@@ -1,0 +1,250 @@
+package vision.gui;
+
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.event.MouseInputAdapter;
+
+import vision.PitchConstants;
+import vision.Position;
+import vision.VideoStream;
+import vision.interfaces.VideoReceiver;
+
+@SuppressWarnings("serial")
+public class VisionGUI extends JFrame implements VideoReceiver {
+        private final int videoWidth;
+        private final int videoHeight;
+
+        // Pitch dimension selector variables
+        private boolean selectionActive = false;
+        private Point anchor;
+        private int a;
+        private int b;
+        private int c;
+        private int d;
+
+        // Stored to only have rendering happen in one place
+        private BufferedImage frame;
+        private int fps;
+        private int frameCounter;
+        private BufferedImage debugOverlay;
+
+        private final JPanel videoDisplay = new JPanel();
+        private final WindowAdapter windowAdapter = new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                        dispose();
+
+                        System.exit(0);
+                }
+        };
+
+        public VisionGUI(final int videoWidth, final int videoHeight,
+                        final VideoStream vStream) {
+
+                super("Vision");
+                this.videoWidth = videoWidth;
+                this.videoHeight = videoHeight;
+
+
+                Container contentPane = this.getContentPane();
+
+                Dimension videoSize = new Dimension(videoWidth, videoHeight);
+                BufferedImage blankInitialiser = new BufferedImage(videoWidth,
+                                videoHeight, BufferedImage.TYPE_INT_RGB);
+                getContentPane().setLayout(null);
+                videoDisplay.setLocation(0, 0);
+                this.videoDisplay.setMinimumSize(videoSize);
+                this.videoDisplay.setSize(videoSize);
+                contentPane.add(videoDisplay);
+
+                this.setVisible(true);
+                
+                this.getGraphics().drawImage(blankInitialiser, 0, 0, null);
+                Dimension frameSize = new Dimension(videoWidth
+                        + settingsPanel.getPreferredSize().width, Math.max(videoHeight,
+                        settingsPanel.getPreferredSize().height));
+                contentPane.setSize(frameSize);
+                this.setSize(frameSize.width + 8, frameSize.height + 30);
+                // Wait for size to actually be set before setting resizable to false.
+                try {
+                        Thread.sleep(200);
+                } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                }
+                this.setResizable(false);
+                videoDisplay.setFocusable(true);
+                videoDisplay.addKeyListener(new KeyListener() {
+                        public void keyPressed(KeyEvent ke) {
+                        }
+
+                        public void keyReleased(KeyEvent ke) {
+                                adjust = KeyEvent.getKeyText(ke.getKeyCode());
+                        }
+
+                        public void keyTyped(KeyEvent e) {
+                        }
+                });
+            
+
+
+                this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                this.addWindowListener(windowAdapter);
+        }
+
+        @Override
+        public void sendFrame(BufferedImage frame, int fps, int frameCounter) {
+                this.frame = frame;
+                this.fps = fps;
+                this.frameCounter = frameCounter;
+        }
+
+
+
+        public ArrayList<?>[] getColourRange(BufferedImage frame, int object) {
+
+                ArrayList<Integer> redList = new ArrayList<Integer>();
+                ArrayList<Integer> greenList = new ArrayList<Integer>();
+                ArrayList<Integer> blueList = new ArrayList<Integer>();
+                ArrayList<Float> hueList = new ArrayList<Float>();
+                ArrayList<Float> satList = new ArrayList<Float>();
+                ArrayList<Float> valList = new ArrayList<Float>();
+                ArrayList<?>[] colourSettings = { redList, greenList, blueList, hueList,
+                                satList, valList };
+
+                if (object == PitchConstants.BLUE || object == PitchConstants.YELLOW) {
+                        /** PROCESSING EITHER LETTER T */
+                        // Process top part of the letter T
+                        colourSettings = getColourValues(frame, colourSettings, 12, 35, 15,
+                                        24);
+                        // Process bottom part of the letter T
+                        colourSettings = getColourValues(frame, colourSettings, 21, 30, 24,
+                                        44);
+                } else if (object == PitchConstants.GREEN) {
+                        /** PROCESSING EITHER OF THE GREEN PLATES */
+                        // Process the top left quadrant of the green plate
+                        colourSettings = getColourValues(frame, colourSettings, 0 + 15,
+                                        10 + 15, 0 + 25, 15 + 25);
+                        // Process the top right quadrant of the green plate
+                        colourSettings = getColourValues(frame, colourSettings, 21 + 15,
+                                        30 + 15, 0 + 25, 15 + 25);
+                        // Process the bottom left quadrant of the green plate
+                        colourSettings = getColourValues(frame, colourSettings, 0 + 15,
+                                        10 + 15, 25 + 25, 50 + 25);
+                        // Process the bottom right quadrant of the green plate
+                        colourSettings = getColourValues(frame, colourSettings, 22 + 15,
+                                        30 + 15, 25 + 25, 50 + 25);
+                } else if (object == PitchConstants.GREY) {
+                        // Process the ball
+                        colourSettings = getColourValues(frame, colourSettings, 0, 8, 0, 8);
+                }
+                return colourSettings;
+        }
+
+        public ArrayList<?>[] getColourValues(BufferedImage frame,
+                        ArrayList[] colourSettings, int fromX, int toX, int fromY, int toY) {
+                int lx = (int) imageCenterX;
+                int ly = (int) imageCenterY;
+
+                for (int x = fromX - lx; x < toX - lx; x++)
+                        for (int y = fromY - ly; y < toY - ly; y++) {
+
+                                // Getting the colour from pixels subject to rotation
+                                double xR = x * Math.cos(Math.toRadians((double) rotation)) - y
+                                                * Math.sin(Math.toRadians((double) rotation));
+                                double yR = x * Math.sin(Math.toRadians((double) rotation)) + y
+                                                * Math.cos(Math.toRadians((double) rotation));
+
+                                xList.add(mouseX + lx + (int) xR);
+                                yList.add(mouseY + ly + (int) yR);
+
+                                Color c = new Color(frame.getRGB(mouseX + lx + (int) xR, mouseY
+                                                + ly + (int) yR));
+
+                                float[] hsbvals = Color.RGBtoHSB(c.getRed(), c.getGreen(),
+                                                c.getBlue(), null);
+
+                                colourSettings[0].add(c.getRed()); // RED
+                                colourSettings[1].add(c.getGreen()); // GREEN
+                                colourSettings[2].add(c.getBlue()); // BLUE
+
+                                colourSettings[3].add(hsbvals[0]); // HUE
+                                colourSettings[4].add(hsbvals[1]); // SATURATION
+                                colourSettings[5].add(hsbvals[2]); // VALUE
+
+                        }
+
+       
+
+        public void clearArrayOfLists(ArrayList<?>[] arrays) {
+                for (int i = 0; i < arrays.length; i++)
+                        arrays[i].clear();
+        }
+
+        public double calcStandardDeviationFloat(ArrayList<Float> points) {
+
+                double mean = calcMeanFloat(points);
+                double sum = 0;
+                for (int i = 0; i < points.size(); i++) {
+                        float p = points.get(i);
+                        double diff = p - mean;
+                        sum += diff * diff;
+                }
+
+                return Math.sqrt(sum / points.size());
+        }
+
+        public double calcMeanFloat(ArrayList<Float> points) {
+                float sum = 0;
+                for (int i = 0; i < points.size(); i++) {
+                        sum += points.get(i);
+                }
+                return (double) (sum) / points.size();
+        }
+
+        public double calcStandardDeviation(ArrayList<Integer> points) {
+
+                double mean = calcMean(points);
+                double sum = 0;
+                for (int i = 0; i < points.size(); i++) {
+                        int p = points.get(i);
+                        double diff = p - mean;
+                        sum += diff * diff;
+                }
+
+                return Math.sqrt(sum / points.size());
+        }
+
+        public double calcMean(ArrayList<Integer> points) {
+                int sum = 0;
+                for (int i = 0; i < points.size(); i++) {
+                        sum += points.get(i);
+                }
+                return (double) (sum) / points.size();
+        }
+
+}

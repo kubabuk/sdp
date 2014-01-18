@@ -1,0 +1,225 @@
+package sdp.vision;
+
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import sdp.vision.ui.MouseClick;
+
+import au.edu.jcu.v4l4j.CaptureCallback;
+import au.edu.jcu.v4l4j.DeviceInfo;
+import au.edu.jcu.v4l4j.FrameGrabber;
+import au.edu.jcu.v4l4j.ImageFormat;
+import au.edu.jcu.v4l4j.V4L4JConstants;
+import au.edu.jcu.v4l4j.VideoDevice;
+import au.edu.jcu.v4l4j.VideoFrame;
+import au.edu.jcu.v4l4j.exceptions.ImageFormatException;
+import au.edu.jcu.v4l4j.exceptions.V4L4JException;
+
+/**
+ * The main class for showing the video feed and processing the video data.
+ * Identifies ball and robot locations, and robot orientations.
+ * 
+ * @author s0840449
+ * @author Thomas Wallace
+ */
+public class Vision extends WindowAdapter {
+        
+        private VideoDevice videoDev;
+        private JLabel label;
+        private JFrame windowFrame;
+        private FrameGrabber frameGrabber;
+        private int width, height;
+        private WorldState worldState;
+        private BufferedImage frameImage = null;
+        private ImageProcessor imageProcessor = null;
+        private long before = 0;
+        private long after = 0;
+        
+        public Vision(WorldState worldState, ThresholdsState ts, PitchConstants pitchConstants) throws V4L4JException {
+			this("/dev/video0", 640, 480, 0, V4L4JConstants.STANDARD_PAL,
+					80, worldState, ts, pitchConstants);
+        }
+        
+        /**
+         * Default constructor.
+         * 
+         * @param videoDevice
+         *            The video device file to capture from.
+         * @param width
+         *            The desired capture width.
+         * @param height
+         *            The desired capture height.
+         * @param videoStandard
+         *            The capture standard.
+         * @param channel
+         *            The capture channel.
+         * @param compressionQuality
+         *            The JPEG compression quality.
+         * @param worldState
+         * @param ts
+         * @param pitchConstants
+         * 
+         * @throws V4L4JException
+         *             If any parameter if invalid.
+         */
+        public Vision(String videoDevice, int width, int height, int channel,
+                        int videoStandard, int compressionQuality, WorldState worldState,
+                        ThresholdsState ts, PitchConstants pitchConstants)
+                        throws V4L4JException {
+
+                /* Set the state fields. */
+                this.worldState = worldState;
+                imageProcessor = new ImageProcessor(worldState, ts);
+
+                System.setProperty("v4l4j.num_driver_buffers", "10");
+                int nbV4LBuffers = (System.getProperty("v4l4j.num_driver_buffers") != null) ? Integer.parseInt(System.getProperty("v4l4j.num_driver_buffers")) : 4;
+                System.out.println("nbV4LBuffers="+nbV4LBuffers);
+                /* Initialise the GUI that displays the video feed. */
+                initFrameGrabber(videoDevice, width, height, channel, videoStandard,
+                                compressionQuality);
+                initGUI();
+        }
+
+        /**
+         * Initialises a FrameGrabber object with the given parameters.
+         * 
+         * @param videoDevice
+         *            The video device file to capture from.
+         * @param inWidth
+         *            The desired capture width.
+         * @param inHeight
+         *            The desired capture height.
+         * @param channel
+         *            The capture channel.
+         * @param videoStandard
+         *            The capture standard.
+         * @param compressionQuality
+         *            The JPEG compression quality.
+         * 
+         * @throws V4L4JException
+         *             If any parameter is invalid.
+         */
+        private void initFrameGrabber(String videoDevice, int inWidth,
+                        int inHeight, int channel, int videoStandard, int compressionQuality)
+                        throws V4L4JException {
+                videoDev = new VideoDevice(videoDevice);
+
+                DeviceInfo deviceInfo = videoDev.getDeviceInfo();
+
+                if (deviceInfo.getFormatList().getNativeFormats().isEmpty()) {
+                        throw new ImageFormatException(
+                                        "Unable to detect any native formats for the device!");
+                }
+                ImageFormat imageFormat = deviceInfo.getFormatList().getNativeFormat(0);
+
+                frameGrabber = videoDev.getJPEGFrameGrabber(inWidth, inHeight, channel,
+                                videoStandard, compressionQuality, imageFormat);
+                frameGrabber.setCaptureCallback(new CaptureCallback() {
+                        public void exceptionReceived(V4L4JException e) {
+                                System.err.println("Unable to capture frame:");
+                                e.printStackTrace();
+                        }
+
+                        int counter = 0;
+
+                        public void nextFrame(VideoFrame frame) {
+                                frameImage = frame.getBufferedImage();
+
+                                /* Display the FPS that the vision system is running at. */
+                                after = System.currentTimeMillis();
+                                float fps = (1.0f) / ((after - before) / 1000.0f);
+                                before = after;
+                                frameImage.getGraphics().setColor(Color.white);
+                                frameImage.getGraphics().drawString("FPS: " + fps, 15, 15);
+                                
+
+                                if (counter==20) {
+                                    File file = new File("pitchBackground.bmp");
+//                                    ArrayList<Point>  pointz= new MouseClick(windowFrame).getTestData();
+//                                    for (int i=0; i< pointz.size(); i++) {
+//                                    	pointz.set(i, DistortionFix.barrelCorrected(pointz.get(i)));
+//                                    	System.out.println("point["+i+"]:("+pointz.get(i).getX()+", "+pointz.get(i).getY()+")");
+//                                    }
+                                    try {
+                                        System.out.println("Writing Image now");
+                                        ImageIO.write(frameImage, "bmp", file);
+                                    } catch(IOException e) {
+                                        System.out.println("Write Error:"+e.getMessage());
+                                    }
+                                }
+                                if (counter > 10)
+                                {
+                                        imageProcessor.processImage(frameImage);
+                                        worldState.updateCounter();
+                                        label.getGraphics().drawImage(frameImage, 0, 0, width, height, null);
+                                }
+
+                                frame.recycle();
+                                
+                                counter++;
+                        }
+                });
+                
+                frameGrabber.startCapture();
+
+                width = frameGrabber.getWidth();
+                height = frameGrabber.getHeight();
+                
+                System.out.println(frameGrabber.getNumberOfVideoFrames()+" frames actually used");
+                System.out.println(Integer.parseInt(System.getProperty("v4l4j.num_driver_buffers"))+" frames");
+                int nbV4LBuffers = (System.getProperty("v4l4j.num_driver_buffers") != null) ? Integer.parseInt(System.getProperty("v4l4j.num_driver_buffers")) : 4;
+                System.out.println("nbV4LBuffers="+nbV4LBuffers);
+        }
+
+        /**
+         * Creates the graphical interface components and initialises them
+         */
+        private void initGUI() {
+                windowFrame = new JFrame("Vision Window");
+                label = new JLabel();
+                windowFrame.getContentPane().add(label);
+                windowFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                windowFrame.addWindowListener(this);
+                windowFrame.setVisible(true);
+                windowFrame.setSize(width, height);
+        }
+
+        /**
+         * Catches the window closing event, so that we can free up resources before
+         * exiting.
+         * 
+         * @param e
+         *            The window closing event.
+         */
+        public void windowClosing(WindowEvent e) {
+                /* Dispose of the various swing and v4l4j components. */
+                frameGrabber.stopCapture();
+                videoDev.releaseFrameGrabber();
+
+                windowFrame.dispose();
+
+                System.exit(0);
+        }
+
+        public WorldState getWorldState() {
+                return worldState;
+        }
+        
+        public ImageProcessor getImageProcessor(){
+        	return imageProcessor;
+        }
+        
+        public JFrame getWindowFrame() {
+        	return windowFrame;
+        }
+}

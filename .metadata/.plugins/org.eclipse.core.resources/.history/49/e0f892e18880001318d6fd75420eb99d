@@ -1,0 +1,5 @@
+package vision.interfaces;
+
+public interface VideoReceiver {
+
+}
