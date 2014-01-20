@@ -2,6 +2,7 @@ package vision;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,7 +26,7 @@ import au.edu.jcu.v4l4j.exceptions.V4L4JException;
  *
  */
 public class SimpleViewer extends WindowAdapter implements CaptureCallback{
-        private static int      width = 640, height = 480, std = V4L4JConstants.STANDARD_WEBCAM, channel = 0;
+        private static int      width = 640, height = 480, std = V4L4JConstants.STANDARD_PAL, channel = 0;
         private static String   device = "/dev/video0";
 
         private VideoDevice     videoDevice;
@@ -88,9 +89,17 @@ public class SimpleViewer extends WindowAdapter implements CaptureCallback{
                                     "Unable to detect any native formats for the device!");
                 }
                 
-                ImageFormat imageFormat = deviceInfo.getFormatList().getYUVEncodableFormat(0);
+                List<ImageFormat> imageFormats = deviceInfo.getFormatList().getNativeFormats();
+                System.out.println(imageFormats);
                 
-                frameGrabber = videoDevice.getJPEGFrameGrabber(width, height, channel, std, 80, imageFormat);
+                ImageFormat imageFormat = imageFormats.get(1);
+                
+                frameGrabber = videoDevice.getRawFrameGrabber(width, height, channel,
+                                std, imageFormat);
+                /*List<ImageFormat> imageFormats = deviceInfo.getFormatList().getYUVEncodableFormats();
+                System.out.println(imageFormats);
+                ImageFormat imageFormat = imageFormats.get(0);*/
+
                 frameGrabber.setCaptureCallback(this);
                 width = frameGrabber.getWidth();
                 height = frameGrabber.getHeight();

@@ -111,10 +111,10 @@ public class VideoStream {
                                 throw new ImageFormatException(
                                                 "Unable to detect any native formats for the device!");
                         }
-                        imageFormat = deviceInfo.getFormatList().getYUVEncodableFormat(0);
+                        imageFormat = deviceInfo.getFormatList().getNativeFormats().get(1);
 
-                        frameGrabber = videoDev.getJPEGFrameGrabber(width, height, channel,
-                                        videoStandard, compressionQuality, imageFormat);
+                        frameGrabber = videoDev.getRawFrameGrabber(width, height, channel,
+                                        videoStandard, imageFormat);
                         frameGrabber.setCaptureCallback(frameGrabberCallback);
                         frameGrabber.startCapture();
 
