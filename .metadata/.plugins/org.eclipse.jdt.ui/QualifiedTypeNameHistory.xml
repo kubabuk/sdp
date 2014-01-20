@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="au.edu.jcu.v4l4j.ImageFormat"/>
+<fullyQualifiedTypeName name="au.edu.jcu.v4l4j.DeviceInfo"/>
+<fullyQualifiedTypeName name="au.edu.jcu.v4l4j.exceptions.ImageFormatException"/>
+</qualifiedTypeNameHistroy>

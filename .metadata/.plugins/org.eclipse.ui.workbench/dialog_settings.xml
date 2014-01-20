@@ -8,6 +8,10 @@
 			<item value="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/v4l4j-0.9.1"/>
 		</list>
 	</section>
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item value="0" key="DIALOG_Y_ORIGIN"/>
+		<item value="192" key="DIALOG_X_ORIGIN"/>
+	</section>
 	<section name="ZipFileImportWizard">
 		<item value="false" key="WizardZipFileResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID"/>
 		<list key="WizardZipFileResourceImportPage1.STORE_SOURCE_NAMES_ID">

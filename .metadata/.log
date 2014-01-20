@@ -84,3 +84,142 @@ java.lang.IllegalArgumentException: Element not found: /Vision/v4l4j.
 	at org.eclipse.jdt.internal.ui.actions.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:106)
 	at org.eclipse.jdt.internal.ui.actions.WorkbenchRunnableAdapter$1.run(WorkbenchRunnableAdapter.java:121)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SESSION 2014-01-20 00:14:34.653 -----------------------------------------------
+eclipse.buildId=M20100909-0800
+java.version=1.7.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_GB
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 4 1 2014-01-20 00:15:43.878
+!MESSAGE Internal Error
+!STACK 0
+java.lang.IllegalArgumentException: Element not found: /Vision/lib/javacv-bin.
+	at org.eclipse.core.internal.watson.ElementTree.elementNotFound(ElementTree.java:255)
+	at org.eclipse.core.internal.watson.ElementTree.createElement(ElementTree.java:183)
+	at org.eclipse.core.internal.resources.Workspace.createResource(Workspace.java:1020)
+	at org.eclipse.core.internal.resources.Workspace.createResource(Workspace.java:973)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.createResource(RefreshLocalVisitor.java:80)
+	at org.eclipse.core.internal.localstore.RefreshLocalAliasVisitor.createResource(RefreshLocalAliasVisitor.java:38)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.synchronizeExistence(RefreshLocalVisitor.java:219)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.visit(RefreshLocalVisitor.java:293)
+	at org.eclipse.core.internal.localstore.UnifiedTree.accept(UnifiedTree.java:108)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:824)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:808)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1663)
+	at org.eclipse.core.internal.resources.Resource.createLink(Resource.java:693)
+	at org.eclipse.core.internal.resources.Resource.createLink(Resource.java:629)
+	at org.eclipse.jdt.internal.core.ExternalFoldersManager.createLinkFolder(ExternalFoldersManager.java:126)
+	at org.eclipse.jdt.internal.core.ExternalFolderChange.updateExternalFoldersIfNecessary(ExternalFolderChange.java:47)
+	at org.eclipse.jdt.internal.core.ChangeClasspathOperation.classpathChanged(ChangeClasspathOperation.java:62)
+	at org.eclipse.jdt.internal.core.SetClasspathOperation.executeOperation(SetClasspathOperation.java:74)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:728)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:1975)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:793)
+	at org.eclipse.jdt.internal.core.JavaProject.setRawClasspath(JavaProject.java:3026)
+	at org.eclipse.jdt.internal.core.JavaProject.setRawClasspath(JavaProject.java:2988)
+	at org.eclipse.jdt.internal.core.JavaProject.setRawClasspath(JavaProject.java:3000)
+	at org.eclipse.jdt.internal.ui.wizards.buildpaths.BuildPathsBlock.flush(BuildPathsBlock.java:910)
+	at org.eclipse.jdt.internal.ui.wizards.buildpaths.BuildPathsBlock.configureJavaProject(BuildPathsBlock.java:735)
+	at org.eclipse.jdt.internal.ui.wizards.buildpaths.BuildPathsBlock.configureJavaProject(BuildPathsBlock.java:731)
+	at org.eclipse.jdt.internal.ui.preferences.BuildPathsPropertyPage$1.run(BuildPathsPropertyPage.java:214)
+	at org.eclipse.jdt.internal.core.BatchOperation.executeOperation(BatchOperation.java:39)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:728)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:1975)
+	at org.eclipse.jdt.core.JavaCore.run(JavaCore.java:4777)
+	at org.eclipse.jdt.internal.ui.actions.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:106)
+	at org.eclipse.jdt.internal.ui.actions.WorkbenchRunnableAdapter$1.run(WorkbenchRunnableAdapter.java:121)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2014-01-20 00:15:43.989
+!MESSAGE An internal error occurred during: "Setting build path".
+!STACK 0
+java.lang.IllegalArgumentException: Element not found: /Vision/lib/javacv-bin.
+	at org.eclipse.core.internal.watson.ElementTree.elementNotFound(ElementTree.java:255)
+	at org.eclipse.core.internal.watson.ElementTree.createElement(ElementTree.java:183)
+	at org.eclipse.core.internal.resources.Workspace.createResource(Workspace.java:1020)
+	at org.eclipse.core.internal.resources.Workspace.createResource(Workspace.java:973)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.createResource(RefreshLocalVisitor.java:80)
+	at org.eclipse.core.internal.localstore.RefreshLocalAliasVisitor.createResource(RefreshLocalAliasVisitor.java:38)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.synchronizeExistence(RefreshLocalVisitor.java:219)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.visit(RefreshLocalVisitor.java:293)
+	at org.eclipse.core.internal.localstore.UnifiedTree.accept(UnifiedTree.java:108)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:824)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:808)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1663)
+	at org.eclipse.core.internal.resources.Resource.createLink(Resource.java:693)
+	at org.eclipse.core.internal.resources.Resource.createLink(Resource.java:629)
+	at org.eclipse.jdt.internal.core.ExternalFoldersManager.createLinkFolder(ExternalFoldersManager.java:126)
+	at org.eclipse.jdt.internal.core.ExternalFolderChange.updateExternalFoldersIfNecessary(ExternalFolderChange.java:47)
+	at org.eclipse.jdt.internal.core.ChangeClasspathOperation.classpathChanged(ChangeClasspathOperation.java:62)
+	at org.eclipse.jdt.internal.core.SetClasspathOperation.executeOperation(SetClasspathOperation.java:74)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:728)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:1975)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:793)
+	at org.eclipse.jdt.internal.core.JavaProject.setRawClasspath(JavaProject.java:3026)
+	at org.eclipse.jdt.internal.core.JavaProject.setRawClasspath(JavaProject.java:2988)
+	at org.eclipse.jdt.internal.core.JavaProject.setRawClasspath(JavaProject.java:3000)
+	at org.eclipse.jdt.internal.ui.wizards.buildpaths.BuildPathsBlock.flush(BuildPathsBlock.java:910)
+	at org.eclipse.jdt.internal.ui.wizards.buildpaths.BuildPathsBlock.configureJavaProject(BuildPathsBlock.java:735)
+	at org.eclipse.jdt.internal.ui.wizards.buildpaths.BuildPathsBlock.configureJavaProject(BuildPathsBlock.java:731)
+	at org.eclipse.jdt.internal.ui.preferences.BuildPathsPropertyPage$1.run(BuildPathsPropertyPage.java:214)
+	at org.eclipse.jdt.internal.core.BatchOperation.executeOperation(BatchOperation.java:39)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:728)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:1975)
+	at org.eclipse.jdt.core.JavaCore.run(JavaCore.java:4777)
+	at org.eclipse.jdt.internal.ui.actions.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:106)
+	at org.eclipse.jdt.internal.ui.actions.WorkbenchRunnableAdapter$1.run(WorkbenchRunnableAdapter.java:121)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SESSION 2014-01-20 00:22:14.013 -----------------------------------------------
+eclipse.buildId=M20100909-0800
+java.version=1.7.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_GB
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2014-01-20 00:22:28.228
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.core.resources 4 1 2014-01-20 00:22:28.619
+!MESSAGE Internal Error
+!STACK 0
+java.lang.IllegalArgumentException: Element not found: /Vision/lib/javacv-bin.
+	at org.eclipse.core.internal.watson.ElementTree.elementNotFound(ElementTree.java:255)
+	at org.eclipse.core.internal.watson.ElementTree.createElement(ElementTree.java:183)
+	at org.eclipse.core.internal.resources.Workspace.createResource(Workspace.java:1020)
+	at org.eclipse.core.internal.resources.Workspace.createResource(Workspace.java:973)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.createResource(RefreshLocalVisitor.java:80)
+	at org.eclipse.core.internal.localstore.RefreshLocalAliasVisitor.createResource(RefreshLocalAliasVisitor.java:38)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.synchronizeExistence(RefreshLocalVisitor.java:219)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.visit(RefreshLocalVisitor.java:293)
+	at org.eclipse.core.internal.localstore.UnifiedTree.accept(UnifiedTree.java:108)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:824)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:808)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshRoot(FileSystemResourceManager.java:855)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:801)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1663)
+	at org.eclipse.core.internal.refresh.RefreshJob.runInWorkspace(RefreshJob.java:166)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.eclipse.core.jobs 4 2 2014-01-20 00:22:28.634
+!MESSAGE An internal error occurred during: "Refreshing workspace".
+!STACK 0
+java.lang.IllegalArgumentException: Element not found: /Vision/lib/javacv-bin.
+	at org.eclipse.core.internal.watson.ElementTree.elementNotFound(ElementTree.java:255)
+	at org.eclipse.core.internal.watson.ElementTree.createElement(ElementTree.java:183)
+	at org.eclipse.core.internal.resources.Workspace.createResource(Workspace.java:1020)
+	at org.eclipse.core.internal.resources.Workspace.createResource(Workspace.java:973)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.createResource(RefreshLocalVisitor.java:80)
+	at org.eclipse.core.internal.localstore.RefreshLocalAliasVisitor.createResource(RefreshLocalAliasVisitor.java:38)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.synchronizeExistence(RefreshLocalVisitor.java:219)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.visit(RefreshLocalVisitor.java:293)
+	at org.eclipse.core.internal.localstore.UnifiedTree.accept(UnifiedTree.java:108)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:824)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:808)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshRoot(FileSystemResourceManager.java:855)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:801)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1663)
+	at org.eclipse.core.internal.refresh.RefreshJob.runInWorkspace(RefreshJob.java:166)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
