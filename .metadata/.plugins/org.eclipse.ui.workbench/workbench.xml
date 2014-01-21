@@ -29,13 +29,28 @@
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SimpleViewer.java" partName="SimpleViewer.java" path="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/src/vision/SimpleViewer.java" title="SimpleViewer.java" tooltip="Vision/src/vision/SimpleViewer.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SimpleViewer.java" partName="SimpleViewer.java" path="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/src/vision/SimpleViewer.java" title="SimpleViewer.java" tooltip="Vision/src/vision/SimpleViewer.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Vision/src/vision/SimpleViewer.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2841" selectionTopPixel="1166"/>
+<editorState selectionHorizontalPixel="68" selectionLength="0" selectionOffset="3448" selectionTopPixel="1073"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="VideoStream.java" partName="VideoStream.java" path="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/src/vision/VideoStream.java" title="VideoStream.java" tooltip="Vision/src/vision/VideoStream.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Vision/src/vision/VideoStream.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RunVision.java" partName="RunVision.java" path="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/src/vision/RunVision.java" title="RunVision.java" tooltip="Vision/src/vision/RunVision.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Vision/src/vision/RunVision.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SimpleViewer2.java" partName="SimpleViewer2.java" path="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/lib/au/edu/jcu/v4l4j/examples/SimpleViewer2.java" title="SimpleViewer2.java" tooltip="Vision/lib/au/edu/jcu/v4l4j/examples/SimpleViewer2.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Vision/lib/au/edu/jcu/v4l4j/examples/SimpleViewer2.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1521" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -45,7 +60,7 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>&#x0A;<category IMemento.internal.id="Warnings (61 items)"/>
-<category IMemento.internal.id="Warnings"/>
+<category IMemento.internal.id="Errors"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="0" org.eclipse.ui.ide.markerType="0" org.eclipse.ui.ide.pathField="0" org.eclipse.ui.ide.resourceField="0" org.eclipse.ui.ide.severityAndDescriptionField="0"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -111,7 +126,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.ui.console.ConsoleView" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.ui.internal.ide.application.ResourcePerspective" id="org.eclipse.ui.resourcePerspective" label="Resource"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -264,8 +279,8 @@
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.32939324" ratioLeft="418" ratioRight="851" relationship="2" relative="left"/>
-<info folder="true" part="bottom" ratio="0.7819905" ratioLeft="660" ratioRight="184" relationship="4" relative="org.eclipse.ui.editorss">
+<info part="org.eclipse.ui.editorss" ratio="0.28053585" ratioLeft="356" ratioRight="913" relationship="2" relative="left"/>
+<info folder="true" part="bottom" ratio="0.66113746" ratioLeft="558" ratioRight="286" relationship="4" relative="org.eclipse.ui.editorss">
 <folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
@@ -300,171 +315,171 @@
 <navigationHistory>
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/RunVision.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/gui/VisionGUI.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/lib/au/edu/jcu/v4l4j/VideoDevice.java"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=Vision/\/usr\/lib\/jvm\/java-1.7.0-openjdk-1.7.0.45.x86_64\/jre\/lib\/rt.jar&lt;java.lang(System.class"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/RunVision.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/VideoStream.java"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=Vision/\/usr\/lib\/jvm\/java-1.7.0-openjdk-1.7.0.45.x86_64\/jre\/lib\/rt.jar&lt;java.lang(Runtime.class"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/lib/au/edu/jcu/v4l4j/VideoDevice.java"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=Vision/\/usr\/lib\/jvm\/java-1.7.0-openjdk-1.7.0.45.x86_64\/jre\/lib\/rt.jar&lt;java.lang(System.class"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=Vision/\/usr\/lib\/jvm\/java-1.7.0-openjdk-1.7.0.45.x86_64\/jre\/lib\/rt.jar&lt;java.lang(Runtime.class"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/VideoStream.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/PitchConstants.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/Position.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/gui/VisionGUI.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/interfaces/VideoReceiver.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/SimpleViewer.java"/>
+<editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" uri="file:/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/src/vision/SimpleViewer.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/SimpleViewer.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/VideoStream.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/src/vision/RunVision.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/lib/au/edu/jcu/v4l4j/examples/SimpleViewer.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/lib/au/edu/jcu/v4l4j/examples/SimpleViewer2.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/lib/au/edu/jcu/v4l4j/AbstractGrabber.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/lib/au/edu/jcu/v4l4j/JPEGFrameGrabber.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Vision/lib/au/edu/jcu/v4l4j/VideoDevice.java"/>
 </editors>
-<item historyLabel="VisionGUI.java" index="1">
+<item historyLabel="PitchConstants.java" index="2">
+<position info="not_deleted" x="33809" y="0"/>
+</item>
+<item historyLabel="RunVision.java" index="0">
+<position info="not_deleted" x="1138" y="0"/>
+</item>
+<item historyLabel="Position.java" index="3">
+<position info="not_deleted" x="6604" y="0"/>
+</item>
+<item historyLabel="RunVision.java" index="0">
+<position info="not_deleted" x="1138" y="0"/>
+</item>
+<item historyLabel="VideoStream.java" index="1">
+<position info="not_deleted" x="4423" y="0"/>
+</item>
+<item historyLabel="Position.java" index="3">
+<position info="not_deleted" x="6604" y="0"/>
+</item>
+<item historyLabel="VideoStream.java" index="1">
+<position info="not_deleted" x="4423" y="0"/>
+</item>
+<item historyLabel="VisionGUI.java" index="4">
 <position info="not_deleted" x="3669" y="0"/>
 </item>
 <item historyLabel="RunVision.java" index="0">
-<position info="not_deleted" x="2496" y="0"/>
-</item>
-<item historyLabel="VisionGUI.java" index="1">
-<position info="not_deleted" x="3669" y="0"/>
-</item>
-<item historyLabel="VideoDevice.java" index="2">
-<position info="not_deleted" x="8633" y="0"/>
-</item>
-<item historyLabel="System.class" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="VideoDevice.java" index="2">
-<position info="not_deleted" x="6815" y="0"/>
-</item>
-<item historyLabel="RunVision.java" index="4">
-<position info="not_deleted" x="2496" y="0"/>
-</item>
-<item historyLabel="RunVision.java" index="4">
-<position info="not_deleted" x="1452" y="89"/>
-</item>
-<item historyLabel="VideoStream.java" index="5">
-<position info="not_deleted" x="3375" y="0"/>
-</item>
-<item historyLabel="VideoStream.java" index="5">
-<position info="not_deleted" x="3978" y="64"/>
-</item>
-<item historyLabel="VideoDevice.java" index="2">
-<position info="not_deleted" x="8029" y="31"/>
-</item>
-<item historyLabel="System.class" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Runtime.class" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="RunVision.java" index="4">
-<position/>
-</item>
-<item historyLabel="VideoDevice.java" index="7">
-<position info="not_deleted" x="3" y="0"/>
-</item>
-<item historyLabel="VideoDevice.java" index="7">
-<position info="not_deleted" x="8060" y="0"/>
-</item>
-<item historyLabel="RunVision.java" index="4">
-<position info="not_deleted" x="1335" y="0"/>
-</item>
-<item historyLabel="VideoDevice.java" index="7">
-<position info="not_deleted" x="8060" y="0"/>
-</item>
-<item historyLabel="System.class" index="8">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Runtime.class" index="9">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="VideoDevice.java" index="7">
-<position info="not_deleted" x="8060" y="0"/>
-</item>
-<item historyLabel="Runtime.class" index="9">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="System.class" index="8">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="RunVision.java" index="4">
-<position info="not_deleted" x="1335" y="0"/>
-</item>
-<item historyLabel="VideoStream.java" index="10">
-<position info="not_deleted" x="3978" y="64"/>
-</item>
-<item historyLabel="VideoStream.java" index="10">
-<position info="not_deleted" x="4423" y="0"/>
-</item>
-<item historyLabel="RunVision.java" index="4">
-<position info="not_deleted" x="840" y="0"/>
-</item>
-<item historyLabel="PitchConstants.java" index="11">
-<position info="not_deleted" x="33809" y="0"/>
-</item>
-<item historyLabel="RunVision.java" index="4">
 <position info="not_deleted" x="1138" y="0"/>
 </item>
-<item historyLabel="Position.java" index="12">
-<position info="not_deleted" x="6604" y="0"/>
-</item>
-<item historyLabel="RunVision.java" index="4">
-<position info="not_deleted" x="1138" y="0"/>
-</item>
-<item historyLabel="VideoStream.java" index="10">
-<position info="not_deleted" x="4423" y="0"/>
-</item>
-<item historyLabel="Position.java" index="12">
-<position info="not_deleted" x="6604" y="0"/>
-</item>
-<item historyLabel="VideoStream.java" index="10">
-<position info="not_deleted" x="4423" y="0"/>
-</item>
-<item historyLabel="VisionGUI.java" index="13">
-<position info="not_deleted" x="3669" y="0"/>
-</item>
-<item historyLabel="RunVision.java" index="4">
-<position info="not_deleted" x="1138" y="0"/>
-</item>
-<item historyLabel="VideoReceiver.java" index="14">
+<item historyLabel="VideoReceiver.java" index="5">
 <position info="not_deleted" x="370" y="0"/>
 </item>
-<item historyLabel="VideoStream.java" index="10">
+<item historyLabel="VideoStream.java" index="1">
 <position info="not_deleted" x="4423" y="0"/>
 </item>
-<item historyLabel="VideoStream.java" index="10">
+<item historyLabel="VideoStream.java" index="1">
 <position info="not_deleted" x="1106" y="0"/>
 </item>
-<item historyLabel="RunVision.java" index="4">
+<item historyLabel="RunVision.java" index="0">
 <position info="not_deleted" x="1138" y="0"/>
 </item>
-<item historyLabel="VideoStream.java" index="10">
+<item historyLabel="VideoStream.java" index="1">
 <position info="not_deleted" x="1106" y="0"/>
 </item>
-<item historyLabel="SimpleViewer.java" index="15">
+<item historyLabel="SimpleViewer.java" index="6">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="SimpleViewer.java" index="15">
+<item historyLabel="SimpleViewer.java" index="6">
 <position/>
 </item>
-<item historyLabel="SimpleViewer.java" index="15">
+<item historyLabel="SimpleViewer.java" index="6">
 <position info="not_deleted" x="1765" y="0"/>
 </item>
-<item historyLabel="SimpleViewer.java" index="15">
+<item historyLabel="SimpleViewer.java" index="6">
 <position info="not_deleted" x="2554" y="0"/>
 </item>
-<item historyLabel="SimpleViewer.java" index="15">
+<item historyLabel="SimpleViewer.java" index="6">
 <position info="not_deleted" x="4183" y="0"/>
 </item>
-<item historyLabel="VideoStream.java" index="10">
+<item historyLabel="VideoStream.java" index="1">
 <position info="not_deleted" x="1106" y="0"/>
 </item>
-<item historyLabel="SimpleViewer.java" index="15">
+<item historyLabel="SimpleViewer.java" index="6">
 <position info="not_deleted" x="4183" y="0"/>
 </item>
-<item historyLabel="VideoReceiver.java" index="14">
+<item historyLabel="VideoReceiver.java" index="5">
 <position info="not_deleted" x="370" y="0"/>
 </item>
-<item active="true" historyLabel="SimpleViewer.java" index="15">
+<item historyLabel="SimpleViewer.java" index="6">
 <position info="not_deleted" x="4183" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="7">
+<position info="not_deleted" x="1107" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="8">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="7">
+<position info="not_deleted" x="1107" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="8">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="8">
+<position info="not_deleted" x="3329" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="8">
+<position/>
+</item>
+<item historyLabel="SimpleViewer.java" index="8">
+<position info="not_deleted" x="3329" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="8">
+<position info="not_deleted" x="3448" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="8">
+<position info="not_deleted" x="3376" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="8">
+<position info="not_deleted" x="3541" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="8">
+<position info="not_deleted" x="3544" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="8">
+<position info="not_deleted" x="3830" y="0"/>
+</item>
+<item historyLabel="VideoStream.java" index="9">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="RunVision.java" index="10">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="VideoStream.java" index="9">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="RunVision.java" index="10">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="VideoStream.java" index="9">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="8">
+<position info="not_deleted" x="3448" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="11">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="SimpleViewer.java" index="11">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="SimpleViewer2.java" index="12">
+<position info="not_deleted" x="3380" y="0"/>
+</item>
+<item historyLabel="AbstractGrabber.java" index="13">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="JPEGFrameGrabber.java" index="14">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="VideoDevice.java" index="15">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="JPEGFrameGrabber.java" index="14">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="AbstractGrabber.java" index="13">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item active="true" historyLabel="SimpleViewer2.java" index="12">
+<position info="not_deleted" x="3380" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -483,6 +498,27 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="VideoDevice.java" tooltip="Vision/lib/au/edu/jcu/v4l4j/VideoDevice.java">
+<persistable path="/Vision/lib/au/edu/jcu/v4l4j/VideoDevice.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="JPEGFrameGrabber.java" tooltip="Vision/lib/au/edu/jcu/v4l4j/JPEGFrameGrabber.java">
+<persistable path="/Vision/lib/au/edu/jcu/v4l4j/JPEGFrameGrabber.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractGrabber.java" tooltip="Vision/lib/au/edu/jcu/v4l4j/AbstractGrabber.java">
+<persistable path="/Vision/lib/au/edu/jcu/v4l4j/AbstractGrabber.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SimpleViewer.java" tooltip="Vision/lib/au/edu/jcu/v4l4j/examples/SimpleViewer.java">
+<persistable path="/Vision/lib/au/edu/jcu/v4l4j/examples/SimpleViewer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RunVision.java" tooltip="Vision/src/vision/RunVision.java">
+<persistable path="/Vision/src/vision/RunVision.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="VideoStream.java" tooltip="Vision/src/vision/VideoStream.java">
+<persistable path="/Vision/src/vision/VideoStream.java"/>
+</file>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SimpleViewer.java" tooltip="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/src/vision/SimpleViewer.java">
+<persistable uri="file:/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/src/vision/SimpleViewer.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SimpleViewer.java" tooltip="Vision/src/vision/SimpleViewer.java">
 <persistable path="/Vision/src/vision/SimpleViewer.java"/>
 </file>
@@ -491,9 +527,6 @@
 </file>
 <file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="System.class" tooltip="java.lang.System">
 <persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Vision/\/usr\/lib\/jvm\/java-1.7.0-openjdk-1.7.0.45.x86_64\/jre\/lib\/rt.jar&lt;java.lang(System.class"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="VideoDevice.java" tooltip="Vision/lib/au/edu/jcu/v4l4j/VideoDevice.java">
-<persistable path="/Vision/lib/au/edu/jcu/v4l4j/VideoDevice.java"/>
 </file>
 <file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ClassLoader.class" tooltip="java.lang.ClassLoader">
 <persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Vision/\/usr\/lib\/jvm\/java-1.7.0-openjdk-1.7.0.45.x86_64\/jre\/lib\/rt.jar&lt;java.lang(ClassLoader.class"/>
@@ -504,17 +537,11 @@
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PitchConstants.java" tooltip="Vision/src/vision/PitchConstants.java">
 <persistable path="/Vision/src/vision/PitchConstants.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RunVision.java" tooltip="Vision/src/vision/RunVision.java">
-<persistable path="/Vision/src/vision/RunVision.java"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="VideoReceiver.java" tooltip="Vision/src/vision/interfaces/VideoReceiver.java">
 <persistable path="/Vision/src/vision/interfaces/VideoReceiver.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Vision.java" tooltip="Vision/src/Vision.java">
 <persistable path="/Vision/src/Vision.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractGrabber.java" tooltip="Vision/lib/src/au/edu/jcu/v4l4j/AbstractGrabber.java">
-<persistable path="/Vision/lib/src/au/edu/jcu/v4l4j/AbstractGrabber.java"/>
 </file>
 </mruList>
 </workbench>

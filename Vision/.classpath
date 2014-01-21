@@ -4,13 +4,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/v4l4j-0.9.1/lib/junit-4.1.jar"/>
-	<classpathentry kind="lib" path="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/lib/v4l4j.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://v4l4j.googlecode.com/svn/www/v4l4j-api/"/>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/lib"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/lib/javacv-bin/javacv.jar"/>
 	<classpathentry kind="lib" path="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/lib/javacv-bin/javacpp.jar"/>
+	<classpathentry kind="lib" path="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/lib/v4l4j.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -83,6 +83,7 @@ public class SimpleViewer extends WindowAdapter implements CaptureCallback{
         private void initFrameGrabber() throws V4L4JException{
                 videoDevice = new VideoDevice(device);
                 DeviceInfo deviceInfo = videoDevice.getDeviceInfo();
+                System.out.println(videoDevice.supportJPEGConversion());
                 
                 if (deviceInfo.getFormatList().getNativeFormats().isEmpty()) {
                     throw new ImageFormatException(
@@ -91,15 +92,17 @@ public class SimpleViewer extends WindowAdapter implements CaptureCallback{
                 
                 List<ImageFormat> imageFormats = deviceInfo.getFormatList().getNativeFormats();
                 System.out.println(imageFormats);
+                System.out.println(std);
                 
                 ImageFormat imageFormat = imageFormats.get(1);
                 
-                frameGrabber = videoDevice.getRawFrameGrabber(width, height, channel,
-                                std, imageFormat);
+                //frameGrabber = videoDevice.getJPEGFrameGrabber(640, 480, 0, 1, 80, imageFormat);
+                frameGrabber = videoDevice.getRawFrameGrabber(1, channel, std, 0, imageFormat);
+                
                 /*List<ImageFormat> imageFormats = deviceInfo.getFormatList().getYUVEncodableFormats();
                 System.out.println(imageFormats);
                 ImageFormat imageFormat = imageFormats.get(0);*/
-
+                
                 frameGrabber.setCaptureCallback(this);
                 width = frameGrabber.getWidth();
                 height = frameGrabber.getHeight();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/lib/javacv-bin" key="org.eclipse.jdt.ui.lastextjar"/>
+	<item value="/afs/inf.ed.ac.uk/user/s11/s1108328/repos/sdp/sdp/Vision/lib" key="org.eclipse.jdt.ui.lastextjar"/>
 	<item value="JavaSE-1.7" key="org.eclipse.jdt.ui.last.selected.execution.enviroment"/>
 	<section name="OptionalMessageDialog.hide.">
 		<item value="true" key="org.eclipse.jdt.ui.typecomment.deprecated"/>
