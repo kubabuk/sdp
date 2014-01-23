@@ -1,9 +1,8 @@
-package com.mydomain;
-
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
 import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
+
 
 public class FirstMileStone {
 	//Codes for 1st Milestone
@@ -20,28 +19,18 @@ public class FirstMileStone {
 		    LCD.drawInt(sensor1.getNormalizedLightValue(), 4, 0, 1);
 		    LCD.drawInt(sensor2.getLightValue(), 4, 0, 2);
 		    LCD.drawInt(sensor2.getNormalizedLightValue(), 4, 0, 3);
+		    
 		    //keep moving while the sensor1 is on the white edge and sensor2 in on the green area
-		    do
-		    {
-		    	Move.forward();
-		    }
-		    
+		    do{Move.forward();}
 		    while (sensor1.getLightValue()>40&&sensor2.getLightValue()<40);
-		    Move.stop();
-		    //turn left while both of the sensors are on the white edge
-		    do 
-		    {
-		    	Move.turnLeft();
-		    }
-		    while (sensor1.getLightValue()>40&&sensor2.getLightValue()>40);
+		    
 		    Move.stop();
 		    
-		    //do 
-		    //{
-		    //	Move.turnRight();
-		    //}
-		    //while (sensor1.getLightValue()<50&&sensor2.getLightValue()<50);
-		    //Move.stop();
+		    //turn left while both of the sensors are on the white edge
+		    do {Move.turnLeft();}
+		    while (sensor1.getLightValue()>40&&sensor2.getLightValue()>40);
+		   
+		    
 		    
 		    flag = ! Button.ESCAPE.isPressed();
 	    
