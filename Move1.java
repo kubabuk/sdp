@@ -1,5 +1,3 @@
-package com.mydomain;
-
 import lejos.navigation.Pilot;
 import lejos.nxt.Motor;
 
