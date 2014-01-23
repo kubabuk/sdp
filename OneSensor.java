@@ -1,5 +1,3 @@
-package com.mydomain;
-
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
 import lejos.nxt.LightSensor;
@@ -26,7 +24,6 @@ public class OneSensor {
 		    LCD.drawInt(sensor1.getNormalizedLightValue(), 4, 0, 1);
 		    //keep moving while the sensor1 is on the white edge and sensor2 in on the green area
 		    
-		   
 		    
 		    while (sensor1.getLightValue()<40)
 		    {
@@ -38,17 +35,8 @@ public class OneSensor {
 		    while (sensor1.getLightValue()>40)
 		    {
 		    	Move.turnLeft();
-		    //	Motor.A.rotate(60);
-		    //	Motor.B.rotate(-30);
 		    }
-//		    Move.stop();
-		    
-		    //do 
-		    //{
-		    //	Move.turnRight();
-		    //}
-		    //while (sensor1.getLightValue()<50&&sensor2.getLightValue()<50);
-		    //Move.stop();
+
 		    
 		    flag = ! Button.ESCAPE.isPressed();
 	    
