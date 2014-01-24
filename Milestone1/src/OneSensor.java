@@ -18,20 +18,18 @@ public class OneSensor {
 		
 		int speedFast = 200;
 		int speedSlow = 50;
-		Move.setSpeedLeft(250);
-		Move.setSpeedRight(250);
 		while (flag) {
 		    //keep moving while the sensor1 is on the white edge and sensor2 in on the green area
-			//Move.setSpeedLeft(speedFast);
-			//Move.setSpeedRight(speedFast);
+			Move.setSpeedLeft(speedFast);
+			Move.setSpeedRight(speedFast);
 		    while (sensor1.getLightValue()<=40)
 		    {
 				Motor.A.rotate(180,true);
 				Motor.B.rotate(180,true);
 		    }
-		    //turn left while both of the sensors are on the white edge
-			//Move.setSpeedLeft(speedSlow);
-			//Move.setSpeedRight(speedSlow);
+		    //turn left while the sensor is` on the white edge
+			Move.setSpeedLeft(speedSlow);
+			Move.setSpeedRight(speedSlow);
 		    while (sensor1.getLightValue()>40)
 		    {
 		    	Motor.A.rotate(-10,true);

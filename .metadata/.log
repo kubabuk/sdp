@@ -414,3 +414,12 @@ java.lang.NullPointerException
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:574)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1407)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1383)
+!SESSION 2014-01-24 17:36:51.583 -----------------------------------------------
+eclipse.buildId=M20100909-0800
+java.version=1.7.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_GB
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2014-01-24 17:36:52.652
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
