@@ -37,12 +37,20 @@ public class Robot {
 	int deltaX = (targetX-x); 
     int deltaY = (targetY-y);
     int dist = (int) Math.sqrt((deltaX*deltaX)+(deltaY*deltaY))*distConstant; //find the difference between current robot position and target, convert it to distance needed to travel.
-    int angleTo = (int)Math.round((Math.atan((deltaX*1.0)/(deltaY*1.0)))*(180/Math.PI)); // find the angle the robot needs to turn before being able to move.
-	if (deltaX ==0 && deltaY<0)
-	{
-		angleTo = 180;
-	}
-    System.out.println(angleTo);
+    int angleTo=0;
+    if (deltaY==0)
+    	if (deltaX>0)
+    	    angleTo = 90;
+    	else if (deltaX<0)
+    		angleTo = -90;
+    	else angleTo = 0;
+    else
+    	angleTo = (int)Math.round((Math.atan((deltaX*1.0)/(deltaY*1.0)))*(180/Math.PI)); // find the angle the robot needs to turn before being able to move.
+    if (deltaX<=0 && deltaY<0)
+    	angleTo-=180;
+    else if (deltaX>0 && deltaY >0)
+    	angleTo+=180;
+
     turnAngle(angleTo-angle); // turn the angle.
 	Motor.A.rotate(dist,true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
 	Motor.B.rotate(dist); 
