@@ -20,7 +20,7 @@ public class BackAttacker {
 		LightSensor sensor1 = new LightSensor(SensorPort.S1);
 		LightSensor sensor2 = new LightSensor(SensorPort.S2);
 		
-		int circumference = 27500; // The circumference of the white area measured in motor rotations. EXPERIMENTAL CONSTANT.
+		int circumference = 28500; // The circumference of the white area measured in motor rotations. EXPERIMENTAL CONSTANT.
 		
 		//TODO: The circumference is at a pretty good est.
 		int rotations = 0; // Stores how many rotations the motors have made while moving forward.

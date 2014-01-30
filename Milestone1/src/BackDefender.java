@@ -21,22 +21,55 @@ public class BackDefender {
 		LightSensor sensor1 = new LightSensor(SensorPort.S1);
 		LightSensor sensor2 = new LightSensor(SensorPort.S2);
 		
-		int circumference = 23500; // The circumference of the white area measured in motor rotations. EXPERIMENTAL CONSTANT.
+		int circumference = 25000; // The circumference of the white area measured in motor rotations. EXPERIMENTAL CONSTANT.
 		
 		//TODO: The circumference is at a pretty good est.
 		int rotations = 0; // Stores how many rotations the motors have made while moving forward.
 		
 		int speedFast = 100;
 		int speedSlow = 50;
-		Move.setSpeedLeft(speedFast);
-		Move.setSpeedRight(speedFast);
-		
-		
-		if (sensor1.getLightValue()>=40 && sensor2.getLightValue()<=40 || sensor2.getLightValue()>=40 && sensor1.getLightValue()<=40) {
-			onWhite = true;
+		Move.setSpeedLeft(speedSlow);
+		Move.setSpeedRight(speedSlow);
+		int counter = 0;
+		while (counter < 10000){
+			counter += 1;
+		}
+		LCD.drawInt(sensor1.getLightValue(), 0, 0);
+		LCD.drawInt(sensor2.getLightValue(), 10, 0); 
+		if (sensor1.getLightValue()>=40 && sensor2.getLightValue()<=40) {
+			while (sensor1.getLightValue() >=40) {
+				//Motor.A.rotate(-180,true);
+				Motor.B.rotate(-180,true);
+
+				LCD.drawInt(sensor1.getLightValue(), 0, 0);
+				LCD.drawInt(sensor2.getLightValue(), 10, 0);
+			}
+			//Motor.A.rotate(-180,true);
+			//Motor.B.rotate(-180,true);
+			while (sensor1.getLightValue() <=40) {
+				Motor.A.rotate(-250,true);
+				//Motor.B.rotate(90,true);
+			}
+			rotations += 1000;
+		} else if (sensor2.getLightValue()>=40 && sensor1.getLightValue()<=40){
+			while (sensor2.getLightValue() >=40) {
+					Motor.A.rotate(-180,true); 
+				//Motor.B.rotate(-180,true);
+
+					LCD.drawInt(sensor1.getLightValue(), 0, 0);
+					LCD.drawInt(sensor2.getLightValue(), 10, 0);
+			}
+			//Motor.A.rotate(-180,true);
+			//Motor.B.rotate(-180,true);
+			while (sensor2.getLightValue() <=40) {
+				//Motor.A.rotate(90,true);
+				Motor.B.rotate(-250,true);
+			}
+			rotations += 1000;
 		}
 		
-		
+		Move.setSpeedLeft(speedFast);
+		Move.setSpeedRight(speedFast);
 		
 		while (sensor1.getLightValue()<=40 && sensor2.getLightValue()<=40){
 			Motor.A.rotate(-180,true);
@@ -45,23 +78,9 @@ public class BackDefender {
 		if (sensor1.getLightValue()>40){
 			while (flag && ( rotations < circumference)) {
 			    //keep moving while the sensor1 is on the white edge and sensor2 in on the green area
-				Move.setSpeedLeft(speedFast);
+				Move.setSpeedLeft(speedFast - 5);
 				Move.setSpeedRight(speedFast);
 				
-				while (sensor2.getLightValue()<=40 && sensor1.getLightValue() >=40 && onWhite) {
-					//Motor.A.rotate(-180,true);
-					while (sensor1.getLightValue() > 40)
-						Motor.B.rotate(-180,true);
-					while (sensor1.getLightValue() <=40) {
-						Motor.A.rotate(-90,true);
-						Motor.B.rotate(90,true);
-						f = true;
-					}
-					if (f) {
-						onWhite = false;
-						break;
-					}
-				}
 			    while (sensor1.getLightValue()<=40)
 			    {
 					Motor.A.rotate(-180,true);
@@ -89,22 +108,7 @@ public class BackDefender {
 			while (flag && ( rotations < circumference)) {
 			    //keep moving while the sensor1 is on the white edge and sensor2 in on the green area
 				Move.setSpeedLeft(speedFast);
-				Move.setSpeedRight(speedFast);
-				
-				while (sensor1.getLightValue()<=40 && sensor2.getLightValue() >=40 && onWhite ) {
-					while (sensor2.getLightValue() > 40)
-						Motor.A.rotate(-180,true); 
-					//Motor.B.rotate(-180,true);
-					while (sensor2.getLightValue() <=40) {
-						Motor.A.rotate(90,true);
-						Motor.B.rotate(-90,true);
-						f = true;
-					}
-					if (f) {
-						onWhite = false;
-						break;
-					}
-				}
+				Move.setSpeedRight(speedFast - 5);
 				
 			    while (sensor2.getLightValue()<=40)
 			    {
