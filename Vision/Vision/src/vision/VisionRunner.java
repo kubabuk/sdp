@@ -2,18 +2,18 @@ package vision;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import au.edu.jcu.v4l4j.CaptureCallback;
-import au.edu.jcu.v4l4j.ControlList;
+import au.edu.jcu.v4l4j.Control;
 import au.edu.jcu.v4l4j.FrameGrabber;
 import au.edu.jcu.v4l4j.V4L4JConstants;
 import au.edu.jcu.v4l4j.VideoDevice;
 import au.edu.jcu.v4l4j.VideoFrame;
-import au.edu.jcu.v4l4j.examples.SimpleViewer;
 import au.edu.jcu.v4l4j.exceptions.StateException;
 import au.edu.jcu.v4l4j.exceptions.V4L4JException;
 
@@ -70,6 +70,14 @@ public class VisionRunner implements CaptureCallback, WindowListener {
                     System.err.println("Error starting the capture");
                     e.printStackTrace();
             }
+            
+            try {
+                updateVideoSettings(videoDevice,127,200,0,80,50);
+            } catch (Exception e) {
+            	System.err.println("error updating video settings");
+            	e.printStackTrace();
+            }
+            
     }
 
     /**
@@ -78,13 +86,41 @@ public class VisionRunner implements CaptureCallback, WindowListener {
      */
     private void initFrameGrabber() throws V4L4JException{
             videoDevice = new VideoDevice(device);
-            //ControlList controlList = videoDevice.getControlList();
-            //System.out.println(controlList.getList());
             frameGrabber = videoDevice.getJPEGFrameGrabber(width, height, channel, std, 80);
             frameGrabber.setCaptureCallback(this);
             width = frameGrabber.getWidth();
             height = frameGrabber.getHeight();
+
             System.out.println("Starting capture at "+width+"x"+height);
+    }
+    
+    private void updateVideoSettings(VideoDevice v, int contrast, int brightness,
+    		int hue, int saturation, int chroma_gain)
+    {
+    	try
+    	{
+	        List<Control> controlList = v.getControlList().getList();
+	        for(Control c : controlList)
+	        {
+	        	if(c.getName().equals("Contrast"))
+	        		c.setValue(contrast);
+	        	else if(c.getName().equals("Brightness"))
+	        		c.setValue(brightness);
+	        	else if(c.getName().equals("Hue"))
+	        		c.setValue(hue);
+	        	else if(c.getName().equals("Saturation"))
+	        		c.setValue(saturation);
+	        	else if(c.getName().equals("Chroma Gain"))
+	        		c.setValue(chroma_gain);
+	        	else if(c.getName().equals("Chroma AGC"))
+	        		c.setValue(1);
+	        }
+    	} catch(V4L4JException e) {
+    		System.err.println("Cannot update video settings: " + e.getMessage());
+    		e.printStackTrace();
+    	}
+    	
+    	v.releaseControlList();
     }
 
     /** 
