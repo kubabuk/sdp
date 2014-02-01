@@ -1,4 +1,3 @@
-package com.mydomain;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +22,16 @@ public class Robot {
 	private int angle; // current angle, default is set along with creation of robot (and placement of nxt). May give an override to prevent desyncs, but that would make opportunities for mistakes.
 	public Robot()
 	{
-
 	  Motor.A.setSpeed(speed);
 	  Motor.B.setSpeed(speed);
 	}
 	
-	private void Abort()
+	private void Abort() //check if the robot needs to abandon all of its commands
 	{
-	   boolean isAbort= false;
-	   for (Commands current: commands)
+	   boolean isAbort= false; // assume it doesn't need to
+	   for (Commands current: commands) // go through all current commands
 	   {
-		   if (current.commandName ==CommandNames.ABORT)
+		   if (current.commandName ==CommandNames.ABORT) // if you find it, then initiate abort
 		   {
 			   isAbort=true;
 			   break;
@@ -42,18 +40,18 @@ public class Robot {
 		
 		
 	   if (isAbort)
-		   while(!commands.isEmpty())
+		   while(!commands.isEmpty()) // if you're aborting, dump everything you have in your command list.
 		   {
 			   commands.remove(0);
 		   }
 	   
 	}
-	public void addCommand(Commands toAdd)
+	public void addCommand(Commands toAdd) // user command input (through ENUMs)
 	{
 		commands.add(toAdd);
 	}
 	
-	private boolean Exit()
+	private boolean Exit() // check if there is an exit somewhere in the command list, close the robot (maybe change it to be first program)
 	{
 
 	   for (Commands current: commands)
@@ -67,7 +65,7 @@ public class Robot {
 		
 	}
 	
-	public void run()
+	public void run() // main thread, which works on stuff. takes a command, analyses it and does it.
 	{
 		
 		while(!Exit()&&!commands.isEmpty())
@@ -113,7 +111,7 @@ public class Robot {
 	Motor.B.rotate(distance*distConstant); 
 	}
 	
-	private void turnAngle(int desiredSpeed, int toTurnAngle)
+	private void turnAngle(int desiredSpeed, int toTurnAngle) // turn the angle
 	{
 		    setSpeed(desiredSpeed);
 			Motor.A.rotate(angleConstant*toTurnAngle,true);
