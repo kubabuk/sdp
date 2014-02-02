@@ -2,6 +2,8 @@ package vision;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
+import java.security.acl.LastOwnerException;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -184,11 +186,34 @@ public class VisionRunner implements CaptureCallback, WindowListener {
             // This method is called when a new frame is ready.
             // Don't forget to recycle it when done dealing with the frame.
             
+    		ImageProcessor proc = new ImageProcessor();
+    		BufferedImage img = (BufferedImage) proc.trackBall(frame.getBufferedImage());
+    		
             // draw the new frame onto the JLabel
-            label.getGraphics().drawImage(frame.getBufferedImage(), 0, 0, width, height, null);
+            label.getGraphics().drawImage(img, 0, 0, width, height, null);
             
             // recycle the frame
             frame.recycle();
+            
+            
+           /* 
+         // Calculate frame rate based on time between calls
+         			long thisFrame = System.currentTimeMillis();
+         			int frameRate = (int) (1000 / (thisFrame - lastFrame));
+         			lastFrame = thisFrame;
+
+         			// Wait for video device to initialise properly before reading
+         			// frames
+         			if (ready) {
+         				BufferedImage frameBuffer = frame.getBufferedImage();
+
+         				for (VideoReceiver receiver : videoReceivers)
+         					receiver.sendFrame(frameBuffer, frameRate, frameCounter);
+         			} else if (frameCounter > 3)
+         				ready = true;
+         			++frameCounter;
+         			frame.recycle();
+         	*/
     }
 
 	@Override
