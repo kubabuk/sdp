@@ -1,5 +1,6 @@
 package vision;
 
+import java.awt.Image;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
@@ -29,6 +30,7 @@ public class VisionRunner implements CaptureCallback, WindowListener {
 
     private VideoDevice     videoDevice;
     private FrameGrabber    frameGrabber;
+    private ImageProcessor	imageProcessor;
 
     private JLabel          label;
     private JFrame          frame;
@@ -64,7 +66,7 @@ public class VisionRunner implements CaptureCallback, WindowListener {
             
             // create and initialise UI
             initGUI();
-            
+            imageProcessor = new ImageProcessor();
             // start capture
             try {
                     frameGrabber.startCapture();
@@ -186,8 +188,7 @@ public class VisionRunner implements CaptureCallback, WindowListener {
             // This method is called when a new frame is ready.
             // Don't forget to recycle it when done dealing with the frame.
             
-    		ImageProcessor proc = new ImageProcessor();
-    		BufferedImage img = (BufferedImage) proc.trackBall(frame.getBufferedImage());
+    		Image img = imageProcessor.trackBall(frame.getBufferedImage());
     		
             // draw the new frame onto the JLabel
             label.getGraphics().drawImage(img, 0, 0, width, height, null);
