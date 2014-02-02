@@ -33,9 +33,9 @@ public class ImageProcessor {
 					count++;
 				}
 			}
-			if (count > 0) 
-				System.out.println("" + redX/((double)count) + "," + redY/((double)count));
 		}
+		if (count > 0) 
+			System.out.println("" + redX/((double)count) + "," + redY/((double)count));
 		return img;
 
 	}
