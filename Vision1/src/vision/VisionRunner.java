@@ -71,6 +71,14 @@ public class VisionRunner implements CaptureCallback, WindowListener {
                     e.printStackTrace();
             }
             
+            /* this is where the camera settings can be modified;
+             * variables are in the following order:
+             * contrast -> from 0 up to 127
+             * brightness -> from 0 up to 255
+             * hue -> from -127 up to +127
+             * saturatiom -> from 0 up to 127
+             * chroma gain
+             */
             try {
                 updateVideoSettings(videoDevice,127,200,0,80,50);
             } catch (Exception e) {
