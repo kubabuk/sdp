@@ -84,7 +84,7 @@ public class VisionRunner implements CaptureCallback, WindowListener {
              * chroma gain
              */
             try {
-                updateVideoSettings(videoDevice,127,200,0,80,50);
+                updateVideoSettings(videoDevice,110,200,35,80,100);
             } catch (Exception e) {
             	System.err.println("error updating video settings");
             	e.printStackTrace();
@@ -187,34 +187,17 @@ public class VisionRunner implements CaptureCallback, WindowListener {
     public void nextFrame(VideoFrame frame) {
             // This method is called when a new frame is ready.
             // Don't forget to recycle it when done dealing with the frame.
-            
-    		Image img = imageProcessor.trackBall(frame.getBufferedImage());
+    		BufferedImage tmp = frame.getBufferedImage();
+    	
+    		Image img = imageProcessor.trackBall(tmp);
+    		img = imageProcessor.trackYelowRobot(tmp);
+    		img = imageProcessor.trackBlueRobot(tmp);
     		
             // draw the new frame onto the JLabel
             label.getGraphics().drawImage(img, 0, 0, width, height, null);
             
             // recycle the frame
             frame.recycle();
-            
-            
-           /* 
-         // Calculate frame rate based on time between calls
-         			long thisFrame = System.currentTimeMillis();
-         			int frameRate = (int) (1000 / (thisFrame - lastFrame));
-         			lastFrame = thisFrame;
-
-         			// Wait for video device to initialise properly before reading
-         			// frames
-         			if (ready) {
-         				BufferedImage frameBuffer = frame.getBufferedImage();
-
-         				for (VideoReceiver receiver : videoReceivers)
-         					receiver.sendFrame(frameBuffer, frameRate, frameCounter);
-         			} else if (frameCounter > 3)
-         				ready = true;
-         			++frameCounter;
-         			frame.recycle();
-         	*/
     }
 
 	@Override
