@@ -9,6 +9,8 @@ public class ImageProcessor {
 	
 	static Color green = new Color(0,255,0);
 	static Color red = new Color(255,0,0);
+	static Color yellow = new Color(255,255,0);
+	static Color blue = new Color(0,0,255);
 /*
      Currently this method finds the ball, and changes it to appear as black
     on the gui. It also calculates the center of the ball with pixel values.
@@ -57,7 +59,7 @@ public class ImageProcessor {
 				int green = c.getGreen();
 				int red = c.getRed();
 
-				if (red > (blue + 130) && red > (green + 130)){
+				if (red > (blue + 120) && red > (green + 120)){
 					redX += (double)w;
 					redY += (double)h;
 					count++;
@@ -77,16 +79,18 @@ public class ImageProcessor {
 	// Draws the location of the ball on the image
 	public Image drawBall(BufferedImage img){
 		int[] coords = getBallLocation(img);
-		for (int w = 0; w < img.getWidth(); w++){
-			img.setRGB(w, coords[1], red.getRGB());
-		}
-		for (int h = 0; h < img.getHeight(); h++){
-			img.setRGB(coords[0], h, red.getRGB());
+		if (coords[0] > 50 && coords[1] > 50){
+			for (int w = coords[0] - 50; w < coords[0] + 50; w++){
+				img.setRGB(w, coords[1], red.getRGB());
+			}
+			for (int h = coords[1] - 50; h < coords[1] + 50; h++){
+				img.setRGB(coords[0], h, red.getRGB());
+			}			
 		}
 		return img;
 	}
 	
-	public Image trackYelowRobot(BufferedImage img) {
+	public Image trackYellowRobot(BufferedImage img) {
 
 		double yellowX = 0.0;
 		double yellowY = 0.0;
@@ -109,6 +113,59 @@ public class ImageProcessor {
 		}
 		if (count > 0) 
 			System.out.println("" + yellowX/((double)count) + "," + yellowY/((double)count));
+		return img;
+	}
+	
+	public int[] getYellowLocations(BufferedImage img){
+		double yellowX = 0.0;
+		double yellowY = 0.0;
+		int count = 0;
+		int[] coords = {1,1,1,1};
+
+		for (int w = 0; w < img.getWidth(); w++) {
+			for (int h = 0; h < img.getHeight(); h++) {
+				Color c = new Color(img.getRGB(w, h), true);
+				int blue = c.getBlue();
+				int green = c.getGreen();
+				int red = c.getRed();
+
+				if (red > (blue + 55) && green > (blue + 55)){
+					yellowX += (double)w;
+					yellowY += (double)h;
+					count++;
+					if (count > 5){
+						if (coords[0] == 1){
+							coords[0] = w;
+							coords[1] = h;							
+						} else {
+							if (w - coords[0] > 100){
+								coords[2] = w;
+								coords[3] = h;
+							}
+						}
+					}
+				}
+			}
+		}
+		return coords;
+	}
+	
+	public Image drawYellowRobots(BufferedImage img){
+		int[] coords = getYellowLocations(img);
+		if (coords[0] > 50 && coords[1] > 50 && coords[2] > 50 && coords[3] > 50){
+			for (int w = coords[0] - 50; w < coords[0] + 50; w++){
+				img.setRGB(w, coords[1], yellow.getRGB());
+			}
+			for (int h = coords[1] - 50; h < coords[1] + 50; h++){
+				img.setRGB(coords[0], h, yellow.getRGB());
+			}
+			for (int w = coords[2] - 50; w < coords[2] + 50; w++){
+				img.setRGB(w, coords[3], yellow.getRGB());
+			}
+			for (int h = coords[3] - 50; h < coords[3] + 50; h++){
+				img.setRGB(coords[2], h, yellow.getRGB());
+			}
+		}
 		return img;
 	}
 	
@@ -135,6 +192,55 @@ public class ImageProcessor {
 		}
 		if (count > 0) 
 			System.out.println("" + blueX/((double)count) + "," + blueY/((double)count));
+		return img;
+	}
+	
+	public int[] getBlueLocations(BufferedImage img){
+		double blueX = 0.0;
+		double blueY = 0.0;
+		int[] coords = {1,1,1,1};
+
+		for (int w = 0; w < img.getWidth(); w++) {
+			for (int h = 0; h < img.getHeight(); h++) {
+				Color c = new Color(img.getRGB(w, h), true);
+				int blue = c.getBlue();
+				int green = c.getGreen();
+				int red = c.getRed();
+
+				if (blue > (green) && blue > (red+30) && green > (red + 25)){
+					blueX += (double)w;
+					blueY += (double)h;
+					if (coords[0] == 1){
+							coords[0] = w;
+							coords[1] = h;							
+					} else {
+							if (w - coords[0] > 100){
+								coords[2] = w;
+								coords[3] = h;
+							}
+					}
+				}
+			}
+		}
+		return coords;
+	}
+	
+	public Image drawBlueRobots(BufferedImage img){
+		int[] coords = getBlueLocations(img);
+		if (coords[0] > 50 && coords[1] > 50 && coords[2] > 50 && coords[3] > 50){
+			for (int w = coords[0] - 50; w < coords[0] + 50; w++){
+				img.setRGB(w, coords[1], blue.getRGB());
+			}
+			for (int h = coords[1] - 50; h < coords[1] + 50; h++){
+				img.setRGB(coords[0], h, blue.getRGB());
+			}
+			for (int w = coords[2] - 50; w < coords[2] + 50; w++){
+				img.setRGB(w, coords[3], blue.getRGB());
+			}
+			for (int h = coords[3] - 50; h < coords[3] + 50; h++){
+				img.setRGB(coords[2], h, blue.getRGB());
+			}
+		}
 		return img;
 	}
 	
