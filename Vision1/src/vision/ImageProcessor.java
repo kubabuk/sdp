@@ -90,6 +90,7 @@ public class ImageProcessor {
 		return img;
 	}
 	
+	// Locates yellow pixels in the image.
 	public Image trackYellowRobot(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
 
 		double yellowX = 0.0;
@@ -116,6 +117,8 @@ public class ImageProcessor {
 		return img;
 	}
 	
+	// Returns the locations of the yellow robots, leftmost robot first.
+	// Returns an array: [leftx, lefty, rightx, righty]
 	public int[] getYellowLocations(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
 		double yellowX = 0.0;
 		double yellowY = 0.0;
@@ -150,6 +153,7 @@ public class ImageProcessor {
 		return coords;
 	}
 	
+	// Draws crosses on top of the yellow robots.
 	public Image drawYellowRobots(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
 		int[] coords = getYellowLocations(img, minWidth, maxWidth, minHeight, maxHeight);
 		if (coords[0] > 50 && coords[1] > 50 && coords[2] > 50 && coords[3] > 50){
@@ -169,6 +173,7 @@ public class ImageProcessor {
 		return img;
 	}
 	
+	// Tracks area of blue in the image.
 	public Image trackBlueRobot(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
 
 		double blueX = 0.0;
@@ -195,6 +200,8 @@ public class ImageProcessor {
 		return img;
 	}
 	
+	// Returns the locations of the blue robots, leftmost robot first.
+	// Returns an array: [leftx, lefty, rightx, righty]
 	public int[] getBlueLocations(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
 		double blueX = 0.0;
 		double blueY = 0.0;
@@ -225,6 +232,7 @@ public class ImageProcessor {
 		return coords;
 	}
 	
+	// Draws crosses on top of the blue robots.
 	public Image drawBlueRobots(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
 		int[] coords = getBlueLocations(img, minWidth, maxWidth, minHeight, maxHeight);
 		if (coords[0] > 50 && coords[1] > 50 && coords[2] > 50 && coords[3] > 50){
@@ -242,8 +250,7 @@ public class ImageProcessor {
 			}
 		}
 		return img;
-	}
-	
+	}	
 	
 	//Returns an array of integers:
 	// output[0] - y value of left boundary
