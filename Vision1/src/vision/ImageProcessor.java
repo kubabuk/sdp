@@ -152,13 +152,20 @@ public class ImageProcessor {
 		int topEdge = 0;
 		int bottomEdge = height - 1;
 		int rightEdge = width - 1;
-		
+		int temp = 0;
 		// Detecting left edge.
 		for (int w = 1; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, height / 2));
 			if (c.getBlue() > 75){
-				leftEdge = w;
-				break;
+				temp = 0;
+				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
+					c = new Color(img.getRGB(w, h));
+					temp += c.getBlue();
+				}
+				if (temp / 100 > 100){
+					leftEdge = w;
+					break;
+				}
 			}
 		}
 		
@@ -166,8 +173,15 @@ public class ImageProcessor {
 		for (int w = width - 1; w > 0; w--){
 			Color c = new Color(img.getRGB(w, height / 2));
 			if (c.getBlue() > 75){
-				rightEdge = w;
-				break;
+				temp = 0;
+				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
+					c = new Color(img.getRGB(w, h));
+					temp += c.getBlue();
+				}
+				if (temp / 100 > 100){
+					rightEdge = w;
+					break;
+				}
 			}
 		}
 		
@@ -175,8 +189,15 @@ public class ImageProcessor {
 		for (int h = 1; h < height; h++){
 			Color c = new Color(img.getRGB(width / 2, h));
 			if (c.getBlue() > 75){
-				topEdge = h;
-				break;
+				temp = 0;
+				for (int w = (width / 2) - 50; w < (width / 2) + 50; w++){
+					c = new Color(img.getRGB(w, h));
+					temp += c.getBlue();
+				}
+				if (temp / 100 > 100){
+					topEdge = h;
+					break;
+				}
 			}
 		}
 		
@@ -184,8 +205,15 @@ public class ImageProcessor {
 		for (int h = height - 1; h > 0; h--){
 			Color c = new Color(img.getRGB(width / 2, h));
 			if (c.getBlue() > 75){
-				bottomEdge = h;
-				break;
+				temp = 0;
+				for (int w = (width / 2) - 50; w < (width / 2) + 50; w++){
+					c = new Color(img.getRGB(w, h));
+					temp += c.getBlue();
+				}
+				if (temp / 100 > 100){
+					bottomEdge = h;
+					break;
+				}
 			}
 		}
 		
