@@ -19,7 +19,7 @@ public class ImageProcessor {
     Also needs to take into consideration grid coordinate system, which is still
     to be implemented. -- Kuba  
 */
-	public Image trackBall(BufferedImage img) {
+	public Image trackBall(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
 
 		double redX = 0.0;
 		double redY = 0.0;
@@ -46,14 +46,14 @@ public class ImageProcessor {
 	}
 
 	// Returns the x and y coordinates of the ball.
-	public int[] getBallLocation(BufferedImage img) {
+	public int[] getBallLocation(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
 		
 		double redX = 0.0;
 		double redY = 0.0;
 		int count = 0;
 
-		for (int w = 0; w < img.getWidth(); w++) {
-			for (int h = 0; h < img.getHeight(); h++) {
+		for (int w = minWidth; w < maxWidth; w++) {
+			for (int h = minHeight; h < maxHeight; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
@@ -77,8 +77,8 @@ public class ImageProcessor {
 	}	
 
 	// Draws the location of the ball on the image
-	public Image drawBall(BufferedImage img){
-		int[] coords = getBallLocation(img);
+	public Image drawBall(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
+		int[] coords = getBallLocation(img, minWidth, maxWidth, minHeight, maxHeight);
 		if (coords[0] > 50 && coords[1] > 50){
 			for (int w = coords[0] - 50; w < coords[0] + 50; w++){
 				img.setRGB(w, coords[1], red.getRGB());
@@ -90,7 +90,7 @@ public class ImageProcessor {
 		return img;
 	}
 	
-	public Image trackYellowRobot(BufferedImage img) {
+	public Image trackYellowRobot(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
 
 		double yellowX = 0.0;
 		double yellowY = 0.0;
@@ -116,7 +116,7 @@ public class ImageProcessor {
 		return img;
 	}
 	
-	public int[] getYellowLocations(BufferedImage img){
+	public int[] getYellowLocations(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
 		double yellowX = 0.0;
 		double yellowY = 0.0;
 		int count = 0;
@@ -150,8 +150,8 @@ public class ImageProcessor {
 		return coords;
 	}
 	
-	public Image drawYellowRobots(BufferedImage img){
-		int[] coords = getYellowLocations(img);
+	public Image drawYellowRobots(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
+		int[] coords = getYellowLocations(img, minWidth, maxWidth, minHeight, maxHeight);
 		if (coords[0] > 50 && coords[1] > 50 && coords[2] > 50 && coords[3] > 50){
 			for (int w = coords[0] - 50; w < coords[0] + 50; w++){
 				img.setRGB(w, coords[1], yellow.getRGB());
@@ -169,7 +169,7 @@ public class ImageProcessor {
 		return img;
 	}
 	
-	public Image trackBlueRobot(BufferedImage img) {
+	public Image trackBlueRobot(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
 
 		double blueX = 0.0;
 		double blueY = 0.0;
@@ -195,7 +195,7 @@ public class ImageProcessor {
 		return img;
 	}
 	
-	public int[] getBlueLocations(BufferedImage img){
+	public int[] getBlueLocations(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
 		double blueX = 0.0;
 		double blueY = 0.0;
 		int[] coords = {1,1,1,1};
@@ -225,8 +225,8 @@ public class ImageProcessor {
 		return coords;
 	}
 	
-	public Image drawBlueRobots(BufferedImage img){
-		int[] coords = getBlueLocations(img);
+	public Image drawBlueRobots(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
+		int[] coords = getBlueLocations(img, minWidth, maxWidth, minHeight, maxHeight);
 		if (coords[0] > 50 && coords[1] > 50 && coords[2] > 50 && coords[3] > 50){
 			for (int w = coords[0] - 50; w < coords[0] + 50; w++){
 				img.setRGB(w, coords[1], blue.getRGB());
