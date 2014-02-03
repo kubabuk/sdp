@@ -189,10 +189,12 @@ public class VisionRunner implements CaptureCallback, WindowListener {
             // Don't forget to recycle it when done dealing with the frame.
     		BufferedImage tmp = frame.getBufferedImage();
     	
-    		Image img = imageProcessor.trackBall(tmp);
-    		img = imageProcessor.trackYelowRobot((BufferedImage) img);
+
+    		//Image img = imageProcessor.trackBall(tmp);
+    		Image img = imageProcessor.drawBall(tmp);
+    		//img = imageProcessor.trackYelowRobot((BufferedImage) img);
     		img = imageProcessor.drawBoundaries((BufferedImage) img);
-    		img = imageProcessor.trackBlueRobot((BufferedImage) img);
+    		//img = imageProcessor.trackBlueRobot((BufferedImage) img);
     		
             // draw the new frame onto the JLabel
             label.getGraphics().drawImage(img, 0, 0, width, height, null);

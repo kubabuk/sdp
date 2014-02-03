@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 public class ImageProcessor {
 	
 	static Color green = new Color(0,255,0);
+	static Color red = new Color(255,0,0);
 /*
      Currently this method finds the ball, and changes it to appear as black
     on the gui. It also calculates the center of the ball with pixel values.
@@ -29,7 +30,7 @@ public class ImageProcessor {
 				int green = c.getGreen();
 				int red = c.getRed();
 
-				if (red > (blue + 70) && red > (green + 70)){
+				if (red > (blue + 130) && red > (green + 130)){
 					img.setRGB(w, h, 0);
 					redX += (double)w;
 					redY += (double)h;
@@ -39,6 +40,49 @@ public class ImageProcessor {
 		}
 		if (count > 0) 
 			System.out.println("" + redX/((double)count) + "," + redY/((double)count));
+		return img;
+	}
+
+	// Returns the x and y coordinates of the ball.
+	public int[] getBallLocation(BufferedImage img) {
+		
+		double redX = 0.0;
+		double redY = 0.0;
+		int count = 0;
+
+		for (int w = 0; w < img.getWidth(); w++) {
+			for (int h = 0; h < img.getHeight(); h++) {
+				Color c = new Color(img.getRGB(w, h), true);
+				int blue = c.getBlue();
+				int green = c.getGreen();
+				int red = c.getRed();
+
+				if (red > (blue + 130) && red > (green + 130)){
+					redX += (double)w;
+					redY += (double)h;
+					count++;
+				}
+			}
+		}
+		int x = 0;
+		int y = 0;
+		if (count > 0){
+			x = (int) (redX/((double)count));
+			y = (int) (redY/((double)count));
+		}
+		int[] coords = {x,y};
+		return coords;
+	}	
+
+	// Draws the location of the ball on the image
+	public Image drawBall(BufferedImage img){
+		int[] coords = getBallLocation(img);
+		for (int w = 0; w < img.getWidth(); w++){
+			img.setRGB(w, coords[1], red.getRGB());
+		}
+		for (int h = 0; h < img.getHeight(); h++){
+			img.setRGB(coords[0], h, red.getRGB());
+		}
 		return img;
 	}
 	
