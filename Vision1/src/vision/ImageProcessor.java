@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
+
 public class ImageProcessor {
+	
+	static Color green = new Color(0,255,0);
 /*
      Currently this method finds the ball, and changes it to appear as black
     on the gui. It also calculates the center of the ball with pixel values.
@@ -91,24 +94,29 @@ public class ImageProcessor {
 		return img;
 	}
 	
+	
+	//Returns an array of integers:
+	// output[0] - y value of left boundary
+	// output[1] - x value of top boundary
+	// output[2] - y value of right boundary
+	// output[3] - x value of bottom boundary
 	public int[] getBoundaries(BufferedImage img) {
-		int[] output = {0,0,0,0};
+		int[] output = {10,10,50,50};
 		int height = img.getHeight();
 		int width = img.getWidth();
 		int leftEdge = 0;
 		int topEdge = 0;
-		int bottomEdge = height;
-		int rightEdge = width;
+		int bottomEdge = height - 1;
+		int rightEdge = width - 1;
 		
 		// Detecting left edge.
-		for (int w = 0; w < img.getWidth(); w++){
+		for (int w = 1; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, height / 2));
 			if (c.getBlue() > 75){
 				leftEdge = w;
 				break;
 			}
 		}
-		System.out.println("Left edge at y = " + leftEdge);
 		
 		// Detecting right edge.
 		for (int w = width - 1; w > 0; w--){
@@ -118,17 +126,15 @@ public class ImageProcessor {
 				break;
 			}
 		}
-		System.out.println("Right edge at y = " + rightEdge);
 		
 		// Detecting top edge.
-		for (int h = 0; h < height; h++){
+		for (int h = 1; h < height; h++){
 			Color c = new Color(img.getRGB(width / 2, h));
 			if (c.getBlue() > 75){
 				topEdge = h;
 				break;
 			}
 		}
-		System.out.println("Top edge at y = " + topEdge);
 		
 		// Detecting bottom edge.
 		for (int h = height - 1; h > 0; h--){
@@ -138,12 +144,97 @@ public class ImageProcessor {
 				break;
 			}
 		}
-		System.out.println("Bottom edge at y = " + bottomEdge);
 		
 		output[0] = leftEdge;
 		output[1] = topEdge;
 		output[2] = rightEdge;
 		output[3] = bottomEdge;
 		return output;
+	}
+	
+	// Draws a green outline of the pitch on the given BufferedImage
+	public Image drawBoundaries(BufferedImage img){
+		int[] boundaries = getBoundaries(img);
+		int[] sections = getPitchSections(img);
+		int firstSection = sections[0];
+		int secondSection = sections[1];
+		int thirdSection = sections[2];
+		int fourthSection = sections[3];
+		int fifthSection = sections[4];
+		int sixthSection = sections[5];
+		int left = boundaries[0];
+		int top = boundaries[1];
+		int right = boundaries[2];
+		int bottom = boundaries[3];
+		for (int w = left; w < right; w++){
+			img.setRGB(w, top, green.getRGB());
+			img.setRGB(w, bottom, green.getRGB());
+		}
+		for (int h = top; h < bottom; h++){
+			img.setRGB(left, h, green.getRGB());
+			img.setRGB(right, h, green.getRGB());
+			img.setRGB(firstSection, h, green.getRGB());
+			img.setRGB(secondSection, h, green.getRGB());
+			img.setRGB(thirdSection, h, green.getRGB());
+			img.setRGB(fourthSection, h, green.getRGB());
+			img.setRGB(fifthSection, h, green.getRGB());
+			img.setRGB(sixthSection, h, green.getRGB());
+		}
+		return img;
+	}
+	
+	public int[] getPitchSections(BufferedImage img){
+		int[] sections = {10,10,10,10,10,10};
+		int[] boundaries = getBoundaries(img);
+		int left = boundaries[0];
+		int top = boundaries[1];
+		int right = boundaries[2];
+		int bottom = boundaries[3];
+
+		for (int w = left + 50; w < img.getWidth(); w++){
+			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
+			if (c.getBlue() > 100){
+				sections[0] = w;
+				break;
+			}
+		}
+		for (int w = sections[0] + 50; w < img.getWidth(); w++){
+			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
+			if (c.getBlue() < 100){
+				sections[1] = w;
+				break;
+			}
+		}
+
+		for (int w = sections[1] + 50; w < img.getWidth(); w++){
+			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
+			if (c.getBlue() > 100){
+				sections[2] = w;
+				break;
+			}
+		}
+		for (int w = sections[2] + 50; w < img.getWidth(); w++){
+			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
+			if (c.getBlue() < 100){
+				sections[3] = w;
+				break;
+			}
+		}
+
+		for (int w = sections[3] + 50; w < img.getWidth(); w++){
+			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
+			if (c.getBlue() > 100){
+				sections[4] = w;
+				break;
+			}
+		}
+		for (int w = sections[4] + 50; w < img.getWidth(); w++){
+			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
+			if (c.getBlue() < 100){
+				sections[5] = w;
+				break;
+			}
+		}
+		return sections;
 	}
 }
