@@ -188,7 +188,6 @@ public class VisionRunner implements CaptureCallback, WindowListener {
             // This method is called when a new frame is ready.
             // Don't forget to recycle it when done dealing with the frame.
     		BufferedImage tmp = frame.getBufferedImage();
-    	
 
     		//Image img = imageProcessor.trackBall(tmp);
     		//Image img = imageProcessor.drawBall(tmp);

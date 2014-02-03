@@ -80,10 +80,10 @@ public class ImageProcessor {
 	public Image drawBall(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
 		int[] coords = getBallLocation(img, minWidth, maxWidth, minHeight, maxHeight);
 		if (coords[0] > 50 && coords[1] > 50){
-			for (int w = coords[0] - 50; w < coords[0] + 50; w++){
+			for (int w = coords[0] - 20; w < coords[0] + 20; w++){
 				img.setRGB(w, coords[1], red.getRGB());
 			}
-			for (int h = coords[1] - 50; h < coords[1] + 50; h++){
+			for (int h = coords[1] - 20; h < coords[1] + 20; h++){
 				img.setRGB(coords[0], h, red.getRGB());
 			}			
 		}
@@ -125,8 +125,8 @@ public class ImageProcessor {
 		int count = 0;
 		int[] coords = {1,1,1,1};
 
-		for (int w = 0; w < img.getWidth(); w++) {
-			for (int h = 0; h < img.getHeight(); h++) {
+		for (int w = minWidth; w < maxWidth; w++) {
+			for (int h = minHeight; h < maxHeight; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
@@ -157,16 +157,16 @@ public class ImageProcessor {
 	public Image drawYellowRobots(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
 		int[] coords = getYellowLocations(img, minWidth, maxWidth, minHeight, maxHeight);
 		if (coords[0] > 50 && coords[1] > 50 && coords[2] > 50 && coords[3] > 50){
-			for (int w = coords[0] - 50; w < coords[0] + 50; w++){
+			for (int w = coords[0] - 20; w < coords[0] + 20; w++){
 				img.setRGB(w, coords[1], yellow.getRGB());
 			}
-			for (int h = coords[1] - 50; h < coords[1] + 50; h++){
+			for (int h = coords[1] - 20; h < coords[1] + 20; h++){
 				img.setRGB(coords[0], h, yellow.getRGB());
 			}
-			for (int w = coords[2] - 50; w < coords[2] + 50; w++){
+			for (int w = coords[2] - 20; w < coords[2] + 20; w++){
 				img.setRGB(w, coords[3], yellow.getRGB());
 			}
-			for (int h = coords[3] - 50; h < coords[3] + 50; h++){
+			for (int h = coords[3] - 20; h < coords[3] + 20; h++){
 				img.setRGB(coords[2], h, yellow.getRGB());
 			}
 		}
@@ -207,8 +207,8 @@ public class ImageProcessor {
 		double blueY = 0.0;
 		int[] coords = {1,1,1,1};
 
-		for (int w = 0; w < img.getWidth(); w++) {
-			for (int h = 0; h < img.getHeight(); h++) {
+		for (int w = minWidth; w < maxWidth; w++) {
+			for (int h = minHeight; h < maxHeight; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
@@ -236,16 +236,16 @@ public class ImageProcessor {
 	public Image drawBlueRobots(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight){
 		int[] coords = getBlueLocations(img, minWidth, maxWidth, minHeight, maxHeight);
 		if (coords[0] > 50 && coords[1] > 50 && coords[2] > 50 && coords[3] > 50){
-			for (int w = coords[0] - 50; w < coords[0] + 50; w++){
+			for (int w = coords[0] - 20; w < coords[0] + 20; w++){
 				img.setRGB(w, coords[1], blue.getRGB());
 			}
-			for (int h = coords[1] - 50; h < coords[1] + 50; h++){
+			for (int h = coords[1] - 20; h < coords[1] + 20; h++){
 				img.setRGB(coords[0], h, blue.getRGB());
 			}
-			for (int w = coords[2] - 50; w < coords[2] + 50; w++){
+			for (int w = coords[2] - 20; w < coords[2] + 20; w++){
 				img.setRGB(w, coords[3], blue.getRGB());
 			}
-			for (int h = coords[3] - 50; h < coords[3] + 50; h++){
+			for (int h = coords[3] - 20; h < coords[3] + 20; h++){
 				img.setRGB(coords[2], h, blue.getRGB());
 			}
 		}
@@ -421,5 +421,11 @@ public class ImageProcessor {
 			}
 		}
 		return sections;
+	}
+	
+	public void pitchRatio(BufferedImage img){
+		int[] boundaries = getBoundaries(img);
+		System.out.println("Width: " + (boundaries[2] - boundaries[0]));
+		System.out.println("Height: " + (boundaries[3] - boundaries[1]));
 	}
 }
