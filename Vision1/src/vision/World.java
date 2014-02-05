@@ -15,16 +15,14 @@ public class World {
 	private Image img;
 	
 	private Point ball ;
-	private  Point yellowAt , yellowDef;
-	private  Point blueAt , blueDef;
+	private  Point yellowLeft , yellowRight;
+	private  Point blueLeft , blueRight;
 	// private double ballSpeedX, ballSpeedY;
 	// add everything for the pitch here
 	
-	public World(BufferedImage img)
+	public World()
 	{
-		this.img=img;
-		// initialize everything with -1.0 to make it easier to check if
-		// the camera detected the objects
+		// initialize the world here
 	}
 	
 	// methods for ball
@@ -33,56 +31,56 @@ public class World {
 		this.ball = ballXY;
 	}
 	
-	public Point getBallX ()
+	public Point getBall ()
 	{
 		return this.ball;
 	}
 
 	
-	// methods for yellow Attacker robot.
-	public void setYellowAttacker (Point yellowAttackerXY)
+	// methods for yellow robot LEFT
+	public void setYellowLeft (Point yellowLeftXY)
 	{
-		this.yellowAt = yellowAttackerXY;
+		this.yellowLeft = yellowLeftXY;
 	}
 	
-	public Point getYellowAttacker()
+	public Point getYellowLeft()
 	{
-		return this.yellowAt;
+		return this.yellowLeft;
 	}
 	
-	// methods for yellow Defender.
+	// methods for yellow robot RIGHT
 	
-	public void setYellowDefender (Point yellowDefenderXY)
+	public void setYellowRight (Point yellowRightXY)
 	{
-		this.yellowDef = yellowDefenderXY;
+		this.yellowRight = yellowRightXY;
 	}
 	
-	public Point getYellowDefender()
+	public Point getYellowRight()
 	{
-		return this.yellowDef;
+		return this.yellowRight;
 	}
 
-	// methods for blue Attacker robot.
-	public void setBlueAttacker (Point blueAttackerXY)
+	// methods for blue robot LEFT
+	public void setBlueLeft (Point blueLeftXY)
 	{
-		this.blueAt = blueAttackerXY;
+		this.blueLeft = blueLeftXY;
 	}
 	
-	public Point getBlueAttacker()
+	public Point getBlueLeft()
 	{
-		return this.blueAt;
+		return this.blueLeft;
 	}
 	
-	// methods for blue Defender robot.
+	// methods for blue robot RIGHT
 	
-	public void setBlueDefender (Point blueDefenderXY)
+	public void setBlueRight (Point blueRightXY)
 	{
-		this.blueDef = blueDefenderXY;
+		this.blueRight = blueRightXY;
 	}
 	
-	public Point getBlueDefender()
+	public Point getBlueRight()
 	{
-		return this.blueDef;
+		return this.blueRight;
 	}
 		
 	// methods for the video image

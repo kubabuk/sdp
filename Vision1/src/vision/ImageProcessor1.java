@@ -30,7 +30,9 @@ public class ImageProcessor1 {
     note that instead of several methods there is just 1 method
     trackWorld that tracks all the objects
 */
-	public World trackWorld(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
+	public World newWorld;
+	
+	public void trackWorld(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
 
 		double redX = 0.0, redY = 0.0;
 		double yellowX = 0.0, yellowY = 0.0;
@@ -38,8 +40,6 @@ public class ImageProcessor1 {
 		int countRed = 0;
 		int[] coords_yellow = {1,1,1,1};
 		int[] coords_blue = {1,1,1,1};
-
-		World newWorld = new World(img);
 
 		for (int w = 0; w < img.getWidth(); w++) {
 			for (int h = 0; h < img.getHeight(); h++) {
@@ -103,7 +103,7 @@ public class ImageProcessor1 {
 		// after seeting coordinates, draw the elements on the image
 
 		// draw the ball
-		Point ball = newWorld.getBall()
+		Point ball = newWorld.getBall();
 		int x=(int) ball.getX();
 		int y=(int) ball.getY();
 
@@ -141,7 +141,6 @@ public class ImageProcessor1 {
 		
 		// set the final image
 		newWorld.setImage(img);
-		return newWorld;
 	}
 
 
