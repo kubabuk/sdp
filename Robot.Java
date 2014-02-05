@@ -1,3 +1,4 @@
+package com.mydomain;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import lejos.nxt.Motor;
 
 public class Robot {
 	public enum CommandNames{
-		 MOVEFORWARD, MOVEBACKWARD, CHANGEANGLE, ABORT, EXIT
+		 MOVEFORWARD, KICK, MOVEBACKWARD, CHANGEANGLE, ABORT, EXIT
 		}
 	
 
@@ -16,34 +17,41 @@ public class Robot {
 	
 	static int angleConstant = 2; //constant, which is used to determine amount of degrees needed to turn the robot one angle. Depends on weight/wheels of robot.
 	static int distConstant = 100; // constant, which is used to determine how much move is needed to cross one square.
+	static int kickerAngle = 10;// depends on kicker, how much does kicker need to kick each time.
+	static int kickerReturn = 0;// depends on the kicker, whether it needs to return back.
 	
 	List<Commands> commands = new ArrayList<Commands>(); 
+	
 	private int speed = 200;// default speed, can be changed in mid run;
-	private int angle; // current angle, default is set along with creation of robot (and placement of nxt). May give an override to prevent desyncs, but that would make opportunities for mistakes.
+// possibly useless 	private int angle; // current angle, default is set along with creation of robot (and placement of nxt). May give an override to prevent desyncs, but that would make opportunities for mistakes.
 	public Robot()
 	{
+	  //Motor.A.setAcceleration(5000);
 	  Motor.A.setSpeed(speed);
 	  Motor.B.setSpeed(speed);
 	}
 	
-	private void Abort() //check if the robot needs to abandon all of its commands
+	private void kick(int speed)
+	{
+	   Motor.C.setSpeed(speed);
+	   Motor.C.rotate(kickerAngle);
+	   Motor.C.rotate(kickerReturn,true);
+	   
+	}
+	
+	private void abort() //check if the robot needs to abandon all of its commands
 	{
 	   boolean isAbort= false; // assume it doesn't need to
 	   for (Commands current: commands) // go through all current commands
 	   {
 		   if (current.commandName ==CommandNames.ABORT) // if you find it, then initiate abort
 		   {
-			   isAbort=true;
+			   while(!(commands.remove(0).commandName==CommandNames.ABORT)); // test this, many doubts, but may have potential;
 			   break;
 		   }
 	   }
 		
-		
-	   if (isAbort)
-		   while(!commands.isEmpty()) // if you're aborting, dump everything you have in your command list.
-		   {
-			   commands.remove(0);
-		   }
+
 	   
 	}
 	public void addCommand(Commands toAdd) // user command input (through ENUMs)
@@ -70,12 +78,15 @@ public class Robot {
 		
 		while(!Exit()&&!commands.isEmpty())
 		{
-			Abort();
+			abort();
 			if (!commands.isEmpty())
 			{
 			Commands curcommand = commands.remove(0);
 			switch (curcommand.commandName)
 			{
+			case KICK:
+				kick(curcommand.firstArg);
+				break;
 			case MOVEFORWARD:
 				moveDistance(curcommand.firstArg,curcommand.secondArg);
 				break;
