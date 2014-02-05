@@ -2,6 +2,8 @@ package vision;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import geometry.Point;
+import geometry.Vector;
 
 /* This class is meant to be used as a helper in the imageprocessor
  * makes everithing more object oriented
@@ -12,11 +14,10 @@ public class World {
 	// image generated only once
 	private Image img;
 	
-	private double ballX, ballY;
-	private  double yellowX_left, yellowY_left;
-	private  double yellowX_right, yellowY_right;
-	private double blueX_left, blueY_left, blueX_right, blueY_right;
-	private double ballSpeedX, ballSpeedY;
+	private Point ball ;
+	private  Point yellowAt , yellowDef;
+	private  Point blueAt , blueDef;
+	// private double ballSpeedX, ballSpeedY;
 	// add everything for the pitch here
 	
 	public World(BufferedImage img)
@@ -24,107 +25,79 @@ public class World {
 		this.img=img;
 		// initialize everything with -1.0 to make it easier to check if
 		// the camera detected the objects
-		this.ballX=-1.0;
-		this.ballY=-1.0;
-		this.yellowX_left=-1.0;
-		this.yellowY_left=-1.0;
-		this.yellowX_right=-1.0;
-		this.yellowY_right=-1.0;
-		this.blueX_left=-1.0;
-		this.blueY_left=-1.0;
-		this.blueX_right=-1.0;
-		this.blueY_right=-1.0;
-		this.ballSpeedX = 0;
-		this.ballSpeedY = 0;
 	}
 	
 	// methods for ball
-	public void setBallXY (double x, double y)
+	public void setBallXY (Point ballXY)
 	{
-		this.ballX = x;
-		this.ballY = y;
+		this.ball = ballXY;
 	}
 	
-	public double getBallX ()
+	public Point getBallX ()
 	{
-		return this.ballX;
+		return this.ball;
+	}
+
+	
+	// methods for yellow Attacker robot.
+	public void setYellowAttacker (Point yellowAttackerXY)
+	{
+		this.yellowAt = yellowAttackerXY;
 	}
 	
-	public double getBallY ()
+	public Point getYellowAttacker()
 	{
-		return this.ballY;
+		return this.yellowAt;
 	}
 	
-	// methods for yellow robot on the left
-	public void setYellowXY_left (double x, double y)
+	// methods for yellow Defender.
+	
+	public void setYellowDefender (Point yellowDefenderXY)
 	{
-		this.yellowX_left = x;
-		this.yellowY_left = y;
+		this.yellowDef = yellowDefenderXY;
 	}
 	
-	public double getYellowX_left ()
+	public Point getYellowDefender()
 	{
-		return this.yellowX_left;
+		return this.yellowDef;
+	}
+
+	// methods for blue Attacker robot.
+	public void setBlueAttacker (Point blueAttackerXY)
+	{
+		this.blueAt = blueAttackerXY;
 	}
 	
-	public double getYellowY_left ()
+	public Point getBlueAttacker()
 	{
-		return this.yellowY_left;
+		return this.blueAt;
 	}
 	
-	// methods for yellow robot on the right
-	public void setYellowXY_right (double x, double y)
+	// methods for blue Defender robot.
+	
+	public void setBlueDefender (Point blueDefenderXY)
 	{
-		this.yellowX_right = x;
-		this.yellowY_right = y;
+		this.blueDef = blueDefenderXY;
 	}
 	
-	public double getYellowX_right ()
+	public Point getBlueDefender()
 	{
-		return this.yellowX_right;
-	}
-	
-	public double getYellowY_right ()
-	{
-		return this.yellowY_right;
-	}
-	
-	// methods for blue robot on the left
-	public void setBlueXY_left (double x, double y)
-	{
-		this.blueX_left = x;
-		this.blueY_left = y;
-	}
-	
-	public double getBlueX_left ()
-	{
-		return this.blueX_left;
-	}
-	
-	public double getBlueY_left ()
-	{
-		return this.blueY_left;
-	}
-	
-	// methods for blue robot
-	public void setBlueXY_right (double x, double y)
-	{
-		this.blueX_right = x;
-		this.blueY_right = y;
-	}
-	
-	public double getBlueX_right ()
-	{
-		return this.blueX_right;
+		return this.blueDef;
 	}
 		
-	public double getBlueY_right ()
+	// methods for the video image
+	public void setImage(Image img)
 	{
-		return this.blueY_right;
+		this.img = img;
 	}
 	
-	// speed methods
-	public void setBallSpeed(double x, double y)
+	public Image getImage()
+	{
+		return this.img;
+	}
+	
+	/*
+	 * 	public void setBallSpeed(double x, double y)
 	{
 		this.ballSpeedX = x;
 		this.ballSpeedY = y;
@@ -139,16 +112,6 @@ public class World {
 	{
 		return this.ballSpeedY;
 	}
-		
-	// methods for the video image
-	public void setImage(Image img)
-	{
-		this.img = img;
-	}
-	
-	public Image getImage()
-	{
-		return this.img;
-	}
+	 */
 
 }
