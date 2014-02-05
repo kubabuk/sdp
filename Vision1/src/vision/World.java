@@ -16,6 +16,7 @@ public class World {
 	private  double yellowX_left, yellowY_left;
 	private  double yellowX_right, yellowY_right;
 	private double blueX_left, blueY_left, blueX_right, blueY_right;
+	private double ballSpeedX, ballSpeedY;
 	// add everything for the pitch here
 	
 	public World(BufferedImage img)
@@ -33,6 +34,8 @@ public class World {
 		this.blueY_left=-1.0;
 		this.blueX_right=-1.0;
 		this.blueY_right=-1.0;
+		this.ballSpeedX = 0;
+		this.ballSpeedY = 0;
 	}
 	
 	// methods for ball
@@ -104,21 +107,38 @@ public class World {
 	}
 	
 	// methods for blue robot
-		public void setBlueXY_right (double x, double y)
-		{
-			this.blueX_right = x;
-			this.blueY_right = y;
-		}
+	public void setBlueXY_right (double x, double y)
+	{
+		this.blueX_right = x;
+		this.blueY_right = y;
+	}
+	
+	public double getBlueX_right ()
+	{
+		return this.blueX_right;
+	}
 		
-		public double getBlueX_right ()
-		{
-			return this.blueX_right;
-		}
-		
-		public double getBlueY_right ()
-		{
-			return this.blueY_right;
-		}
+	public double getBlueY_right ()
+	{
+		return this.blueY_right;
+	}
+	
+	// speed methods
+	public void setBallSpeed(double x, double y)
+	{
+		this.ballSpeedX = x;
+		this.ballSpeedY = y;
+	}
+	
+	public double getBallSpeedX()
+	{
+		return this.ballSpeedX;
+	}
+	
+	public double getBallSpeedY()
+	{
+		return this.ballSpeedY;
+	}
 		
 	// methods for the video image
 	public void setImage(Image img)
