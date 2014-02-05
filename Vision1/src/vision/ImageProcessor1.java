@@ -3,7 +3,7 @@ package vision;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-
+import geometry.Point;
 
 public class ImageProcessor1 {
 
@@ -92,19 +92,20 @@ public class ImageProcessor1 {
 		}
 		// find red dots and get the average to find out the location of the ball
 		if (countRed > 0) 
-			newWorld.setBallXY(redX/((double)countRed), redY/((double)countRed));
+			newWorld.setBallXY(new Point (redX/((double)countRed), redY/((double)countRed)));
 
-		newWorld.setYellowXY_left(coords_yellow[0],coords_yellow[1]);
-		newWorld.setYellowXY_right(coords_yellow[2],coords_yellow[3]);
+		newWorld.setYellowLeft(new Point (coords_yellow[0],coords_yellow[1]));
+		newWorld.setYellowRight(new Point (coords_yellow[2],coords_yellow[3]));
 
-		newWorld.setBlueXY_left(coords_yellow[0],coords_yellow[1]);
-		newWorld.setBlueXY_right(coords_yellow[2],coords_yellow[3]);
+		newWorld.setBlueLeft(new Point (coords_yellow[0],coords_yellow[1]));
+		newWorld.setBlueRight(new Point (coords_yellow[2],coords_yellow[3]));
 
 		// after seeting coordinates, draw the elements on the image
 
 		// draw the ball
-		int x=(int) newWorld.getBallX();
-		int y=(int) newWorld.getBallY();
+		Point ball = newWorld.getBall()
+		int x=(int) ball.getX();
+		int y=(int) ball.getY();
 
 		if (x > 50 && y > 50){
 			for (int w1 = x - 20; w1 < x + 20; w1++){
