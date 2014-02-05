@@ -20,7 +20,7 @@ import au.edu.jcu.v4l4j.VideoFrame;
 import au.edu.jcu.v4l4j.exceptions.StateException;
 import au.edu.jcu.v4l4j.exceptions.V4L4JException;
 
-public class VisionRunner implements CaptureCallback, WindowListener {
+public class VisionRunner implements CaptureCallback, WindowListener{
 	static String device = "/dev/video0";
 	static int width = 640;
 	static int height = 480;
@@ -34,8 +34,7 @@ public class VisionRunner implements CaptureCallback, WindowListener {
 
     private JLabel          label;
     private JFrame          frame;
-
-
+    
 
     public static void main(String args[]){
 
@@ -187,20 +186,26 @@ public class VisionRunner implements CaptureCallback, WindowListener {
     public void nextFrame(VideoFrame frame) {
             // This method is called when a new frame is ready.
             // Don't forget to recycle it when done dealing with the frame.
-    		BufferedImage tmp = frame.getBufferedImage();
-
+    		
+    	BufferedImage tmp = frame.getBufferedImage();
+    	
     		//Image img = imageProcessor.trackBall(tmp);
     		//Image img = imageProcessor.drawBall(tmp);
     		//img = imageProcessor.trackYelowRobot((BufferedImage) img);
-    		int[] boundaries = imageProcessor.getBoundaries(tmp);
+    	
+    	int[] boundaries = imageProcessor.getBoundaries(tmp);
+    	ImageProcessor1.trackWorld(tmp,boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
+    	  	/*old stuff
     		Image img = imageProcessor.drawBoundaries((BufferedImage) tmp);
     		img = imageProcessor.drawYellowRobots((BufferedImage) img, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
     		img = imageProcessor.drawBall((BufferedImage) img, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
     		img = imageProcessor.drawBlueRobots((BufferedImage) img, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
+    	*/
     		//img = imageProcessor.trackBlueRobot((BufferedImage) img);
     		
+    		
             // draw the new frame onto the JLabel
-            label.getGraphics().drawImage(img, 0, 0, width, height, null);
+            label.getGraphics().drawImage(ImageProcessor1.newWorld.getImage(), 0, 0, width, height, null);
             
             // recycle the frame
             frame.recycle();

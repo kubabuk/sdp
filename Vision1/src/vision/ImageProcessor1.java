@@ -13,10 +13,10 @@ public class ImageProcessor1 {
 	static Color blue = new Color(0,0,255);
 	
 	// using those variables to calculate the spped of the ball
-	double pavgRX = 0;
-	double pavgRY = 0;
-	double speedX = 0;
-	double speedY = 0;
+	static double pavgRX = 0;
+	static double pavgRY = 0;
+	static double speedX = 0;
+	static double speedY = 0;
 /*
      Currently this method finds the ball, and changes it to appear as black
     on the gui. It also calculates the center of the ball with pixel values.
@@ -30,9 +30,9 @@ public class ImageProcessor1 {
     note that instead of several methods there is just 1 method
     trackWorld that tracks all the objects
 */
-	public World newWorld;
+	public static World newWorld;
 	
-	public void trackWorld(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
+	public static void trackWorld(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
 
 		double redX = 0.0, redY = 0.0;
 		double yellowX = 0.0, yellowY = 0.0;
