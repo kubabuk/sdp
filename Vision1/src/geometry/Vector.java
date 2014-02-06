@@ -68,6 +68,26 @@ public class Vector {
 		return String.format("(%.2f, %.2f)", x, y);
 	}
 	
+	public boolean isParallel (Vector v){
+		return Math.tan(theta)==Math.tan(v.getOrientation());
+	}
+	
+	public boolean isColinear (Vector v){
+		return this.isParallel(v) && this.origin.isColinear(v);
+	}
+	
+	public boolean sameSegment (Vector v){
+		return this.isColinear(v) && this.r==v.getMagnitude();
+	}
+	
+	public double angleFrom (Vector v){
+		//angle between vectors starting counting from Vector V.
+		
+		return Angle.toRange(this.theta-v.getOrientation());
+		
+		
+	}
+		
 	//TODO: Figure out what operations we're going to need and add methods for them
 	
 	/*
