@@ -8,14 +8,21 @@ public class Ball {
 	private int speed;
 	private boolean moving,caught;
 	
+	
+	public Ball(Point coordinate) 
+	{
+		this.coordinate = coordinate;
+	}
+
+	
 	public boolean isMoving()
 	{
 		return moving;
 	}
 	
-	public setMoving (boolean m)
+	public setMoving (boolean moving)
 	{
-		this.moving = m;
+		this.moving = moving;
 	}
 	
 	public Point getPos() 
@@ -23,9 +30,9 @@ public class Ball {
 		return coordinate;
 	}
 	
-	public void setPos(Point xy) 
+	public void setPos(Point position) 
 	{
-		 this.coordinate = xy;
+		 this.coordinate = position;
 	}
 	
 	public Vector getDir()
@@ -33,9 +40,9 @@ public class Ball {
 		return orientation;
 	}
 	
-	public void setDir(Vector xy)
+	public void setDir(Vector direction)
 	{
-		this.orientation = xy;
+		this.orientation = direction;
 	}
 	
 	public int getSpeed()
@@ -43,9 +50,9 @@ public class Ball {
 		return speed;
 	}
 	
-	public void setSpeed(int v)
+	public void setSpeed(int speed)
 	{
-		this.speed = v;
+		this.speed = speed;
 	}
 	
 	public boolean iscaught()
@@ -53,9 +60,9 @@ public class Ball {
 		return caught;
 	}
 	
-	public void setCaught(boolean a) 
+	public void setCaught(boolean caught) 
 	{ 
-		this.caught = a; 
+		this.caught = caught; 
 	}
 	
 }

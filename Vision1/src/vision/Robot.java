@@ -8,14 +8,20 @@ public class Robot {
 	private int speed;
 	private boolean carryball;
 	
+	public Robot(Point coordinate, Vector orientation)
+	{
+		this.coordinate = coordinate;
+		this.orientation = orientation;
+	}
+	
 	public Point getPos() 
 	{
 		return coordinate;
 	}
 	
-	public void setPos(Point xy) 
+	public void setPos(Point postion) 
 	{
-		 this.coordinate = xy;
+		 this.coordinate = position;
 	}
 	
 	public Vector getDir()
@@ -23,9 +29,9 @@ public class Robot {
 		return orientation;
 	}
 	
-	public void setDir(Vector xy)
+	public void setDir(Vector direction)
 	{
-		this.orientation = xy;
+		this.orientation = direction;
 	}
 	
 	public int getSpeed()
@@ -43,9 +49,9 @@ public class Robot {
 		return carryball;
 	}
 	
-	public void setCB(boolean a) 
+	public void setCB(boolean carryball) 
 	{ 
-		this.carryball = a; 
+		this.carryball = carryball; 
 	}
 	
 	public boolean isHandsome()
