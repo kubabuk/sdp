@@ -17,6 +17,8 @@ public class World {
 	private Point ball ;
 	private  Point yellowLeft , yellowRight;
 	private  Point blueLeft , blueRight;
+	
+	private int pitchWidth, pitchHeight, pitchCentre;
 	// private double ballSpeedX, ballSpeedY;
 	// add everything for the pitch here
 	
@@ -92,6 +94,30 @@ public class World {
 	public Image getImage()
 	{
 		return this.img;
+	}
+
+	public void setWidth(int width) {
+		this.pitchWidth = width;
+	}
+
+	public int getWidth() {
+		return pitchWidth;
+	}
+
+	public void setHeight(int height) {
+		this.pitchHeight = height;
+	}
+
+	public int getHeight() {
+		return pitchHeight;
+	}
+
+	public void setPitchCentre(int pitchCentre) {
+		this.pitchCentre = pitchCentre;
+	}
+
+	public int getPitchCentre() {
+		return pitchCentre;
 	}
 	
 	/*

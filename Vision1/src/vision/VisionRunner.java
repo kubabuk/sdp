@@ -35,7 +35,7 @@ public class VisionRunner implements CaptureCallback, WindowListener{
     private JLabel          label;
     private JFrame          frame;
     
-    public static World newWorld;
+    public static World world;
 
     public static void main(String args[]){
 
@@ -67,7 +67,7 @@ public class VisionRunner implements CaptureCallback, WindowListener{
             // create and initialise UI
             initGUI();
             imageProcessor = new ImageProcessor();
-            newWorld = new World();
+            world = new World();
             // start capture
             try {
                     frameGrabber.startCapture();
@@ -196,7 +196,7 @@ public class VisionRunner implements CaptureCallback, WindowListener{
     		//img = imageProcessor.trackYelowRobot((BufferedImage) img);
     	
     	int[] boundaries = imageProcessor.getBoundaries(tmp);
-    	ImageProcessor1.trackWorld(tmp, newWorld, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
+    	ImageProcessor1.trackWorld(tmp, world, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
     	  	/*old stuff
     		Image img = imageProcessor.drawBoundaries((BufferedImage) tmp);
     		img = imageProcessor.drawYellowRobots((BufferedImage) img, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
@@ -207,7 +207,7 @@ public class VisionRunner implements CaptureCallback, WindowListener{
     		
     		
             // draw the new frame onto the JLabel
-            label.getGraphics().drawImage(newWorld.getImage(), 0, 0, width, height, null);
+            label.getGraphics().drawImage(world.getImage(), 0, 0, width, height, null);
             
             // recycle the frame
             frame.recycle();
