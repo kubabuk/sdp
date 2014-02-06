@@ -27,4 +27,13 @@ public class Point {
 	public boolean isColinear(Vector v){
 		return colinear(this, v.getOrigin(), v.getDestination());
 	}
+	public Vector latitude(){
+		return new Vector (this,0);
 	}
+	
+	public Vector longtitude(){
+		return new Vector (this, Math.PI/2);
+	}
+	
+
+}
