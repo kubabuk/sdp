@@ -3,8 +3,6 @@ package vision;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-
-import world.World;
 import geometry.Point;
 
 public class ImageProcessor1 {
@@ -19,6 +17,8 @@ public class ImageProcessor1 {
 	static double pavgRY = 0;
 	static double speedX = 0;
 	static double speedY = 0;
+	
+	private static World world;
 /*
      Currently this method finds the ball, and changes it to appear as black
     on the gui. It also calculates the center of the ball with pixel values.
@@ -33,8 +33,11 @@ public class ImageProcessor1 {
     trackWorld that tracks all the objects
 */
 	//public static World newWorld;
+	public ImageProcessor1(World newWorld){
+		this.world = newWorld;
+	}
 	
-	public static void trackWorld(BufferedImage img, World newWorld, int minWidth, int maxWidth, int minHeight, int maxHeight) {
+	public static Image trackWorld(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
 
 		double redX = 0.0, redY = 0.0;
 		double yellowX = 0.0, yellowY = 0.0;
@@ -50,7 +53,7 @@ public class ImageProcessor1 {
 				int green = c.getGreen();
 				int red = c.getRed();
 
-				if (red > (blue + 80) && red > (green + 80)){
+				if (red > (blue + 120) && red > (green + 120)){
 //					img.setRGB(w, h, 0);
 					redX += (double)w;
 					redY += (double)h;
@@ -93,19 +96,20 @@ public class ImageProcessor1 {
 			}
 		}
 		// find red dots and get the average to find out the location of the ball
-		newWorld.setBallXY(new Point (redX/((double)countRed), redY/((double)countRed)));
+		Point ballLocation = new Point (redX/((double)countRed), redY/((double)countRed));
+		world.setBallXY(ballLocation);
 
-		newWorld.setYellowLeft(new Point (coords_yellow[0],coords_yellow[1]));
-		newWorld.setYellowRight(new Point (coords_yellow[2],coords_yellow[3]));
-		newWorld.setBlueLeft(new Point (coords_yellow[0],coords_yellow[1]));
-		newWorld.setBlueRight(new Point (coords_yellow[2],coords_yellow[3]));
+		world.setYellowLeft(new Point (coords_yellow[0],coords_yellow[1]));
+		world.setYellowRight(new Point (coords_yellow[2],coords_yellow[3]));
+		world.setBlueLeft(new Point (coords_yellow[0],coords_yellow[1]));
+		world.setBlueRight(new Point (coords_yellow[2],coords_yellow[3]));
 
 		// after setting coordinates, draw the elements on the image
 
 		// draw the ball
-		Point ball = newWorld.getBall();
-		int x=(int) ball.getX();
-		int y=(int) ball.getY();
+		Point ball = world.getBall();
+		int x=(int) ballLocation.getX();
+		int y=(int) ballLocation.getY();
 
 		if (x > 50 && y > 50){
 			for (int w1 = x - 20; w1 < x + 20; w1++){
@@ -156,7 +160,8 @@ public class ImageProcessor1 {
 		pavgRY = redY/((double)countRed);
 		
 		// set the final image
-		newWorld.setImage(img);
+		world.setImage(img);
+		return img;
 	}
 
 
@@ -242,6 +247,10 @@ public class ImageProcessor1 {
 		output[1] = topEdge;
 		output[2] = rightEdge;
 		output[3] = bottomEdge;
+		world.setPitchLeft(output[0]);
+		world.setPitchTop(output[1]);
+		world.setWidth(output[2] - output[0]);
+		world.setHeight(output[3] - output[1]);
 		return output;
 	}
 
@@ -329,11 +338,5 @@ public class ImageProcessor1 {
 			}
 		}
 		return sections;
-	}
-
-	public void pitchRatio(BufferedImage img){
-		int[] boundaries = getBoundaries(img);
-		System.out.println("Width: " + (boundaries[2] - boundaries[0]));
-		System.out.println("Height: " + (boundaries[3] - boundaries[1]));
 	}
 }

@@ -11,8 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
-import world.World;
-
 import au.edu.jcu.v4l4j.CaptureCallback;
 import au.edu.jcu.v4l4j.Control;
 import au.edu.jcu.v4l4j.FrameGrabber;
@@ -32,28 +30,29 @@ public class VisionRunner implements CaptureCallback, WindowListener{
 
     private VideoDevice     videoDevice;
     private FrameGrabber    frameGrabber;
-    private ImageProcessor	imageProcessor;
+    private ImageProcessor1	imageProcessor;
+    
+    private int frameCount;
+    private int[] boundaries;
 
     private JLabel          label;
     private JFrame          frame;
-    
-    public static World world;
 
     public static void main(String args[]){
 
-            SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                            new VisionRunner();
-                    }
-            });
+//            SwingUtilities.invokeLater(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                            new VisionRunner();
+//                    }
+//            });
     }
 
     /**
      * Builds a WebcamViewer object
      * @throws V4L4JException if any parameter if invalid
      */
-    public VisionRunner(){
+    public VisionRunner(World world){
             // Initialise video device and frame grabber
             try {
                     initFrameGrabber();
@@ -68,8 +67,13 @@ public class VisionRunner implements CaptureCallback, WindowListener{
             
             // create and initialise UI
             initGUI();
-            imageProcessor = new ImageProcessor();
-            world = new World();
+            imageProcessor = new ImageProcessor1(world);
+            frameCount = 0;
+            boundaries = new int[4];
+            boundaries[0] = 10;
+            boundaries[1] = 10;
+            boundaries[2] = 100;
+            boundaries[3] = 100;
             // start capture
             try {
                     frameGrabber.startCapture();
@@ -192,27 +196,17 @@ public class VisionRunner implements CaptureCallback, WindowListener{
             // Don't forget to recycle it when done dealing with the frame.
     		
     	BufferedImage tmp = frame.getBufferedImage();
-    	
-    		//Image img = imageProcessor.trackBall(tmp);
-    		//Image img = imageProcessor.drawBall(tmp);
-    		//img = imageProcessor.trackYelowRobot((BufferedImage) img);
-    	
-    	int[] boundaries = imageProcessor.getBoundaries(tmp);
-    	ImageProcessor1.trackWorld(tmp, world, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
-    	  	/*old stuff
-    		Image img = imageProcessor.drawBoundaries((BufferedImage) tmp);
-    		img = imageProcessor.drawYellowRobots((BufferedImage) img, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
-    		img = imageProcessor.drawBall((BufferedImage) img, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
-    		img = imageProcessor.drawBlueRobots((BufferedImage) img, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
-    	*/
-    		//img = imageProcessor.trackBlueRobot((BufferedImage) img);
-    		
+    	if (frameCount % 1000 < 10){
+        	boundaries = imageProcessor.getBoundaries(tmp);	
+    	}
+    	Image img = imageProcessor.trackWorld(tmp, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
     		
             // draw the new frame onto the JLabel
-            label.getGraphics().drawImage(world.getImage(), 0, 0, width, height, null);
+        label.getGraphics().drawImage(img, 0, 0, width, height, null);
             
             // recycle the frame
-            frame.recycle();
+        frame.recycle();
+        frameCount++;
     }
 
 	@Override
