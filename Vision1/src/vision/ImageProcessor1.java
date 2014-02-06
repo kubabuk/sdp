@@ -3,6 +3,8 @@ package vision;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+
+import world.World;
 import geometry.Point;
 
 public class ImageProcessor1 {
