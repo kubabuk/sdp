@@ -12,7 +12,7 @@ public class ImageProcessor1 {
 	static Color yellow = new Color(255,255,0);
 	static Color blue = new Color(0,0,255);
 	
-	// using those variables to calculate the spped of the ball
+	// using those variables to calculate the speed of the ball
 	static double pavgRX = 0;
 	static double pavgRY = 0;
 	static double speedX = 0;
@@ -30,9 +30,9 @@ public class ImageProcessor1 {
     note that instead of several methods there is just 1 method
     trackWorld that tracks all the objects
 */
-	public static World newWorld;
+	//public static World newWorld;
 	
-	public static void trackWorld(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
+	public static void trackWorld(BufferedImage img, World newWorld, int minWidth, int maxWidth, int minHeight, int maxHeight) {
 
 		double redX = 0.0, redY = 0.0;
 		double yellowX = 0.0, yellowY = 0.0;
@@ -41,14 +41,14 @@ public class ImageProcessor1 {
 		int[] coords_yellow = {1,1,1,1};
 		int[] coords_blue = {1,1,1,1};
 
-		for (int w = 0; w < img.getWidth(); w++) {
-			for (int h = 0; h < img.getHeight(); h++) {
+		for (int w = minWidth; w < maxWidth; w++) {
+			for (int h = minHeight; h < maxHeight; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
 				int red = c.getRed();
 
-				if (red > (blue + 130) && red > (green + 130)){
+				if (red > (blue + 80) && red > (green + 80)){
 //					img.setRGB(w, h, 0);
 					redX += (double)w;
 					redY += (double)h;
@@ -91,16 +91,14 @@ public class ImageProcessor1 {
 			}
 		}
 		// find red dots and get the average to find out the location of the ball
-		if (countRed > 0) 
-			newWorld.setBallXY(new Point (redX/((double)countRed), redY/((double)countRed)));
+		newWorld.setBallXY(new Point (redX/((double)countRed), redY/((double)countRed)));
 
 		newWorld.setYellowLeft(new Point (coords_yellow[0],coords_yellow[1]));
 		newWorld.setYellowRight(new Point (coords_yellow[2],coords_yellow[3]));
-
 		newWorld.setBlueLeft(new Point (coords_yellow[0],coords_yellow[1]));
 		newWorld.setBlueRight(new Point (coords_yellow[2],coords_yellow[3]));
 
-		// after seeting coordinates, draw the elements on the image
+		// after setting coordinates, draw the elements on the image
 
 		// draw the ball
 		Point ball = newWorld.getBall();
@@ -130,6 +128,22 @@ public class ImageProcessor1 {
 			}
 			for (int h2 = coords_yellow[3] - 20; h2 < coords_yellow[3] + 20; h2++){
 				img.setRGB(coords_yellow[2], h2, yellow.getRGB());
+			}
+		}
+		
+		//draw crosses on top of the blue robots
+		if (coords_blue[0] > 50 && coords_blue[1] > 50 && coords_blue[2] > 50 && coords_blue[3] > 50){
+			for (int w2 = coords_blue[0] - 20; w2 < coords_blue[0] + 20; w2++){
+				img.setRGB(w2, coords_blue[1], blue.getRGB());
+			}
+			for (int h2 = coords_blue[1] - 20; h2 < coords_blue[1] + 20; h2++){
+				img.setRGB(coords_blue[0], h2, blue.getRGB());
+			}
+			for (int w2 = coords_blue[2] - 20; w2 < coords_blue[2] + 20; w2++){
+				img.setRGB(w2, coords_blue[3], blue.getRGB());
+			}
+			for (int h2 = coords_blue[3] - 20; h2 < coords_blue[3] + 20; h2++){
+				img.setRGB(coords_blue[2], h2, blue.getRGB());
 			}
 		}
 
