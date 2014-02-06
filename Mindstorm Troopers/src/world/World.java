@@ -2,12 +2,18 @@ package world;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+
+import vision.VisionRunner;
+
 import geometry.Point;
 import geometry.Vector;
-import geometry.Area;
 
 /* This class is meant to be used as a helper in the imageprocessor
- * makes everithing more object oriented
+ * makes everything more object oriented
  */
 
 public class World {
@@ -20,18 +26,32 @@ public class World {
 	private  Point blueLeft , blueRight;
 	
 	private int pitchWidth, pitchHeight, pitchCentre;
+	private int pitchLeft, pitchTop;
 	// private double ballSpeedX, ballSpeedY;
 	// add everything for the pitch here
 	
 	public World()
 	{
-		// initialize the world here
+		// Initialise the world here
+		ball = new Point(100,100);
+		runVision(this);
+	}
+	
+	public void runVision(final World world){
+        SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                        new VisionRunner(world);
+                }
+        });
 	}
 	
 	// methods for ball
 	public void setBallXY (Point ballXY)
 	{
-		this.ball = ballXY;
+		int x = (int) ((100 * (ballXY.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((100 * (ballXY.getY() - this.pitchTop)) / this.pitchWidth);
+		this.ball = new Point(x,y);
 	}
 	
 	public Point getBall ()
@@ -43,7 +63,9 @@ public class World {
 	// methods for yellow robot LEFT
 	public void setYellowLeft (Point yellowLeftXY)
 	{
-		this.yellowLeft = yellowLeftXY;
+		int x = (int) ((100 * (yellowLeftXY.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((100 * (yellowLeftXY.getY() - this.pitchTop)) / this.pitchWidth);
+		this.yellowLeft = new Point(x,y);
 	}
 	
 	public Point getYellowLeft()
@@ -55,7 +77,9 @@ public class World {
 	
 	public void setYellowRight (Point yellowRightXY)
 	{
-		this.yellowRight = yellowRightXY;
+		int x = (int) ((100 * (yellowRightXY.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((100 * (yellowRightXY.getY() - this.pitchTop)) / this.pitchWidth);
+		this.yellowRight = new Point(x,y);
 	}
 	
 	public Point getYellowRight()
@@ -66,7 +90,9 @@ public class World {
 	// methods for blue robot LEFT
 	public void setBlueLeft (Point blueLeftXY)
 	{
-		this.blueLeft = blueLeftXY;
+		int x = (int) ((100 * (blueLeftXY.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((100 * (blueLeftXY.getY() - this.pitchTop)) / this.pitchWidth);
+		this.blueLeft = new Point(x,y);
 	}
 	
 	public Point getBlueLeft()
@@ -78,7 +104,9 @@ public class World {
 	
 	public void setBlueRight (Point blueRightXY)
 	{
-		this.blueRight = blueRightXY;
+		int x = (int) ((100 * (blueRightXY.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((100 * (blueRightXY.getY() - this.pitchTop)) / this.pitchWidth);
+		this.blueRight = new Point(x,y);
 	}
 	
 	public Point getBlueRight()
@@ -119,6 +147,22 @@ public class World {
 
 	public int getPitchCentre() {
 		return pitchCentre;
+	}
+
+	public void setPitchLeft(int pitchLeft) {
+		this.pitchLeft = pitchLeft;
+	}
+
+	public int getPitchLeft() {
+		return pitchLeft;
+	}
+
+	public void setPitchTop(int pitchTop) {
+		this.pitchTop = pitchTop;
+	}
+
+	public int getPitchTop() {
+		return pitchTop;
 	}
 	
 	/*
