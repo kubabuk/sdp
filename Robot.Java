@@ -2,8 +2,9 @@ package com.mydomain;
 import java.util.ArrayList;
 import java.util.List;
 
+import lejos.nxt.Button;
 import lejos.nxt.Motor;
-
+import lejos.nxt.ButtonListener;
 
 
 
@@ -17,7 +18,7 @@ public class Robot {
 	
 	static int angleConstant = 2; //constant, which is used to determine amount of degrees needed to turn the robot one angle. Depends on weight/wheels of robot.
 	static int distConstant = 100; // constant, which is used to determine how much move is needed to cross one square.
-	static int kickerAngle = 10;// depends on kicker, how much does kicker need to kick each time.
+	static int kickerAngle = 200;// depends on kicker, how much does kicker need to kick each time.
 	static int kickerReturn = 0;// depends on the kicker, whether it needs to return back.
 	
 	List<Commands> commands = new ArrayList<Commands>(); 
@@ -73,15 +74,17 @@ public class Robot {
 		
 	}
 	
+	
+
+	
 	public void run() // main thread, which works on stuff. takes a command, analyses it and does it.
 	{
-		
-		while(!Exit()&&!commands.isEmpty())
+
+		while(!Exit())
 		{
-			abort();
 			if (!commands.isEmpty())
 			{
-			Commands curcommand = commands.remove(0);
+		    Commands curcommand = commands.remove(0);
 			switch (curcommand.commandName)
 			{
 			case KICK:
@@ -97,8 +100,8 @@ public class Robot {
 				turnAngle(curcommand.firstArg,curcommand.secondArg);
 				break;
 			}
-			}
 			
+			}
 		}
 		
 		
@@ -119,7 +122,14 @@ public class Robot {
 	int tempspeed = speed;// in case we need to return to old speed;
 	setSpeed(desiredSpeed);
 	Motor.A.rotate(distance*distConstant,true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
-	Motor.B.rotate(distance*distConstant); 
+	Motor.B.rotate(distance*distConstant,true); 
+	try 
+	{
+		int time = (int) (desiredSpeed*Math.abs(distance)*2.5);
+		Thread.sleep(time);
+		System.out.println(time);
+	}
+	catch (Exception e){}
 	}
 	
 	private void turnAngle(int desiredSpeed, int toTurnAngle) // turn the angle
