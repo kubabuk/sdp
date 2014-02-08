@@ -1,0 +1,3 @@
+There are two files for now, the soccer,wbt is the world simulation and files in worlds are resources needed. Later on, we may need to add robot AI to the simulator.
+
+To run the world, first we need to copy the folder worlds to your home folder (s1******'s Home) and open a terminal, type in "webots", then click open project on the top-left side and open the soccer.wbt file.
