@@ -7,24 +7,25 @@ public class State {
 	
 	//       State         ||       Situation   
 	// 		 	0				initial situation
-	//			1				
-	//			2
-	//			3
-	//			4
-	//			5
-	//			6
-	//			7
-	//			8
-	//			9
+	//			1				ball goes to defender
+	//			2				defender near the ball *
+	//			3				defender got the ball
+	//			4				ball goes to attacker
+	//			5				ball near the attacker
+	//			6				attacker got the ball
+	//			7						*
+	//			8						*
+	//			9				End state*		
+	// There may be more states if needed, state with * are states that can possibly be removed
 	
 	public State (int initialstate)
 	{
 		this.state = initialstate;
 	}
 	
-	public int getState()
+	public void update()
 	{
-		// This function calculates and returns the state 
+		// This function calculates and updates the current state 
 		int newstate=0;
 		//
 		
@@ -35,6 +36,5 @@ public class State {
 		
 		
 		this.state = newstate;
-		return this.state;
 	}
 }
