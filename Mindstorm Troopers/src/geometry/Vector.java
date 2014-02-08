@@ -51,16 +51,16 @@ public class Vector {
 		this.x = end.getX()-begin.getX();
 		this.y = end.getY()-begin.getY();
 		this.r=(Math.sqrt(x*x +y*y));
-		this.theta=Math.atan2(x,y);
+		this.theta=Math.atan2(y,x);
 	}
 	
-	public Vector(Point origin, double bearing){
+	public Vector(Point origin, double bearing, double length){
 		//Defines a UNIT vector given it's starting point and orientation (angle with xx' axis)
 		this.theta = bearing;
 		this.origin = origin;
-		this.r = (1);
-		this.x = Math.cos(bearing);
-		this.y = Math.sin(bearing);
+		this.r = length;
+		this.x = r * Math.cos(bearing);
+		this.y = r * Math.sin(bearing);
 		this.destination = new Point(origin.getX()+x,origin.getY()+y);
 	}
 	
@@ -218,8 +218,7 @@ public class Vector {
 */
 
 	public static void main(String[] args){
-		Vector test1 = new Vector( new Point(0,0), new Point(1,1));
-		Vector test2 = new Vector( new Point(0,0), Math.PI);
+
 	}
 	
 }
