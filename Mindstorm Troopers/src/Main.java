@@ -1,4 +1,5 @@
-
+import strategy.State;
+import strategy.Action;
 
 //Import all sorts of files from vision and communication
 

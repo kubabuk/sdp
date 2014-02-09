@@ -28,12 +28,20 @@ public class Point {
 		return colinear(this, v.getOrigin(), v.getDestination());
 	}
 	public Vector latitude(){
-		return new Vector (this,0);
+		
+		//returns a unit vector in the direction of the latitude
+		return new Vector (this,0,1);
 	}
 	
 	public Vector longtitude(){
-		return new Vector (this, Math.PI/2);
+		
+		//returns a unit vector in the direction of the longtitude 
+		return new Vector (this, Math.PI/2,1);
 	}
 	
+	public static double pointDistance(Point a , Point b){
+		Vector v = new Vector(a,b);
+		return v.getMagnitude();
+	}
 
 }

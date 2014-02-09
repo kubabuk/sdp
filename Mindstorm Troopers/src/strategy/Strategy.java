@@ -1,3 +1,4 @@
+package strategy;
 import geometry.Vector;
 
 

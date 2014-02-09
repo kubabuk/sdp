@@ -1,3 +1,4 @@
+package strategy;
 
 public class State {
 	//This class represents which state the robot is in,
