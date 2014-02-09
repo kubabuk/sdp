@@ -24,6 +24,12 @@ public class State {
 		this.state = initialstate;
 	}
 	
+	public getState()
+	{
+		return this.state;
+	}
+	
+	
 	public void update()
 	{
 		// This function calculates and updates the current state 
