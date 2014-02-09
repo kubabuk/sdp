@@ -13,7 +13,7 @@ public interface MessageListener {
 * @param args the arguments of the message
 * @param controller which controller is returning the result
 */
-public void receiveMessage(CommandNames op, byte[] args, Communicator controller);
+public void receiveMessage(CommandNames op, short[] args, Communicator controller);
 
 }
 

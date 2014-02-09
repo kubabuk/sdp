@@ -1,5 +1,6 @@
 
 	import java.io.IOException;
+
 	import java.io.InputStream;
 	import java.io.OutputStream;
 	import java.util.ArrayList;
@@ -25,8 +26,8 @@ import lejos.pc.comm.NXTInfo;
 
 	// password and mac settings
 	private static final int max_retries = 5; // how many times to try connecting to brick before quitting
-	private static final String friendly_name = "GRP 6 Bot 2";
-	private static final String mac_of_brick = "00:16:53:08:DA:0F";
+	private static final String friendly_name = "GRP6 Bot 1";
+	private static final String mac_of_brick = "00:16:53:0A:96:91";
 
 	//private static short[] old_operate = null;
 
@@ -109,11 +110,11 @@ import lejos.pc.comm.NXTInfo;
 	    	short[] args = new short[length/2];
 	    	for (int i = 0; i < args.length; i++)
 	    		args[i] = (short)((data[2*i] <<8) | (data[2*i+1] & 0xFF));
+	    		
 	    	// notify all listeners
 	    	Iterator<MessageListener> ml = mListener.iterator();
 	    	while (ml.hasNext()) {
-	    		//NEED TO SORT THIS OUT - NOT SURE WHY THIS WON'T WORK
-	    		//ml.next().receiveMessage(op, args, MainComm.this);	    	
+	    		ml.next().receiveMessage(op, args, MainComm.this);	
 	    		}
 	    }
 
@@ -123,7 +124,7 @@ import lejos.pc.comm.NXTInfo;
 	* @param args the arguments
 	*/
 	//@Override
-	public synchronized void sendMessage(CommandNames op, int ... args) throws IOException {
+	public synchronized void sendMessage(CommandNames op, byte ... args) throws IOException {
 
 	}
 	/**
