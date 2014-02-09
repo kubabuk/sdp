@@ -1,4 +1,4 @@
-package strategy;
+package src.strategy;
 
 public class State {
 	//This class represents which state the robot is in,
@@ -12,19 +12,24 @@ public class State {
 	//			2				defender near the ball *
 	//			3				defender got the ball
 	//			4				ball goes to attacker
-	//			5				ball near the attacker
+	//			5				attacker near the ball
 	//			6				attacker got the ball
 	//			7						*
 	//			8						*
 	//			9				End state*		
 	// There may be more states if needed, state with * are states that can possibly be removed
 	
+	public State()
+	{
+		this.state = 0;
+	}
+	
 	public State (int initialstate)
 	{
 		this.state = initialstate;
 	}
 	
-	public getState()
+	public int getState()
 	{
 		return this.state;
 	}
