@@ -43,5 +43,11 @@ public class Point {
 		Vector v = new Vector(a,b);
 		return v.getMagnitude();
 	}
+	
+	public double distanceFromLine(Vector v){
+		Line l = v.getLine();
+		
+		return (Math.abs(l.a()*x + l.b()*y +l.c())/Math.sqrt(l.a()*l.a()+l.b()*l.b()));
+	}
 
 }
