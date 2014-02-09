@@ -4,14 +4,14 @@ import geometry.Vector;
 
 public class Ball {
 
-	private Point coordinate;
+	private Point position;
 	private Vector orientation;
 	private int speed;
 	private boolean moving,caught;
 		
-	public Ball(Point coordinate) 
+	public Ball(Point position) 
 	{
-		this.coordinate = coordinate;
+		this.position = position;
 	}
 
 	
@@ -27,12 +27,12 @@ public class Ball {
 	
 	public Point getPos() 
 	{
-		return coordinate;
+		return position;
 	}
 	
 	public void setPos(Point position) 
 	{
-		 this.coordinate = position;
+		 this.position = position;
 	}
 	
 	public Vector getDir()
