@@ -16,10 +16,10 @@ public class Robot {
 
 	
 	
-	static int angleConstant = 2; //constant, which is used to determine amount of degrees needed to turn the robot one angle. Depends on weight/wheels of robot.
-	static int distConstant = 100; // constant, which is used to determine how much move is needed to cross one square.
-	static int kickerAngle = 200;// depends on kicker, how much does kicker need to kick each time.
-	static int kickerReturn = 0;// depends on the kicker, whether it needs to return back.
+	final double angleConstant = 1.1;// Peak's constant 2.85; //constant, which is used to determine amount of degrees needed to turn the robot one angle. Depends on weight/wheels of robot.
+	final double distConstant = 5.65; // Peak's constant 10.2; // should be equal to 0.5 cm in real world // constant, which is used to determine how much move is needed to cross one square.
+	final int kickerAngle = 200;// depends on kicker, how much does kicker need to kick each time.
+	final int kickerReturn = 200;// depends on the kicker, whether it needs to return back.
 	
 	List<Commands> commands = new ArrayList<Commands>(); 
 	
@@ -28,6 +28,7 @@ public class Robot {
 	public Robot()
 	{
 	  //Motor.A.setAcceleration(5000);
+	  //Motor.B.setAcceleration(5000);
 	  Motor.A.setSpeed(speed);
 	  Motor.B.setSpeed(speed);
 	}
@@ -35,7 +36,7 @@ public class Robot {
 	private void kick(int speed)
 	{
 	   Motor.C.setSpeed(speed);
-	   Motor.C.rotate(kickerAngle);
+	   Motor.C.rotate(-kickerAngle);
 	   Motor.C.rotate(kickerReturn,true);
 	   
 	}
@@ -51,18 +52,20 @@ public class Robot {
 			   break;
 		   }
 	   }
-		
 
 	   
 	}
 	public void addCommand(Commands toAdd) // user command input (through ENUMs)
 	{
+		synchronized(this) 
+		{
 		commands.add(toAdd);
+		}
 	}
 	
 	private boolean Exit() // check if there is an exit somewhere in the command list, close the robot (maybe change it to be first program)
 	{
-
+		synchronized(this) {
 	   for (Commands current: commands)
 	   {
 		   if (current.commandName ==CommandNames.EXIT)
@@ -71,7 +74,7 @@ public class Robot {
 		   }
 	   }
 	   return false;
-		
+		}
 	}
 	
 	
@@ -82,9 +85,12 @@ public class Robot {
 
 		while(!Exit())
 		{
+			Commands curcommand = null;
+			synchronized(this) {
 			if (!commands.isEmpty())
-			{
-		    Commands curcommand = commands.remove(0);
+			curcommand = commands.remove(0);
+			}
+			if (curcommand!=null){
 			switch (curcommand.commandName)
 			{
 			case KICK:
@@ -100,8 +106,9 @@ public class Robot {
 				turnAngle(curcommand.firstArg,curcommand.secondArg);
 				break;
 			}
-			
 			}
+			
+			
 		}
 		
 		
@@ -121,22 +128,23 @@ public class Robot {
 	{
 	int tempspeed = speed;// in case we need to return to old speed;
 	setSpeed(desiredSpeed);
-	Motor.A.rotate(distance*distConstant,true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
-	Motor.B.rotate(distance*distConstant,true); 
-	try 
-	{
-		int time = (int) (desiredSpeed*Math.abs(distance)*2.5);
-		Thread.sleep(time);
-		System.out.println(time);
-	}
-	catch (Exception e){}
+	Motor.A.rotate((int)(distance*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
+	Motor.B.rotate((int)(distance*distConstant),false); 
+	//try 
+	//{
+	//	int time = (int) (Math.abs(distance)*100000/desiredSpeed);
+	//	Thread.sleep(time);
+	//	System.out.println(time);
+	//}
+	//catch (Exception e){}
 	}
 	
 	private void turnAngle(int desiredSpeed, int toTurnAngle) // turn the angle
 	{
 		    setSpeed(desiredSpeed);
-			Motor.A.rotate(angleConstant*toTurnAngle,true);
-			Motor.B.rotate(-angleConstant*toTurnAngle);
+		    System.out.println((int)(angleConstant*toTurnAngle));
+			Motor.A.rotate((int)(angleConstant*toTurnAngle),true);
+			Motor.B.rotate((int)(-angleConstant*toTurnAngle));
 	}
 
 }
