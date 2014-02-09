@@ -32,5 +32,7 @@ public class Line {
 	public double c() {
 		return c;
 	}
-	
+	public double getTheta(){
+		return theta;
+	}
 }
