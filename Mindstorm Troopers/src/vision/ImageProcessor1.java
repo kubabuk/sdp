@@ -3,6 +3,8 @@ package vision;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+
+import world.World;
 import geometry.Point;
 
 public class ImageProcessor1 {
@@ -104,6 +106,30 @@ public class ImageProcessor1 {
 		world.setBlueLeft(new Point (coords_yellow[0],coords_yellow[1]));
 		world.setBlueRight(new Point (coords_yellow[2],coords_yellow[3]));
 
+		
+		
+		// get the dot for the robot after we have the coordinates for the yellow/blue pixels
+		double yellowDotX = 0.0, yellowDotY = 0.0;
+		int count = 0;
+		for(int w=coords_yellow[0]-20; w<coords_yellow[0]+20;w++)
+			for (int h =coords_yellow[1]-20; h<coords_yellow[1]+20;h++)
+			{
+				Color c = new Color(img.getRGB(w, h), true);
+				int blue = c.getBlue();
+				int green = c.getGreen();
+				int red = c.getRed();
+				
+				if(blue<60 && green<60 && red<60)
+				{
+					yellowDotX = yellowDotX + w;
+					yellowDotY = yellowDotY + h;
+					count ++;
+					
+				}
+			}
+		
+		world.setVectorYellowLeft(new Point(yellowDotX/(double)count, yellowDotY/(double)count));
+		
 		// after setting coordinates, draw the elements on the image
 
 		// draw the ball
