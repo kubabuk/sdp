@@ -54,13 +54,13 @@ public class Vector {
 		this.theta=Math.atan2(y,x);
 	}
 	
-	public Vector(Point origin, double length, double bearing){
+	public Vector(Point origin, double length, double theta){
 		//Defines a UNIT vector given it's starting point and orientation (angle with xx' axis)
-		this.theta = bearing;
+		this.theta = theta;
 		this.origin = origin;
 		this.r = length;
-		this.x = r * Math.cos(bearing);
-		this.y = r * Math.sin(bearing);
+		this.x = r * Math.cos(theta);
+		this.y = r * Math.sin(theta);
 		this.destination = new Point(origin.getX()+x,origin.getY()+y);
 	}
 	
@@ -88,6 +88,32 @@ public class Vector {
 		
 	}
 	
+	public Point intersectLong(Vector longtitude){
+		double x = longtitude.getOrigin().getX();
+		double y = 0;
+		if( Math.sin(this.theta)==0){
+			y = this.getOrigin().getY();
+		}
+		else{
+			Line l = this.getLine();
+			y = (l.c()-l.a()*x)/l.b();
+		}
+		return new Point(x,y);
+	}
+	
+	
+	public Point intersectLat(Vector latitude){
+		double y = latitude.getOrigin().getY();
+		double x= 0;
+		if( Math.cos(this.theta)==0){
+			x = this.getOrigin().getX();
+		}
+		else{
+			Line l = this.getLine();
+			x = (l.c()-l.b()*y)/l.a();
+		}
+		return new Point(x,y);
+	}
 	// To be used from the Command module for calculating turns.
 	
 	public static double innerAngle(Vector v1 , Vector v2){
