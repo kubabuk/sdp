@@ -107,7 +107,7 @@ public class ImageProcessor1 {
 		world.setBlueRight(new Point (coords_yellow[2],coords_yellow[3]));
 
 		
-
+		
 		// get the dot for the robot after we have the coordinates for the yellow/blue pixels
 		double yellowDotX = 0.0, yellowDotY = 0.0;
 		int count = 0;
