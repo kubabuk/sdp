@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+package commands;
+
+>>>>>>> AI
 public class Command {
     private int speed;
     private int distAngle;

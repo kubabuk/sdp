@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 import java.util.ArrayList;
 
+=======
+package commands;
+
+import java.util.ArrayList;
+import geometry.*;
+>>>>>>> AI
 public class Queue {
 
     /* Need to: 
@@ -11,7 +18,11 @@ public class Queue {
     private ArrayList<Command> commandList;    
     private static int MAX = 900;
     private double previousAngle;
+<<<<<<< HEAD
 	
+=======
+	private Vector lastVector;
+>>>>>>> AI
 	
     public Queue(double initialAngle) {
         commandList = new ArrayList<Command>();
@@ -22,12 +33,19 @@ public class Queue {
         commandList.add(translate(v));
     }
     
+<<<<<<< HEAD
+=======
+    public void addKick(){
+    	commandList.add(new Command(CommandNames.KICK,MAX,0));
+    }
+>>>>>>> AI
     public Command pull() {
         return commandList.remove(0);
     }
     
     public Command translate(Vector v) {
         CommandNames e;
+<<<<<<< HEAD
         int speed;
         int distAngle;
         
@@ -45,6 +63,26 @@ public class Queue {
             distAngle = (int)(v.getMagnitude()/1.25);
         }
         
+=======
+        int speed = MAX;
+        int distAngle;
+        
+        if (v.getMagnitude() == 0) {
+            e = CommandNames.CHANGEANGLE;
+            distAngle = 0; //To do
+            previousAngle = 0; //To do
+        }
+        else if (true /* 1 something representing a kick*/) {
+            e = CommandNames.KICK;
+            speed = MAX;
+            distAngle = 0; //TODO
+        }
+        else {
+            e = CommandNames.MOVEFORWARD;
+            distAngle = (int)(v.getMagnitude()/1.25);
+        }
+        this.lastVector = v;
+>>>>>>> AI
         return new Command(e, speed, distAngle);
         
     }
