@@ -1,10 +1,6 @@
-package com.mydomain;
 import java.util.ArrayList;
 import java.util.List;
-
-import lejos.nxt.Button;
 import lejos.nxt.Motor;
-import lejos.nxt.ButtonListener;
 
 
 
@@ -14,21 +10,44 @@ public class Robot {
 		}
 	
 
-	
-	
-	final double angleConstant = 1.1;// Peak's constant 2.85; //constant, which is used to determine amount of degrees needed to turn the robot one angle. Depends on weight/wheels of robot.
-	final double distConstant = 5.65; // Peak's constant 10.2; // should be equal to 0.5 cm in real world // constant, which is used to determine how much move is needed to cross one square.
-	final int kickerAngle = 200;// depends on kicker, how much does kicker need to kick each time.
-	final int kickerReturn = 200;// depends on the kicker, whether it needs to return back.
+	final double defAngleConst= 3.05;
+	final double defDistConst= 10.2;
+	final double atkAngleConst = 1.1;
+	final double atkDistConst= 5.65;
+	final int defKickerAngle=100;
+	final int defReturnAngle = 110;
+	final int atkKickerAngle=180;
+	final int atkReturnAngle=0;
+	final boolean isDefender;
+	final double angleConstant; //constant, which is used to determine amount of degrees needed to turn the robot one angle. Depends on weight/wheels of robot.
+	final double distConstant; // should be equal to 0.5 cm in real world // constant, which is used to determine how much move is needed to cross one square.
+	final int kickerAngle;// depends on kicker, how much does kicker need to kick each time.
+	final int kickerReturn;// depends on the kicker, whether it needs to return back.
 	
 	List<Commands> commands = new ArrayList<Commands>(); 
 	
 	private int speed = 200;// default speed, can be changed in mid run;
-// possibly useless 	private int angle; // current angle, default is set along with creation of robot (and placement of nxt). May give an override to prevent desyncs, but that would make opportunities for mistakes.
-	public Robot()
+
+	public Robot(boolean isDefender)
 	{
-	  //Motor.A.setAcceleration(5000);
-	  //Motor.B.setAcceleration(5000);
+	  this.isDefender = isDefender;
+	  if (isDefender)
+	  {
+		  angleConstant = defAngleConst;
+		  distConstant = defDistConst;
+		  kickerAngle=defKickerAngle;
+		  kickerReturn=defReturnAngle;
+	  }
+	  else 
+	  {
+		  angleConstant = atkAngleConst;
+		  distConstant = atkDistConst;
+		  kickerAngle=atkKickerAngle;
+		  kickerReturn=atkReturnAngle;
+	  }
+	  Motor.A.setAcceleration(4000);
+	  Motor.B.setAcceleration(4000);
+	  Motor.C.setAcceleration(10000);
 	  Motor.A.setSpeed(speed);
 	  Motor.B.setSpeed(speed);
 	}
@@ -43,7 +62,6 @@ public class Robot {
 	
 	private void abort() //check if the robot needs to abandon all of its commands
 	{
-	   boolean isAbort= false; // assume it doesn't need to
 	   for (Commands current: commands) // go through all current commands
 	   {
 		   if (current.commandName ==CommandNames.ABORT) // if you find it, then initiate abort
@@ -65,7 +83,7 @@ public class Robot {
 	
 	private boolean Exit() // check if there is an exit somewhere in the command list, close the robot (maybe change it to be first program)
 	{
-		synchronized(this) {
+	   synchronized(this) {
 	   for (Commands current: commands)
 	   {
 		   if (current.commandName ==CommandNames.EXIT)
@@ -74,7 +92,7 @@ public class Robot {
 		   }
 	   }
 	   return false;
-		}
+	   }
 	}
 	
 	
@@ -82,7 +100,6 @@ public class Robot {
 	
 	public void run() // main thread, which works on stuff. takes a command, analyses it and does it.
 	{
-
 		while(!Exit())
 		{
 			Commands curcommand = null;
@@ -93,6 +110,9 @@ public class Robot {
 			if (curcommand!=null){
 			switch (curcommand.commandName)
 			{
+			case ABORT:
+				abort();
+				break;
 			case KICK:
 				kick(curcommand.firstArg);
 				break;
@@ -106,13 +126,8 @@ public class Robot {
 				turnAngle(curcommand.firstArg,curcommand.secondArg);
 				break;
 			}
-			}
-			
-			
-		}
-		
-		
-		
+			}		
+		}	
 	}
 	
 	private void setSpeed(int desiredSpeed)// set the current speed
@@ -130,13 +145,6 @@ public class Robot {
 	setSpeed(desiredSpeed);
 	Motor.A.rotate((int)(distance*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
 	Motor.B.rotate((int)(distance*distConstant),false); 
-	//try 
-	//{
-	//	int time = (int) (Math.abs(distance)*100000/desiredSpeed);
-	//	Thread.sleep(time);
-	//	System.out.println(time);
-	//}
-	//catch (Exception e){}
 	}
 	
 	private void turnAngle(int desiredSpeed, int toTurnAngle) // turn the angle
