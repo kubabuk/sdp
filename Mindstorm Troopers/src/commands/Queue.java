@@ -27,6 +27,9 @@ public class Queue {
     public void addKick(){
     	commandList.add(new Command(CommandNames.KICK,MAX,0));
     }
+    public void doNothing(){
+    	
+    }
     public Command pull() {
         return commandList.remove(0);
     }

@@ -49,5 +49,9 @@ public class Point {
 		
 		return (Math.abs(l.a()*x + l.b()*y +l.c())/Math.sqrt(l.a()*l.a()+l.b()*l.b()));
 	}
+	
+	public boolean isIn(Area a){
+		return true;
+	}
 
 }
