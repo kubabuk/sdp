@@ -1,5 +1,5 @@
 package strategy;
-import java.util.Queue;
+
 
 import world.World;
 import geometry.Point;
@@ -39,9 +39,9 @@ public class StrategyA {
 		
 			// get the coordinate of the ball and the attacker
 			Point b = w.getBall().getPos();
-			Point r = w.getRobot().getPos();
+			Point r = w.getAttacker().getPos();
 			// get the orientation of the attacker
-			Vector o = w.getRobot().getDir();
+			Vector o = w.getAttacker().getDir();
 			
 
 			// calculate the coordinate of the kick position
@@ -59,12 +59,12 @@ public class StrategyA {
 			
 			Vector Turning1 = new Vector(r,0,rp.getOrientation()-o.getOrientation()); 
 			//generate the queue of commands
-			Queue c = new Queue(o.getOrientation());
-			c.add(Turning1);
-			c.add(rp);
+			Queue c5 = new Queue(o.getOrientation());
+			c5.add(Turning1);
+			c5.add(rp);
 
 			
-			return c;
+			return c5;
 			
 		}
 		case 6:
@@ -79,18 +79,18 @@ public class StrategyA {
 			Vector pg = new Vector(new Point(0,0), kickdistance + bg.getMagnitude(),bg.getOrientation());
 			// turn the robot toward the kick position
 
-			Vector o = w.getRobot().getDir();
-			Point r = w.getRobot().getPos();
+			Vector o = w.getAttacker().getDir();
+			Point r = w.getAttacker().getPos();
 			Queue x = new Queue(10.1);
 			Queue c = new Queue(o.getOrientation());
 			Vector Turning2 = new Vector(r,0,pg.getOrientation()-o.getOrientation());
 		
 			//generate the queue of commands
-			Queue c = new Queue(o.getOrientation());
-			c.add(Turning2);
-			c.addkick(); //kick
+			Queue c6 = new Queue(o.getOrientation());
+			c6.add(Turning2);
+			c6.addKick(); //kick
 			
-			
+			return c6;
 			
 		}
 		case 7:
@@ -114,7 +114,7 @@ public class StrategyA {
 		
 		
 		
-		return a;
+		return new Queue(0.0);
 	}
 	
 	
