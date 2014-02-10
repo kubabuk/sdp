@@ -5,7 +5,7 @@ import geometry.Vector;
 public class StrategyD {
 	//strategy for defender
 	
-	public Action getAction(State s, World w)
+	public Queue getAction(State s, World w)
 	{
 		// this functions takes the state and decide what robots should do
 		Action a = new Action();
@@ -17,7 +17,7 @@ public class StrategyD {
 		//			3				defender got the ball
 		//			4						*
 		//          The states below are for attacker
-		//			5				ball goes to attacker
+		//			5				ball goes to attacker    -- milestone 3 
 		//			6				attacker near the ball   -- milestone 3
 		//			7				attacker got the ball  *
 		//			8						*
