@@ -4,25 +4,25 @@ import geometry.Vector;
 
 public class Robot {
 	
-	private Point coordinate;
+	private Point position;
 	private Vector orientation;
 	private int speed;
 	private boolean carryball;
 	
-	public Robot(Point coordinate, Vector orientation)
+	public Robot(Point position, Vector orientation)
 	{
-		this.coordinate = coordinate;
+		this.position = position;
 		this.orientation = orientation;
 	}
 	
 	public Point getPos() 
 	{
-		return coordinate;
+		return position;
 	}
 	
 	public void setPos(Point position) 
 	{
-		 this.coordinate = position;
+		 this.position = position;
 	}
 	
 	public Vector getDir()

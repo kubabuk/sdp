@@ -51,16 +51,16 @@ public class Vector {
 		this.x = end.getX()-begin.getX();
 		this.y = end.getY()-begin.getY();
 		this.r=(Math.sqrt(x*x +y*y));
-		this.theta=Math.atan2(x,y);
+		this.theta=Math.atan2(y,x);
 	}
 	
-	public Vector(Point origin, double bearing){
+	public Vector(Point origin, double length, double theta){
 		//Defines a UNIT vector given it's starting point and orientation (angle with xx' axis)
-		this.theta = bearing;
+		this.theta = theta;
 		this.origin = origin;
-		this.r = (1);
-		this.x = Math.cos(bearing);
-		this.y = Math.sin(bearing);
+		this.r = length;
+		this.x = r * Math.cos(theta);
+		this.y = r * Math.sin(theta);
 		this.destination = new Point(origin.getX()+x,origin.getY()+y);
 	}
 	
@@ -83,8 +83,47 @@ public class Vector {
 	public double angleFrom (Vector v){
 		//angle between vectors starting counting from Vector V.
 		
-		return Angle.toRange(this.theta-v.getOrientation());
+		return Angle.toRange2PI(this.theta-v.getOrientation());
 		
+		
+	}
+	
+	public Point intersectLong(Vector longtitude){
+		double x = longtitude.getOrigin().getX();
+		double y = 0;
+		if( Math.sin(this.theta)==0){
+			y = this.getOrigin().getY();
+		}
+		else{
+			Line l = this.getLine();
+			y = (l.c()-l.a()*x)/l.b();
+		}
+		return new Point(x,y);
+	}
+	
+	
+	public Point intersectLat(Vector latitude){
+		double y = latitude.getOrigin().getY();
+		double x= 0;
+		if( Math.cos(this.theta)==0){
+			x = this.getOrigin().getX();
+		}
+		else{
+			Line l = this.getLine();
+			x = (l.c()-l.b()*y)/l.a();
+		}
+		return new Point(x,y);
+	}
+	// To be used from the Command module for calculating turns.
+	
+	public static double innerAngle(Vector v1 , Vector v2){
+		double theta1 = v1.getOrientation();
+		double theta2 = v2.getOrientation();
+		return Math.acos(Math.cos(theta1-theta2));
+	}
+	
+	public Line getLine(){
+		return new Line(this);
 		
 	}
 		
@@ -218,8 +257,7 @@ public class Vector {
 */
 
 	public static void main(String[] args){
-		Vector test1 = new Vector( new Point(0,0), new Point(1,1));
-		Vector test2 = new Vector( new Point(0,0), Math.PI);
+
 	}
 	
 }

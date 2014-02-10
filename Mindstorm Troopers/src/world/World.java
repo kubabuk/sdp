@@ -19,6 +19,7 @@ public class World {
 	private Robot attacker,defender;
 	private  Point yellowLeft , yellowRight;
 	private  Point blueLeft , blueRight;
+	private Vector yLeft, yRight, bLeft, bRigth;
 	
 	private int pitchWidth, pitchHeight, pitchCentre;
 	// private double ballSpeedX, ballSpeedY;
@@ -64,6 +65,14 @@ public class World {
 		return this.yellowLeft;
 	}
 	
+	// method to represent the LEFT yellow robot as a vector
+	public void setVectorYellowLeft(Point dot)
+	{
+		int x = (int) ((100 * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((100 * (dot.getY() - this.pitchTop)) / this.pitchWidth);
+		this.yLeft = new Vector(yellowLeft, new Point(x,y));
+	}
+	
 	// methods for yellow robot RIGHT
 	
 	public void setYellowRight (Point yellowRightXY)
@@ -75,6 +84,15 @@ public class World {
 	{
 		return this.yellowRight;
 	}
+	
+	// method to represent the RIGHT yellow robot as a vector
+		public void setVectorYellowRight(Point dot)
+		{
+			int x = (int) ((100 * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
+			int y = (int) ((100 * (dot.getY() - this.pitchTop)) / this.pitchWidth);
+			this.yRight = new Vector(yellowRight, new Point(x,y));
+		}
+		
 
 	// methods for blue robot LEFT
 	public void setBlueLeft (Point blueLeftXY)
@@ -87,6 +105,15 @@ public class World {
 		return this.blueLeft;
 	}
 	
+	// method to represent the LEFT blue robot as a vector
+		public void setVectorBlueLeft(Point dot)
+		{
+			int x = (int) ((100 * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
+			int y = (int) ((100 * (dot.getY() - this.pitchTop)) / this.pitchWidth);
+			this.bLeft = new Vector(blueLeft, new Point(x,y));
+		}
+		
+	
 	// methods for blue robot RIGHT
 	
 	public void setBlueRight (Point blueRightXY)
@@ -98,6 +125,15 @@ public class World {
 	{
 		return this.blueRight;
 	}
+	
+	// method to represent the RIGHT blue robot as a vector
+		public void setVectorBlueRight(Point dot)
+		{
+			int x = (int) ((100 * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
+			int y = (int) ((100 * (dot.getY() - this.pitchTop)) / this.pitchWidth);
+			this.bRigth = new Vector(blueRight, new Point(x,y));
+		}
+		
 		
 	// methods for the video image
 	public void setImage(Image img)
