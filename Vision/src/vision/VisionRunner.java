@@ -201,7 +201,15 @@ public class VisionRunner implements CaptureCallback, WindowListener{
     	if (frameCount % 1000 < 10){
         	boundaries = imageProcessor.getBoundaries(tmp);	
     	}
+<<<<<<< HEAD:Mindstorm Troopers/src/vision/VisionRunner.java
     	Image img = imageProcessor.trackWorld(tmp, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
+=======
+    	Image img = tmp;
+    	if (frameCount > 10){
+    		img = imageProcessor.trackWorld(tmp, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
+    	}
+    	
+>>>>>>> vision:Vision/src/vision/VisionRunner.java
     		
             // draw the new frame onto the JLabel
         label.getGraphics().drawImage(img, 0, 0, width, height, null);
