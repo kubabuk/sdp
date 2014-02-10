@@ -38,8 +38,8 @@ public class StrategyD {
 		// There may be more states if needed, state with * are states that can possibly be removed
 		
 		
-		
-		switch (s.getState())
+		int milestone3 = 1;
+		switch (milestone3)//s.getState())
 		{
 		
 		case 1:
