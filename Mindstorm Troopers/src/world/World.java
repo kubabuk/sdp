@@ -15,7 +15,8 @@ public class World {
 	// image generated only once
 	private Image img;
 	
-	private Point ball ;
+	private Ball ball ;
+	private Robot attacker,defender;
 	private  Point yellowLeft , yellowRight;
 	private  Point blueLeft , blueRight;
 	
@@ -31,14 +32,26 @@ public class World {
 	// methods for ball
 	public void setBallXY (Point ballXY)
 	{
-		this.ball = ballXY;
+		Ball ball = new Ball(ballXY);
+		this.ball = ball;
 	}
 	
-	public Point getBall ()
+	public Ball getBall ()
 	{
 		return this.ball;
 	}
 
+	
+	public Robot getAttacker()
+	{
+		return this.attacker;
+	}
+	
+	public Robot getDefender()
+	{
+		return this.defender;
+	}
+		
 	
 	// methods for yellow robot LEFT
 	public void setYellowLeft (Point yellowLeftXY)
