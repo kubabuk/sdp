@@ -89,6 +89,7 @@ public class Vector {
 	}
 	
 	public Point intersectLong(Vector longtitude){
+		//Given a perpendicular vector longitude it returns the Point where this vector and longitude intersect
 		double x = longtitude.getOrigin().getX();
 		double y = 0;
 		if( Math.sin(this.theta)==0){

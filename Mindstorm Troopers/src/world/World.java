@@ -22,6 +22,11 @@ public class World {
 	private Vector yLeft, yRight, bLeft, bRigth;
 	
 	private int pitchWidth, pitchHeight, pitchCentre;
+	
+	//TODO: For vision. Maximum dimensions of the pitch! you might want to make these constants.
+	private double maxY, minY, maxX, minX;
+	//TODO: For Aris: finish the Area definition
+	private Area areaA , areaB, areaC, areaD;
 	// private double ballSpeedX, ballSpeedY;
 	// add everything for the pitch here
 	
@@ -168,6 +173,42 @@ public class World {
 
 	public int getPitchCentre() {
 		return pitchCentre;
+	}
+	
+	public Area getOurDefenderArea(){ //TODO!!
+		return areaA;
+	}
+
+	public double getMaxX() {
+		return maxX;
+	}
+
+	public void setMaxX(double maxX) {
+		this.maxX = maxX;
+	}
+
+	public double getMaxY() {
+		return maxY;
+	}
+
+	public void setMaxY(double maxY) {
+		this.maxY = maxY;
+	}
+
+	public double getMinY() {
+		return minY;
+	}
+
+	public void setMinY(double minY) {
+		this.minY = minY;
+	}
+
+	public double getMinX() {
+		return minX;
+	}
+
+	public void setMinX(double minX) {
+		this.minX = minX;
 	}
 	
 	/*

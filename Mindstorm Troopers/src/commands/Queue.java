@@ -38,6 +38,12 @@ public class Queue {
     public void addKick(){
     	commandList.add(new Command(CommandNames.KICK,MAX,0));
     }
+<<<<<<< HEAD
+>>>>>>> AI
+=======
+    public void doNothing(){
+    	
+    }
 >>>>>>> AI
     public Command pull() {
         return commandList.remove(0);
