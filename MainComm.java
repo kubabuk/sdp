@@ -1,6 +1,7 @@
 
 	import java.io.IOException;
 
+
 	import java.io.InputStream;
 	import java.io.OutputStream;
 	import java.util.ArrayList;
@@ -10,7 +11,7 @@
 	import lejos.pc.comm.NXTComm;
 	import lejos.pc.comm.NXTCommException;
 	import lejos.pc.comm.NXTCommFactory;
-import lejos.pc.comm.NXTInfo;
+	import lejos.pc.comm.NXTInfo;
 //import message listener
 
 	/**
