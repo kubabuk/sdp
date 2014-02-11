@@ -201,9 +201,6 @@ public class VisionRunner implements CaptureCallback, WindowListener{
     	if (frameCount % 1000 < 10){
         	boundaries = imageProcessor.getBoundaries(tmp);	
     	}
-
-//    	Image img = imageProcessor.trackWorld(tmp, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
-
     	Image img = tmp;
     	if (frameCount > 10){
     		img = imageProcessor.trackWorld(tmp, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);

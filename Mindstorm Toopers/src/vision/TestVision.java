@@ -8,7 +8,7 @@ public class TestVision {
 		world = new World();
 		while(true){
 			Thread.sleep(1000);
-			System.out.println(world.getYellowLeft().toString());
+			System.out.println(world.getyLeft().toString());
 		}
 	}
 }

@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import world.World;
 import geometry.Point;
+import geometry.Vector;
 
 public class ImageProcessor1 {
 
@@ -52,8 +53,6 @@ public class ImageProcessor1 {
 		int countYellowRight = 0;
 		int countBlueLeft = 0;
 		int countBlueRight = 0;
-		int[] coords_yellow = {1,1,1,1};
-		int[] coords_blue = {1,1,1,1};
 		int middleWidth = maxWidth - ((maxWidth - minWidth)/2);
 
 		for (int w = minWidth; w < middleWidth; w++) {
@@ -71,7 +70,7 @@ public class ImageProcessor1 {
 				}
 
 				// finding coordinates for YELLOW robots [ 0=leftx 1=lefty 2=rightx 3=righty ]
-				if (red > (blue + 40) && green > (blue + 40))
+				if (red > (blue + 30) && green > (blue + 30))
 				{
 //					img.setRGB(w,h,0);
 					yellowLeftX += (double)w;
@@ -138,242 +137,120 @@ public class ImageProcessor1 {
 		
 		
 		// get the dot for the left yellow robot after we have the coordinates for the yellow/blue pixels
-		double yellowDotX = 0.0, yellowDotY = 0.0;
-		int count = 0;
-		Boolean detected = false;
-		Boolean include = false;
-		int squareTop = 0;
-		int squareBottom = 0;
-		for(int w=(int) (yellowLeft.getX()-15); w<yellowLeft.getX()+15;w++){
-			for (int h =(int) (yellowLeft.getY()-20); h<yellowLeft.getY()+20;h++)
-			{
-				Color c = new Color(img.getRGB(w, h), true);
-				int blue = c.getBlue();
-				int green = c.getGreen();
-				int red = c.getRed();
-				float[] hsbColor = Color.RGBtoHSB(red, green, blue, null);
-				
-//				if(blue<60 && green<60 && red<60)
-				if (hsbColor[2] < 0.45)
-				{
-//					if (include){
-//						img.setRGB(w,h,255);
-//						yellowDotX = yellowDotX + w;
-//						yellowDotY = yellowDotY + h;
-//						count ++;
-//					}
-				} else {
-					squareTop = h;
-					break;
-				}
-			}
-			for (int h =(int) (yellowLeft.getY()+20); h>yellowLeft.getY()-20;h--)
-			{
-				Color c = new Color(img.getRGB(w, h), true);
-				int blue = c.getBlue();
-				int green = c.getGreen();
-				int red = c.getRed();
-				float[] hsbColor = Color.RGBtoHSB(red, green, blue, null);
-				
-//				if(blue<60 && green<60 && red<60)
-				if (hsbColor[2] < 0.45)
-				{
-//					if (include){
-//						img.setRGB(w,h,255);
-//						yellowDotX = yellowDotX + w;
-//						yellowDotY = yellowDotY + h;
-//						count ++;
-//					}
-				} else {
-					squareBottom = h;
-					break;
-				}
-			}
-			for (int h=squareTop; h<squareBottom;h++)
-			{
-				Color c = new Color(img.getRGB(w, h), true);
-				int blue = c.getBlue();
-				int green = c.getGreen();
-				int red = c.getRed();
-				float[] hsbColor = Color.RGBtoHSB(red, green, blue, null);
-				
-//				if(blue<60 && green<60 && red<60)
-				if (hsbColor[2] < 0.45)
-				{
-					img.setRGB(w,h,255);
-					yellowDotX = yellowDotX + w;
-					yellowDotY = yellowDotY + h;
-					count ++;
-				}
-			}
-			detected = false;
-			include = false;
-		}
-		Point yellowLeftDot = new Point(yellowDotX/(double)count, yellowDotY/(double)count);
+
+		Point yellowLeftDot = getDot(img, yellowLeft);
 		world.setVectorYellowLeft(yellowLeftDot);
 
 		// get the dot for the right yellow robot
-		yellowDotX = 0.0;
-		yellowDotY = 0.0;
-		squareTop = 0;
-		squareBottom = 0;
-		count = 0;
-		if (yellowLeft.getX() > 30 && yellowLeft.getY() > 30){
-			for(int w=(int) (yellowRight.getX()-20); w<yellowRight.getX()+20;w++){
-				for (int h =(int) (yellowRight.getY()-20); h<yellowRight.getY()+20;h++)
-				{
-					Color c = new Color(img.getRGB(w, h), true);
-					int blue = c.getBlue();
-					int green = c.getGreen();
-					int red = c.getRed();
-					float[] hsbColor = Color.RGBtoHSB(red, green, blue, null);
-					
-//					if(blue<60 && green<60 && red<60)
-					if (hsbColor[2] < 0.45)
-					{
-//						if (include){
-//							img.setRGB(w,h,255);
-//							yellowDotX = yellowDotX + w;
-//							yellowDotY = yellowDotY + h;
-//							count ++;
-//						}
-					} else {
-						squareTop = h;
-						break;
-					}
-				}
-				for (int h =(int) (yellowRight.getY()+20); h>yellowRight.getY()-20;h--)
-				{
-					Color c = new Color(img.getRGB(w, h), true);
-					int blue = c.getBlue();
-					int green = c.getGreen();
-					int red = c.getRed();
-					float[] hsbColor = Color.RGBtoHSB(red, green, blue, null);
-					
-//					if(blue<60 && green<60 && red<60)
-					if (hsbColor[2] < 0.45)
-					{
-//						if (include){
-//							img.setRGB(w,h,255);
-//							yellowDotX = yellowDotX + w;
-//							yellowDotY = yellowDotY + h;
-//							count ++;
-//						}
-					} else {
-						squareBottom = h;
-						break;
-					}
-				}
-				for (int h =squareTop; h<squareBottom;h++)
-				{
-					Color c = new Color(img.getRGB(w, h), true);
-					int blue = c.getBlue();
-					int green = c.getGreen();
-					int red = c.getRed();
-					float[] hsbColor = Color.RGBtoHSB(red, green, blue, null);
-					
-//					if(blue<60 && green<60 && red<60)
-					if (hsbColor[2] < 0.45)
-					{
-						img.setRGB(w,h,255);
-						yellowDotX = yellowDotX + w;
-						yellowDotY = yellowDotY + h;
-						count ++;
-					}
-				}
-				detected = false;
-				include = false;
-			}
-		}
-		
-		Point yellowRightDot = new Point(yellowDotX/(double)count, yellowDotY/(double)count);
+
+		Point yellowRightDot = getDot(img,yellowRight);
 		world.setVectorYellowRight(yellowRightDot);
 
 		// get the dot for the left blue robot
-		yellowDotX = 0.0;
-		yellowDotY = 0.0;
-		count = 0;
-		for(int w=(int) (blueLeft.getX()-20); w<coords_blue[0]+20;w++){
-			for (int h =(int) (blueLeft.getY()-20); h<blueLeft.getY()+20;h++)
-			{
-				Color c = new Color(img.getRGB(w, h), true);
-				int blue = c.getBlue();
-				int green = c.getGreen();
-				int red = c.getRed();
-				
-				if(blue<60 && green<60 && red<60)
-				{
-					img.setRGB(w,h,255);
-					yellowDotX = yellowDotX + w;
-					yellowDotY = yellowDotY + h;
-					count ++;
-					
-				}
-			}
-		}
-		Point blueLeftDot = new Point(yellowDotX/(double)count, yellowDotY/(double)count);
+
+		Point blueLeftDot = getDot(img,blueLeft);
 		world.setVectorBlueLeft(blueLeftDot);
 		
 		// get the dot for the right blue robot
-		yellowDotX = 0.0;
-		yellowDotY = 0.0;
-		count = 0;
-		if (blueRight.getX() > 30 && blueRight.getY() > 30){
-			for(int w=(int) (blueRight.getX()-20); w<blueRight.getX()+20;w++){
-				for (int h =(int) (blueRight.getY()-20); h<blueRight.getY()+20;h++)
-				{
-					Color c = new Color(img.getRGB(w, h), true);
-					int blue = c.getBlue();
-					int green = c.getGreen();
-					int red = c.getRed();
-					
-					if(blue<60 && green<60 && red<60)
-					{
-//						img.setRGB(w, h, 255);
-						yellowDotX = yellowDotX + w;
-						yellowDotY = yellowDotY + h;
-						count ++;
-						
-					}
-				}
-			}
-		}
-		Point blueRightDot = new Point(yellowDotX/(double)count, yellowDotY/(double)count);
+
+		Point blueRightDot = getDot(img,blueRight);
 		world.setVectorBlueRight(blueRightDot);
 				
 		// after setting coordinates, draw the elements on the image
 		Image image = drawEverything(img, ball, yellowLeft, yellowRight, blueLeft, blueRight, yellowLeftDot, yellowRightDot, blueLeftDot, blueRightDot);
 		
 		// calculate the speed of the ball on axis
-		speedX = (pavgRX - redX/((double)countRed))*20;
-		speedY = (pavgRY - redY/((double)countRed))*20;
-		pavgRX = redX/((double)countRed);
-		pavgRY = redY/((double)countRed);
+//		speedX = (pavgRX - redX/((double)countRed))*20;
+//		speedY = (pavgRY - redY/((double)countRed))*20;
+//		pavgRX = redX/((double)countRed);
+//		pavgRY = redY/((double)countRed);
 		
 		// set the final image
 		world.setImage(image);
 		return image;
 	}
 	
-	private static Image drawEverything(Image img, Point ball, Point yellowLeft, Point yellowRight, Point blueLeft, Point blueRight, Point yellowLeftDot, Point yellowRightDot, Point blueLeftDot, Point blueRightDot){
-//		img = drawCross(img, red, ball);
-//		img = drawCross(img, yellow, yellowLeft);
-//		img = drawCross(img, yellow, yellowRight);
-//		img = drawCross(img, blue, blueLeft);
-//		img = drawCross(img, blue, blueRight);
+	private static Point getDot(BufferedImage img, Point robot){
+		double totalBrightness = 0;
+		int windowSize = world.getWidth() / 100;
+		int xPosition = (int) (robot.getX() - (2.5*windowSize));
+		int yPosition = (int) (robot.getY() - (2.5*windowSize));
+		int bestX = xPosition;
+		int bestY = yPosition;
+		double bestBrightness = 1000000000;
+		for (int widthCount = 1; widthCount <= 5; widthCount++){
+			for (int heightCount = 1; heightCount <= 5; heightCount++){
+				for(int w = xPosition; w < xPosition + windowSize; w++){
+					for(int h = yPosition; h < yPosition + windowSize; h++){
+						Color c = new Color(img.getRGB(w, h), true);
+						int blue = c.getBlue();
+						int green = c.getGreen();
+						int red = c.getRed();
+						float[] hsbColor = Color.RGBtoHSB(red, green, blue, null);
+						totalBrightness += hsbColor[2];
+//						if(blue<60 && green<60 && red<60)
+//						if (hsbColor[2] < 0.35){
+//							img.setRGB(w,h,255);
+//							count++;
+//						}
+					}
+				}
+				if (totalBrightness < bestBrightness){
+					bestX = xPosition;
+					bestY = yPosition;
+					bestBrightness = (int) totalBrightness;
+				}
+				totalBrightness = 0;
+				yPosition += windowSize;
+			}
+			xPosition += windowSize;
+			yPosition = (int) (robot.getY() - (2.5*windowSize));
+		}
+		
+		Point robotDot = new Point(bestX + (windowSize/2), bestY + (windowSize/2));
+		return robotDot;
+	}
+	
+	private static BufferedImage drawEverything(BufferedImage img, Point ball, Point yellowLeft, Point yellowRight, Point blueLeft, Point blueRight, Point yellowLeftDot, Point yellowRightDot, Point blueLeftDot, Point blueRightDot){
+		img = drawCross(img, red, ball);
+		img = drawCross(img, yellow, yellowLeft);
+		img = drawCross(img, yellow, yellowRight);
+		img = drawCross(img, blue, blueLeft);
+		img = drawCross(img, blue, blueRight);
 		img = drawCross(img, white, yellowLeftDot);
 		img = drawCross(img, white, yellowRightDot);
-//		img = drawCross(img, white, blueLeftDot);
-//		img = drawCross(img, white, blueRightDot);
+		img = drawCross(img, white, blueLeftDot);
+		img = drawCross(img, white, blueRightDot);
+//		img = drawVector(img, yellow, world.getyLeft());
 		return img;
 	}
 	
-	private static Image drawCross(Image img, Color color, Point centre){
+	private static BufferedImage drawVector(BufferedImage img, Color color, Vector vector){
+		int startX = (int) vector.getOrigin().getX();
+		int startY = (int) vector.getOrigin().getY();
+		int endX = (int) vector.getDestination().getX();
+		int endY = (int) vector.getDestination().getY();
+		double m = 1;
+		if (endX != startX){
+			m = (endY - startY)/(endX - startX);	
+		}
+		double c = startY - (m * startX);
+		int y = 0;
+		for (int x = world.getPitchLeft(); x < world.getWidth() + world.getPitchLeft(); x++){
+			y = (int) ((m * x) + c);
+			if (y > world.getPitchTop() && y < (world.getPitchTop() + world.getHeight())){
+				img.setRGB(x, y, color.getRGB());
+			}
+		}
+		return img;
+	}
+	
+	private static BufferedImage drawCross(BufferedImage img, Color color, Point centre){
 		int x = (int) centre.getX();
 		int y = (int) centre.getY();
 		if (x > 50 && y > 50){
 			for (int w1 = x - 20; w1 < x + 20; w1++){
-				((BufferedImage) img).setRGB(w1, y, color.getRGB());
+				img.setRGB(w1, y, color.getRGB());
 			}
 			for (int h1 = y - 20; h1 < y + 20; h1++){
 				((BufferedImage) img).setRGB(x, h1, color.getRGB());
@@ -508,7 +385,6 @@ public class ImageProcessor1 {
 		int[] boundaries = getBoundaries(img);
 		int left = boundaries[0];
 		int top = boundaries[1];
-		int right = boundaries[2];
 		int bottom = boundaries[3];
 
 		for (int w = left + 50; w < img.getWidth(); w++){
