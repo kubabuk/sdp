@@ -13,14 +13,14 @@ public class AI {
 	public Queue aq,dq;
 	
 	
-	public AI()
+	public AI(World w)
 	{
 		this.lastattackerstate = new State(1);
 		this.lastdefenderstate = new State(0);
 		this.currentattackerstate = new State(1);
 		this.currentdefenderstate = new State(0);
 		
-		this.w = new World();
+		this.w = w;
 		this.aq = new Queue(w.getAttacker().getDir().getOrientation());
 		this.dq = new Queue(w.getDefender().getDir().getOrientation());
 	}

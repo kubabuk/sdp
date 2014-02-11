@@ -1,11 +1,10 @@
 package commands;
 
 import java.util.ArrayList;
-
 import java.util.ArrayList;
 import geometry.*;
 
-public class Queue {
+public class Queue{
 
     /* Need to: 
 	    - Finish implementing Kick
@@ -16,8 +15,7 @@ public class Queue {
     private ArrayList<Command> commandList;    
     private static int MAX = 900;
     private double previousAngle;
-
-	private Vector lastVector;
+    private Vector lastVector;
 
 	
     public Queue(double initialAngle) {
@@ -37,7 +35,9 @@ public class Queue {
     public void doNothing(){
     	
     }
-
+    public void abort(){
+    	commandList.add(new Command(CommandNames.ABORT,0,0));
+    }
     public Command pull() {
         return commandList.remove(0);
     }
