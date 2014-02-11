@@ -62,7 +62,7 @@ public class ImageProcessor1 {
 				int green = c.getGreen();
 				int red = c.getRed();
 
-				if (red > (blue + 120) && red > (green + 120)){
+				if (red > (blue + 90) && red > (green + 90)){
 //					img.setRGB(w, h, 0);
 					redX += (double)w;
 					redY += (double)h;
@@ -95,7 +95,7 @@ public class ImageProcessor1 {
 				int green = c.getGreen();
 				int red = c.getRed();
 
-				if (red > (blue + 120) && red > (green + 120)){
+				if (red > (blue + 90) && red > (green + 90)){
 //					img.setRGB(w, h, 0);
 					redX += (double)w;
 					redY += (double)h;
@@ -166,6 +166,7 @@ public class ImageProcessor1 {
 //		pavgRY = redY/((double)countRed);
 		
 		// set the final image
+		world.setBallDirection();
 		world.setImage(image);
 		return image;
 	}

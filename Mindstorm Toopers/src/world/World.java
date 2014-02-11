@@ -29,6 +29,12 @@ public class World {
 	private Vector yLeft, yRight, bLeft, bRight;
 	private int pitchLeft, pitchTop;
 	
+	private int gridConstant;
+	
+	// Used to track the direction of ball movement.
+	private Point lastBallLocation;
+	private int count;
+	
 	//TODO: For vision. Maximum dimensions of the pitch! you might want to make these constants.
 	private double maxY, minY, maxX, minX;
 	//TODO: For Aris: finish the Area definition
@@ -41,6 +47,9 @@ public class World {
 		// initialize the world here
 		runVision(this);
 		ballObject = new Ball(new Point(10,10));
+		lastBallLocation = new Point(10,10);
+		gridConstant = 474;
+		count = 0;
 	}
 	
 	public void runVision(final World world){
@@ -55,14 +64,25 @@ public class World {
 	// methods for ball
 	public void setBallXY (Point ballXY)
 	{
-		int x = (int) ((100 * (ballXY.getX() - this.pitchLeft)) / this.pitchWidth);
-		int y = (int) ((100 * (ballXY.getY() - this.pitchTop)) / this.pitchWidth);
+		int x = (int) ((gridConstant * (ballXY.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((gridConstant * (ballXY.getY() - this.pitchTop)) / this.pitchWidth);
 		ballObject.setPos(new Point(x,y));
 		this.ball = new Point(x,y);
 	}
 	
-	public void setBallTrajectory (Vector ballTrajectory){
-		ballObject.setDir(ballTrajectory);
+	public void setBallDirection (){
+		if (count == 10){
+			Vector direction = new Vector(lastBallLocation,ballObject.getPos());
+			ballObject.setDir(direction);
+			lastBallLocation = ballObject.getPos();
+			count = 0;
+		} else {
+			count++;
+		}
+	}
+	
+	public Vector getBallDirection(){
+		return ballObject.getDir();
 	}
 	
 	public Point getBallPos ()
@@ -87,22 +107,22 @@ public class World {
 	// methods for yellow robot LEFT
 	public void setYellowLeft (Point yellowLeftXY)
 	{
-		int x = (int) ((100 * (yellowLeftXY.getX() - this.pitchLeft)) / this.pitchWidth);
-		int y = (int) ((100 * (yellowLeftXY.getY() - this.pitchTop)) / this.pitchWidth);
+		int x = (int) ((gridConstant * (yellowLeftXY.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((gridConstant * (yellowLeftXY.getY() - this.pitchTop)) / this.pitchWidth);
 		this.yellowLeft = new Point(x,y);
 	}
 	
 	public void setVectorYellowLeft(Point dot)
 	{
-		int x = (int) ((100 * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
-		int y = (int) ((100 * (dot.getY() - this.pitchTop)) / this.pitchWidth);
+		int x = (int) ((gridConstant * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((gridConstant * (dot.getY() - this.pitchTop)) / this.pitchWidth);
 		this.setyLeft(new Vector(new Point(x,y), yellowLeft));
 	}
 	
 	public void setVectorYellowRight(Point dot)
 	{
-		int x = (int) ((100 * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
-		int y = (int) ((100 * (dot.getY() - this.pitchTop)) / this.pitchWidth);
+		int x = (int) ((gridConstant * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((gridConstant * (dot.getY() - this.pitchTop)) / this.pitchWidth);
 		this.setyRight(new Vector(new Point(x,y), yellowRight));
 	}
 	
@@ -115,8 +135,8 @@ public class World {
 	
 	public void setYellowRight (Point yellowRightXY)
 	{
-		int x = (int) ((100 * (yellowRightXY.getX() - this.pitchLeft)) / this.pitchWidth);
-		int y = (int) ((100 * (yellowRightXY.getY() - this.pitchTop)) / this.pitchWidth);
+		int x = (int) ((gridConstant * (yellowRightXY.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((gridConstant * (yellowRightXY.getY() - this.pitchTop)) / this.pitchWidth);
 		this.yellowRight = new Point(x,y);
 	}
 	
@@ -128,15 +148,15 @@ public class World {
 	// methods for blue robot LEFT
 	public void setBlueLeft (Point blueLeftXY)
 	{
-		int x = (int) ((100 * (blueLeftXY.getX() - this.pitchLeft)) / this.pitchWidth);
-		int y = (int) ((100 * (blueLeftXY.getY() - this.pitchTop)) / this.pitchWidth);
+		int x = (int) ((gridConstant * (blueLeftXY.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((gridConstant * (blueLeftXY.getY() - this.pitchTop)) / this.pitchWidth);
 		this.blueLeft = new Point(x,y);
 	}
 	
 	public void setVectorBlueLeft(Point dot)
 	{
-		int x = (int) ((100 * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
-		int y = (int) ((100 * (dot.getY() - this.pitchTop)) / this.pitchWidth);
+		int x = (int) ((gridConstant * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((gridConstant * (dot.getY() - this.pitchTop)) / this.pitchWidth);
 		this.setbLeft(new Vector(new Point(x,y), blueLeft));
 	}
 	
@@ -149,15 +169,15 @@ public class World {
 	
 	public void setBlueRight (Point blueRightXY)
 	{
-		int x = (int) ((100 * (blueRightXY.getX() - this.pitchLeft)) / this.pitchWidth);
-		int y = (int) ((100 * (blueRightXY.getY() - this.pitchTop)) / this.pitchWidth);
+		int x = (int) ((gridConstant * (blueRightXY.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((gridConstant * (blueRightXY.getY() - this.pitchTop)) / this.pitchWidth);
 		this.blueRight = new Point(x,y);
 	}
 	
 	public void setVectorBlueRight(Point dot)
 	{
-		int x = (int) ((100 * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
-		int y = (int) ((100 * (dot.getY() - this.pitchTop)) / this.pitchWidth);
+		int x = (int) ((gridConstant * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((gridConstant * (dot.getY() - this.pitchTop)) / this.pitchWidth);
 		this.setbRight(new Vector(new Point(x,y), blueRight));
 	}
 	
