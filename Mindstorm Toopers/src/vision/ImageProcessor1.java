@@ -23,6 +23,8 @@ public class ImageProcessor1 {
 	static double speedY = 0;
 	
 	private static Point[] lastDot;
+	private static Point[] lastRobot;
+	private static Point lastBall;
 	
 	private static World world;
 /*
@@ -46,6 +48,12 @@ public class ImageProcessor1 {
 		lastDot[1] = new Point(200,200);
 		lastDot[2] = new Point(200,200);
 		lastDot[3] = new Point(200,200);
+		lastRobot = new Point[4];
+		lastRobot[0] = new Point(200,200);
+		lastRobot[1] = new Point(200,200);
+		lastRobot[2] = new Point(200,200);
+		lastRobot[3] = new Point(200,200);
+		lastBall = new Point(200,200);
 	}
 	
 	public static Image trackWorld(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
@@ -69,7 +77,7 @@ public class ImageProcessor1 {
 				int green = c.getGreen();
 				int red = c.getRed();
 
-				if (red > (blue + 90) && red > (green + 90)){
+				if (red > (blue + 80) && red > (green + 80)){
 //					img.setRGB(w, h, 0);
 					redX += (double)w;
 					redY += (double)h;
@@ -102,7 +110,7 @@ public class ImageProcessor1 {
 				int green = c.getGreen();
 				int red = c.getRed();
 
-				if (red > (blue + 90) && red > (green + 90)){
+				if (red > (blue + 80) && red > (green + 80)){
 //					img.setRGB(w, h, 0);
 					redX += (double)w;
 					redY += (double)h;
@@ -131,15 +139,103 @@ public class ImageProcessor1 {
 		
 		// find red dots and get the average to find out the location of the ball
 		Point ball = new Point (redX/((double)countRed), redY/((double)countRed));
-		world.setBallXY(ball);
+		if ((Math.abs(ball.getX() - lastBall.getX()) + Math.abs(ball.getY() - lastBall.getY())) > 10){
+			if (ball.getX() > lastBall.getX()){
+				ball = new Point(lastBall.getX() + 3, ball.getY());
+			} else {
+				ball = new Point(lastBall.getX() - 3, ball.getY());
+			}
+			if (ball.getY() > lastBall.getY()){
+				ball = new Point(ball.getX(), lastBall.getY() + 3);
+			} else {
+				ball = new Point(ball.getX(), lastBall.getY() - 3);
+			}
+			lastBall = ball;
+			world.setBallXY(ball);
+		} else {
+			lastBall = ball;
+			world.setBallXY(ball);
+		}
+//		world.setBallXY(ball);
 		Point yellowLeft = new Point(yellowLeftX/((double)countYellowLeft),yellowLeftY/((double)countYellowLeft));
-		world.setYellowLeft(yellowLeft);
+		if ((Math.abs(yellowLeft.getX() - lastRobot[0].getX()) + Math.abs(yellowLeft.getY() - lastRobot[0].getY())) > 10){
+			if (yellowLeft.getX() > lastRobot[0].getX()){
+				yellowLeft = new Point(lastRobot[0].getX() + 3, yellowLeft.getY());
+			} else {
+				yellowLeft = new Point(lastRobot[0].getX() - 3, yellowLeft.getY());
+			}
+			if (yellowLeft.getY() > lastRobot[0].getY()){
+				yellowLeft = new Point(yellowLeft.getX(), lastRobot[0].getY() + 3);
+			} else {
+				yellowLeft = new Point(yellowLeft.getX(), lastRobot[0].getY() - 3);
+			}
+			lastRobot[0] = yellowLeft;
+			world.setYellowLeft(yellowLeft);
+		} else {
+			lastRobot[0] = yellowLeft;
+			world.setYellowLeft(yellowLeft);
+		}
+//		world.setYellowLeft(yellowLeft);
 		Point yellowRight = new Point (yellowRightX/((double)countYellowRight),yellowRightY/((double)countYellowRight));
-		world.setYellowRight(yellowRight);
+		if ((Math.abs(yellowRight.getX() - lastRobot[1].getX()) + Math.abs(yellowRight.getY() - lastRobot[1].getY())) > 10){
+			if (yellowRight.getX() > lastRobot[1].getX()){
+				yellowRight = new Point(lastRobot[1].getX() + 3, yellowRight.getY());
+			} else {
+				yellowRight = new Point(lastRobot[1].getX() - 3, yellowRight.getY());
+			}
+			if (yellowRight.getY() > lastRobot[1].getY()){
+				yellowRight = new Point(yellowRight.getX(), lastRobot[1].getY() + 3);
+			} else {
+				yellowRight = new Point(yellowRight.getX(), lastRobot[1].getY() - 3);
+			}
+			lastRobot[1] = yellowRight;
+			world.setYellowRight(yellowRight);
+		} else {
+			lastRobot[1] = yellowRight;
+			world.setYellowRight(yellowRight);
+		}
+//		world.setYellowRight(yellowRight);
+		
+		
 		Point blueLeft = new Point(blueLeftX/((double)countBlueLeft),blueLeftY/((double)countBlueLeft));
-		world.setBlueLeft(blueLeft);
+		if ((Math.abs(blueLeft.getX() - lastRobot[2].getX()) + Math.abs(blueLeft.getY() - lastRobot[2].getY())) > 10){
+			if (blueLeft.getX() > lastRobot[2].getX()){
+				blueLeft = new Point(lastRobot[2].getX() + 3, blueLeft.getY());
+			} else {
+				blueLeft = new Point(lastRobot[2].getX() - 3, blueLeft.getY());
+			}
+			if (blueLeft.getY() > lastRobot[2].getY()){
+				blueLeft = new Point(blueLeft.getX(), lastRobot[2].getY() + 3);
+			} else {
+				blueLeft = new Point(blueLeft.getX(), lastRobot[2].getY() - 3);
+			}
+			lastRobot[2] = blueLeft;
+			world.setBlueLeft(blueLeft);
+		} else {
+			lastRobot[2] = blueLeft;
+			world.setBlueLeft(blueLeft);
+		}
+//		world.setBlueLeft(blueLeft);
+		
 		Point blueRight = new Point(blueRightX/((double)countBlueRight),blueRightY/((double)countBlueRight));
-		world.setBlueRight(blueRight);
+		if ((Math.abs(blueRight.getX() - lastRobot[3].getX()) + Math.abs(blueRight.getY() - lastRobot[3].getY())) > 10){
+			if (blueRight.getX() > lastRobot[3].getX()){
+				blueRight = new Point(lastRobot[3].getX() + 3, blueRight.getY());
+			} else {
+				blueRight = new Point(lastRobot[3].getX() - 3, blueRight.getY());
+			}
+			if (blueRight.getY() > lastRobot[3].getY()){
+				blueRight = new Point(blueRight.getX(), lastRobot[3].getY() + 3);
+			} else {
+				blueRight = new Point(blueRight.getX(), lastRobot[3].getY() - 3);
+			}
+			lastRobot[3] = blueRight;
+			world.setBlueRight(blueRight);
+		} else {
+			lastRobot[3] = blueRight;
+			world.setBlueRight(blueRight);
+		}
+//		world.setBlueRight(blueRight);
 
 		
 		
@@ -202,7 +298,7 @@ public class ImageProcessor1 {
 			}
 //			blueLeftDot = new Point((blueLeftDot.getX() + lastDot[2].getX())/2, (blueLeftDot.getY() + lastDot[2].getY())/2);
 			lastDot[2] = blueLeftDot;
-			world.setVectorBlueLeft(blueLeftDot);
+			world.setBlueLeft(blueLeftDot);
 		} else {
 			lastDot[2] = blueLeftDot;
 			world.setVectorBlueLeft(blueLeftDot);
