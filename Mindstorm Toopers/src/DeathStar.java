@@ -24,14 +24,22 @@ public class DeathStar {
 		//ANDY HELP
 		try {
 			MainComm theForceDef = new MainComm(1);
-			MainComm theForceAttack = new MainComm(2);
+//			MainComm theForceAttack = new MainComm(2);
 			
 			while (flag) {
 				emperor.update();
 				
 				Command cmdDefend = emperor.defenderpull();
-				Command cmdAttack = emperor.attackerpull();
+//				Command cmdAttack = emperor.attackerpull();
+				//System.out.println(cmdDefend.getCommand());
+				if(!cmdDefend.isNothing()){
+					
+					theForceDef.sendMessage(cmdDefend.getCommand(), 
+							cmdDefend.getSpeed(), cmdDefend.getDistAngle());
+					
+				}
 				
+<<<<<<< HEAD
 				sendArgumentsDef[0] = cmdDefend.getSpeed();
 				sendArgumentsDef[1] = cmdDefend.getDistAngle();
 				
@@ -42,6 +50,11 @@ public class DeathStar {
 				
 				theForceAttack.sendMessage(cmdAttack.getCommand(), 
 						sendArgumentsAttk);
+=======
+				
+//				theForceAttack.sendMessage(cmdAttack.getCommand(), 
+//						cmdAttack.getSpeed(), cmdAttack.getDistAngle());
+>>>>>>> e7ef3b331d8a8c8fe739af78c04733966ada7b78
 			}
 			
 		} catch (IOException e) {
