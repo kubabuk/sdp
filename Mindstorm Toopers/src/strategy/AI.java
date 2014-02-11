@@ -10,7 +10,7 @@ public class AI {
 	
 	private World w;
 	private State lastattackerstate, lastdefenderstate, currentattackerstate, currentdefenderstate;
-	private Queue aq,dq;
+	public Queue aq,dq;
 	
 	
 	public AI()
@@ -30,8 +30,8 @@ public class AI {
 		this.currentattackerstate.update(w);
 		this.currentdefenderstate.update(w);
 		
-		if (currentattackerstate != lastattackerstate) aq = StrategyA.getAction(currentattackerstate,w);
-		if (currentdefenderstate != lastdefenderstate) dq = StrategyD.getAction(currentdefenderstate,w);
+		StrategyA.getAction(currentattackerstate,w, aq);
+		StrategyD.getAction(currentdefenderstate,w, dq);
 		
 	
 		

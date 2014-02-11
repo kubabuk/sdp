@@ -12,7 +12,7 @@ public class StrategyD {
 	//strategy for attacker
 	
 
-	public static Queue getAction(State s , World w)
+	public static void getAction(State s , World w, Queue dq)
 	{
 		// this functions takes the state and decide what robots should do
 		
@@ -45,7 +45,6 @@ public class StrategyD {
 			Point b = ball.getPos();
 			Robot ourDef = w.getDefender();
 			Point r = ourDef.getPos();
-			Queue dq = new Queue(ourDef.getDir().getOrientation());
 			Area myArea = w.getOurDefenderArea();
 			
 			while(ball.isMoving()){
@@ -76,12 +75,12 @@ public class StrategyD {
 				}
 				
 			}
-				return dq;
+			
 			}
 		
 		default:
 			{
-				return new Queue(0.0);
+			
 			}		
 		}		
 	}	
