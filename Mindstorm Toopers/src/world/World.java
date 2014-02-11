@@ -86,10 +86,10 @@ public class World {
 		if (count == 10){
 			Vector direction = new Vector(lastBallLocation,ballObject.getPos());
 			ballObject.setDir(direction);
-			if ((direction.getX() == 0) && (direction.getY() == 0)){
-				ballObject.setMoving(false);
-			} else {
+			if (Math.abs(direction.getX() + direction.getY()) > 2){
 				ballObject.setMoving(true);
+			} else {
+				ballObject.setMoving(false);
 			}
 			lastBallLocation = ballObject.getPos();
 			count = 0;

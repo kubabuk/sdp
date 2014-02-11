@@ -147,7 +147,17 @@ public class ImageProcessor1 {
 
 		Point yellowLeftDot = getDot(img, yellowLeft);
 		if ((Math.abs(yellowLeftDot.getX() - lastDot[0].getX()) + Math.abs(yellowLeftDot.getY() - lastDot[0].getY())) > 10){
-			yellowLeftDot = new Point((yellowLeftDot.getX() + lastDot[0].getX())/2, (yellowLeftDot.getY() + lastDot[0].getY())/2);
+			if (yellowLeftDot.getX() > lastDot[0].getX()){
+				yellowLeftDot = new Point(lastDot[0].getX() + 3, yellowLeftDot.getY());
+			} else {
+				yellowLeftDot = new Point(lastDot[0].getX() - 3, yellowLeftDot.getY());
+			}
+			if (yellowLeftDot.getY() > lastDot[0].getY()){
+				yellowLeftDot = new Point(yellowLeftDot.getX(), lastDot[0].getY() + 3);
+			} else {
+				yellowLeftDot = new Point(yellowLeftDot.getX(), lastDot[0].getY() - 3);
+			}
+//			yellowLeftDot = new Point((yellowLeftDot.getX() + lastDot[0].getX())/2, (yellowLeftDot.getY() + lastDot[0].getY())/2);
 			lastDot[0] = yellowLeftDot;
 			world.setVectorYellowLeft(yellowLeftDot);
 		} else {
@@ -158,7 +168,17 @@ public class ImageProcessor1 {
 
 		Point yellowRightDot = getDot(img,yellowRight);
 		if ((Math.abs(yellowRightDot.getX() - lastDot[1].getX()) + Math.abs(yellowRightDot.getY() - lastDot[1].getY())) > 5){
-			yellowLeftDot = new Point((yellowRightDot.getX() + lastDot[1].getX())/2, (yellowRightDot.getY() + lastDot[1].getY())/2);
+			if (yellowRightDot.getX() > lastDot[1].getX()){
+				yellowRightDot = new Point(lastDot[1].getX() + 3, yellowRightDot.getY());
+			} else {
+				yellowRightDot = new Point(lastDot[1].getX() - 3, yellowRightDot.getY());
+			}
+			if (yellowRightDot.getY() > lastDot[1].getY()){
+				yellowRightDot = new Point(yellowRightDot.getX(), lastDot[1].getY() + 3);
+			} else {
+				yellowRightDot = new Point(yellowRightDot.getX(), lastDot[1].getY() - 3);
+			}
+//			yellowLeftDot = new Point((yellowRightDot.getX() + lastDot[1].getX())/2, (yellowRightDot.getY() + lastDot[1].getY())/2);
 			lastDot[1] = yellowRightDot;
 			world.setVectorYellowRight(yellowRightDot);
 		} else {
@@ -170,7 +190,17 @@ public class ImageProcessor1 {
 
 		Point blueLeftDot = getDot(img,blueLeft);
 		if ((Math.abs(blueLeftDot.getX() - lastDot[2].getX()) + Math.abs(blueLeftDot.getY() - lastDot[2].getY())) > 5){
-			blueLeftDot = new Point((blueLeftDot.getX() + lastDot[2].getX())/2, (blueLeftDot.getY() + lastDot[2].getY())/2);
+			if (blueLeftDot.getX() > lastDot[2].getX()){
+				blueLeftDot = new Point(lastDot[2].getX() + 3, blueLeftDot.getY());
+			} else {
+				blueLeftDot = new Point(lastDot[2].getX() - 3, blueLeftDot.getY());
+			}
+			if (blueLeftDot.getY() > lastDot[2].getY()){
+				blueLeftDot = new Point(blueLeftDot.getX(), lastDot[2].getY() + 3);
+			} else {
+				blueLeftDot = new Point(blueLeftDot.getX(), lastDot[2].getY() - 3);
+			}
+//			blueLeftDot = new Point((blueLeftDot.getX() + lastDot[2].getX())/2, (blueLeftDot.getY() + lastDot[2].getY())/2);
 			lastDot[2] = blueLeftDot;
 			world.setVectorBlueLeft(blueLeftDot);
 		} else {
@@ -182,7 +212,17 @@ public class ImageProcessor1 {
 
 		Point blueRightDot = getDot(img,blueRight);
 		if ((Math.abs(blueRightDot.getX() - lastDot[3].getX()) + Math.abs(blueRightDot.getY() - lastDot[3].getY())) > 5){
-			blueRightDot = new Point((blueRightDot.getX() + lastDot[3].getX())/2, (blueRightDot.getY() + lastDot[3].getY())/2);
+			if (blueRightDot.getX() > lastDot[3].getX()){
+				blueRightDot = new Point(lastDot[3].getX() + 3, blueRightDot.getY());
+			} else {
+				blueRightDot = new Point(lastDot[3].getX() - 3, blueRightDot.getY());
+			}
+			if (blueRightDot.getY() > lastDot[3].getY()){
+				blueRightDot = new Point(blueRightDot.getX(), lastDot[3].getY() + 3);
+			} else {
+				blueRightDot = new Point(blueRightDot.getX(), lastDot[3].getY() - 3);
+			}
+//			blueRightDot = new Point((blueRightDot.getX() + lastDot[3].getX())/2, (blueRightDot.getY() + lastDot[3].getY())/2);
 			lastDot[3] = blueRightDot;
 			world.setVectorBlueRight(blueRightDot);
 		} else {

@@ -8,9 +8,8 @@ public class TestVision {
 		world = new World(true, true);
 		Thread.sleep(5000);
 		while(true){
-			Thread.sleep(1000);
-			System.out.println(world.getDefenderDir().toString());
-			System.out.println(world.getBallPos().toString());
+			Thread.sleep(200);
+			System.out.println(world.getBall().isMoving());
 		}
 	}
 }
