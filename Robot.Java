@@ -13,11 +13,13 @@ public class Robot {
 	final double defAngleConst= 3.05;
 	final double defDistConst= 10.2;
 	final double atkAngleConst = 1.1;
-	final double atkDistConst= 5.65;
+	final double atkDistConst= 5.75;
 	final int defKickerAngle=100;
 	final int defReturnAngle = 110;
-	final int atkKickerAngle=180;
+	final int atkKickerAngle=-180;
 	final int atkReturnAngle=0;
+	final int atkspeed=100;
+	final int defspeed=900;
 	final boolean isDefender;
 	final double angleConstant; //constant, which is used to determine amount of degrees needed to turn the robot one angle. Depends on weight/wheels of robot.
 	final double distConstant; // should be equal to 0.5 cm in real world // constant, which is used to determine how much move is needed to cross one square.
@@ -37,6 +39,7 @@ public class Robot {
 		  distConstant = defDistConst;
 		  kickerAngle=defKickerAngle;
 		  kickerReturn=defReturnAngle;
+		  speed = defspeed;
 	  }
 	  else 
 	  {
@@ -44,17 +47,19 @@ public class Robot {
 		  distConstant = atkDistConst;
 		  kickerAngle=atkKickerAngle;
 		  kickerReturn=atkReturnAngle;
+		  speed=atkspeed;
 	  }
-	  Motor.A.setAcceleration(4000);
-	  Motor.B.setAcceleration(4000);
+	  Motor.A.setAcceleration(3000);
+	  Motor.B.setAcceleration(3000);
 	  Motor.C.setAcceleration(10000);
 	  Motor.A.setSpeed(speed);
 	  Motor.B.setSpeed(speed);
+	  
 	}
 	
 	private void kick(int speed)
 	{
-	   Motor.C.setSpeed(speed);
+	   Motor.C.setSpeed(900);
 	   Motor.C.rotate(-kickerAngle);
 	   Motor.C.rotate(kickerReturn,true);
 	   
@@ -100,7 +105,8 @@ public class Robot {
 	
 	public void run() // main thread, which works on stuff. takes a command, analyses it and does it.
 	{
-		while(!Exit())
+		boolean isExit=false;
+		while(!isExit)
 		{
 			Commands curcommand = null;
 			synchronized(this) {
@@ -126,7 +132,10 @@ public class Robot {
 				turnAngle(curcommand.firstArg,curcommand.secondArg);
 				break;
 			case UPDATEANGLE:
-				setAngle(curcommand.firstArg);
+				setAngle((curcommand.firstArg*360/256));
+				break;
+			case EXIT:
+				isExit=true;
 				break;
 			}
 			}		
@@ -135,7 +144,6 @@ public class Robot {
 	
 	private void setSpeed(int desiredSpeed)// set the current speed
 	{
-		  speed = desiredSpeed;
 		  Motor.A.setSpeed(desiredSpeed);
 		  Motor.B.setSpeed(desiredSpeed);
 	}
@@ -148,20 +156,25 @@ public class Robot {
 
 	private void moveDistance(int desiredSpeed,int distance) //Move forward the distance at desiredSpeed
 	{
-	setSpeed(desiredSpeed);
+	//setSpeed(desiredSpeed);
+	setSpeed(speed);
 	Motor.A.rotate((int)(distance*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
 	Motor.B.rotate((int)(distance*distConstant),false); 
 	}
 	
 	private void turnAngle(int desiredSpeed, int toTurnAngle) // turn the angle
 	{
-		    setSpeed(desiredSpeed);
-		    System.out.println((int)(angleConstant*toTurnAngle));
+		    //setSpeed(desiredSpeed);
+		    setSpeed(75);
+		    toTurnAngle= toTurnAngle*360/256;
 		   
 		    int tempAngle1=toTurnAngle-curAngle;
 		    int tempAngle2=toTurnAngle-curAngle-360;
 		    int tempAngle3=toTurnAngle-curAngle+360;
-		    
+		    System.out.println(curAngle);
+		    System.out.println(tempAngle1);
+		    System.out.println(tempAngle2);
+		    System.out.println(tempAngle3);
 		    if (Math.abs(tempAngle1)<Math.abs(tempAngle2)&& Math.abs(tempAngle1)<Math.abs(tempAngle3))
 		    {
 				Motor.A.rotate((int)(angleConstant*tempAngle1),true);
@@ -177,7 +190,7 @@ public class Robot {
 				Motor.A.rotate((int)(angleConstant*tempAngle3),true);
 				Motor.B.rotate((int)(-angleConstant*tempAngle3));	    	
 		    }
-			curAngle = toTurnAngle;
+			curAngle = toTurnAngle%360;
 	}
 
 }
