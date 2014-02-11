@@ -1,42 +1,30 @@
+
+
+
 import com.mydomain.Robot.CommandNames;
 import lejos.nxt.Button;
 import lejos.nxt.ButtonListener;
 
 
-public class AtkRobot {    
-	
-	private static Communicator mCont;
-	
+
+
+public class AtkRobot {        	
+		 private static Communicator mCont;
 	     public static void main(String[] args) {
 	     final Robot nxt = new Robot(false);
-	     
-	     
-	 //add handling here. Bluetooth listener with all the command kicks. 
-	    // example (not sure about the next line)
-	    // smth.addBluetoothListener(new BluetoothListener){ // depends on how bluetooth works
-	    // public void messageReceived(Commands command (or CommandNames code, int arg1, int arg2)
-	    // {
-	    // nxt.addCommand(command); depending on how message is received this or line below;
-	    // nxt.addCommand(newCommands(code,arg1,arg2));
-	    // can add smth extra to print on screen when command is received.
-	    // });
-	    // }
-	    // nxt.run(); // necessary, this starts the thread of the robot.
-	     
-	     		mCont = new BComm(new MessageListener() {
-	         	//Button.ENTER.addButtonListener(new ButtonListener() {
-	        	
-	            		@Override
-	            		public void receiveMessage(CommandNames op, short[] args, Communicator controler) {
-          			nxt.addCommand(new Commands(CommandNames.KICK,args[0],5));
-          			//nxt.addCommand(new Commands(CommandNames.MOVEBACKWARD,200,50));
-               		//nxt.addCommand(new Commands(CommandNames.CHANGEANGLE,200,360));
-              		
-               	 	System.out.println('+');
-           		}
-           	});
-	    
-	        	nxt.run();                             
+
+			mCont = new BComm(new MessageListener() {
+     	public void receiveMessage(CommandNames op, int [] args, Communicator controler)
+     	{
+     	nxt.addCommand(new Commands(op,args[0],5));
+      	 	System.out.println(op);
+     	}
+		});
+
+
+
+
+ 	nxt.run();                                 
 	            
 	        	
 	            
