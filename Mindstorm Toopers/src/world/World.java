@@ -54,7 +54,9 @@ public class World {
 		this.color = color;
 		this.direction = direction;
 		Point start = new Point(10,10);
+		Vector startVector = new Vector(start, new Point(11,10));
 		ballObject = new Ball(start);
+		yLeft = startVector;
 		attacker = new Robot(start, new Vector(start,start));
 		defender = new Robot(start, new Vector(start,start));
 		lastBallLocation = start;
@@ -84,6 +86,11 @@ public class World {
 		if (count == 10){
 			Vector direction = new Vector(lastBallLocation,ballObject.getPos());
 			ballObject.setDir(direction);
+			if ((direction.getX() == 0) && (direction.getY() == 0)){
+				ballObject.setMoving(false);
+			} else {
+				ballObject.setMoving(true);
+			}
 			lastBallLocation = ballObject.getPos();
 			count = 0;
 		} else {
@@ -133,6 +140,17 @@ public class World {
 	{
 		int x = (int) ((gridConstant * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (dot.getY() - this.pitchTop)) / this.pitchWidth);
+		Vector newDir = new Vector(new Point(x,y), yellowLeft);
+//		if ((Math.abs(newDir.getX() - this.yLeft.getX()) + Math.abs(newDir.getY() - this.yLeft.getY())) < 10){
+//			this.setyLeft(new Vector(new Point(x,y), yellowLeft));
+//			if (color){
+//				if (direction){
+//					defender.setDir(new Vector(new Point(x,y), yellowLeft));
+//				} else {
+//					attacker.setDir(new Vector(new Point(x,y), yellowLeft));
+//				}
+//			}
+//		}
 		this.setyLeft(new Vector(new Point(x,y), yellowLeft));
 		if (color){
 			if (direction){

@@ -22,6 +22,8 @@ public class ImageProcessor1 {
 	static double speedX = 0;
 	static double speedY = 0;
 	
+	private static Point[] lastDot;
+	
 	private static World world;
 /*
      Currently this method finds the ball, and changes it to appear as black
@@ -39,6 +41,11 @@ public class ImageProcessor1 {
 	//public static World newWorld;
 	public ImageProcessor1(World newWorld){
 		this.world = newWorld;
+		lastDot = new Point[4];
+		lastDot[0] = new Point(200,200);
+		lastDot[1] = new Point(200,200);
+		lastDot[2] = new Point(200,200);
+		lastDot[3] = new Point(200,200);
 	}
 	
 	public static Image trackWorld(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
@@ -139,12 +146,25 @@ public class ImageProcessor1 {
 		// get the dot for the left yellow robot after we have the coordinates for the yellow/blue pixels
 
 		Point yellowLeftDot = getDot(img, yellowLeft);
-		world.setVectorYellowLeft(yellowLeftDot);
-
+		if ((Math.abs(yellowLeftDot.getX() - lastDot[0].getX()) + Math.abs(yellowLeftDot.getY() - lastDot[0].getY())) > 20){
+			yellowLeftDot = new Point((yellowLeftDot.getX() + lastDot[0].getX())/2, (yellowLeftDot.getY() + lastDot[0].getY())/2);
+			lastDot[0] = yellowLeftDot;
+			world.setVectorYellowLeft(yellowLeftDot);
+		} else {
+			lastDot[0] = yellowLeftDot;
+			world.setVectorYellowLeft(yellowLeftDot);
+		}
 		// get the dot for the right yellow robot
 
 		Point yellowRightDot = getDot(img,yellowRight);
-		world.setVectorYellowRight(yellowRightDot);
+		if ((Math.abs(yellowRightDot.getX() - lastDot[1].getX()) + Math.abs(yellowRightDot.getY() - lastDot[1].getY())) > 20){
+			yellowLeftDot = new Point((yellowRightDot.getX() + lastDot[1].getX())/2, (yellowRightDot.getY() + lastDot[1].getY())/2);
+			lastDot[1] = yellowRightDot;
+			world.setVectorYellowRight(yellowRightDot);
+		} else {
+			lastDot[1] = yellowRightDot;
+			world.setVectorYellowRight(yellowRightDot);
+		}
 
 		// get the dot for the left blue robot
 
