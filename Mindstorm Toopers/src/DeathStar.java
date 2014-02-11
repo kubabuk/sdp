@@ -19,19 +19,19 @@ public class DeathStar {
 		//ANDY HELP
 		try {
 			MainComm theForceDef = new MainComm(1);
-			MainComm theForceAttack = new MainComm(2);
+//			MainComm theForceAttack = new MainComm(2);
 			
 			while (flag) {
 				emperor.update();
 				
 				Command cmdDefend = emperor.defenderpull();
-				Command cmdAttack = emperor.attackerpull();
+//				Command cmdAttack = emperor.attackerpull();
 				
 				theForceDef.sendMessage(cmdDefend.getCommand(), 
 						cmdDefend.getSpeed(), cmdDefend.getDistAngle());
 				
-				theForceAttack.sendMessage(cmdAttack.getCommand(), 
-						cmdAttack.getSpeed(), cmdAttack.getDistAngle());
+//				theForceAttack.sendMessage(cmdAttack.getCommand(), 
+//						cmdAttack.getSpeed(), cmdAttack.getDistAngle());
 			}
 			
 		} catch (IOException e) {

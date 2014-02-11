@@ -2,6 +2,7 @@ package strategy;
 
 import commands.Command;
 import commands.Queue;
+import comms.CommandNames;
 
 import world.World;
 
@@ -49,7 +50,12 @@ public class AI {
 	
 	public Command defenderpull()
 	{
-		return dq.pull();
+		if(dq.isEmpty()){
+			return new Command(CommandNames.DONOTHING,0,0);
+		}else{
+			return dq.pull();
+		}
+		
 	}
 	
 }

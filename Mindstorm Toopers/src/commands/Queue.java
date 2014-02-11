@@ -43,6 +43,10 @@ public class Queue{
         return commandList.remove(0);
     }
     
+    public boolean isEmpty(){
+    	return commandList.isEmpty();
+    }
+    
     public Command translate(Vector v) {
         CommandNames e;
 
