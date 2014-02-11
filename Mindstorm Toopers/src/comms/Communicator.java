@@ -18,7 +18,7 @@ public interface Communicator {
 * @param args the arguments
 * @throws IOException in case of error in the connection
 */
-public void sendMessage(CommandNames op, byte ... args) throws IOException;
+public void sendMessage(CommandNames op, int ... args) throws IOException;
 
 
 public void close();

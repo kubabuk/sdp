@@ -1,14 +1,14 @@
 package comms;
 
+
 	import java.io.IOException;
 
 
 	import java.io.InputStream;
 	import java.io.OutputStream;
 	import java.util.ArrayList;
-	import java.util.Arrays;
+	//import java.util.Arrays;
 	import java.util.Iterator;
-
 
 	import lejos.pc.comm.NXTComm;
 	import lejos.pc.comm.NXTCommException;
@@ -29,8 +29,10 @@ package comms;
 
 	// password and mac settings
 	private static final int max_retries = 5; // how many times to try connecting to brick before quitting
-	private static final String friendly_name = "GRP6 Bot 1";
-	private static final String mac_of_brick = "00:16:53:0A:96:91";
+	private static final String friendly_name_Bot_1 = "GRP6 Bot 1";
+	private static final String mac_of_brick_Bot_1 = "00:16:53:0A:96:91";
+	private static final String friendly_name_Bot_2 = "GRP 6 Bot 2";
+	private static final String mac_of_brick_Bot_2 = "00:16:53:08:DA:0F";
 
 	//private static short[] old_operate = null;
 
@@ -48,14 +50,16 @@ package comms;
 	* @param listener the listener that will receive updates from the robot
 	* @throws NXTCommException if a connection cannot be established
 	*/
-	    public MainComm() throws IOException {
+	    public MainComm(int r) throws IOException {
 	    	try {
 	    		mComm = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
 	    	} catch (Exception e) {
 	    		System.out.println("Cannot open Bluetooth.");
 	    	}
-	    	NXTInfo info = new NXTInfo(NXTCommFactory.BLUETOOTH,friendly_name, mac_of_brick);
-	    	System.out.println("Openning connection...");
+	    	//Check if we are connecting to robot 1 or robot 2. This is the code for robot 1.
+	    	if (r == 1) {
+	    	NXTInfo info = new NXTInfo(NXTCommFactory.BLUETOOTH,friendly_name_Bot_1, mac_of_brick_Bot_1);
+	    	System.out.println("Opening connection...");
 	    	boolean repeat = true;
 	    	int tries = 0;
 	    	while (repeat && tries < max_retries) {
@@ -95,7 +99,51 @@ package comms;
 	    	}.start();
 	    	System.out.println("Ready");
 	    }
-
+	    //This is the code for robot 2.
+	    if (r == 2) {
+	    	NXTInfo info = new NXTInfo(NXTCommFactory.BLUETOOTH,friendly_name_Bot_2, mac_of_brick_Bot_2);
+	    	System.out.println("Opening connection...");
+	    	boolean repeat = true;
+	    	int tries = 0;
+	    	while (repeat && tries < max_retries) {
+	    		tries++;
+	    		try {
+	    			mComm.open(info);
+	    			repeat = false;
+	    		} catch (Exception e) {
+	    			System.out.println("Cannot establish connection. Is device on? Retry in 4 s. ("+(max_retries-tries)+" attempts left)");
+	    			try {
+	    				Thread.sleep(4000);
+	    			} catch (InterruptedException e1) {}
+	    		}
+	    	}
+	    	if (repeat)
+	    		throw new IOException("Cannot connect to brick!");
+	    	System.out.println("Getting output stream...");
+	    	os = mComm.getOutputStream();
+	    	System.out.println("Getting input stream...");
+	    	is = mComm.getInputStream();
+	    	connection_open = true;
+	    	// handle incoming connections in a new thread
+	    	System.out.println("Starting listener...");
+	    	new Thread() {
+	    		public void run() {
+	    			while (connection_open) {
+	    				try {
+	    					readNextMessage();
+	    				} catch (IOException e) {
+	    					System.out.println("Connection with device lost. Waiting 2 s and trying again...");
+	    					try {
+	    						sleep(2000);
+	    					} catch (InterruptedException e1) {	}
+	    				}
+	    			}
+	    		};
+	    	}.start();
+	    	System.out.println("Ready");
+	    }
+	    	
+	    }
 	/**
 	* Reads the next message from the input stream.
 	* @throws IOException
@@ -127,7 +175,7 @@ package comms;
 	* @param args the arguments
 	*/
 	//@Override
-	public synchronized void sendMessage(CommandNames op, byte ... args) throws IOException {
+	public synchronized void sendMessage(CommandNames op, int ... args) throws IOException {
 
 	}
 	/**

@@ -18,8 +18,8 @@ public class DeathStar {
 		
 		//ANDY HELP
 		try {
-			MainComm theForceDef = new MainComm();
-			MainComm theForceAttack = new MainComm();
+			MainComm theForceDef = new MainComm(1);
+			MainComm theForceAttack = new MainComm(2);
 			
 			while (flag) {
 				emperor.update();
