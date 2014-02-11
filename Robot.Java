@@ -6,7 +6,7 @@ import lejos.nxt.Motor;
 
 public class Robot {
 	public enum CommandNames{
-		 MOVEFORWARD, KICK, MOVEBACKWARD, CHANGEANGLE, ABORT, EXIT
+		 MOVEFORWARD, KICK, MOVEBACKWARD, UPDATEANGLE, CHANGEANGLE, ABORT, EXIT
 		}
 	
 
@@ -23,7 +23,7 @@ public class Robot {
 	final double distConstant; // should be equal to 0.5 cm in real world // constant, which is used to determine how much move is needed to cross one square.
 	final int kickerAngle;// depends on kicker, how much does kicker need to kick each time.
 	final int kickerReturn;// depends on the kicker, whether it needs to return back.
-	
+	int curAngle=0;
 	List<Commands> commands = new ArrayList<Commands>(); 
 	
 	private int speed = 200;// default speed, can be changed in mid run;
@@ -125,6 +125,9 @@ public class Robot {
 			case CHANGEANGLE:
 				turnAngle(curcommand.firstArg,curcommand.secondArg);
 				break;
+			case UPDATEANGLE:
+				setAngle(curcommand.firstArg);
+				break;
 			}
 			}		
 		}	
@@ -136,12 +139,15 @@ public class Robot {
 		  Motor.A.setSpeed(desiredSpeed);
 		  Motor.B.setSpeed(desiredSpeed);
 	}
-	
+
+	private void setAngle(int angle)
+	{
+		curAngle=angle;
+	}
 
 
 	private void moveDistance(int desiredSpeed,int distance) //Move forward the distance at desiredSpeed
 	{
-	int tempspeed = speed;// in case we need to return to old speed;
 	setSpeed(desiredSpeed);
 	Motor.A.rotate((int)(distance*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
 	Motor.B.rotate((int)(distance*distConstant),false); 
@@ -151,8 +157,27 @@ public class Robot {
 	{
 		    setSpeed(desiredSpeed);
 		    System.out.println((int)(angleConstant*toTurnAngle));
-			Motor.A.rotate((int)(angleConstant*toTurnAngle),true);
-			Motor.B.rotate((int)(-angleConstant*toTurnAngle));
+		   
+		    int tempAngle1=toTurnAngle-curAngle;
+		    int tempAngle2=toTurnAngle-curAngle-360;
+		    int tempAngle3=toTurnAngle-curAngle+360;
+		    
+		    if (Math.abs(tempAngle1)<Math.abs(tempAngle2)&& Math.abs(tempAngle1)<Math.abs(tempAngle3))
+		    {
+				Motor.A.rotate((int)(angleConstant*tempAngle1),true);
+				Motor.B.rotate((int)(-angleConstant*tempAngle1));	
+		    }
+		    else if (Math.abs(tempAngle2)<Math.abs(tempAngle3))
+		    {
+				Motor.A.rotate((int)(angleConstant*tempAngle2),true);
+				Motor.B.rotate((int)(-angleConstant*tempAngle2));	
+		    }
+		    else 
+		    {
+				Motor.A.rotate((int)(angleConstant*tempAngle3),true);
+				Motor.B.rotate((int)(-angleConstant*tempAngle3));	    	
+		    }
+			curAngle = toTurnAngle;
 	}
 
 }
