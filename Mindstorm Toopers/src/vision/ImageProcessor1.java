@@ -146,7 +146,7 @@ public class ImageProcessor1 {
 		// get the dot for the left yellow robot after we have the coordinates for the yellow/blue pixels
 
 		Point yellowLeftDot = getDot(img, yellowLeft);
-		if ((Math.abs(yellowLeftDot.getX() - lastDot[0].getX()) + Math.abs(yellowLeftDot.getY() - lastDot[0].getY())) > 20){
+		if ((Math.abs(yellowLeftDot.getX() - lastDot[0].getX()) + Math.abs(yellowLeftDot.getY() - lastDot[0].getY())) > 10){
 			yellowLeftDot = new Point((yellowLeftDot.getX() + lastDot[0].getX())/2, (yellowLeftDot.getY() + lastDot[0].getY())/2);
 			lastDot[0] = yellowLeftDot;
 			world.setVectorYellowLeft(yellowLeftDot);
@@ -157,7 +157,7 @@ public class ImageProcessor1 {
 		// get the dot for the right yellow robot
 
 		Point yellowRightDot = getDot(img,yellowRight);
-		if ((Math.abs(yellowRightDot.getX() - lastDot[1].getX()) + Math.abs(yellowRightDot.getY() - lastDot[1].getY())) > 20){
+		if ((Math.abs(yellowRightDot.getX() - lastDot[1].getX()) + Math.abs(yellowRightDot.getY() - lastDot[1].getY())) > 5){
 			yellowLeftDot = new Point((yellowRightDot.getX() + lastDot[1].getX())/2, (yellowRightDot.getY() + lastDot[1].getY())/2);
 			lastDot[1] = yellowRightDot;
 			world.setVectorYellowRight(yellowRightDot);
@@ -169,12 +169,26 @@ public class ImageProcessor1 {
 		// get the dot for the left blue robot
 
 		Point blueLeftDot = getDot(img,blueLeft);
-		world.setVectorBlueLeft(blueLeftDot);
+		if ((Math.abs(blueLeftDot.getX() - lastDot[2].getX()) + Math.abs(blueLeftDot.getY() - lastDot[2].getY())) > 5){
+			blueLeftDot = new Point((blueLeftDot.getX() + lastDot[2].getX())/2, (blueLeftDot.getY() + lastDot[2].getY())/2);
+			lastDot[2] = blueLeftDot;
+			world.setVectorBlueLeft(blueLeftDot);
+		} else {
+			lastDot[2] = blueLeftDot;
+			world.setVectorBlueLeft(blueLeftDot);
+		}
 		
 		// get the dot for the right blue robot
 
 		Point blueRightDot = getDot(img,blueRight);
-		world.setVectorBlueRight(blueRightDot);
+		if ((Math.abs(blueRightDot.getX() - lastDot[3].getX()) + Math.abs(blueRightDot.getY() - lastDot[3].getY())) > 5){
+			blueRightDot = new Point((blueRightDot.getX() + lastDot[3].getX())/2, (blueRightDot.getY() + lastDot[3].getY())/2);
+			lastDot[3] = blueRightDot;
+			world.setVectorBlueRight(blueRightDot);
+		} else {
+			lastDot[3] = blueRightDot;
+			world.setVectorBlueRight(blueRightDot);
+		}
 				
 		// after setting coordinates, draw the elements on the image
 		Image image = drawEverything(img, ball, yellowLeft, yellowRight, blueLeft, blueRight, yellowLeftDot, yellowRightDot, blueLeftDot, blueRightDot);
@@ -235,13 +249,13 @@ public class ImageProcessor1 {
 	private static BufferedImage drawEverything(BufferedImage img, Point ball, Point yellowLeft, Point yellowRight, Point blueLeft, Point blueRight, Point yellowLeftDot, Point yellowRightDot, Point blueLeftDot, Point blueRightDot){
 		img = drawCross(img, red, ball);
 		img = drawCross(img, yellow, yellowLeft);
-//		img = drawCross(img, yellow, yellowRight);
-//		img = drawCross(img, blue, blueLeft);
-//		img = drawCross(img, blue, blueRight);
+		img = drawCross(img, yellow, yellowRight);
+		img = drawCross(img, blue, blueLeft);
+		img = drawCross(img, blue, blueRight);
 		img = drawCross(img, white, yellowLeftDot);
-//		img = drawCross(img, white, yellowRightDot);
-//		img = drawCross(img, white, blueLeftDot);
-//		img = drawCross(img, white, blueRightDot);
+		img = drawCross(img, white, yellowRightDot);
+		img = drawCross(img, white, blueLeftDot);
+		img = drawCross(img, white, blueRightDot);
 //		img = drawVector(img, yellow, world.getyLeft());
 		return img;
 	}
