@@ -33,6 +33,7 @@ public class StrategyD {
 		
 		
 		int milestone3 = 1;
+		double  stepSize = 5.0;
 		switch (milestone3)//s.getState())
 		{
 		
@@ -46,9 +47,9 @@ public class StrategyD {
 			Robot ourDef = w.getDefender();
 			Point r = ourDef.getPos();
 			Area myArea = w.getOurDefenderArea();
-			
+			System.out.println("step");
 			while(ball.isMoving()){
-				if(!ourDef.getDir().isParallel(ourDef.getPos().longtitude())){
+				/*if(!ourDef.getDir().isParallel(ourDef.getPos().longtitude())){
 					//Correct robot orientation
 					if(ourDef.getPos().getY()>0){
 						Vector turn = new Vector(ourDef.getPos(),0, 3*Math.PI/2.0);
@@ -60,15 +61,17 @@ public class StrategyD {
 						dq.add(turn);
 					}
 					
-				}
+				}*/
 				//Find the Point where the robot will intercept the Ball 
+				
 				Point target = ball.getDir().intersectLong(ourDef.getPos().longtitude());
 				if(target.isIn(myArea) && !ourDef.getPos().isColinear(ball.getDir())){
 					//Find the Trajectory in which the robot should move
 					Vector trajectory = new Vector(ourDef.getPos(),target);
 					//Move one step towards the target
-					Vector step = new Vector(ourDef.getPos(),1, trajectory.getOrientation());
+					Vector step = new Vector(ourDef.getPos(),stepSize, trajectory.getOrientation());
 					dq.add(step);
+					
 				}
 				else{
 					dq.doNothing();

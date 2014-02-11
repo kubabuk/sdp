@@ -24,4 +24,9 @@ public class Command {
     public int getDistAngle() {
         return this.distAngle;
     }
+    public boolean isNothing(){
+    	return this.command.equals(CommandNames.DONOTHING);
+    }
+    
+    
 }
