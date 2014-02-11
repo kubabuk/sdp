@@ -1,7 +1,5 @@
 package comms;
 
-
-
 import java.io.IOException;
 
 /**

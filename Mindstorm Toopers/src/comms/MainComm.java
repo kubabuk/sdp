@@ -170,7 +170,7 @@ public class MainComm implements Communicator {
 
 	System.out.println(op +" sent");
 
-	
+
 	// send a message to device
 	os.write(op.ordinal()); // write opcode
 	os.write(args1);
@@ -219,7 +219,3 @@ public class MainComm implements Communicator {
 	 */
 
 }
-
-
-
-

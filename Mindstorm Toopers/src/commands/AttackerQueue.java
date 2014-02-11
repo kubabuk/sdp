@@ -5,17 +5,21 @@ import java.util.ArrayList;
 import geometry.*;
 import comms.CommandNames;
 
-//TODO: Filter out repeating commands.
+public class AttackerQueue{
 
-public class DefenderQueue {
+    /* Need to: 
+	    - Finish implementing Kick
+	    - Finish calculation of angle
+	    - Have someone check enums
+	*/
 
-	private ArrayList<Command> commandList;    
+    private ArrayList<Command> commandList;    
     private static int MAX = 900;
     private double previousAngle;
     private Vector lastVector;
 
 	
-    public DefenderQueue(double initialAngle) {
+    public AttackerQueue(double initialAngle) {
         commandList = new ArrayList<Command>();
         previousAngle = initialAngle;
     }
@@ -28,33 +32,24 @@ public class DefenderQueue {
 
         int speed = MAX; 
         int distAngle;
-        //if(v.getMagnitude()!=previousAngle){
-        e = CommandNames.CHANGEANGLE;
-        double angle = Angle.toRange2PI(v.getMagnitude());
-        if(angle<=Math.PI){
-        	angle = Angle.toRange2PI(angle-Math.PI/2);
-        	distAngle = (int) Angle.to255(angle);
-            commandList.add(new Command(e, speed, distAngle));
-            if (v.getMagnitude() != 0) { 
-                e = CommandNames.MOVEFORWARD;
-                distAngle = (int)(v.getMagnitude()/1.25);
-                commandList.add(new Command(e, speed, distAngle));
-            }
-            
-        }else
-        	angle = Angle.toRange2PI(angle+Math.PI/2);
-        	distAngle = (int) Math.toDegrees(v.getMagnitude());
+        System.out.println("flag1");
+        if(v.getOrientation()!=previousAngle){
+        	e = CommandNames.CHANGEANGLE;
+        	distAngle = (int) Angle.to255(Angle.toRange2PI(v.getMagnitude()));
+        	System.out.println("flag2");
         	commandList.add(new Command(e, speed, distAngle));
-        	if (v.getMagnitude() != 0) { 
-                e = CommandNames.MOVEBACKWARD;
-                distAngle = (int)(v.getMagnitude()/1.25);
-                commandList.add(new Command(e, speed, distAngle));
-            }
-        //}
-        
+        }
+        System.out.println("flag1.5");
+        if (v.getMagnitude() != 0) { //TODO:: Decide when to MOVEFORWARD and when to move BACKWARD}
+            e = CommandNames.MOVEFORWARD;
+            distAngle = (int)(v.getMagnitude()/1.25);
+            commandList.add(new Command(e, speed, distAngle));
+        }
        
-        this.lastVector = v;
+        System.out.println("flag2");
         
+        this.lastVector = v;
+        this.previousAngle = v.getOrientation();
     }
     
 

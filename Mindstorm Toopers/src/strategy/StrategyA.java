@@ -4,12 +4,12 @@ package strategy;
 import world.World;
 import geometry.Point;
 import geometry.Vector;
-import commands.Queue;;
+import commands.AttackerQueue;;
 
 public class StrategyA {
 	//strategy for attacker
 	
-	public static void getAction(State s , World w, Queue aq)
+	public static void getAction(State s , World w, AttackerQueue aq)
 	{
 		// this functions takes the state and decide what robots should do
 
@@ -79,8 +79,8 @@ public class StrategyA {
 
 			Vector o = w.getAttacker().getDir();
 			Point r = w.getAttacker().getPos();
-			Queue x = new Queue(10.1);
-			Queue c = new Queue(o.getOrientation());
+			AttackerQueue x = new AttackerQueue(10.1);
+			AttackerQueue c = new AttackerQueue(o.getOrientation());
 			Vector Turning2 = new Vector(r,0,pg.getOrientation()-o.getOrientation());
 		
 			//generate the queue of commands

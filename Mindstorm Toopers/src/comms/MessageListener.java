@@ -20,4 +20,3 @@ public interface MessageListener {
 public void receiveMessage(CommandNames op, int args1, int args2, Communicator controller);
 
 }
-

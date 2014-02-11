@@ -1,7 +1,6 @@
 package strategy;
 
-import commands.Command;
-import commands.Queue;
+import commands.*;
 import comms.CommandNames;
 
 import world.World;
@@ -11,10 +10,11 @@ public class AI {
 	
 	private World w;
 	private State lastattackerstate, lastdefenderstate, currentattackerstate, currentdefenderstate;
-	public Queue aq,dq;
+	public AttackerQueue aq;
+	public DefenderQueue dq;
+	public boolean flag;
 	
-	
-	public AI(World w, Queue aq, Queue dq)
+	public AI(World w, AttackerQueue aq, DefenderQueue dq)
 	{
 		//this.lastattackerstate = new State(1);
 		this.lastdefenderstate = new State(0);
@@ -25,6 +25,7 @@ public class AI {
 		//this.aq = new Queue(w.getAttacker().getDir().getOrientation());
 		//this.dq = new Queue(w.getDefender().getDir().getOrientation());
 		this.dq = dq;
+		this.flag = false;
 	}
 	
 	public void update()
@@ -33,7 +34,7 @@ public class AI {
 		this.currentdefenderstate.update(w);
 		
 		//StrategyA.getAction(currentattackerstate,w, aq);
-		StrategyD.getAction(currentdefenderstate,w, dq);
+		StrategyD.getAction(currentdefenderstate,w, dq, flag);
 		
 		System.out.println("second call");
 		
@@ -59,6 +60,10 @@ public class AI {
 			return dq.pull();
 		}
 		
+	}
+	
+	public void notInitial(){
+		this.flag = true;
 	}
 	
 }

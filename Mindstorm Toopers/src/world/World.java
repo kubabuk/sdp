@@ -377,6 +377,12 @@ public class World {
 		return pitchTop;
 	}
 	
+	public boolean isYellow(){
+		return color;
+	}
+	public boolean isOnTheRight(){
+		return direction;
+	}
 	/*
 	 * 	public void setBallSpeed(double x, double y)
 	{
