@@ -29,6 +29,9 @@ public class World {
 	private Vector yLeft, yRight, bLeft, bRight;
 	private int pitchLeft, pitchTop;
 	
+	private Boolean color;
+	private Boolean direction;
+	
 	private int gridConstant;
 	
 	// Used to track the direction of ball movement.
@@ -42,12 +45,19 @@ public class World {
 	// private double ballSpeedX, ballSpeedY;
 	// add everything for the pitch here
 	
-	public World()
+	// Color - true means yellow, false means blue
+	// Direction - true mean right, false means left
+	public World(Boolean color, Boolean direction)
 	{
 		// initialize the world here
 		runVision(this);
-		ballObject = new Ball(new Point(10,10));
-		lastBallLocation = new Point(10,10);
+		this.color = color;
+		this.direction = direction;
+		Point start = new Point(10,10);
+		ballObject = new Ball(start);
+		attacker = new Robot(start, new Vector(start,start));
+		defender = new Robot(start, new Vector(start,start));
+		lastBallLocation = start;
 		gridConstant = 474;
 		count = 0;
 	}
@@ -110,6 +120,13 @@ public class World {
 		int x = (int) ((gridConstant * (yellowLeftXY.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (yellowLeftXY.getY() - this.pitchTop)) / this.pitchWidth);
 		this.yellowLeft = new Point(x,y);
+		if (color){
+			if (direction){
+				defender.setPos(new Point(x,y));
+			} else {
+				attacker.setPos(new Point(x,y));
+			}
+		}
 	}
 	
 	public void setVectorYellowLeft(Point dot)
@@ -117,6 +134,13 @@ public class World {
 		int x = (int) ((gridConstant * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (dot.getY() - this.pitchTop)) / this.pitchWidth);
 		this.setyLeft(new Vector(new Point(x,y), yellowLeft));
+		if (color){
+			if (direction){
+				defender.setDir(new Vector(new Point(x,y), yellowLeft));
+			} else {
+				attacker.setDir(new Vector(new Point(x,y), yellowLeft));
+			}
+		}
 	}
 	
 	public void setVectorYellowRight(Point dot)
@@ -124,6 +148,13 @@ public class World {
 		int x = (int) ((gridConstant * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (dot.getY() - this.pitchTop)) / this.pitchWidth);
 		this.setyRight(new Vector(new Point(x,y), yellowRight));
+		if (color){
+			if (direction){
+				attacker.setDir(new Vector(new Point(x,y), yellowRight));
+			} else {
+				defender.setDir(new Vector(new Point(x,y), yellowRight));
+			}
+		}
 	}
 	
 	public Point getYellowLeft()
@@ -138,6 +169,13 @@ public class World {
 		int x = (int) ((gridConstant * (yellowRightXY.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (yellowRightXY.getY() - this.pitchTop)) / this.pitchWidth);
 		this.yellowRight = new Point(x,y);
+		if (color){
+			if (direction){
+				attacker.setPos(new Point(x,y));
+			} else {
+				defender.setPos(new Point(x,y));
+			}
+		}
 	}
 	
 	public Point getYellowRight()
@@ -184,6 +222,22 @@ public class World {
 	public Point getBlueRight()
 	{
 		return this.blueRight;
+	}
+	
+	public Point getAttackerPos(){
+		return attacker.getPos();
+	}
+	
+	public Point getDefenderPos(){
+		return defender.getPos();
+	}
+	
+	public Vector getAttackerDir(){
+		return attacker.getDir();
+	}
+	
+	public Vector getDefenderDir(){
+		return defender.getDir();
 	}
 		
 	// methods for the video image

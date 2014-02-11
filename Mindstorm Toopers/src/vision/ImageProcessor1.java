@@ -215,13 +215,13 @@ public class ImageProcessor1 {
 	private static BufferedImage drawEverything(BufferedImage img, Point ball, Point yellowLeft, Point yellowRight, Point blueLeft, Point blueRight, Point yellowLeftDot, Point yellowRightDot, Point blueLeftDot, Point blueRightDot){
 		img = drawCross(img, red, ball);
 		img = drawCross(img, yellow, yellowLeft);
-		img = drawCross(img, yellow, yellowRight);
-		img = drawCross(img, blue, blueLeft);
-		img = drawCross(img, blue, blueRight);
+//		img = drawCross(img, yellow, yellowRight);
+//		img = drawCross(img, blue, blueLeft);
+//		img = drawCross(img, blue, blueRight);
 		img = drawCross(img, white, yellowLeftDot);
-		img = drawCross(img, white, yellowRightDot);
-		img = drawCross(img, white, blueLeftDot);
-		img = drawCross(img, white, blueRightDot);
+//		img = drawCross(img, white, yellowRightDot);
+//		img = drawCross(img, white, blueLeftDot);
+//		img = drawCross(img, white, blueRightDot);
 //		img = drawVector(img, yellow, world.getyLeft());
 		return img;
 	}

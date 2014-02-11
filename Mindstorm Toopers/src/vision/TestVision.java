@@ -5,7 +5,7 @@ import world.World;
 public class TestVision {
 	private static World world;	
 	public static void main(String[] args) throws InterruptedException {
-		world = new World();
+		world = new World(true, true);
 		Thread.sleep(5000);
 		while(true){
 			Thread.sleep(1000);
