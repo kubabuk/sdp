@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.lejos.nxt.ldt.LEJOS_LIBRARY_CONTAINER/pc"/>
+	<classpathentry kind="lib" path="libs/bcel.jar"/>
+	<classpathentry kind="lib" path="libs/bluecove-gpl.jar"/>
+	<classpathentry kind="lib" path="libs/bluecove.jar"/>
+	<classpathentry kind="lib" path="libs/charting.jar"/>
+	<classpathentry kind="lib" path="libs/commons-cli.jar"/>
+	<classpathentry kind="lib" path="libs/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="libs/gson-1.4.jar"/>
+	<classpathentry kind="lib" path="libs/guava-14.0-rc3.jar"/>
+	<classpathentry kind="lib" path="libs/guava-r08.jar"/>
+	<classpathentry kind="lib" path="libs/javassist-3.12.1.GA.jar"/>
+	<classpathentry kind="lib" path="libs/javassist.jar"/>
+	<classpathentry kind="lib" path="libs/jboss-vfs-3.0.0.CR5.jar"/>
+	<classpathentry kind="lib" path="libs/jbox2d-library-2.1.2.1-SNAPSHOT-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="libs/jbox2d-testbed-2.1.2.1-SNAPSHOT-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="libs/jcommon.jar"/>
+	<classpathentry kind="lib" path="libs/jfreechart.jar"/>
+	<classpathentry kind="lib" path="libs/jopt-simple-4.3.jar"/>
+	<classpathentry kind="lib" path="libs/jopt-simple-4.4.jar"/>
+	<classpathentry kind="lib" path="libs/jtools.jar"/>
+	<classpathentry kind="lib" path="libs/miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="libs/mockito-all-1.9.0.jar"/>
+	<classpathentry kind="lib" path="libs/pccomm.jar"/>
+	<classpathentry kind="lib" path="libs/pctools.jar"/>
+	<classpathentry kind="lib" path="libs/reflections-0.9.5.jar"/>
+	<classpathentry kind="lib" path="libs/slf4j-api-1.6.4.jar"/>
+	<classpathentry kind="lib" path="libs/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/v4l4j.jar"/>
+	<classpathentry kind="lib" path="libs/xml-apis-1.0.b2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
