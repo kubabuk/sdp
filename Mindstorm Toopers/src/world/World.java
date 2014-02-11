@@ -2,6 +2,10 @@ package world;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+
+import javax.swing.SwingUtilities;
+
+import vision.VisionRunner;
 import geometry.Point;
 import geometry.Vector;
 import geometry.Area;
@@ -35,6 +39,17 @@ public class World {
 	public World()
 	{
 		// initialize the world here
+		runVision(this);
+		ballObject = new Ball(new Point(10,10));
+	}
+	
+	public void runVision(final World world){
+        SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                        new VisionRunner(world);
+                }
+        });
 	}
 	
 	// methods for ball
@@ -42,7 +57,12 @@ public class World {
 	{
 		int x = (int) ((100 * (ballXY.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((100 * (ballXY.getY() - this.pitchTop)) / this.pitchWidth);
+		ballObject.setPos(new Point(x,y));
 		this.ball = new Point(x,y);
+	}
+	
+	public void setBallTrajectory (Vector ballTrajectory){
+		ballObject.setDir(ballTrajectory);
 	}
 	
 	public Point getBallPos ()

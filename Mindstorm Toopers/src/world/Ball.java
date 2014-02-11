@@ -12,6 +12,8 @@ public class Ball {
 	public Ball(Point position) 
 	{
 		this.position = position;
+		this.speed = 0;
+		this.moving = false;
 	}
 
 	

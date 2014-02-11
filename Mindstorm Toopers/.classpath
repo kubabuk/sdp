@@ -29,7 +29,11 @@
 	<classpathentry kind="lib" path="libs/reflections-0.9.5.jar"/>
 	<classpathentry kind="lib" path="libs/slf4j-api-1.6.4.jar"/>
 	<classpathentry kind="lib" path="libs/stax-api-1.0.1.jar"/>
-	<classpathentry kind="lib" path="libs/v4l4j.jar"/>
+	<classpathentry kind="lib" path="libs/v4l4j.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Mindstorm Troopers/libs"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="libs/xml-apis-1.0.b2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
