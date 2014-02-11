@@ -5,21 +5,16 @@ import java.util.ArrayList;
 import geometry.*;
 import comms.CommandNames;
 
-public class Queue{
 
-    /* Need to: 
-	    - Finish implementing Kick
-	    - Finish calculation of angle
-	    - Have someone check enums
-	*/
+public class DefenderQueue {
 
-    private ArrayList<Command> commandList;    
+	private ArrayList<Command> commandList;    
     private static int MAX = 900;
     private double previousAngle;
     private Vector lastVector;
 
 	
-    public Queue(double initialAngle) {
+    public DefenderQueue(double initialAngle) {
         commandList = new ArrayList<Command>();
         previousAngle = initialAngle;
     }

@@ -41,7 +41,7 @@ public class World {
 	//TODO: For vision. Maximum dimensions of the pitch! you might want to make these constants.
 	private double maxY, minY, maxX, minX;
 	//TODO: For Aris: finish the Area definition
-	private Area areaA , areaB, areaC, areaD;
+	private Area areaA /*, areaB, areaC, areaD*/;
 	// private double ballSpeedX, ballSpeedY;
 	// add everything for the pitch here
 	

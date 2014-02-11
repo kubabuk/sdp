@@ -43,9 +43,9 @@ public class StrategyD {
 		
 			// get the coordinate of the ball and the attacker
 			Ball ball = w.getBall();
-			Point b = ball.getPos();
+//			Point b = ball.getPos();
 			Robot ourDef = w.getDefender();
-			Point r = ourDef.getPos();
+//			Point r = ourDef.getPos();
 			Area myArea = w.getOurDefenderArea();
 			//System.out.println("step");
 			boolean flag=true;
@@ -75,6 +75,7 @@ public class StrategyD {
 					Vector step = new Vector(ourDef.getPos(),stepSize, trajectory.getOrientation());
 					dq.add(step);
 					System.out.println(step.toString() + "jdkl");
+					return;
 				}
 				else{
 					dq.doNothing();
@@ -84,6 +85,14 @@ public class StrategyD {
 			}
 			
 			}
+		case 2:{
+			Ball ball = w.getBall();
+			Robot ourDef = w.getDefender();
+			System.out.println("Alt Def Straetgy");
+			
+
+			
+		}
 		
 		default:
 			{
