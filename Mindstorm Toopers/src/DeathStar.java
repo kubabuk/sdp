@@ -19,7 +19,7 @@ public class DeathStar {
 		AttackerQueue aq = new AttackerQueue(universe.getAttacker().getDir().getOrientation());
 		DefenderQueue dq = new DefenderQueue(universe.getDefender().getDir().getOrientation());
 
-		AI emperor = new AI(universe,aq,dq);
+		AI emperor = new AI2(universe,aq,dq);
 		boolean flag = true;
 
 
@@ -32,7 +32,13 @@ public class DeathStar {
 			System.out.println("initial command sent");
 			while (flag) {
 				emperor.update();
-
+				
+				System.out.println("The ball is at "+universe.getBall().toString());
+				System.out.println("The attacker is at "+universe.getAttacker().toString());
+				System.out.println("The defender is at "+universe.getDefender().toString());
+				System.out.println("The max X,Y are " + universe.getMinX() + " , " + universe.getMinY());
+				
+				
 				//Command cmdDefend = emperor.defenderpull();
 				//Command cmdDefend = dq.pull();
 				Command cmdAttack = aq.pull();
