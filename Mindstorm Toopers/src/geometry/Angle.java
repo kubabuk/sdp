@@ -42,6 +42,10 @@ public class Angle{
 		}
 		return angle;
 	}
+	public static double to255(double angle){
+		return angle = angle*255/(2*Math.PI);
+		
+	}
 	public static void main (String[] args){
 		int i = -10;
 		while(i<=10){
