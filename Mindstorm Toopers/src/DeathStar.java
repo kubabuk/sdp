@@ -16,6 +16,11 @@ public class DeathStar {
 		AI emperor = new AI(universe);
 		boolean flag = true;
 		
+		int[] sendArgumentsDef;
+		sendArgumentsDef = new int[1];
+		int[] sendArgumentsAttk;
+		sendArgumentsAttk = new int[1];
+		
 		//ANDY HELP
 		try {
 			MainComm theForceDef = new MainComm(1);
@@ -27,11 +32,16 @@ public class DeathStar {
 				Command cmdDefend = emperor.defenderpull();
 				Command cmdAttack = emperor.attackerpull();
 				
-				theForceDef.sendMessage(cmdDefend.getCommand(), 
-						cmdDefend.getSpeed(), cmdDefend.getDistAngle());
+				sendArgumentsDef[0] = cmdDefend.getSpeed();
+				sendArgumentsDef[1] = cmdDefend.getDistAngle();
+				
+				sendArgumentsAttk[0] = cmdAttack.getSpeed();
+				sendArgumentsAttk[1] = cmdAttack.getDistAngle();
+				
+				theForceDef.sendMessage(cmdDefend.getCommand(), sendArgumentsDef);
 				
 				theForceAttack.sendMessage(cmdAttack.getCommand(), 
-						cmdAttack.getSpeed(), cmdAttack.getDistAngle());
+						sendArgumentsAttk);
 			}
 			
 		} catch (IOException e) {
