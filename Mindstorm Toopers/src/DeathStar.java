@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import comms.*;
 import strategy.*;
@@ -28,6 +29,9 @@ public class DeathStar {
 				
 				theForceDef.sendMessage(cmdDefend.getCommand(), 
 						cmdDefend.getSpeed(), cmdDefend.getDistAngle());
+				
+				theForceAttack.sendMessage(cmdAttack.getCommand(), 
+						cmdAttack.getSpeed(), cmdAttack.getDistAngle());
 			}
 			
 		} catch (IOException e) {
