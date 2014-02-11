@@ -46,7 +46,7 @@ public class Queue{
     public Command translate(Vector v) {
         CommandNames e;
 
-        int speed = MAX;
+        int speed = MAX; 
         int distAngle;
         
         if (v.getMagnitude() == 0) {
@@ -54,29 +54,11 @@ public class Queue{
             distAngle = 0; //To do
             previousAngle = 0; //To do
         }
-        else if (true/*something representing a kick*/) {
-            e = CommandNames.KICK;
-            speed = MAX;
-        }
         else {
             e = CommandNames.MOVEFORWARD;
             distAngle = (int)(v.getMagnitude()/1.25);
         }
-        
-        if (v.getMagnitude() == 0) {
-            e = CommandNames.CHANGEANGLE;
-            distAngle = 0; //To do
-            previousAngle = 0; //To do
-        }
-        else if (true /* 1 something representing a kick*/) {
-            e = CommandNames.KICK;
-            speed = MAX;
-            distAngle = 0; //TODO
-        }
-        else {
-            e = CommandNames.MOVEFORWARD;
-            distAngle = (int)(v.getMagnitude()/1.25);
-        }
+       
         this.lastVector = v;
 
         return new Command(e, speed, distAngle);
