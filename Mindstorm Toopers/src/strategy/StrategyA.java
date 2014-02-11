@@ -9,7 +9,7 @@ import commands.Queue;;
 public class StrategyA {
 	//strategy for attacker
 	
-	public static Queue getAction(State s , World w)
+	public static void getAction(State s , World w, Queue aq)
 	{
 		// this functions takes the state and decide what robots should do
 
@@ -59,12 +59,10 @@ public class StrategyA {
 			
 			Vector Turning1 = new Vector(r,0,rp.getOrientation()-o.getOrientation()); 
 			//generate the queue of commands
-			Queue c5 = new Queue(o.getOrientation());
-			c5.add(Turning1);
-			c5.add(rp);
+			//Queue c5 = new Queue(o.getOrientation());
+			aq.add(Turning1);
+			aq.add(rp);
 
-			
-			return c5;
 			
 		}
 		case 6:
@@ -86,11 +84,11 @@ public class StrategyA {
 			Vector Turning2 = new Vector(r,0,pg.getOrientation()-o.getOrientation());
 		
 			//generate the queue of commands
-			Queue c6 = new Queue(o.getOrientation());
-			c6.add(Turning2);
-			c6.addKick(); //kick
+			//Queue c6 = new Queue(o.getOrientation());
+			aq.add(Turning2);
+			aq.addKick(); //kick
 			
-			return c6;
+		
 			
 		}
 		case 7:
@@ -114,7 +112,7 @@ public class StrategyA {
 		
 		
 		
-		return new Queue(0.0);
+		
 	}
 	
 	
