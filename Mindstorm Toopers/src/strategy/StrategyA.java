@@ -39,14 +39,17 @@ public class StrategyA {
 		
 			// get the coordinate of the ball and the attacker
 			Point b = w.getBallPos();
+			//Point b = new Point(10,5);
+			//System.out.println(b.toString());
 			Point r = w.getAttacker().getPos();
+			System.out.println(r.toString());
 			// get the orientation of the attacker
 			Vector o = w.getAttacker().getDir();
 			
 
 			// calculate the coordinate of the kick position
 			
-			Point g = new Point(100,0); // the middle point of the goal
+			Point g = new Point(100.0,20.0); // the middle point of the goal
 			Vector bg = new Vector(b,g);
 			
 			double kickdistance = 10.0; // the distance the robot should be kept between the robot center and the ball
@@ -57,17 +60,24 @@ public class StrategyA {
 		
 			Vector rp = new Vector(r,p);
 			
-			Vector Turning1 = new Vector(r,0,rp.getOrientation()-o.getOrientation()); 
+			Vector Turning1 = new Vector(r,0,rp.getOrientation()); 
+			Vector step = new Vector(r,10,rp.getOrientation());
 			//generate the queue of commands
 			//Queue c5 = new Queue(o.getOrientation());
-			aq.add(Turning1);
-			aq.add(rp);
-
+			if (o.getOrientation()>Turning1.getOrientation()-0.1 && o.getOrientation()<Turning1.getOrientation()+0.1)
+			{
+				aq.add(Turning1);
+				System.out.println("Turning sent");
+			}
+			aq.add(step);
+			
+			System.out.println("step sent move fowards");
 			
 		}
 		case 6:
 		{
 			Point b = w.getBallPos();
+			//Point b = new Point(10,5);
 			Point g = new Point(100,0); // the middle point of the goal
 			Vector bg = new Vector(b,g);
 			
@@ -79,15 +89,18 @@ public class StrategyA {
 
 			Vector o = w.getAttacker().getDir();
 			Point r = w.getAttacker().getPos();
-			AttackerQueue x = new AttackerQueue(10.1);
-			AttackerQueue c = new AttackerQueue(o.getOrientation());
 			Vector Turning2 = new Vector(r,0,pg.getOrientation()-o.getOrientation());
-		
+			
 			//generate the queue of commands
 			//Queue c6 = new Queue(o.getOrientation());
-			aq.add(Turning2);
-			aq.addKick(); //kick
+			if (o.getOrientation()>Turning2.getOrientation()-0.1 && o.getOrientation()<Turning2.getOrientation()+0.1)
+			{
+				aq.add(Turning2);
+				System.out.println("Try to face the ball!");
+			}
 			
+			aq.addKick(); //kick
+			System.out.println("kick!");
 		
 			
 		}
