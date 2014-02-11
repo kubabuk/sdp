@@ -26,9 +26,14 @@ public class DeathStar {
 				
 				Command cmdDefend = emperor.defenderpull();
 //				Command cmdAttack = emperor.attackerpull();
+				//System.out.println(cmdDefend.getCommand());
+				if(!cmdDefend.isNothing()){
+					
+					theForceDef.sendMessage(cmdDefend.getCommand(), 
+							cmdDefend.getSpeed(), cmdDefend.getDistAngle());
+					
+				}
 				
-				theForceDef.sendMessage(cmdDefend.getCommand(), 
-						cmdDefend.getSpeed(), cmdDefend.getDistAngle());
 				
 //				theForceAttack.sendMessage(cmdAttack.getCommand(), 
 //						cmdAttack.getSpeed(), cmdAttack.getDistAngle());
