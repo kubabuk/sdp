@@ -31,7 +31,7 @@ public class StrategyD {
 		//			9						*		
 		// There may be more states if needed, state with * are states that can possibly be removed
 		
-		
+		System.out.println("getAction Defender was called");
 		int milestone3 = 1;
 		double  stepSize = 5.0;
 		switch (milestone3)//s.getState())
@@ -47,8 +47,10 @@ public class StrategyD {
 			Robot ourDef = w.getDefender();
 			Point r = ourDef.getPos();
 			Area myArea = w.getOurDefenderArea();
-			System.out.println("step");
-			while(ball.isMoving()){
+			//System.out.println("step");
+			boolean flag=true;
+			while(flag)   //(ball.isMoving())
+				{
 				/*if(!ourDef.getDir().isParallel(ourDef.getPos().longtitude())){
 					//Correct robot orientation
 					if(ourDef.getPos().getY()>0){
@@ -63,19 +65,21 @@ public class StrategyD {
 					
 				}*/
 				//Find the Point where the robot will intercept the Ball 
-				
+				System.out.println("step");
 				Point target = ball.getDir().intersectLong(ourDef.getPos().longtitude());
-				if(target.isIn(myArea) && !ourDef.getPos().isColinear(ball.getDir())){
+				//if(target.isIn(myArea) && !ourDef.getPos().isColinear(ball.getDir())){
+				if(flag){
 					//Find the Trajectory in which the robot should move
 					Vector trajectory = new Vector(ourDef.getPos(),target);
 					//Move one step towards the target
 					Vector step = new Vector(ourDef.getPos(),stepSize, trajectory.getOrientation());
 					dq.add(step);
-					
+					System.out.println(step.toString() + "jdkl");
 				}
 				else{
 					dq.doNothing();
 				}
+				break;
 				
 			}
 			

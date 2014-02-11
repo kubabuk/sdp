@@ -18,10 +18,12 @@ public class Command {
     }
     
     public int getSpeed() {
+    	System.out.println("Speed set at " + speed);
         return this.speed;
     }
     
     public int getDistAngle() {
+    	System.out.println("Dist/Angle set as " + distAngle);
         return this.distAngle;
     }
     public boolean isNothing(){

@@ -26,6 +26,7 @@ public class Queue{
     
     public void add(Vector v) {
         commandList.add(translate(v));
+        System.out.println("new vector added to the queue");
     }
     
 
@@ -40,7 +41,12 @@ public class Queue{
     	commandList.add(new Command(CommandNames.ABORT,0,0));
     }
     public Command pull() {
-        return commandList.remove(0);
+    	System.out.println("pull");
+        Command c = commandList.get(0);
+        commandList.remove(0);
+        return c;
+        
+
     }
     
     public boolean isEmpty(){

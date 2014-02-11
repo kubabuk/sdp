@@ -14,7 +14,7 @@ public class AI {
 	public Queue aq,dq;
 	
 	
-	public AI(World w)
+	public AI(World w, Queue aq, Queue dq)
 	{
 		//this.lastattackerstate = new State(1);
 		this.lastdefenderstate = new State(0);
@@ -23,7 +23,8 @@ public class AI {
 		
 		this.w = w;
 		//this.aq = new Queue(w.getAttacker().getDir().getOrientation());
-		this.dq = new Queue(w.getDefender().getDir().getOrientation());
+		//this.dq = new Queue(w.getDefender().getDir().getOrientation());
+		this.dq = dq;
 	}
 	
 	public void update()
@@ -33,6 +34,8 @@ public class AI {
 		
 		//StrategyA.getAction(currentattackerstate,w, aq);
 		StrategyD.getAction(currentdefenderstate,w, dq);
+		
+		System.out.println("second call");
 		
 	
 		
