@@ -1,7 +1,10 @@
 package comms;
 
 
+
 import java.io.IOException;
+
+
 
 
 import java.io.InputStream;
@@ -9,6 +12,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 //import java.util.Arrays;
 import java.util.Iterator;
+
 
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommException;
@@ -153,38 +157,24 @@ public class MainComm implements Communicator {
 		if (b == -1)
 			throw new IOException("ERROR");
 		CommandNames op = CommandNames.values()[b];
-		int length = is.read();
-		byte[] data = new byte[length];
-		for (int i = 0; i < length; i++) {
-			data[i] = (byte) is.read();
-		}
-		int[] args = new int[length/2];
-		for (int i = 0; i < args.length; i++)
-			args[i] = (int)((data[2*i] <<8) | (data[2*i+1] & 0xFF));
-
+		int args1 = is.read();
+		int args2 = is.read();
 		// notify all listeners
 		Iterator<MessageListener> ml = mListener.iterator();
 		while (ml.hasNext()) {
-			ml.next().receiveMessage(op, args, MainComm.this);	
+			ml.next().receiveMessage(op, args1, args2, MainComm.this);	
 		}
 	}
 	//@Override
-	public synchronized void sendMessage(CommandNames op, int[] args) throws IOException {
+	public synchronized void sendMessage(CommandNames op, int args1, int args2) throws IOException {
 
 	System.out.println(op +" sent");
 
 	
 	// send a message to device
-	int[] data = new int[args.length*2];
-	for (int i = 0; i < args.length; i++) {
-	data[2*i] = (int) (args[i] >> 8);
-	data[2*i+1] = (int) (args[i]);
-	}
 	os.write(op.ordinal()); // write opcode
-	os.write(data.length); // write number of args
-	for (int i : args) {
-		os.write(i);
-		}
+	os.write(args1);
+	os.write(args2);
 	os.flush(); // send message
 	}
 

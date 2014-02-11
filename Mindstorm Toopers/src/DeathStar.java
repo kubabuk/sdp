@@ -1,6 +1,6 @@
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
+import comms.CommandNames;
 import comms.*;
 import strategy.*;
 import commands.*;
@@ -13,11 +13,11 @@ public class DeathStar {
 		boolean direction = args[0].equals("right");
 		
 		
-		World universe = new World(color, direction);
-		Queue aq = new Queue(universe.getAttacker().getDir().getOrientation());
-		Queue dq = new Queue(universe.getDefender().getDir().getOrientation());
+		//World universe = new World(color, direction);
+		//Queue aq = new Queue(universe.getAttacker().getDir().getOrientation());
+		//Queue dq = new Queue(universe.getDefender().getDir().getOrientation());
 		
-		AI emperor = new AI(universe,aq,dq);
+		//AI emperor = new AI(universe,aq,dq);
 		boolean flag = true;
 		
 		int[] sendArgumentsDef;
@@ -30,23 +30,30 @@ public class DeathStar {
 			MainComm theForceDef = new MainComm(1);
 //			MainComm theForceAttack = new MainComm(2);
 			
-			while (flag) {
-				emperor.update();
+			//while (flag) {
+				//emperor.update();
 				
 				//Command cmdDefend = emperor.defenderpull();
-				Command cmdDefend = dq.pull();
+//				Command cmdDefend = dq.pull();
 //				Command cmdAttack = emperor.attackerpull();
-				System.out.println(cmdDefend.getCommand());
+				//System.out.println(cmdDefend.getCommand());
 				
-				sendArgumentsDef[0] = cmdDefend.getSpeed();
-				sendArgumentsDef[1] = cmdDefend.getDistAngle();
-				if(!cmdDefend.isNothing()){
+				//sendArgumentsDef[0] = cmdDefend.getSpeed();
+				//sendArgumentsDef[1] = cmdDefend.getDistAngle();
+				//if(!cmdDefend.isNothing()){
 					
-					theForceDef.sendMessage(cmdDefend.getCommand(), sendArgumentsDef);
+					//theForceDef.sendMessage(cmdDefend.getCommand(), sendArgumentsDef);
 					
-				}
+				//}
 				
-
+				theForceDef.sendMessage(CommandNames.MOVEFORWARD, 200, 5);
+				
+				theForceDef.sendMessage(CommandNames.KICK,250, 10);
+				
+				theForceDef.sendMessage(CommandNames.CHANGEANGLE, 300, 5);
+				
+				theForceDef.sendMessage(CommandNames.EXIT, 300, 5);
+				
 				
 				
 //				sendArgumentsAttk[0] = cmdAttack.getSpeed();
@@ -59,7 +66,7 @@ public class DeathStar {
 //				theForceAttack.sendMessage(cmdAttack.getCommand(), 
 //						cmdAttack.getSpeed(), cmdAttack.getDistAngle());
 
-			}
+			//}
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
