@@ -27,12 +27,12 @@ public class ImageProcessor1 {
 	static int redMoreThanBlue = 80;
 	static int redMoreThanGreen = 80;
 	// detecting yellow:
-	static int yellowRedMoreThanBlue = 30;
-	static int yellowGreenMoreThanBlue = 30;
+	static int yellowRedMoreThanBlue = 48;
+	static int yellowGreenMoreThanBlue = 48;
 	// detecting blue:
 	static int blueMoreThanGreen = 0;
-	static int blueMoreThanRed = 40;
-	static int greenMoreThanRed = 40;
+	static int blueMoreThanRed = 30;
+	static int greenMoreThanRed = 30;
 	
 	private static Point[] lastDot;
 	private static Point[] lastRobot;
@@ -159,9 +159,9 @@ public class ImageProcessor1 {
 				ball = new Point(lastBall.getX() - 3, ball.getY());
 			}
 			if (ball.getY() > lastBall.getY()){
-				ball = new Point(ball.getX(), lastBall.getY() + 3);
+				ball = new Point(ball.getX(), lastBall.getY() + 10);
 			} else {
-				ball = new Point(ball.getX(), lastBall.getY() - 3);
+				ball = new Point(ball.getX(), lastBall.getY() - 10);
 			}
 			lastBall = ball;
 			world.setBallXY(ball);
@@ -396,15 +396,15 @@ public class ImageProcessor1 {
 	}
 	
 	private static BufferedImage drawEverything(BufferedImage img, Point ball, Point yellowLeft, Point yellowRight, Point blueLeft, Point blueRight, Point yellowLeftDot, Point yellowRightDot, Point blueLeftDot, Point blueRightDot){
-		img = drawCross(img, red, ball);
-		img = drawCross(img, yellow, yellowLeft);
-		img = drawCross(img, yellow, yellowRight);
+//		img = drawCross(img, red, ball);
+//		img = drawCross(img, yellow, yellowLeft);
+//		img = drawCross(img, yellow, yellowRight);
 		img = drawCross(img, blue, blueLeft);
-		img = drawCross(img, blue, blueRight);
-		img = drawCross(img, white, yellowLeftDot);
-		img = drawCross(img, white, yellowRightDot);
-		img = drawCross(img, white, blueLeftDot);
-		img = drawCross(img, white, blueRightDot);
+//		img = drawCross(img, blue, blueRight);
+//		img = drawCross(img, white, yellowLeftDot);
+//		img = drawCross(img, white, yellowRightDot);
+//		img = drawCross(img, white, blueLeftDot);
+//		img = drawCross(img, white, blueRightDot);
 //		img = drawVector(img, yellow, world.getyLeft());
 		return img;
 	}
