@@ -12,7 +12,7 @@ public class DeathStar {
 
 	public static void main (String[] args){
 		boolean color = args[0].equals("yellow");
-		boolean direction = args[0].equals("right");
+		boolean direction = args[1].equals("right");
 
 
 		World universe = new World(color, direction);
