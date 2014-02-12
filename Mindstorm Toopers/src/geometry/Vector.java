@@ -50,8 +50,8 @@ public class Vector {
 		this.destination = end;
 		this.x = end.getX()-begin.getX();
 		this.y = end.getY()-begin.getY();
-		//this.r=(Math.sqrt(x*x +y*y));
-		this.r = Point.pointDistance(begin, end);
+		this.r=(Math.sqrt(x*x +y*y));
+		//this.r = Point.pointDistance(begin, end);
 		this.theta=Math.atan2(y,x);
 	}
 	

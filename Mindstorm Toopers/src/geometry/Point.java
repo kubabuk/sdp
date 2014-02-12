@@ -41,9 +41,9 @@ public class Point {
 	
 	public static double pointDistance(Point a , Point b){
 		Vector v = new Vector(a,b);
-		double dist = Math.sqrt((a.getX()-b.getX())*(a.getX()-b.getX())+(a.getY()-b.getY())*(a.getY()-b.getY()));
-		//return v.getMagnitude();
-		return dist;
+		//double dist = Math.sqrt((a.getX()-b.getX())*(a.getX()-b.getX())+(a.getY()-b.getY())*(a.getY()-b.getY()));
+		return v.getMagnitude();
+		//return dist;
 	}
 	
 	public double distanceFromLine(Vector v){

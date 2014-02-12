@@ -19,7 +19,7 @@ public class DeathStar {
 		AttackerQueue aq = new AttackerQueue(universe.getAttacker().getDir().getOrientation());
 		DefenderQueue dq = new DefenderQueue(universe.getDefender().getDir().getOrientation());
 
-		AI emperor = new AI2(universe,aq,dq);
+		AI2 emperor = new AI2(universe,aq,dq);
 		boolean flag = true;
 
 
