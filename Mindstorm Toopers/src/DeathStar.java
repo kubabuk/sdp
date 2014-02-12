@@ -29,7 +29,7 @@ public class DeathStar {
 			int init = (int) Angle.to255(Angle.toRange2PI(universe.getAttackerDir().getOrientation()));
 			theForceAttack.sendMessage(CommandNames.UPDATEANGLE, init, 0);
 			
-			System.out.println("initial command sent");
+			System.out.println("initial command sent"); 	
 			while (flag) {
 				emperor.update();
 				

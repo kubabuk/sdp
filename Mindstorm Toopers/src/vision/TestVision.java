@@ -8,8 +8,10 @@ public class TestVision {
 		world = new World(true, true);
 		Thread.sleep(5000);
 		while(true){
-			Thread.sleep(200);
+			Thread.sleep(1000);
 			System.out.println(world.getBall().getPos().toString());
+			System.out.println(world.getAttacker().getPos().toString());
+			System.out.println(world.getMaxY());
 		}
 	}
 }

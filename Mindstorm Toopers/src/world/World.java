@@ -28,6 +28,7 @@ public class World {
 	private int pitchWidth, pitchHeight, pitchCentre;
 	private Vector yLeft, yRight, bLeft, bRight;
 	private int pitchLeft, pitchTop;
+	private int gridSize;
 	
 	private Boolean color;
 	private Boolean direction;
@@ -259,6 +260,7 @@ public class World {
 	}
 
 	public void setWidth(int width) {
+		this.maxX = gridConstant;
 		this.pitchWidth = width;
 	}
 
@@ -267,6 +269,11 @@ public class World {
 	}
 
 	public void setHeight(int height) {
+		if (pitchWidth != 0){
+			this.maxY = height / (this.pitchWidth / gridConstant);
+		} else {
+			maxY = 350;
+		}
 		this.pitchHeight = height;
 	}
 
@@ -351,6 +358,7 @@ public class World {
 	}
 	
 	public void setPitchLeft(int pitchLeft) {
+		this.minX = 0;
 		this.pitchLeft = pitchLeft;
 	}
 
@@ -359,6 +367,7 @@ public class World {
 	}
 
 	public void setPitchTop(int pitchTop) {
+		this.minY = 0;
 		this.pitchTop = pitchTop;
 	}
 
