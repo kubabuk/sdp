@@ -152,24 +152,24 @@ public class ImageProcessor1 {
 		
 		// find red dots and get the average to find out the location of the ball
 		Point ball = new Point (redX/((double)countRed), redY/((double)countRed));
-		if ((Math.abs(ball.getX() - lastBall.getX()) + Math.abs(ball.getY() - lastBall.getY())) > 10){
-			if (ball.getX() > lastBall.getX()){
-				ball = new Point(lastBall.getX() + 3, ball.getY());
-			} else {
-				ball = new Point(lastBall.getX() - 3, ball.getY());
-			}
-			if (ball.getY() > lastBall.getY()){
-				ball = new Point(ball.getX(), lastBall.getY() + 10);
-			} else {
-				ball = new Point(ball.getX(), lastBall.getY() - 10);
-			}
-			lastBall = ball;
-			world.setBallXY(ball);
-		} else {
-			lastBall = ball;
-			world.setBallXY(ball);
-		}
-//		world.setBallXY(ball);
+//		if ((Math.abs(ball.getX() - lastBall.getX()) + Math.abs(ball.getY() - lastBall.getY())) > 10){
+//			if (ball.getX() > lastBall.getX()){
+//				ball = new Point(lastBall.getX() + 3, ball.getY());
+//			} else {
+//				ball = new Point(lastBall.getX() - 3, ball.getY());
+//			}
+//			if (ball.getY() > lastBall.getY()){
+//				ball = new Point(ball.getX(), lastBall.getY() + 10);
+//			} else {
+//				ball = new Point(ball.getX(), lastBall.getY() - 10);
+//			}
+//			lastBall = ball;
+//			world.setBallXY(ball);
+//		} else {
+//			lastBall = ball;
+//			world.setBallXY(ball);
+//		}
+		world.setBallXY(ball);
 		Point yellowLeft = new Point(yellowLeftX/((double)countYellowLeft),yellowLeftY/((double)countYellowLeft));
 		if ((Math.abs(yellowLeft.getX() - lastRobot[0].getX()) + Math.abs(yellowLeft.getY() - lastRobot[0].getY())) > 10){
 			if (yellowLeft.getX() > lastRobot[0].getX()){
@@ -396,15 +396,15 @@ public class ImageProcessor1 {
 	}
 	
 	private static BufferedImage drawEverything(BufferedImage img, Point ball, Point yellowLeft, Point yellowRight, Point blueLeft, Point blueRight, Point yellowLeftDot, Point yellowRightDot, Point blueLeftDot, Point blueRightDot){
-//		img = drawCross(img, red, ball);
-//		img = drawCross(img, yellow, yellowLeft);
-//		img = drawCross(img, yellow, yellowRight);
+		img = drawCross(img, red, ball);
+		img = drawCross(img, yellow, yellowLeft);
+		img = drawCross(img, yellow, yellowRight);
 		img = drawCross(img, blue, blueLeft);
-//		img = drawCross(img, blue, blueRight);
-//		img = drawCross(img, white, yellowLeftDot);
-//		img = drawCross(img, white, yellowRightDot);
-//		img = drawCross(img, white, blueLeftDot);
-//		img = drawCross(img, white, blueRightDot);
+		img = drawCross(img, blue, blueRight);
+		img = drawCross(img, white, yellowLeftDot);
+		img = drawCross(img, white, yellowRightDot);
+		img = drawCross(img, white, blueLeftDot);
+		img = drawCross(img, white, blueRightDot);
 //		img = drawVector(img, yellow, world.getyLeft());
 		return img;
 	}
