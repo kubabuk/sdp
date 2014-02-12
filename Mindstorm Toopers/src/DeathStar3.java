@@ -35,6 +35,7 @@ public class DeathStar3 {
 			Point ballPos = universe.getBallPos();
 			Point robotPos = universe.getDefenderPos();
 			Point lastBall = new Point (ballPos.getX()+5,0);
+			while(n<=10){
 			while (Math.abs(ballPos.getY()-robotPos.getY())>=5 && !lastBall.equals(ballPos)) {
 				
 				Point target = new Point(robotPos.getX(),ballPos.getY()); 
@@ -61,7 +62,8 @@ public class DeathStar3 {
 					ballPos = universe.getBallPos();
 					robotPos = universe.getDefenderPos();
 			}
-			//}
+			n++;
+			}
 			theForceDef.sendMessage(CommandNames.EXIT, 0, 0);
 			theForceDef.close();
 		} catch (IOException e) {
