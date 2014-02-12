@@ -12,6 +12,7 @@ public class State {
 	
 	private int state,mode;
 	private Point goal;
+	private boolean test;
 	
 	//       State         ||       Situation   
 	// 		 	0						*
@@ -81,18 +82,21 @@ public class State {
 			
 			
 			
-			if (Point.pointDistance(r, p) < 5 )
-			{
-				this.goal = b;
-				System.out.println("State = 6");
-				newstate = 6;
-			}
-			else
-			{	
-				this.goal = p;
-				System.out.println("State = 5");
-				newstate = 5;
-			}
+//			if (Point.pointDistance(r, p) < 5 )
+//			{
+//				this.goal = b;
+//				System.out.println("State = 6");
+//				newstate = 6;
+//			}
+//			else
+//			{	
+//				this.goal = p;
+//				System.out.println("State = 5");
+//				newstate = 5;
+//			}
+			newstate = 9;
+			System.out.println("State = 9");
+			this.goal = p;
 			
 			
 			
