@@ -60,20 +60,35 @@ public class State {
 		{
 			//attacker
 			Point b = w.getBallPos();
+			//Point b = new Point(10,5);
+			//System.out.println(b.toString());
 			Point r = w.getAttacker().getPos();
+			System.out.println(r.toString());
+			// get the orientation of the attacker
+			Vector o = w.getAttacker().getDir();
+			// calculate the coordinate of the kick position
+			Point g = new Point(50.0,0.0); // the middle point of the goal
+			Vector bg = new Vector(b,g);
+			double kickdistance = 10.0; // the distance the robot should be kept between the robot center and the ball
+			Vector pg = new Vector(new Point(0,0), kickdistance + bg.getMagnitude(),bg.getOrientation());
+			Point p = new Point(g.getX()-pg.getX(),g.getY()-pg.getY()); //kickpoint;
 			
-			if (Point.pointDistance(r, b) < 10 )
+			
+			
+			if (Point.pointDistance(r, p) < 5 )
 			{
-				newstate = 5;
+				System.out.println("State = 6");
+				newstate = 6;
 			}
 			else
 			{
-				newstate = 6;
+				System.out.println("State = 5");
+				newstate = 5;
 			}
 			
 			
+			
 		}
-		
 		
 		
 		
