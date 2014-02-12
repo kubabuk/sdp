@@ -1,0 +1,59 @@
+\documentclass[dvips]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{layout}
+\usepackage[margin=1in]{geometry}
+
+%\setlength{\voffset}{-0.75in}
+%\setlength{\headsep}{5pt} 
+ 
+\begin{document}
+\sloppy
+\title{Group 6 - Milestone 3}
+ 
+\author{Peter Macregor, s1126155}
+ 
+\maketitle
+
+\section{Your Contribution to the Group}
+I worked on vision for Milestone 3 throughout this week. The main challenge
+was tracking the dot on the robots in order to detect the direction they face.
+I tried various methods before settling on the current one which works in most cases.
+I also built on the interface between vision and the rest of the system. This
+abstracts the information about the world so the AI methods can access it without
+reference to the vision system. I also helped with last minute testing on Wednesday morning.
+
+\section{High Points of Your Contribution}
+\begin{itemize}
+  \item Tracking the dots on the robots with reasonably high accuracy.
+  \item Improving the interface to vision.
+  \item Reducing the noise on the vision system. Eratic values are handled in a more sophisticated way.
+\end{itemize} 
+
+\section{Points Awarded to Each Member (out of 5)}
+\begin{itemize}
+\begin{multicols}{2}
+\item Peter Macgregor - 4
+\item Patricia Dragan - 2.5
+\item Egidijus Skinkys - 3.5
+\item Andrew Leith - 3.5
+\item Nursultan Askarbekuly - 3
+\item Peak Limpiti - 3
+\item Zhang Chen - 3.5
+\item Aris Tsialos - 4
+\item Kuba Kaszyk - 4
+\end{multicols}
+\end{itemize}
+
+\section{Additional Information}
+My plans for the future: improve the dot tracking algorithm so that it is
+more reliable, add GUI for changing camera settings and threshold values,
+improve blue robot tracking, add implementation for tracking opponents robots.\\
+These tasks should be shared out between Patricia and myself.
+
+
+
+\end{document}
+
