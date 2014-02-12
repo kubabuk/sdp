@@ -19,27 +19,35 @@ public class DeathStar2 {
 		
 		AI emperor = new AI(universe,aq,dq);
 		boolean flag = true;
+		int n = 0;
 				
-
+		
 		try {
 			MainComm theForceDef = new MainComm(1);
 //			MainComm theForceAttack = new MainComm(2);
+			while(n<=500){
+				n++;
+			}
+			n=0;
 			int init = (int) Angle.to255(Angle.toRange2PI(universe.getAttackerDir().getOrientation()));
 			theForceDef.sendMessage(CommandNames.UPDATEANGLE, init, 0);
 			
 			while (flag) {
+				//if(n%10==0){
 				emperor.update();
 				emperor.notInitial();
 				//Command cmdDefend = emperor.defenderpull();
 				Command cmdDefend = dq.pull();
 //				Command cmdAttack = emperor.attackerpull();
-				System.out.println(cmdDefend.getCommand());
 				
 				
-				if(!cmdDefend.isNothing()){
+				//System.out.println(n);
+				if(!cmdDefend.isNothing() ){
+					if(cmdDefend.getCommand()!=CommandNames.DONOTHING){
+					System.out.println(cmdDefend.getCommand());
 					theForceDef.sendMessage(cmdDefend.getCommand(), 100, cmdDefend.getDistAngle());
 					}
-				
+				}
 				
 				//sendArgumentsDef[0] = cmdDefend.getSpeed();
 				//sendArgumentsDef[1] = cmdDefend.getDistAngle();
@@ -68,9 +76,11 @@ public class DeathStar2 {
 
 //				theForceAttack.sendMessage(cmdAttack.getCommand(), 
 //						cmdAttack.getSpeed(), cmdAttack.getDistAngle());
-
+				//n++;
 			}
-			
+			//}
+			theForceDef.sendMessage(CommandNames.EXIT, 0, 0);
+			theForceDef.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -31,8 +31,8 @@ private static Vector lastInstruction;
 		//			9						*		
 		// There may be more states if needed, state with * are states that can possibly be removed
 		
-		System.out.println("getAction Defender was called");
-		int milestone3 = 2;
+		//System.out.println("getAction Defender was called");
+		int milestone3 = 3;
 		double  stepSize = 5.0;
 		double distFromWall = 5.0;
 		switch (milestone3)//s.getState())
@@ -88,6 +88,7 @@ private static Vector lastInstruction;
 			}
 		case 2:{
 			Point ballPos = w.getBallPos();
+			Ball ball = w.getBall();
 			Robot defender = w.getDefender();
 			Point robotPos = w.getDefenderPos();
 			Vector latitude = ballPos.latitude();
@@ -109,31 +110,40 @@ private static Vector lastInstruction;
 				System.out.println("Ball: " + ballPos.getY());
 				System.out.println("Robot: " +robotPos.getX());
 				System.out.println("MaxY: " + (w.getMinY()));
-			}else if(ballPos.getY()>=(55-distFromWall)){
-				dq.add(new Vector(robotPos, new Point(robotPos.getX(),(55-distFromWall))));
+			}else */if(ballPos.getY()>=(55-distFromWall)){
+				
+			
+				//dq.add(new Vector(robotPos, new Point(robotPos.getX(),(55-distFromWall))));
 				System.out.println("Cond 2");
 				System.out.println("Ball: " + ballPos.getY());
 				System.out.println("Robot: " +robotPos.getX());
 				System.out.println("MaxY: " + (w.getMinY()));
-			/*if(ballPos.getY()>=distFromWall){
-				dq.add(new Vector(robotPos, new Point(robotPos.getX(),distFromWall)));
-				System.out.println("Cond 1");
-				System.out.println("Ball: " + ballPos.getY());
-				System.out.println("Robot: " +robotPos.getX());
-				System.out.println("MaxY: " + (w.getMaxY()-distFromWall));
-			}else if(ballPos.getY()<=(w.getMaxY()+distFromWall)){
-				dq.add(new Vector(robotPos, new Point(robotPos.getX(),(w.getMaxY()-distFromWall))));
-				System.out.println("Cond 2");
-				System.out.println("Ball: " + ballPos.getY());
-				System.out.println("Robot: " +robotPos.getX());
-				System.out.println("MaxY: " + (w.getMaxY()-distFromWall)); 
-			}else{ */
+				Point target = new Point(robotPos.getX(),(55-distFromWall));
+				System.out.println(target);
+				Vector v = new Vector(robotPos,target);
+				if (notInitial){
+					System.out.println("Cond 5");
+					System.out.println(lastInstruction.getDestination());
+					
+					
+					if(!lastInstruction.getDestination().equals(target)){
+						dq.add(v);
+					}
+				}else{
+					dq.add(v);
+				}
+				lastInstruction = v;
+	
+			}else{ 
 				Point target = latitude.intersectLong(longtitude);
 				Vector v = new Vector(robotPos,target);
 				System.out.println("Cond 4");
 				System.out.println("Ball: " + ballPos.toString());
+				System.out.println("Ball: " + ball.getPos().toString());
 				System.out.println("Robot: " +robotPos.toString());
-				System.out.println("MaxY: " + orientation.getOrientation());
+				System.out.println("Robot: " +defender.getPos().toString());
+				System.out.println("orientation: " + orientation.getOrientation());
+				System.out.println("orientation: " + defender.getDir().getOrientation());
 				if (notInitial){
 					System.out.println("Cond 5");
 					System.out.println(lastInstruction.getDestination());
@@ -147,10 +157,39 @@ private static Vector lastInstruction;
 				}
 				lastInstruction = v;
 			}
-
+		}
 			
 	//	}
-		
+		case 3:{
+			Point ballPos = w.getBallPos();
+			Point robotPos = w.getDefenderPos();
+			Vector latitude = ballPos.latitude();
+			Vector longtitude = robotPos.longtitude();
+			
+			//Point target = latitude.intersectLong(longtitude);
+			Point target = new Point(robotPos.getX(),ballPos.getY()); 
+			Vector v = new Vector(robotPos,target);
+			//System.out.println("Cond 4");
+			//System.out.println("Ball: " + ballPos.toString());
+			
+			//System.out.println("Robot: " +robotPos.toString());
+			
+			
+			
+			if (notInitial){
+				//System.out.println("Cond 5");
+				//System.out.println(lastInstruction.getDestination());
+				//System.out.println(target);
+				
+				if(!lastInstruction.getDestination().equals(target)){
+					dq.add(v);
+				}
+			}else{
+				dq.add(v);
+			}
+			lastInstruction = v;
+			
+		}
 		default:
 			{
 			
@@ -158,3 +197,4 @@ private static Vector lastInstruction;
 		}		
 	}	
 }
+
