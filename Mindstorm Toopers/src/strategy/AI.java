@@ -36,7 +36,7 @@ public class AI {
 		//StrategyA.getAction(currentattackerstate,w, aq);
 		StrategyD.getAction(currentdefenderstate,w, dq, flag);
 		
-		System.out.println("second call");
+		//System.out.println("second call");
 		
 	
 		

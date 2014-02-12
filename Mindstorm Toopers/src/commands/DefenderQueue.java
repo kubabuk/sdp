@@ -22,19 +22,19 @@ public class DefenderQueue {
     
     public void add(Vector v) {
         //commandList.add(translate(v));
-        System.out.println("new vector added to the queue");
+        //System.out.println("new vector added to the queue");
         
         CommandNames e;
 
         int speed = MAX; 
         int distAngle;
         //if(v.getMagnitude()!=previousAngle){
-        e = CommandNames.CHANGEANGLE;
-        double angle = Angle.toRange2PI(v.getMagnitude());
+        //e = CommandNames.CHANGEANGLE;
+        double angle = Angle.toRange2PI(v.getOrientation());
         if(angle<=Math.PI){
-        	angle = Angle.toRange2PI(angle-Math.PI/2);
-        	distAngle = (int) Angle.to255(angle);
-            commandList.add(new Command(e, speed, distAngle));
+        	//angle = Angle.toRange2PI(angle-Math.PI/2);
+        	//distAngle = (int) Angle.to255(angle);
+            //commandList.add(new Command(e, speed, distAngle));
             if (v.getMagnitude() != 0) { 
                 e = CommandNames.MOVEFORWARD;
                 distAngle = (int)(v.getMagnitude()/1.25);
@@ -42,9 +42,9 @@ public class DefenderQueue {
             }
             
         }else
-        	angle = Angle.toRange2PI(angle+Math.PI/2);
-        	distAngle = (int) Math.toDegrees(v.getMagnitude());
-        	commandList.add(new Command(e, speed, distAngle));
+        	//angle = Angle.toRange2PI(angle+Math.PI/2);
+        	//distAngle = (int) Math.toDegrees(v.getMagnitude());
+        	//commandList.add(new Command(e, speed, distAngle));
         	if (v.getMagnitude() != 0) { 
                 e = CommandNames.MOVEBACKWARD;
                 distAngle = (int)(v.getMagnitude()/1.25);
@@ -69,7 +69,7 @@ public class DefenderQueue {
     	commandList.add(new Command(CommandNames.ABORT,0,0));
     }
     public Command pull() {
-    	System.out.println("pull");
+    	//System.out.println("pull");
     	if(!commandList.isEmpty()){
         Command c = commandList.get(0);
         commandList.remove(0);
@@ -86,8 +86,39 @@ public class DefenderQueue {
     	return commandList.isEmpty();
     }
     
-    public Command translate(Vector v) {
-        CommandNames e;
+    public static Command translate(Vector v) {
+    	
+    	CommandNames e;
+
+        int speed = MAX; 
+        int distAngle;
+        //if(v.getMagnitude()!=previousAngle){
+        //e = CommandNames.CHANGEANGLE;
+        double angle = Angle.toRange2PI(v.getOrientation());
+        if(angle<=Math.PI){
+        	//angle = Angle.toRange2PI(angle-Math.PI/2);
+        	//distAngle = (int) Angle.to255(angle);
+            //commandList.add(new Command(e, speed, distAngle));
+            if (v.getMagnitude() != 0) { 
+                e = CommandNames.MOVEFORWARD;
+                distAngle = (int)(v.getMagnitude()/1.25);
+                return new Command(e, speed, distAngle);
+            }
+            
+        }else
+        	//angle = Angle.toRange2PI(angle+Math.PI/2);
+        	//distAngle = (int) Math.toDegrees(v.getMagnitude());
+        	//commandList.add(new Command(e, speed, distAngle));
+        	if (v.getMagnitude() != 0) { 
+                e = CommandNames.MOVEBACKWARD;
+                distAngle = (int)(v.getMagnitude()/1.25);
+                return (new Command(e, speed, distAngle));
+            }
+        //}
+        
+        return new Command(CommandNames.DONOTHING, 0, 0);
+        
+        /*CommandNames e;
 
         int speed = MAX; 
         int distAngle;
@@ -105,6 +136,7 @@ public class DefenderQueue {
         this.lastVector = v;
 
         return new Command(e, speed, distAngle);
+        */
         
     }
 }

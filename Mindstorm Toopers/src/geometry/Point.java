@@ -30,18 +30,20 @@ public class Point {
 	public Vector latitude(){
 		
 		//returns a unit vector in the direction of the latitude
-		return new Vector (this,0,1);
+		return new Vector (this,1,0);
 	}
 	
 	public Vector longtitude(){
 		
 		//returns a unit vector in the direction of the longtitude 
-		return new Vector (this, Math.PI/2,1);
+		return new Vector (this,1,Math.PI/2);
 	}
 	
 	public static double pointDistance(Point a , Point b){
 		Vector v = new Vector(a,b);
+		//double dist = Math.sqrt((a.getX()-b.getX())*(a.getX()-b.getX())+(a.getY()-b.getY())*(a.getY()-b.getY()));
 		return v.getMagnitude();
+		//return dist;
 	}
 	
 	public double distanceFromLine(Vector v){
