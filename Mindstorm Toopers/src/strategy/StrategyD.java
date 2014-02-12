@@ -102,16 +102,43 @@ private static Vector lastInstruction;
 				if(!Angle.sameAngle(orientation.getOrientation(), 0)){
 					dq.add(new Vector(robotPos,0,0));}
 			}
-			if(ballPos.getY()<=distFromWall){
+			/*if(ballPos.getY()<=distFromWall){
 				dq.add(new Vector(robotPos, new Point(robotPos.getX(),distFromWall)));
-			}else if(ballPos.getY()>=(w.getMaxY()-distFromWall)){
+
+				System.out.println("Cond 1");
+				System.out.println("Ball: " + ballPos.getY());
+				System.out.println("Robot: " +robotPos.getX());
+				System.out.println("MaxY: " + (w.getMinY()));
+			}else if(ballPos.getY()>=(55-distFromWall)){
+				dq.add(new Vector(robotPos, new Point(robotPos.getX(),(55-distFromWall))));
+				System.out.println("Cond 2");
+				System.out.println("Ball: " + ballPos.getY());
+				System.out.println("Robot: " +robotPos.getX());
+				System.out.println("MaxY: " + (w.getMinY()));
+			/*if(ballPos.getY()>=distFromWall){
+				dq.add(new Vector(robotPos, new Point(robotPos.getX(),distFromWall)));
+				System.out.println("Cond 1");
+				System.out.println("Ball: " + ballPos.getY());
+				System.out.println("Robot: " +robotPos.getX());
+				System.out.println("MaxY: " + (w.getMaxY()-distFromWall));
+			}else if(ballPos.getY()<=(w.getMaxY()+distFromWall)){
 				dq.add(new Vector(robotPos, new Point(robotPos.getX(),(w.getMaxY()-distFromWall))));
-			}else{
+				System.out.println("Cond 2");
+				System.out.println("Ball: " + ballPos.getY());
+				System.out.println("Robot: " +robotPos.getX());
+				System.out.println("MaxY: " + (w.getMaxY()-distFromWall)); 
+			}else{ */
 				Point target = latitude.intersectLong(longtitude);
 				Vector v = new Vector(robotPos,target);
+				System.out.println("Cond 4");
+				System.out.println("Ball: " + ballPos.toString());
+				System.out.println("Robot: " +robotPos.toString());
+				System.out.println("MaxY: " + orientation.getOrientation());
 				if (notInitial){
+					System.out.println("Cond 5");
+					System.out.println(lastInstruction.getDestination());
+					System.out.println(target);
 					
-				
 					if(!lastInstruction.getDestination().equals(target)){
 						dq.add(v);
 					}
@@ -122,7 +149,7 @@ private static Vector lastInstruction;
 			}
 
 			
-		}
+	//	}
 		
 		default:
 			{
