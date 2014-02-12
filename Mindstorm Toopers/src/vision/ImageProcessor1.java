@@ -27,8 +27,8 @@ public class ImageProcessor1 {
 	static int redMoreThanBlue = 80;
 	static int redMoreThanGreen = 80;
 	// detecting yellow:
-	static int yellowRedMoreThanBlue = 48;
-	static int yellowGreenMoreThanBlue = 48;
+	static int yellowRedMoreThanBlue = 45;
+	static int yellowGreenMoreThanBlue = 45;
 	// detecting blue:
 	static int blueMoreThanGreen = 0;
 	static int blueMoreThanRed = 30;
@@ -340,6 +340,7 @@ public class ImageProcessor1 {
 		}
 				
 		// after setting coordinates, draw the elements on the image
+//		Image image = drawBoundaries(img);
 		Image image = drawEverything(img, ball, yellowLeft, yellowRight, blueLeft, blueRight, yellowLeftDot, yellowRightDot, blueLeftDot, blueRightDot);
 		
 		// calculate the speed of the ball on axis
@@ -349,7 +350,6 @@ public class ImageProcessor1 {
 //		pavgRY = redY/((double)countRed);
 		
 		// set the final image
-		image = drawBoundaries((BufferedImage) image);
 		world.setBallDirection();
 		world.setImage(image);
 		return image;
@@ -399,13 +399,13 @@ public class ImageProcessor1 {
 	private static BufferedImage drawEverything(BufferedImage img, Point ball, Point yellowLeft, Point yellowRight, Point blueLeft, Point blueRight, Point yellowLeftDot, Point yellowRightDot, Point blueLeftDot, Point blueRightDot){
 		img = drawCross(img, red, ball);
 		img = drawCross(img, yellow, yellowLeft);
-		img = drawCross(img, yellow, yellowRight);
-		img = drawCross(img, blue, blueLeft);
-		img = drawCross(img, blue, blueRight);
+//		img = drawCross(img, yellow, yellowRight);
+//		img = drawCross(img, blue, blueLeft);
+//		img = drawCross(img, blue, blueRight);
 		img = drawCross(img, white, yellowLeftDot);
-		img = drawCross(img, white, yellowRightDot);
-		img = drawCross(img, white, blueLeftDot);
-		img = drawCross(img, white, blueRightDot);
+//		img = drawCross(img, white, yellowRightDot);
+//		img = drawCross(img, white, blueLeftDot);
+//		img = drawCross(img, white, blueRightDot);
 //		img = drawVector(img, yellow, world.getyLeft());
 		return img;
 	}
