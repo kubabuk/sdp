@@ -93,7 +93,7 @@ public class VisionRunner implements CaptureCallback, WindowListener{
              * chroma gain
              */
             try {
-                updateVideoSettings(videoDevice,120,200,35,80,100);
+                updateVideoSettings(videoDevice,120,180,35,80,120);
             } catch (Exception e) {
             	System.err.println("error updating video settings");
             	e.printStackTrace();

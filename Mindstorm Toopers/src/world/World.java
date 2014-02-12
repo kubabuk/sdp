@@ -269,7 +269,7 @@ public class World {
 	}
 
 	public void setHeight(int height) {
-		if (pitchWidth != 0){
+		if ((this.pitchWidth / gridConstant) != 0){
 			this.maxY = height / (this.pitchWidth / gridConstant);
 		} else {
 			maxY = 350;

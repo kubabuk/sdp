@@ -349,6 +349,7 @@ public class ImageProcessor1 {
 //		pavgRY = redY/((double)countRed);
 		
 		// set the final image
+		image = drawBoundaries((BufferedImage) image);
 		world.setBallDirection();
 		world.setImage(image);
 		return image;
@@ -449,7 +450,7 @@ public class ImageProcessor1 {
 	// output[1] - x value of top boundary
 	// output[2] - y value of right boundary
 	// output[3] - x value of bottom boundary
-	public int[] getBoundaries(BufferedImage img) {
+	public static int[] getBoundaries(BufferedImage img) {
 		int[] output = {10,10,50,50};
 		int height = img.getHeight();
 		int width = img.getWidth();
@@ -534,7 +535,7 @@ public class ImageProcessor1 {
 	}
 
 	// Draws a green outline of the pitch on the given BufferedImage
-	public Image drawBoundaries(BufferedImage img){
+	public static Image drawBoundaries(BufferedImage img){
 		int[] boundaries = getBoundaries(img);
 		int[] sections = getPitchSections(img);
 		int firstSection = sections[0];
@@ -564,7 +565,7 @@ public class ImageProcessor1 {
 		return img;
 	}
 
-	public int[] getPitchSections(BufferedImage img){
+	public static int[] getPitchSections(BufferedImage img){
 		int[] sections = {10,10,10,10,10,10};
 		int[] boundaries = getBoundaries(img);
 		int left = boundaries[0];
@@ -573,14 +574,14 @@ public class ImageProcessor1 {
 
 		for (int w = left + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
-			if (c.getBlue() > 100){
+			if (c.getBlue() > 120){
 				sections[0] = w;
 				break;
 			}
 		}
 		for (int w = sections[0] + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
-			if (c.getBlue() < 100){
+			if (c.getBlue() < 120){
 				sections[1] = w;
 				break;
 			}
@@ -588,14 +589,14 @@ public class ImageProcessor1 {
 
 		for (int w = sections[1] + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
-			if (c.getBlue() > 100){
+			if (c.getBlue() > 120){
 				sections[2] = w;
 				break;
 			}
 		}
 		for (int w = sections[2] + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
-			if (c.getBlue() < 100){
+			if (c.getBlue() < 120){
 				sections[3] = w;
 				break;
 			}
@@ -603,14 +604,14 @@ public class ImageProcessor1 {
 
 		for (int w = sections[3] + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
-			if (c.getBlue() > 100){
+			if (c.getBlue() > 120){
 				sections[4] = w;
 				break;
 			}
 		}
 		for (int w = sections[4] + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (top + bottom) / 2));
-			if (c.getBlue() < 100){
+			if (c.getBlue() < 120){
 				sections[5] = w;
 				break;
 			}
