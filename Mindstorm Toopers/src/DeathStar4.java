@@ -84,9 +84,9 @@ public class DeathStar3 {
 				}
 				if (Math.abs(ballPos.getX() - robotPos.getX()) <= 10)
 					ballWillMove = false;
-				lastPoint = ballPos.getY();
-			}
 			
+			}
+			lastPoint = ballPos.getY()
 			theForceDef.sendMessage(CommandNames.EXIT, 0, 0);
 			theForceDef.close();
 		} catch (IOException e) {
