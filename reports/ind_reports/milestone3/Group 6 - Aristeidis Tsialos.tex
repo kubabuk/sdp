@@ -1,0 +1,52 @@
+\documentclass[dvips]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{layout}
+\usepackage[margin=1in]{geometry}
+
+%\setlength{\voffset}{-0.75in}
+%\setlength{\headsep}{5pt} 
+ 
+\begin{document}
+\sloppy
+\title{Milestone 3 - Mindstorm Troopers}
+ 
+\author{Aristeidis Tsialos, s1010118, Group 6}
+ 
+\maketitle
+
+\section{Your Contribution to the Group}
+As the team leader for AI my contribution to the groub this week was substantial. To begin with I bulit on my work from the previous and expanded the geometry package to essentially include methods for every mathematical operation needed in the project (essentially nothing more complicated than an addition happens in any other module.) I developed, maintained and debugged this package by myself. Further to that I coordinated with Kuba to design an interface between the AI and the communications packages (package commands) which stores, translates and filters all the commands before sending them over the bluetooth. Kuba implemented this package and I then helped to debug it. Primarilly I worked with Roy on the main AI module to generate the commands needed for milestone 3. After deciding on the overall structure I then designed and implemented the AI for the defender robot, while Roy did the same for the attacker. On monday evening I helped Kuba integrate all the modules together, and then did significant work debugging the project. Overall I would say I have set the tone and style for the whole project (at least the computer part) as I was involved in pretty much every big design and integration decision and I insisted on imposing uniform modularization from the start.
+
+\section{High Points of Your Contribution}
+\begin{itemize}
+  \item Improved, expanded and debugged the geometry package: Added methods for translating angles and finding intersections.
+  \item Helped design, debug, and expand the commands package, fixed a bug that prevented the AI from pulling commands, fixed it to handle empty 		queues and optimized the queue for the defender.
+  \item Designed, implemented and debugged the strategy classes for the defender robot, as well as the main theod that runs it.
+  \item Helped with the project integration, by maintaining the git , doing foundational work to ensure compatibility between modules and finally 		correcting Typechecking errors and generally debugging the project.
+\end{itemize} 
+
+\section{Future Work}
+\begin{itemize}
+  \item Continue mainting and expanding geometry. My goal is to design methods for every mathematical operation in the project and have run 		centrally and uniformly throught, to make debugging them easier.
+  \item Continue working on AI and strategy, though I would like to move away from the actual implementation and focus on software engineering and 		planning.
+  \item Continue monitorring compatibility and integration in the project and imposing a uniform high level structure.
+\end{itemize}
+\section{Points Awarded to Each Member (out of 5)}
+\begin{itemize}
+\begin{multicols}{2}
+\item Peter Macgregor - 3.5
+\item Patricia Dragan - 
+\item Egidijus Skinkys - 3
+\item Andrew Leith - 3
+\item Nursultan Askarbekuly - 
+\item Peak Limpiti - 
+\item Zhang Chen  -3.5
+\item Aris Tsialos - 4-4.5
+\item Kuba Kaszyk - 4
+\end{multicols}
+\end{itemize}
+\end{document}
+
