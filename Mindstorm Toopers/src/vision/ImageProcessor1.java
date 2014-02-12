@@ -22,6 +22,18 @@ public class ImageProcessor1 {
 	static double speedX = 0;
 	static double speedY = 0;
 	
+	// use these variable to easily change the threshold values for various colours
+	// detecting red:
+	static int redMoreThanBlue = 80;
+	static int redMoreThanGreen = 80;
+	// detecting yellow:
+	static int yellowRedMoreThanBlue = 30;
+	static int yellowGreenMoreThanBlue = 30;
+	// detecting blue:
+	static int blueMoreThanGreen = 0;
+	static int blueMoreThanRed = 40;
+	static int greenMoreThanRed = 40;
+	
 	private static Point[] lastDot;
 	private static Point[] lastRobot;
 	private static Point lastBall;
@@ -43,17 +55,18 @@ public class ImageProcessor1 {
 	//public static World newWorld;
 	public ImageProcessor1(World newWorld){
 		this.world = newWorld;
+		Point start = new Point(320,240);
 		lastDot = new Point[4];
-		lastDot[0] = new Point(200,200);
-		lastDot[1] = new Point(200,200);
-		lastDot[2] = new Point(200,200);
-		lastDot[3] = new Point(200,200);
+		lastDot[0] = start;
+		lastDot[1] = start;
+		lastDot[2] = start;
+		lastDot[3] = start;
 		lastRobot = new Point[4];
-		lastRobot[0] = new Point(200,200);
-		lastRobot[1] = new Point(200,200);
-		lastRobot[2] = new Point(200,200);
-		lastRobot[3] = new Point(200,200);
-		lastBall = new Point(200,200);
+		lastRobot[0] = start;
+		lastRobot[1] = start;
+		lastRobot[2] = start;
+		lastRobot[3] = start;
+		lastBall = start;
 	}
 	
 	public static Image trackWorld(BufferedImage img, int minWidth, int maxWidth, int minHeight, int maxHeight) {
@@ -77,7 +90,7 @@ public class ImageProcessor1 {
 				int green = c.getGreen();
 				int red = c.getRed();
 
-				if (red > (blue + 80) && red > (green + 80)){
+				if (red > (blue + redMoreThanBlue) && red > (green + redMoreThanGreen)){
 //					img.setRGB(w, h, 0);
 					redX += (double)w;
 					redY += (double)h;
@@ -85,7 +98,7 @@ public class ImageProcessor1 {
 				}
 
 				// finding coordinates for YELLOW robots [ 0=leftx 1=lefty 2=rightx 3=righty ]
-				if (red > (blue + 30) && green > (blue + 30))
+				if (red > (blue + yellowRedMoreThanBlue) && green > (blue + yellowGreenMoreThanBlue))
 				{
 //					img.setRGB(w,h,0);
 					yellowLeftX += (double)w;
@@ -94,7 +107,7 @@ public class ImageProcessor1 {
 				}
 
 				// finding coordinates for BLUE robots [ 0=leftx 1=lefty 2=rightx 3=righty ]
-				if (blue > (green) && blue > (red+40) && green > (red + 40))
+				if (blue > (green + blueMoreThanGreen) && blue > (red+blueMoreThanRed) && green > (red + greenMoreThanRed))
 				{
 //					img.setRGB(w,h,0);
 					blueLeftX += (double)w;
@@ -110,7 +123,7 @@ public class ImageProcessor1 {
 				int green = c.getGreen();
 				int red = c.getRed();
 
-				if (red > (blue + 80) && red > (green + 80)){
+				if (red > (blue + redMoreThanBlue) && red > (green + redMoreThanGreen)){
 //					img.setRGB(w, h, 0);
 					redX += (double)w;
 					redY += (double)h;
@@ -118,7 +131,7 @@ public class ImageProcessor1 {
 				}
 
 				// finding coordinates for YELLOW robots [ 0=leftx 1=lefty 2=rightx 3=righty ]
-				if (red > (blue + 40) && green > (blue + 40))
+				if (red > (blue + yellowRedMoreThanBlue) && green > (blue + yellowGreenMoreThanBlue))
 				{
 //					img.setRGB(w, h, 0);
 					yellowRightX += (double)w;
@@ -127,7 +140,7 @@ public class ImageProcessor1 {
 				}
 
 				// finding coordinates for BLUE robots [ 0=leftx 1=lefty 2=rightx 3=righty ]
-				if (blue > (green) && blue > (red+40) && green > (red + 40))
+				if (blue > (green + blueMoreThanGreen) && blue > (red+blueMoreThanRed) && green > (red + greenMoreThanRed))
 				{
 //					img.setRGB(w,h,0);
 					blueRightX += (double)w;

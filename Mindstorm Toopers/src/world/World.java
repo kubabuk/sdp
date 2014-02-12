@@ -41,7 +41,7 @@ public class World {
 	//TODO: For vision. Maximum dimensions of the pitch! you might want to make these constants.
 	private double maxY, minY, maxX, minX;
 	//TODO: For Aris: finish the Area definition
-	private Area areaA /*, areaB, areaC, areaD*/;
+	private Area areaA , areaB, areaC, areaD;
 	// private double ballSpeedX, ballSpeedY;
 	// add everything for the pitch here
 	
@@ -140,17 +140,6 @@ public class World {
 	{
 		int x = (int) ((gridConstant * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (dot.getY() - this.pitchTop)) / this.pitchWidth);
-		Vector newDir = new Vector(new Point(x,y), yellowLeft);
-//		if ((Math.abs(newDir.getX() - this.yLeft.getX()) + Math.abs(newDir.getY() - this.yLeft.getY())) < 10){
-//			this.setyLeft(new Vector(new Point(x,y), yellowLeft));
-//			if (color){
-//				if (direction){
-//					defender.setDir(new Vector(new Point(x,y), yellowLeft));
-//				} else {
-//					attacker.setDir(new Vector(new Point(x,y), yellowLeft));
-//				}
-//			}
-//		}
 		this.setyLeft(new Vector(new Point(x,y), yellowLeft));
 		if (color){
 			if (direction){
@@ -377,12 +366,6 @@ public class World {
 		return pitchTop;
 	}
 	
-	public boolean isYellow(){
-		return color;
-	}
-	public boolean isOnTheRight(){
-		return direction;
-	}
 	/*
 	 * 	public void setBallSpeed(double x, double y)
 	{
