@@ -44,7 +44,7 @@ public class DeathStar6 {
 				Command cmd= new Command(CommandNames.DONOTHING,0,0);
 
 				if(target<(source-10)){
-					cmd = new Command(CommandNames.MOVEBACKWARD, 100, 60);
+					cmd = new Command(CommandNames.MOVEFORWARD, 100, 60);
 					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
 					//while (target < source){
 						
@@ -59,7 +59,7 @@ public class DeathStar6 {
 					//}
 				}
 				else if (target > (source+10)){
-					cmd = new Command(CommandNames.MOVEFORWARD, 100, 60);
+					cmd = new Command(CommandNames.MOVEBACKWARD, 100, 60);
 					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
 					//while (target > source){
 						System.out.println("2");
@@ -84,7 +84,7 @@ public class DeathStar6 {
 						System.out.println(robotPos.getY());
 					//}
 				}
-				Thread.sleep(1000);
+				//Thread.sleep(1000);
 			} 
 			theForceDef.sendMessage(CommandNames.EXIT, 0, 0);
 			theForceDef.close();
