@@ -134,11 +134,11 @@ public class StrategyA {
 			//Point b = new Point(10,5);
 			
 			//mainpitch towards left
-			Point g = new Point(0,114);
+			Point g = new Point(10,114);
 			//main pitch towards right
 //			Point g = new Point(474,114); // the middle point of the goal 
 			Vector bg = new Vector(b,g);	
-			double kickdistance = 40.0; 
+			double kickdistance = 30.0; 
 			// the distance the robot should be kept between the robot center and the ball
 			Vector pg = new Vector(new Point(0,0), kickdistance + bg.getMagnitude(), bg.getOrientation());
 			Point p = new Point(g.getX()-pg.getX(),g.getY()-pg.getY()); //kickpoint;
