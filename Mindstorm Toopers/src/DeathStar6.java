@@ -24,26 +24,33 @@ public class DeathStar6 {
 		boolean flag = true;
 		int n = 0;
 
-
-		try {
-			MainComm theForceDef = new MainComm(1);
+		Thread.sleep(5000);
+		//try {
+			//MainComm theForceDef = new MainComm(1);
 
 			n=0;
 			int init = (int) Angle.to255(Angle.toRange2PI(universe.getAttackerDir().getOrientation()));
-			theForceDef.sendMessage(CommandNames.UPDATEANGLE, init, 0);
+			//theForceDef.sendMessage(CommandNames.UPDATEANGLE, init, 0);
 			Point ballPos = universe.getBallPos();
 			Point robotPos = universe.getDefenderPos();
 			double target = ballPos.getY();
 			double source = robotPos.getY();
 			//while (Math.abs(ballPos.getY()-robotPos.getY())>=0 && !lastBall.equals(ballPos)) {
-			while(flag)	{
+			while(true)	{
 				ballPos = universe.getBallPos();
+				robotPos = universe.getDefenderPos();
+				target = ballPos.getY();
+				source = robotPos.getY();
+				System.out.println(target);
+				System.out.println(source);
+			} }}
+				/*ballPos = universe.getBallPos();
 				robotPos = universe.getDefenderPos();
 				target = ballPos.getY();
 				source = robotPos.getY();
 				Command cmd= new Command(CommandNames.DONOTHING,0,0);
 
-				if(target<(source-10)){
+				if(target<(source-5)){
 					cmd = new Command(CommandNames.MOVEFORWARD, 100, 60);
 					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
 					//while (target < source){
@@ -58,7 +65,7 @@ public class DeathStar6 {
 						
 					//}
 				}
-				else if (target > (source+10)){
+				else if (target > (source+5)){
 					cmd = new Command(CommandNames.MOVEBACKWARD, 100, 60);
 					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
 					//while (target > source){
@@ -75,6 +82,7 @@ public class DeathStar6 {
 					//cmd= new Command(CommandNames.DONOTHING,0,0);
 					//theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
 					//while (Math.abs(target - source) <= 10){
+					
 						ballPos = universe.getBallPos();
 						robotPos = universe.getDefenderPos();
 						target = ballPos.getY();
@@ -84,15 +92,19 @@ public class DeathStar6 {
 						System.out.println(robotPos.getY());
 					//}
 				}
-				//Thread.sleep(1000);
+				Thread.sleep(800);
 			} 
 			theForceDef.sendMessage(CommandNames.EXIT, 0, 0);
 			theForceDef.close();
-		} 
-		catch (IOException e) {
+			*/
+				
+		/*catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally {
+			
+		}
 
 	}
-}
+}*/
