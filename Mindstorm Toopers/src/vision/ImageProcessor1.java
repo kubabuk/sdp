@@ -27,8 +27,8 @@ public class ImageProcessor1 {
 	static int redMoreThanBlue = 80;
 	static int redMoreThanGreen = 80;
 	// detecting yellow:
-	static int yellowRedMoreThanBlue = 45;
-	static int yellowGreenMoreThanBlue = 45;
+	static int yellowRedMoreThanBlue = 50;
+	static int yellowGreenMoreThanBlue = 50;
 	// detecting blue:
 	static int blueMoreThanGreen = 0;
 	static int blueMoreThanRed = 30;

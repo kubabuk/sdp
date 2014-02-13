@@ -9,7 +9,7 @@ public class TestVision {
 		Thread.sleep(5000);
 		while(true){
 			Thread.sleep(1000);
-			System.out.println(world.getBall().getPos().toString());
+			System.out.println(world.getAttackerPos().toString());
 			System.out.println(world.getDefenderPos().toString());
 		}
 	}
