@@ -35,6 +35,8 @@ public class World {
 	
 	private int gridConstant;
 	
+	private double initialorientation;
+	
 	// Used to track the direction of ball movement.
 	private Point lastBallLocation;
 	private int count;
@@ -374,6 +376,17 @@ public class World {
 	public int getPitchTop() {
 		return pitchTop;
 	}
+	
+	public void setIO(double o)
+	{
+		this.initialorientation = o;
+	}
+	
+	public double getIO()
+	{
+		return this.initialorientation;
+	}
+	
 	
 	/*
 	 * 	public void setBallSpeed(double x, double y)
