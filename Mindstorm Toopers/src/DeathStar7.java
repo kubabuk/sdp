@@ -11,21 +11,43 @@ import comms.MainComm;
 
 
 public class DeathStar7 {
+	public static World universe;
+	
 	public static void main (String[] args) throws InterruptedException{
 		boolean color = args[0].equals("yellow");
 		boolean direction = args[1].equals("right");
-
-		World universe = new World(color, direction);
-
+		boolean startFlag = false;
+		
+		universe = new World(color, direction);
+		
 		Thread.sleep(5000);
+		
+		Point ballPos = universe.getBallPos();
+		Point robotPos = universe.getDefenderPos();
+		
+		double target = ballPos.getY();
+		double source = robotPos.getY();
+		double targetX = ballPos.getX();
+		double initialX = ballPos.getX();
+	
+		
 		try {
 			MainComm theForceDef = new MainComm(1);
 			int init = (int) Angle.to255(Angle.toRange2PI(universe.getDefenderDir().getOrientation()));
 			theForceDef.sendMessage(CommandNames.UPDATEANGLE, init, 0);
-			Point ballPos = universe.getBallPos();
-			Point robotPos = universe.getDefenderPos();
-			double target = ballPos.getY();
-			double source = robotPos.getY();
+			ballPos = universe.getBallPos();
+			robotPos = universe.getDefenderPos();
+			
+			while (!startFlag){
+				targetX = universe.getBallPos().getX();
+				System.out.println(targetX);
+				System.out.println(initialX);
+				if (Math.abs(targetX - initialX) > 20){
+					System.out.println("GAH");
+					startFlag = true;
+				}
+			}
+			
 			while(true)	{
 				ballPos = universe.getBallPos();
 				robotPos = universe.getDefenderPos();
@@ -36,46 +58,59 @@ public class DeathStar7 {
 				Command cmd= new Command(CommandNames.DONOTHING,0,0);
 
 				if(target<(source-50)){
-					cmd = new Command(CommandNames.MOVEFORWARD, 100, 50);
+					cmd = new Command(CommandNames.MOVEFORWARD, 100, 100);
 					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
-					Thread.sleep(1200);
+					//Thread.sleep(1200);
+					spin(target, source, -50, true);
 				} else if(target<(source-40)){
+					cmd = new Command(CommandNames.MOVEFORWARD, 100, 80);
+					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
+					//Thread.sleep(1100);
+					spin(target, source, -40, true);
+				} else if(target<(source-30)){
+					cmd = new Command(CommandNames.MOVEFORWARD, 100, 60);
+					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
+					//Thread.sleep(900);
+					spin(target, source, -30, true);
+				} else if(target<(source-20)){
 					cmd = new Command(CommandNames.MOVEFORWARD, 100, 40);
 					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
-					Thread.sleep(1100);
-				} else if(target<(source-30)){
-					cmd = new Command(CommandNames.MOVEFORWARD, 100, 30);
-					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
-					Thread.sleep(900);
-				} else if(target<(source-20)){
+					//Thread.sleep(700);
+					spin(target, source, -20, true);
+				} else if(target<(source-10)){
 					cmd = new Command(CommandNames.MOVEFORWARD, 100, 20);
 					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
-					Thread.sleep(700);
-				} else if(target<(source-10)){
-					cmd = new Command(CommandNames.MOVEFORWARD, 100, 10);
+					//Thread.sleep(500);
+					spin(target, source, -10, true);
+				} else if (target > (source+50)){
+					cmd = new Command(CommandNames.MOVEBACKWARD, 100, 100);
 					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
-					Thread.sleep(500);
-				} else if (target > (source+10)){
-					cmd = new Command(CommandNames.MOVEBACKWARD, 100, 10);
-					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
-					Thread.sleep(500);
-				} else if (target > (source+20)){
-					cmd = new Command(CommandNames.MOVEBACKWARD, 100, 20);
-					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
-					Thread.sleep(700);
-				} else if (target > (source+30)){
-					cmd = new Command(CommandNames.MOVEBACKWARD, 100, 30);
-					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
-					Thread.sleep(900);
+					//Thread.sleep(1200);
+					spin(target, source, 50, false);
 				} else if (target > (source+40)){
+					cmd = new Command(CommandNames.MOVEBACKWARD, 100, 80);
+					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
+					//Thread.sleep(1100);
+					spin(target, source, 40, false);
+				} else if (target > (source+30)){
+					cmd = new Command(CommandNames.MOVEBACKWARD, 100, 60);
+					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
+					//Thread.sleep(900);
+					spin(target, source, 30, false);
+				}
+				  else if (target > (source+20)){
 					cmd = new Command(CommandNames.MOVEBACKWARD, 100, 40);
 					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
-					Thread.sleep(1100);
-				} else if (target > (source+50)){
-					cmd = new Command(CommandNames.MOVEBACKWARD, 100, 50);
-					theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
-					Thread.sleep(1200);
+					//Thread.sleep(700);
+					spin(target, source, 20, false);
 				}
+				  else if (target > (source+10)){
+						cmd = new Command(CommandNames.MOVEBACKWARD, 100, 20);
+						theForceDef.sendMessage(cmd.getCommand(), 100, cmd.getDistAngle());
+						//Thread.sleep(500);
+						spin(target, source, 10, false);
+				  }
+				else{}
 			} 
 		}
 				
@@ -87,5 +122,31 @@ public class DeathStar7 {
 			
 		}
 
+	}
+	
+	public static void spin(double target, double source, double thresh, boolean less) {
+		Point ballPos = universe.getBallPos();
+		Point robotPos = universe.getDefenderPos();
+		
+		target = ballPos.getY();
+		source = robotPos.getY();
+		
+		if (less) {
+			while (target < (source + thresh)) {
+				ballPos = universe.getBallPos();
+				universe.getDefenderPos();
+				target = ballPos.getY();
+				source = robotPos.getY();
+			}	
+		}
+		else {
+			while (target > (source + thresh)) {
+				ballPos = universe.getBallPos();
+				universe.getDefenderPos();
+				target = ballPos.getY();
+				source = robotPos.getY();
+				System.out.println("Hi");
+			}
+		}
 	}
 }
