@@ -32,21 +32,21 @@ public class AttackerQueue{
 
         int speed = MAX; 
         int distAngle;
-        System.out.println("flag1");
+        
         if(v.getOrientation()!=previousAngle){
         	e = CommandNames.CHANGEANGLE;
-        	distAngle = (int) Angle.to255(Angle.toRange2PI(v.getMagnitude()));
-        	System.out.println("flag2");
+        	distAngle = (int) Angle.to255(Angle.toRange2PI(v.getOrientation()));
+        	System.out.println(distAngle);
         	commandList.add(new Command(e, speed, distAngle));
         }
-        System.out.println("flag1.5");
+        
         if (v.getMagnitude() != 0) { //TODO:: Decide when to MOVEFORWARD and when to move BACKWARD}
             e = CommandNames.MOVEFORWARD;
             distAngle = (int)(v.getMagnitude()/1.25);
             commandList.add(new Command(e, speed, distAngle));
         }
        
-        System.out.println("flag2");
+        
         
         this.lastVector = v;
         this.previousAngle = v.getOrientation();
