@@ -27,8 +27,8 @@ public class ImageProcessor1 {
 	static int redMoreThanBlue = 80;
 	static int redMoreThanGreen = 80;
 	// detecting yellow:
-	static int yellowRedMoreThanBlue = 50;
-	static int yellowGreenMoreThanBlue = 50;
+	static int yellowRedMoreThanBlue = 45;
+	static int yellowGreenMoreThanBlue = 45;
 	// detecting blue:
 	static int blueMoreThanGreen = 0;
 	static int blueMoreThanRed = 30;
@@ -100,7 +100,7 @@ public class ImageProcessor1 {
 				// finding coordinates for YELLOW robots [ 0=leftx 1=lefty 2=rightx 3=righty ]
 				if (red > (blue + yellowRedMoreThanBlue) && green > (blue + yellowGreenMoreThanBlue))
 				{
-//					img.setRGB(w,h,0);
+					img.setRGB(w,h,0);
 					yellowLeftX += (double)w;
 					yellowLeftY += (double)h;
 					countYellowLeft++;
@@ -109,7 +109,7 @@ public class ImageProcessor1 {
 				// finding coordinates for BLUE robots [ 0=leftx 1=lefty 2=rightx 3=righty ]
 				if (blue > (green + blueMoreThanGreen) && blue > (red+blueMoreThanRed) && green > (red + greenMoreThanRed))
 				{
-//					img.setRGB(w,h,0);
+					img.setRGB(w,h,0);
 					blueLeftX += (double)w;
 					blueLeftY += (double)h;
 					countBlueLeft++;
