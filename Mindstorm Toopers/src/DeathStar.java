@@ -18,7 +18,27 @@ public class DeathStar {
 
 		World universe = new World(color, direction);
 		Thread.sleep(7000);
-		AttackerQueue aq = new AttackerQueue(0);//universe.getAttacker().getDir().getOrientation());
+		
+		Vector od;
+		double o = 0;
+		for (int i = 1; i < 10; i++)
+		{
+			Thread.sleep(50);
+			od = universe.getAttacker().getDir();
+			o += od.getOrientation();
+		}
+		o = o/10;
+		
+		if (o>1.5)
+		{
+			o = 3.14;
+		}
+		else
+		{
+			o = 0;
+		}
+		universe.setIO(o);
+		AttackerQueue aq = new AttackerQueue(o);//universe.getAttacker().getDir().getOrientation());
 		DefenderQueue dq = new DefenderQueue(universe.getDefender().getDir().getOrientation());
 
 		AI2 emperor = new AI2(universe,aq,dq);
