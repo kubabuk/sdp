@@ -10,7 +10,7 @@ import commands.Command;
 public class StrategyA {
 	//strategy for attacker
 	
-	public static void getAction(State s , World w, AttackerQueue aq)
+	public static void getAction(State s , World w, AttackerQueue aq) throws InterruptedException
 	{
 		// this functions takes the state and decide what robots should do
 
@@ -134,20 +134,25 @@ public class StrategyA {
 			//Point b = new Point(10,5);
 			
 			//mainpitch towards left
-			Point g = new Point(10,114);
+			Point g = new Point(0,114);
 			//main pitch towards right
-//			Point g = new Point(474,114); // the middle point of the goal 
+			//Point g = new Point(474,114); // the middle point of the goal 
 			Vector bg = new Vector(b,g);	
 			double kickdistance = 30.0; 
 			// the distance the robot should be kept between the robot center and the ball
 			Vector pg = new Vector(new Point(0,0), kickdistance + bg.getMagnitude(), bg.getOrientation());
 			Point p = new Point(g.getX()-pg.getX(),g.getY()-pg.getY()); //kickpoint;
 			Point r = w.getAttacker().getPos();
-			Vector o = w.getAttacker().getDir();
+			
+			
+			//Vector o = w.getAttacker().getDir();
+			double o = w.getIO();
+			
+			
 			//Vector o = new Vector(r,0,0);
 			System.out.println("The ball is at "+b.getX() +" , "+ b.getY());
 			System.out.println("The robot is at "+r.getX() +" , "+ r.getY());
-			System.out.println("The orientation is facing " + o.toString());
+			System.out.println("The orientation is facing " + o);
 			System.out.println("The kick point is at "+p.getX() +" , "+ p.getY());
 			//Vector v1 = new Vector(r,0,3.14);
 			

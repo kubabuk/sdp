@@ -30,7 +30,7 @@ public class AI2 {
 		this.aq = aq;
 	}
 	
-	public void update()
+	public void update() throws InterruptedException
 	{
 		this.currentattackerstate.update(w);
 		//this.currentdefenderstate.update(w);
