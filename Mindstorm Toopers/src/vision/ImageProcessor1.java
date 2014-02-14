@@ -100,7 +100,7 @@ public class ImageProcessor1 {
 				// finding coordinates for YELLOW robots [ 0=leftx 1=lefty 2=rightx 3=righty ]
 				if (red > (blue + yellowRedMoreThanBlue) && green > (blue + yellowGreenMoreThanBlue))
 				{
-					img.setRGB(w,h,0);
+//					img.setRGB(w,h,0);
 					yellowLeftX += (double)w;
 					yellowLeftY += (double)h;
 					countYellowLeft++;
