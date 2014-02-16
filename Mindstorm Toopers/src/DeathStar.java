@@ -1,4 +1,5 @@
 import geometry.Angle;
+import geometry.Point;
 import geometry.Vector;
 
 import java.io.IOException;
@@ -11,11 +12,11 @@ import world.*;
 
 public class DeathStar {
 
-	public static void main (String[] args) throws InterruptedException{
+	public static void main (String[] args) throws InterruptedException, IOException{
 		boolean color = args[0].equals("yellow");
 		boolean direction = args[1].equals("right");
 
-
+		
 		World universe = new World(color, direction);
 		Thread.sleep(7000);
 		
@@ -38,21 +39,29 @@ public class DeathStar {
 			o = 0;
 		}
 		universe.setIO(o);
+		
+		
 		AttackerQueue aq = new AttackerQueue(o);//universe.getAttacker().getDir().getOrientation());
 		DefenderQueue dq = new DefenderQueue(universe.getDefender().getDir().getOrientation());
 
+		
 		AI2 emperor = new AI2(universe,aq,dq);
 		boolean flag = true;
+		
 
-
-		try {
 			//MainComm theForceDef = new MainComm(1);
 			MainComm theForceAttack = new MainComm(2);
-			int init = (int) Angle.to255(Angle.toRange2PI(universe.getAttackerDir().getOrientation()));
+			int init = (int) Angle.to255(Angle.toRange2PI(o));//
+
 			System.out.println("The initial angle is set to be "+init);
 			theForceAttack.sendMessage(CommandNames.UPDATEANGLE, init, 0);
 			
 			System.out.println("initial command sent");
+			
+
+			
+			
+			
 			while (flag) {
 				emperor.update();
 				
@@ -105,11 +114,7 @@ public class DeathStar {
 				//flag = false;
 			}
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		
 	}
 
 

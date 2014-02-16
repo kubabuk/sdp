@@ -138,7 +138,7 @@ public class StrategyA {
 			//main pitch towards right
 			//Point g = new Point(474,114); // the middle point of the goal 
 			Vector bg = new Vector(b,g);	
-			double kickdistance = 30.0; 
+			double kickdistance = 60.0; 
 			// the distance the robot should be kept between the robot center and the ball
 			Vector pg = new Vector(new Point(0,0), kickdistance + bg.getMagnitude(), bg.getOrientation());
 			Point p = new Point(g.getX()-pg.getX(),g.getY()-pg.getY()); //kickpoint;
@@ -165,10 +165,15 @@ public class StrategyA {
 			aq.add(Turning1);
 			aq.add(rp); //was step, now testing rp
 			aq.add(Turning2);
-			aq.add(new Vector(p,20,pg.getOrientation()));
+			aq.add(new Vector(p,25,pg.getOrientation()));
 			aq.addKick(); //kick
-			
-			
+			aq.add(new Vector(p,4,pg.getOrientation()));
+			aq.addKick();
+			aq.add(new Vector(p,4,pg.getOrientation()));
+			aq.addKick();
+			aq.add(new Vector(p,4,pg.getOrientation()));
+			aq.addKick();
+		
 		}
 		default:
 		{
