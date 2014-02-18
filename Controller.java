@@ -127,16 +127,21 @@ public class Controller {
 	//100%/0% motors sideway/forward = 90 degrees
 	//setSpeed(desiredSpeed);
 	//setSpeed(speed);
+
+	
+	
+	
+	
     if (angle>=0 &&angle <=90)
     {
 	float tempangle= ((float)angle)/90;//gives percentage of distribution	
 	Motor.A.setSpeed(speed*tempangle);
 	Motor.B.setSpeed(speed*(1-tempangle));
 	Motor.C.setSpeed(speed*(1-tempangle));
-	System.out.println(tempangle);
-	Motor.A.rotate((int)((tempangle)*distance*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
-	Motor.B.rotate((int)((1-tempangle)*distance*distConstant),true); 
-	Motor.C.rotate((int)((1-tempangle)*distance*distConstant),false);
+	float percentangle = (float)Math.abs(0.5-tempangle);
+	Motor.A.rotate((int)((tempangle)*(distance*(1.5-(percentangle)))*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
+	Motor.B.rotate((int)((1-tempangle)*(distance*(1.5-(percentangle)))*distConstant),true); 
+	Motor.C.rotate((int)((1-tempangle)*(distance*(1.5-(percentangle)))*distConstant),false);
     }
     else if(angle>0)
     {
@@ -145,10 +150,10 @@ public class Controller {
     	Motor.A.setSpeed(speed*(1-tempangle));
     	Motor.B.setSpeed(speed*tempangle);
     	Motor.C.setSpeed(speed*tempangle);
-    	System.out.println(tempangle);
-    	Motor.A.rotate((int)((tempangle)*distance*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
-    	Motor.B.rotate((int)(-(1-tempangle)*distance*distConstant),true); 
-    	Motor.C.rotate((int)(-(1-tempangle)*distance*distConstant),false);
+    	float percentangle = (float)Math.abs(0.5-tempangle);
+    	Motor.A.rotate((int)((tempangle)*(distance*(1.5-(percentangle)))*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
+    	Motor.B.rotate((int)(-(1-tempangle)*(distance*(1.5-(percentangle)))*distConstant),true); 
+    	Motor.C.rotate((int)(-(1-tempangle)*(distance*(1.5-(percentangle)))*distConstant),false);
     }
     else if(angle<-90)
     {
@@ -157,10 +162,10 @@ public class Controller {
     	Motor.A.setSpeed(speed*(1-tempangle));
     	Motor.B.setSpeed(speed*tempangle);
     	Motor.C.setSpeed(speed*tempangle);
-    	System.out.println(tempangle);
-    	Motor.A.rotate((int)(-(1-tempangle)*distance*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
-    	Motor.B.rotate((int)(-(tempangle)*distance*distConstant),true); 
-    	Motor.C.rotate((int)(-(tempangle)*distance*distConstant),false);
+    	float percentangle = (float)Math.abs(0.5-tempangle);
+    	Motor.A.rotate((int)(-(1-tempangle)*(distance*(1.5-(percentangle)))*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
+    	Motor.B.rotate((int)(-(tempangle)*(distance*(1.5-(percentangle)))*distConstant),true); 
+    	Motor.C.rotate((int)(-(tempangle)*(distance*(1.5-(percentangle)))*distConstant),false);
  
     }
     else 
@@ -170,10 +175,10 @@ public class Controller {
     	Motor.A.setSpeed(speed*tempangle);
     	Motor.B.setSpeed(speed*(1-tempangle));
     	Motor.C.setSpeed(speed*(1-tempangle));
-    	System.out.println(tempangle);
-    	Motor.A.rotate((int)(-(1-tempangle)*distance*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
-    	Motor.B.rotate((int)((tempangle)*distance*distConstant),true); 
-    	Motor.C.rotate((int)((tempangle)*distance*distConstant),false);
+    	float percentangle = (float)Math.abs(0.5-tempangle);
+    	Motor.A.rotate((int)(-(1-tempangle)*(distance*(1.5-(percentangle)))*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
+    	Motor.B.rotate((int)((tempangle)*(distance*(1.5-(percentangle)))*distConstant),true); 
+    	Motor.C.rotate((int)((tempangle)*(distance*(1.5-(percentangle)))*distConstant),false);
     }
 	}
 	
