@@ -1,34 +1,22 @@
-import lejos.nxt.NXTMotor;
-import lejos.nxt.SensorPort;
-import lejos.nxt.comm.BTConnection;;
 
-public class Test {
+import com.mydomain.Commands.CommandNames;
 
+public class test {
 
-        	
-            public static void main(String[] args) {
-            final Robot nxt = new Robot();
-            	Button.ENTER.addButtonListener(new ButtonListener() {
-            		public void buttonPressed(Button b) {
-            	
-            		}
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Controller nxt = new Controller();
+		
+		nxt.addCommand(new Commands(CommandNames.MOVE,100,100,45));
+		nxt.addCommand(new Commands(CommandNames.MOVE,0,100,-90));
+		nxt.addCommand(new Commands(CommandNames.MOVE,0,100,-130));
+		nxt.addCommand(new Commands(CommandNames.TURN,0,100,45));
 
-            		@Override
-            		public void buttonReleased(Button b) { // change the commands below to test different things
-            			nxt.addCommand(new Commands(CommandNames.KICK,200,5));
-                		nxt.addCommand(new Commands(CommandNames.MOVEBACKWARD,200,5));
-                	 	nxt.addCommand(new Commands(CommandNames.MOVEFORWARD,200,5));
-                		System.out.println('+');
-            		}
-            	});
-        	try{
-        	Thread.sleep(2000);
-        	}
-        	catch (Exception e){};
-        	nxt.run();                             
-            
-        	
-            
-        }
+		
+		//nxt.addCommand(new Commands(CommandNames.TURN,0,90,0));
+		nxt.run();
+	}
 
 }
