@@ -3,28 +3,28 @@ package commands;
 import comms.CommandNames;
 
 public class Command {
-    private int speed;
-    private int distAngle;
+    private int distance;
+    private int angle;
     private CommandNames command;
     
-    public Command(CommandNames c, int speed, int distAngle) {
+    public Command(CommandNames c, int distance, int angle) {
         this.command = c;
-        this.speed = speed;
-        this.distAngle = distAngle;
+        this.distance = distance;
+        this.angle = (int)((double)angle*255.0/360.0);
     }
 
     public CommandNames getCommand() {
         return this.command;
     }
     
-    public int getSpeed() {
+    public int getDistance() {
     	//System.out.println("Speed set at " + speed);
-        return this.speed;
+        return this.distance;
     }
     
-    public int getDistAngle() {
+    public int getAngle() {
     	//System.out.println("Dist/Angle set as " + distAngle);
-        return this.distAngle;
+        return this.angle;
     }
     public boolean isNothing(){
     	return this.command.equals(CommandNames.DONOTHING);
