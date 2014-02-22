@@ -32,20 +32,28 @@ public class Controller {
 	
 	private void kick(int speed)
 	{
+		
 	   Motor.C.setSpeed(900);
 	   Motor.C.rotate(-kickerAngle);
 	   Motor.C.rotate(kickerReturn,true);
 	   
 	}
 	
-	private void abort() //check if the robot needs to abandon all of its commands
+	public void abort() //check if the robot needs to abandon all of its commands
 	{
 	   for (Commands current: commands) // go through all current commands
 	   {
 		   if (current.commandName ==CommandNames.ABORT) // if you find it, then initiate abort
 		   {
-			   while(!(commands.remove(0).commandName==CommandNames.ABORT)); // test this, many doubts, but may have potential;
-			   break;
+			   while(true)
+			   {
+				   Commands temp = commands.remove(0);
+				   System.out.println(temp.commandName);
+				   if (temp.commandName==CommandNames.ABORT)
+					   break;
+			   }
+ // test this, many doubts, but may have potential;
+			  
 		   }
 	   }
 
@@ -172,13 +180,18 @@ public class Controller {
     {
     	angle=Math.abs(angle);
     	float tempangle= ((float)angle)/90;//gives percentage of distribution	
-    	Motor.A.setSpeed(speed*tempangle);
-    	Motor.B.setSpeed(speed*(1-tempangle));
-    	Motor.C.setSpeed(speed*(1-tempangle));
+    	Motor.A.setSpeed(speed*(1-tempangle));
+    	Motor.B.setSpeed(speed*tempangle);
+    	Motor.C.setSpeed(speed*tempangle);
     	float percentangle = (float)Math.abs(0.5-tempangle);
+    	System.out.println(percentangle);
+    	System.out.println(-(1-tempangle)*(distance*(1.5-(percentangle))));
+    	System.out.println((tempangle)*(distance*(1.5-(percentangle))));
+    	
+    	
     	Motor.A.rotate((int)(-(1-tempangle)*(distance*(1.5-(percentangle)))*distConstant),true); // move forward, do not wait for it to finish, so move is simultaneous and does not turn a robot.
     	Motor.B.rotate((int)((tempangle)*(distance*(1.5-(percentangle)))*distConstant),true); 
-    	Motor.C.rotate((int)((tempangle)*(distance*(1.5-(percentangle)))*distConstant),false);
+    	Motor.C.rotate((int)((tempangle)*(distance*(1.5-(percentangle)))*distConstant));
     }
 	}
 	
