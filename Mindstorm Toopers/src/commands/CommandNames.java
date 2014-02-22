@@ -2,4 +2,4 @@
 package commands;
 
 
-public enum CommandNames {MOVEFORWARD, KICK, MOVEBACKWARD, CHANGEANGLE, ABORT, EXIT, DONOTHING };
+public enum CommandNames {MOVE, KICK, CHANGEANGLE, ABORT, EXIT, DONOTHING };

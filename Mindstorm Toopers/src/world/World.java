@@ -387,6 +387,9 @@ public class World {
 		return this.initialorientation;
 	}
 	
+	public boolean getDirection() {
+		return this.direction;
+	}
 	
 	/*
 	 * 	public void setBallSpeed(double x, double y)
