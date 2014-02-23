@@ -338,6 +338,10 @@ public class ImageProcessor1 {
 			lastDot[3] = blueRightDot;
 			world.setVectorBlueRight(blueRightDot);
 		}
+		
+		// update coordinates for oposite team's robots
+		world.setOtherRobots();
+		
 				
 		// after setting coordinates, draw the elements on the image
 //		Image image = drawBoundaries(img);

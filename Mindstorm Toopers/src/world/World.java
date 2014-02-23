@@ -21,6 +21,10 @@ public class World {
 	
 	private Ball ballObject ;
 	private Robot attacker,defender;
+	
+	// use the get methods for the other team's robots
+	private Robot otherAttacker, otherDefender;
+		
 	private  Point yellowLeft , yellowRight;
 	private  Point blueLeft , blueRight;
 	private Point ball;
@@ -62,6 +66,11 @@ public class World {
 		yLeft = startVector;
 		attacker = new Robot(start, new Vector(start,start));
 		defender = new Robot(start, new Vector(start,start));
+		
+		// not sure if the other team's robots are initialized the same way
+		otherAttacker = new Robot(start, new Vector(start,start));
+		otherDefender = new Robot(start, new Vector(start,start));
+		
 		lastBallLocation = start;
 		gridConstant = 474;
 		count = 0;
@@ -122,7 +131,48 @@ public class World {
 	{
 		return this.defender;
 	}
-		
+	
+	public Robot getOtherAttacker()
+	{
+		return this.otherAttacker;
+	}
+	
+	public Robot getOtherDefender()
+	{
+		return this.otherDefender;
+	}
+	
+	
+	// use this method after to track other team's robots after deciding which ones are ours
+	public void setOtherRobots()
+	{
+		if(color)
+		{
+			if(direction)
+			{
+				otherAttacker.setPos(blueLeft);
+				otherDefender.setPos(blueRight);
+			}
+			else
+			{
+				otherAttacker.setPos(blueRight);
+				otherDefender.setPos(blueLeft);
+			}
+		}
+		else
+		{
+			if(direction)
+			{
+				otherAttacker.setPos(yellowLeft);
+				otherDefender.setPos(yellowRight);
+			}
+			else
+			{
+				otherAttacker.setPos(yellowRight);
+				otherDefender.setPos(yellowLeft);
+			}
+		}
+	}
 	
 	// methods for yellow robot LEFT
 	public void setYellowLeft (Point yellowLeftXY)
@@ -238,16 +288,32 @@ public class World {
 		return attacker.getPos();
 	}
 	
+	public Point getOtherAttackerPos(){
+		return otherAttacker.getPos();
+	}
+	
 	public Point getDefenderPos(){
 		return defender.getPos();
+	}
+	
+	public Point getOtherDefenderPos(){
+		return otherDefender.getPos();
 	}
 	
 	public Vector getAttackerDir(){
 		return attacker.getDir();
 	}
 	
+	public Vector getOtherAttackerDir(){
+		return otherAttacker.getDir();
+	}
+	
 	public Vector getDefenderDir(){
 		return defender.getDir();
+	}
+	
+	public Vector getOtherDefenderDir(){
+		return otherDefender.getDir();
 	}
 		
 	// methods for the video image
