@@ -636,6 +636,7 @@ public class ImageProcessor {
 		
 		// set the final image
 		world.setBallDirection();
+		world.setRobots();
 		world.setImage(image);
 		return image;
 	}
