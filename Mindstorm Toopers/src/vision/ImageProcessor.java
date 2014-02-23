@@ -917,8 +917,14 @@ public class ImageProcessor {
 				return img;
 			}
 		} else {
-			for (int y = (int) startY; y < endY + 40; y++){
-				img.setRGB((int) startX, y, color.getRGB());
+			if (startY < endY){
+				for (int y = (int) startY; y < endY + 40; y++){
+					img.setRGB((int) startX, y, color.getRGB());
+				}
+			} else {
+				for (int y = (int) startY; y > endY - 40; y--){
+					img.setRGB((int) startX, y, color.getRGB());
+				}
 			}
 			return img;
 		}
