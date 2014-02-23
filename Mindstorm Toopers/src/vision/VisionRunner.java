@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import vision.gui.CameraSettingsPanel;
+import vision.gui.VisionGUI;
 import world.World;
 
 import au.edu.jcu.v4l4j.CaptureCallback;
@@ -32,29 +34,27 @@ public class VisionRunner implements CaptureCallback, WindowListener{
 
     private VideoDevice     videoDevice;
     private FrameGrabber    frameGrabber;
-    private ImageProcessor1	imageProcessor;
     
     private int frameCount;
     private int[] boundaries;
 
     private JLabel          label;
-    private JFrame          frame;
+    private VisionGUI          frame;
 
-    public static void main(String args[]){
+    private int contrast = 127;
+    private int brightness = 200;
+    private int hue = 0;
+    private int saturation = 127;
+    private int chroma_gain = 0;
+    private int chroma_agc = 0;
 
-//            SwingUtilities.invokeLater(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                            new VisionRunner();
-//                    }
-//            });
-    }
-
+    private World world;
     /**
      * Builds a WebcamViewer object
      * @throws V4L4JException if any parameter if invalid
      */
     public VisionRunner(World world){
+    		this.world = world;
             // Initialise video device and frame grabber
             try {
                     initFrameGrabber();
@@ -69,7 +69,6 @@ public class VisionRunner implements CaptureCallback, WindowListener{
             
             // create and initialise UI
             initGUI();
-            imageProcessor = new ImageProcessor1(world);
             frameCount = 0;
             boundaries = new int[4];
             boundaries[0] = 10;
@@ -92,12 +91,15 @@ public class VisionRunner implements CaptureCallback, WindowListener{
              * saturatiom -> from 0 up to 127
              * chroma gain
              */
-            try {
+       /*     try {
                 updateVideoSettings(videoDevice,120,180,35,80,120);
             } catch (Exception e) {
             	System.err.println("error updating video settings");
             	e.printStackTrace();
             }
+            
+            use set/get methods instead
+        */
             
     }
 
@@ -107,6 +109,7 @@ public class VisionRunner implements CaptureCallback, WindowListener{
      */
     private void initFrameGrabber() throws V4L4JException{
             videoDevice = new VideoDevice(device);
+            updateVideoSettings();
             frameGrabber = videoDevice.getJPEGFrameGrabber(width, height, channel, std, 80);
             frameGrabber.setCaptureCallback(this);
             width = frameGrabber.getWidth();
@@ -115,12 +118,13 @@ public class VisionRunner implements CaptureCallback, WindowListener{
             System.out.println("Starting capture at "+width+"x"+height);
     }
     
-    private void updateVideoSettings(VideoDevice v, int contrast, int brightness,
-    		int hue, int saturation, int chroma_gain)
+// ##############
+    
+    public void updateVideoSettings()
     {
     	try
     	{
-	        List<Control> controlList = v.getControlList().getList();
+	        List<Control> controlList = videoDevice.getControlList().getList();
 	        for(Control c : controlList)
 	        {
 	        	if(c.getName().equals("Contrast"))
@@ -134,27 +138,82 @@ public class VisionRunner implements CaptureCallback, WindowListener{
 	        	else if(c.getName().equals("Chroma Gain"))
 	        		c.setValue(chroma_gain);
 	        	else if(c.getName().equals("Chroma AGC"))
-	        		c.setValue(1);
+	        		c.setValue(chroma_agc);
 	        }
     	} catch(V4L4JException e) {
     		System.err.println("Cannot update video settings: " + e.getMessage());
     		e.printStackTrace();
     	}
     	
-    	v.releaseControlList();
+    	videoDevice.releaseControlList();
     }
+    
+    
+    public int getSaturation() {
+		return saturation;
+	}
+
+	public void setSaturation(int saturation) {
+		this.saturation = saturation;
+	}
+
+	public int getBrightness() {
+		return brightness;
+	}
+
+	public void setBrightness(int brightness) {
+		this.brightness = brightness;
+	}
+
+	public int getContrast() {
+		return contrast;
+	}
+
+	public void setContrast(int contrast) {
+		this.contrast = contrast;
+	}
+
+	public int getHue() {
+		return hue;
+	}
+
+	public void setHue(int hue) {
+		this.hue = hue;
+	}
+
+	public int getChromaGain() {
+		return chroma_gain;
+	}
+
+	public void setChromaGain(int chromaGain) {
+		this.chroma_gain = chromaGain;
+	}
+
+	public boolean getChromaAGC() {
+		return (chroma_agc == 1) ? true : false;
+	}
+
+	public void setChromaAGC(boolean chromaAGC) {
+		this.chroma_agc = chromaAGC ? 1 : 0;
+	}
+	
+	
+	
+	// ###########################################
+
 
     /** 
      * Creates the UI components and initialises them
      */
     private void initGUI(){
-            frame = new JFrame();
-            label = new JLabel();
-            frame.getContentPane().add(label);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame = new VisionGUI(this.width, this.height, this, this.world);
+//            label = new JLabel();
+//            frame.getContentPane().add(label);
+//            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.addWindowListener(this);
-            frame.setVisible(true);
-            frame.setSize(width, height);       
+//            frame.setVisible(true);
+//            frame.setSize(width, height);      
+//    	CameraSettingsPanel panel = new CameraSettingsPanel(this);
     }
     
     /**
@@ -198,17 +257,10 @@ public class VisionRunner implements CaptureCallback, WindowListener{
             // Don't forget to recycle it when done dealing with the frame.
     		
     	BufferedImage tmp = frame.getBufferedImage();
-    	if (frameCount % 1000 < 10){
-        	boundaries = imageProcessor.getBoundaries(tmp);	
-    	}
-    	Image img = tmp;
-    	if (frameCount > 10){
-    		img = imageProcessor.trackWorld(tmp, boundaries[0], boundaries[2], boundaries[1], boundaries[3]);
-    	}
-    	
-    		
+    	    		
             // draw the new frame onto the JLabel
-        label.getGraphics().drawImage(img, 0, 0, width, height, null);
+//    	label.getGraphics().drawImage(img, 0, 0, width, height, null);
+        this.frame.sendFrame(tmp, 20, frameCount);
             
             // recycle the frame
         frame.recycle();
