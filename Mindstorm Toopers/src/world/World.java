@@ -32,6 +32,19 @@ public class World {
 	private int pitchWidth, pitchHeight, pitchCentre;
 	private Vector yLeft, yRight, bLeft, bRight;
 	private int pitchLeft, pitchTop;
+	private int firstSectionBoundary, secondSectionBoundary, thirdSectionBoundary;
+	public Boolean getColor() {
+		return color;
+	}
+
+	public void setColor(Boolean color) {
+		this.color = color;
+	}
+
+	public void setDirection(Boolean direction) {
+		this.direction = direction;
+	}
+
 	private int gridSize;
 	
 	private Boolean color;
@@ -144,7 +157,7 @@ public class World {
 	
 	
 	// use this method after to track other team's robots after deciding which ones are ours
-	public void setOtherRobots()
+	public void setRobots()
 	{
 		if(color)
 		{
@@ -152,11 +165,15 @@ public class World {
 			{
 				otherAttacker.setPos(blueLeft);
 				otherDefender.setPos(blueRight);
+				attacker.setPos(yellowRight);
+				attacker.setPos(yellowLeft);
 			}
 			else
 			{
 				otherAttacker.setPos(blueRight);
 				otherDefender.setPos(blueLeft);
+				attacker.setPos(yellowLeft);
+				attacker.setPos(yellowRight);
 			}
 		}
 		else
@@ -165,11 +182,15 @@ public class World {
 			{
 				otherAttacker.setPos(yellowLeft);
 				otherDefender.setPos(yellowRight);
+				attacker.setPos(blueRight);
+				defender.setPos(blueLeft);
 			}
 			else
 			{
 				otherAttacker.setPos(yellowRight);
 				otherDefender.setPos(yellowLeft);
+				attacker.setPos(blueLeft);
+				attacker.setPos(blueRight);
 			}
 		}
 	}
@@ -186,6 +207,12 @@ public class World {
 			} else {
 				attacker.setPos(new Point(x,y));
 			}
+		} else {
+			if (direction){
+				otherAttacker.setPos(new Point(x,y));
+			} else {
+				otherDefender.setPos(new Point(x,y));
+			}
 		}
 	}
 	
@@ -200,6 +227,12 @@ public class World {
 			} else {
 				attacker.setDir(new Vector(new Point(x,y), yellowLeft));
 			}
+		} else {
+			if (direction){
+				otherAttacker.setDir(new Vector(new Point(x,y), yellowLeft));
+			} else {
+				otherDefender.setDir(new Vector(new Point(x,y), yellowLeft));
+			}
 		}
 	}
 	
@@ -213,6 +246,12 @@ public class World {
 				attacker.setDir(new Vector(new Point(x,y), yellowRight));
 			} else {
 				defender.setDir(new Vector(new Point(x,y), yellowRight));
+			}
+		} else {
+			if (direction){
+				otherDefender.setDir(new Vector(new Point(x,y), yellowRight));
+			} else {
+				otherAttacker.setDir(new Vector(new Point(x,y), yellowRight));
 			}
 		}
 	}
@@ -235,6 +274,12 @@ public class World {
 			} else {
 				defender.setPos(new Point(x,y));
 			}
+		} else {
+			if (direction){
+				otherDefender.setPos(new Point(x,y));
+			} else {
+				otherAttacker.setPos(new Point(x,y));
+			}
 		}
 	}
 	
@@ -249,6 +294,20 @@ public class World {
 		int x = (int) ((gridConstant * (blueLeftXY.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (blueLeftXY.getY() - this.pitchTop)) / this.pitchWidth);
 		this.blueLeft = new Point(x,y);
+		
+		if (!color){
+			if (direction){
+				defender.setPos(new Point(x,y));
+			} else {
+				attacker.setPos(new Point(x,y));
+			}
+		} else {
+			if (direction){
+				otherAttacker.setPos(new Point(x,y));
+			} else {
+				otherDefender.setPos(new Point(x,y));
+			}
+		}
 	}
 	
 	public void setVectorBlueLeft(Point dot)
@@ -455,6 +514,30 @@ public class World {
 	
 	public boolean getDirection() {
 		return this.direction;
+	}
+
+	public void setFirstSectionBoundary(int firstSectionBoundary) {
+		this.firstSectionBoundary = firstSectionBoundary;
+	}
+
+	public int getFirstSectionBoundary() {
+		return firstSectionBoundary;
+	}
+
+	public void setSecondSectionBoundary(int secondSectionBoundary) {
+		this.secondSectionBoundary = secondSectionBoundary;
+	}
+
+	public int getSecondSectionBoundary() {
+		return secondSectionBoundary;
+	}
+
+	public void setThirdSectionBoundary(int thirdSectionBoundary) {
+		this.thirdSectionBoundary = thirdSectionBoundary;
+	}
+
+	public int getThirdSectionBoundary() {
+		return thirdSectionBoundary;
 	}
 	
 	/*
