@@ -48,7 +48,7 @@ public class ImageProcessor {
 	private static int yellowMinGreen = 0;
 	private static int yellowMaxGreen = 255;
 	private static int yellowMinHue = 0;
-	private static int yellowMaxHue = 255;
+	private static int yellowMaxHue = 40;
 	private static int yellowMinSaturation = 0;
 	private static int yellowMaxSaturation = 255;
 	private static int yellowMinValue = 0;
@@ -60,7 +60,7 @@ public class ImageProcessor {
 	private static int blueMaxBlue = 255;
 	private static int blueMinGreen = 0;
 	private static int blueMaxGreen = 255;
-	private static int blueMinHue = 0;
+	private static int blueMinHue = 105;
 	private static int blueMaxHue = 255;
 	private static int blueMinSaturation = 0;
 	private static int blueMaxSaturation = 255;
@@ -88,9 +88,9 @@ public class ImageProcessor {
 	private static int plateMaxGreen = 255;
 	private static int plateMinHue = 64;
 	private static int plateMaxHue = 128;
-	private static int plateMinSaturation = 64;
+	private static int plateMinSaturation = 45;
 	private static int plateMaxSaturation = 255;
-	private static int plateMinValue = 110;
+	private static int plateMinValue = 105;
 	private static int plateMaxValue = 160;
 	
 	// These variables keep track of the last location of the various objects.
@@ -143,11 +143,24 @@ public class ImageProcessor {
 		double yellowRightX = 0.0, yellowRightY = 0.0;
 		double blueLeftX = 0.0, blueLeftY = 0.0;
 		double blueRightX = 0.0, blueRightY = 0.0;
+		double dotX = 0.0, dotY = 0.0;
+		double tempDotX = 0.0, tempDotY = 0.0;
+		double tempYellowLeftX = 0.0, tempYellowLeftY = 0.0;
+		double tempYellowRightX = 0.0, tempYellowRightY = 0.0;
+		double tempBlueLeftX = 0.0, tempBlueLeftY = 0.0;
+		double tempBlueRightX = 0.0, tempBlueRightY = 0.0;
+		int countDot = 0;
 		int countRed = 0;
 		int countYellowLeft = 0;
 		int countYellowRight = 0;
 		int countBlueLeft = 0;
 		int countBlueRight = 0;
+		int tempCountDot = 0;
+		int tempCountYellowLeft = 0;
+		int tempCountYellowRight = 0;
+		int tempCountBlueLeft = 0;
+		int tempCountBlueRight = 0;
+		boolean addToTemp = false;
 		int minWidth = world.getPitchLeft();
 		int maxWidth = minWidth + world.getWidth();
 		int minHeight = world.getPitchTop();
@@ -156,17 +169,14 @@ public class ImageProcessor {
 		int firstWidth = world.getFirstSectionBoundary();
 		int thirdWidth = world.getThirdSectionBoundary();
 
-		int smallest = 1000000;
-		int smallestX = 100;
-		int smallestY = 100;
-		int largest = 0;
-		int largestX = 100;
-		int largestY = 100;
-		int top = 100000000;
-		int bottom = -1;
-		int right = -1;
-		int left = 1000000000;
 		for (int w = minWidth; w < firstWidth; w++) {
+			tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
+			tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
+			tempCountYellowLeft = 0;
+			tempCountBlueLeft = 0;
+			tempDotX = 0.0; tempDotY = 0.0;
+			tempCountDot = 0;
+			addToTemp = false;
 			for (int h = minHeight; h < maxHeight; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
@@ -192,56 +202,95 @@ public class ImageProcessor {
 					if (platePixels){
 						img.setRGB(w,h,0xff00ff);
 					}
-//					if (world.getDirection()){
-//						if (world.getColor()){
-//							yellowLeftX += (double)w;
-//							yellowLeftY += (double)h;
-//							countYellowLeft++;		
-//						} else {
-//							blueLeftX += (double)w;
-//							blueLeftY += (double)h;
-//							countBlueLeft++;
-//						}
-//					} else {
-//						if (world.getColor()){
-//							blueLeftX += (double)w;
-//							blueLeftY += (double)h;
-//							countBlueLeft++;		
-//						} else {
-//							yellowLeftX += (double)w;
-//							yellowLeftY += (double)h;
-//							countYellowLeft++;
-//						}
-//					}
-					if (h < top){
-						top = h;
+					yellowLeftX += tempYellowLeftX;
+					yellowLeftY += tempYellowLeftY;
+					blueLeftX += tempBlueLeftX;
+					blueLeftY += tempBlueLeftY;
+					dotX += tempDotX;
+					dotY += tempDotY;
+					countDot += tempCountDot;
+					tempDotX = 0.0; tempDotY = 0.0;
+					tempCountDot = 0;
+					countYellowLeft += tempCountYellowLeft;
+					countBlueLeft += tempCountBlueLeft;
+					tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
+					tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
+					tempCountYellowLeft = 0;
+					tempCountBlueLeft = 0;
+					addToTemp = true;
+				}
+				if (addToTemp){
+				if (red > blueMinRed && red < blueMaxRed && blue > blueMinBlue && blue < blueMaxBlue && green > blueMinGreen && green < blueMaxGreen
+						&& hsvColor[0] > blueMinHue && hsvColor[0] < blueMaxHue && hsvColor[1] > blueMinSaturation && hsvColor[1] < blueMaxSaturation && hsvColor[2] > blueMinValue && hsvColor[2] < blueMaxValue){
+					if (bluePixels){
+						img.setRGB(w, h, 0xff9900);
 					}
-					if (h > bottom){
-						bottom = h;
+					tempBlueLeftX += w;
+					tempBlueLeftY += h;
+					tempCountBlueLeft++;
+				}
+				if (red > yellowMinRed && red < yellowMaxRed && blue > yellowMinBlue && blue < yellowMaxBlue && green > yellowMinGreen && green < yellowMaxGreen
+						&& hsvColor[0] > yellowMinHue && hsvColor[0] < yellowMaxHue && hsvColor[1] > yellowMinSaturation && hsvColor[1] < yellowMaxSaturation && hsvColor[2] > yellowMinValue && hsvColor[2] < yellowMaxValue){
+					if (yellowPixels){
+						img.setRGB(w, h, 0x000eee);
 					}
-					if (w < left){
-						left = w;
+					tempYellowLeftX += w;
+					tempYellowLeftY += h;
+					tempCountYellowLeft++;
+				}
+				if (red > dotsMinRed && red < dotsMaxRed && blue > dotsMinBlue && blue < dotsMaxBlue && green > dotsMinGreen && green < dotsMaxGreen
+						&& hsvColor[0] > dotsMinHue && hsvColor[0] < dotsMaxHue && hsvColor[1] > dotsMinSaturation && hsvColor[1] < dotsMaxSaturation && hsvColor[2] > dotsMinValue && hsvColor[2] < dotsMaxValue){
+					if (dotsPixels){
+						img.setRGB(w,h,0xffffff);
 					}
-					if (w > right){
-						right = w;
-					}
+					tempDotX += w;
+					tempDotY += h;
+					tempCountDot++;
+				}
 				}
 			}
 		}
 		Point yellowLeft = new Point(0,0);
 		Point blueLeft = new Point(0,0);
+		Point yellowLeftDot = new Point(0,0);
+		Point blueLeftDot = new Point(0,0);
 		if (world.getDirection() && world.getColor()){
-			yellowLeft = new Point((left + right)/2,(top+bottom)/2);
+			yellowLeft = new Point(yellowLeftX/countYellowLeft,yellowLeftY/countYellowLeft);
+			yellowLeftDot = new Point(dotX/countDot,dotY/countDot);
+			dotX = 0.0;
+			dotY = 0.0;
+			countDot = 0;
+			blueLeftX = 0.0;
+			blueLeftY = 0.0;
+			countBlueLeft = 0;
 		} else if (!world.getDirection() && !world.getColor()){
-			yellowLeft = new Point((left + right)/2,(top+bottom)/2);			
+			yellowLeft = new Point(yellowLeftX/countYellowLeft,yellowLeftY/countYellowLeft);
+			yellowLeftDot = new Point(dotX/countDot,dotY/countDot);
+			dotX = 0.0;
+			dotY = 0.0;
+			countDot = 0;
+			blueLeftX = 0.0;
+			blueLeftY = 0.0;
+			countBlueLeft = 0;
 		} else {
-			blueLeft = new Point((left + right)/2,(top+bottom)/2);			
+			blueLeft = new Point(blueLeftX/countBlueLeft,blueLeftY/countBlueLeft);
+			blueLeftDot = new Point(dotX/countDot,dotY/countDot);
+			dotX = 0.0;
+			dotY = 0.0;
+			countDot = 0;
+			yellowLeftX = 0.0;
+			yellowLeftY = 0.0;
+			countYellowLeft = 0;
 		}
-		top = 10000;
-		bottom = 0;
-		left = 100000;
-		right = 0;
+		
 		for (int w = firstWidth; w < middleWidth; w++) {
+			tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
+			tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
+			tempCountYellowLeft = 0;
+			tempCountBlueLeft = 0;
+			tempDotX = 0.0; tempDotY = 0.0;
+			tempCountDot = 0;
+			addToTemp = false;
 			for (int h = minHeight; h < maxHeight; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
@@ -267,54 +316,91 @@ public class ImageProcessor {
 					if (platePixels){
 						img.setRGB(w,h,0xff00ff);
 					}
-//					if (world.getDirection()){
-//						if (world.getColor()){
-//							blueLeftX += (double)w;
-//							blueLeftY += (double)h;
-//							countBlueLeft++;		
-//						} else {
-//							yellowLeftX += (double)w;
-//							yellowLeftY += (double)h;
-//							countYellowLeft++;
-//						}
-//					} else {
-//						if (world.getColor()){
-//							yellowLeftX += (double)w;
-//							yellowLeftY += (double)h;
-//							countYellowLeft++;		
-//						} else {
-//							blueLeftX += (double)w;
-//							blueLeftY += (double)h;
-//							countBlueLeft++;
-//						}
-//					}
-					if (h < top){
-						top = h;
+					yellowLeftX += tempYellowLeftX;
+					yellowLeftY += tempYellowLeftY;
+					blueLeftX += tempBlueLeftX;
+					blueLeftY += tempBlueLeftY;
+					dotX += tempDotX;
+					dotY += tempDotY;
+					countDot += tempCountDot;
+					tempDotX = 0.0; tempDotY = 0.0;
+					tempCountDot = 0;
+					countYellowLeft += tempCountYellowLeft;
+					countBlueLeft += tempCountBlueLeft;
+					tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
+					tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
+					tempCountYellowLeft = 0;
+					tempCountBlueLeft = 0;
+					addToTemp = true;
+				}
+				if (addToTemp){
+				if (red > blueMinRed && red < blueMaxRed && blue > blueMinBlue && blue < blueMaxBlue && green > blueMinGreen && green < blueMaxGreen
+						&& hsvColor[0] > blueMinHue && hsvColor[0] < blueMaxHue && hsvColor[1] > blueMinSaturation && hsvColor[1] < blueMaxSaturation && hsvColor[2] > blueMinValue && hsvColor[2] < blueMaxValue){
+					if (bluePixels){
+						img.setRGB(w, h, 0xff9900);
 					}
-					if (h > bottom){
-						bottom = h;
+					tempBlueLeftX += w;
+					tempBlueLeftY += h;
+					tempCountBlueLeft++;
+				}
+				if (red > yellowMinRed && red < yellowMaxRed && blue > yellowMinBlue && blue < yellowMaxBlue && green > yellowMinGreen && green < yellowMaxGreen
+						&& hsvColor[0] > yellowMinHue && hsvColor[0] < yellowMaxHue && hsvColor[1] > yellowMinSaturation && hsvColor[1] < yellowMaxSaturation && hsvColor[2] > yellowMinValue && hsvColor[2] < yellowMaxValue){
+					if (yellowPixels){
+						img.setRGB(w, h, 0x000eee);
 					}
-					if (w < left){
-						left = w;
+					tempYellowLeftX += w;
+					tempYellowLeftY += h;
+					tempCountYellowLeft++;
+				}
+				if (red > dotsMinRed && red < dotsMaxRed && blue > dotsMinBlue && blue < dotsMaxBlue && green > dotsMinGreen && green < dotsMaxGreen
+						&& hsvColor[0] > dotsMinHue && hsvColor[0] < dotsMaxHue && hsvColor[1] > dotsMinSaturation && hsvColor[1] < dotsMaxSaturation && hsvColor[2] > dotsMinValue && hsvColor[2] < dotsMaxValue){
+					if (dotsPixels){
+						img.setRGB(w,h,0xffffff);
 					}
-					if (w > right){
-						right = w;
-					}
+					tempDotX += w;
+					tempDotY += h;
+					tempCountDot++;
+				}
 				}
 			}
 		}
 		if (world.getDirection() && world.getColor()){
-			blueLeft = new Point((left + right)/2,(top+bottom)/2);
+			blueLeft = new Point(blueLeftX/countBlueLeft,blueLeftY/countBlueLeft);
+			blueLeftDot = new Point(dotX/countDot,dotY/countDot);
+			dotX = 0.0;
+			dotY = 0.0;
+			countDot = 0;
+			yellowLeftX = 0.0;
+			yellowLeftY = 0.0;
+			countYellowLeft = 0;
 		} else if (!world.getDirection() && !world.getColor()){
-			blueLeft = new Point((left + right)/2,(top+bottom)/2);			
+			blueLeft = new Point(blueLeftX/countBlueLeft,blueLeftY/countBlueLeft);
+			blueLeftDot = new Point(dotX/countDot,dotY/countDot);
+			dotX = 0.0;
+			dotY = 0.0;
+			countDot = 0;
+			yellowLeftX = 0.0;
+			yellowLeftY = 0.0;
+			countYellowLeft = 0;
 		} else {
-			yellowLeft = new Point((left + right)/2,(top+bottom)/2);			
+			yellowLeft = new Point(yellowLeftX/countYellowLeft,yellowLeftY/countYellowLeft);
+			yellowLeftDot = new Point(dotX/countDot,dotY/countDot);
+			dotX = 0.0;
+			dotY = 0.0;
+			countDot = 0;
+			blueLeftX = 0.0;
+			blueLeftY = 0.0;
+			countBlueLeft = 0;
 		}
-		top = 10000;
-		bottom = 0;
-		left = 100000;
-		right = 0;
+		
 		for (int w = middleWidth; w < thirdWidth; w++) {
+			tempYellowRightX = 0.0; tempYellowRightY = 0.0;
+			tempBlueRightX = 0.0; tempBlueRightY = 0.0;
+			tempCountYellowRight = 0;
+			tempCountBlueRight = 0;
+			tempDotX = 0.0; tempDotY = 0.0;
+			tempCountDot = 0;
+			addToTemp = false;
 			for (int h = minHeight; h < maxHeight; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
@@ -340,56 +426,95 @@ public class ImageProcessor {
 					if (platePixels){
 						img.setRGB(w,h,0xff00ff);
 					}
-//					if (world.getDirection()){
-//						if (world.getColor()){
-//							yellowRightX += (double)w;
-//							yellowRightY += (double)h;
-//							countYellowRight++;		
-//						} else {
-//							blueRightX += (double)w;
-//							blueRightY += (double)h;
-//							countBlueRight++;
-//						}
-//					} else {
-//						if (world.getColor()){
-//							blueRightX += (double)w;
-//							blueRightY += (double)h;
-//							countBlueRight++;		
-//						} else {
-//							yellowRightX += (double)w;
-//							yellowRightY += (double)h;
-//							countYellowRight++;
-//						}
-//					}
-					if (h < top){
-						top = h;
+					yellowRightX += tempYellowRightX;
+					yellowRightY += tempYellowRightY;
+					blueRightX += tempBlueRightX;
+					blueRightY += tempBlueRightY;
+					countYellowRight += tempCountYellowRight;
+					countBlueRight += tempCountBlueRight;
+					tempYellowRightX = 0.0; tempYellowRightY = 0.0;
+					tempBlueRightX = 0.0; tempBlueRightY = 0.0;
+					dotX += tempDotX;
+					dotY += tempDotY;
+					countDot += tempCountDot;
+					tempDotX = 0.0; tempDotY = 0.0;
+					tempCountDot = 0;
+					tempCountYellowRight = 0;
+					tempCountBlueRight = 0;
+					addToTemp = true;
+				}
+				if (addToTemp){
+				if (red > blueMinRed && red < blueMaxRed && blue > blueMinBlue && blue < blueMaxBlue && green > blueMinGreen && green < blueMaxGreen
+						&& hsvColor[0] > blueMinHue && hsvColor[0] < blueMaxHue && hsvColor[1] > blueMinSaturation && hsvColor[1] < blueMaxSaturation && hsvColor[2] > blueMinValue && hsvColor[2] < blueMaxValue){
+					if (bluePixels){
+						img.setRGB(w, h, 0xff9900);
 					}
-					if (h > bottom){
-						bottom = h;
+					tempBlueRightX += w;
+					tempBlueRightY += h;
+					tempCountBlueRight++;
+				}
+					if (red > yellowMinRed && red < yellowMaxRed && blue > yellowMinBlue && blue < yellowMaxBlue && green > yellowMinGreen && green < yellowMaxGreen
+						&& hsvColor[0] > yellowMinHue && hsvColor[0] < yellowMaxHue && hsvColor[1] > yellowMinSaturation && hsvColor[1] < yellowMaxSaturation && hsvColor[2] > yellowMinValue && hsvColor[2] < yellowMaxValue){
+				if (yellowPixels){
+						img.setRGB(w, h, 0x000eee);
 					}
-					if (w < left){
-						left = w;
+					tempYellowRightX += w;
+					tempYellowRightY += h;
+					tempCountYellowRight++;
+				}
+				if (red > dotsMinRed && red < dotsMaxRed && blue > dotsMinBlue && blue < dotsMaxBlue && green > dotsMinGreen && green < dotsMaxGreen
+						&& hsvColor[0] > dotsMinHue && hsvColor[0] < dotsMaxHue && hsvColor[1] > dotsMinSaturation && hsvColor[1] < dotsMaxSaturation && hsvColor[2] > dotsMinValue && hsvColor[2] < dotsMaxValue){
+					if (dotsPixels){
+						img.setRGB(w,h,0xffffff);
 					}
-					if (w > right){
-						right = w;
-					}
+					tempDotX += w;
+					tempDotY += h;
+					tempCountDot++;
+				}
 				}
 			}
 		}
 		Point yellowRight = new Point(0,0);
 		Point blueRight = new Point(0,0);
+		Point yellowRightDot = new Point(0,0);
+		Point blueRightDot = new Point(0,0);
 		if (world.getDirection() && world.getColor()){
-			yellowRight = new Point((left + right)/2,(top+bottom)/2);
+			yellowRight = new Point(yellowRightX/countYellowRight,yellowRightY/countYellowRight);
+			yellowRightDot = new Point(dotX/countDot,dotY/countDot);
+			dotX = 0.0;
+			dotY = 0.0;
+			countDot = 0;
+			blueRightX = 0.0;
+			blueRightY = 0.0;
+			countBlueRight = 0;
 		} else if (!world.getDirection() && !world.getColor()){
-			yellowRight = new Point((left + right)/2,(top+bottom)/2);			
+			yellowRight = new Point(yellowRightX/countYellowRight,yellowRightY/countYellowRight);
+			yellowRightDot = new Point(dotX/countDot,dotY/countDot);
+			dotX = 0.0;
+			dotY = 0.0;
+			countDot = 0;
+			blueRightX = 0.0;
+			blueRightY = 0.0;
+			countBlueRight = 0;
 		} else {
-			blueRight = new Point((left + right)/2,(top+bottom)/2);			
+			blueRight = new Point(blueRightX/countBlueRight,blueRightY/countBlueRight);
+			blueRightDot = new Point(dotX/countDot,dotY/countDot);
+			dotX = 0.0;
+			dotY = 0.0;
+			countDot = 0;
+			yellowRightX = 0.0;
+			yellowRightY = 0.0;
+			countYellowRight = 0;
 		}
-		top = 10000;
-		bottom = 0;
-		left = 100000;
-		right = 0;
+		
 		for (int w = thirdWidth; w < maxWidth; w++) {
+			tempYellowRightX = 0.0; tempYellowRightY = 0.0;
+			tempBlueRightX = 0.0; tempBlueRightY = 0.0;
+			tempCountYellowRight = 0;
+			tempCountBlueRight = 0;
+			tempDotX = 0.0; tempDotY = 0.0;
+			tempCountDot = 0;
+			addToTemp = false;
 			for (int h = minHeight; h < maxHeight; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
@@ -415,48 +540,63 @@ public class ImageProcessor {
 					if (platePixels){
 						img.setRGB(w,h,0xff00ff);
 					}
-//					if (world.getDirection()){
-//						if (world.getColor()){
-//							blueRightX += (double)w;
-//							blueRightY += (double)h;
-//							countBlueRight++;		
-//						} else {
-//							yellowRightX += (double)w;
-//							yellowRightY += (double)h;
-//							countYellowRight++;
-//						}
-//					} else {
-//						if (world.getColor()){
-//							yellowRightX += (double)w;
-//							yellowRightY += (double)h;
-//							countYellowRight++;		
-//						} else {
-//							blueRightX += (double)w;
-//							blueRightY += (double)h;
-//							countBlueRight++;
-//						}
-//					}
-					if (h < top){
-						top = h;
+					yellowRightX += tempYellowRightX;
+					yellowRightY += tempYellowRightY;
+					blueRightX += tempBlueRightX;
+					blueRightY += tempBlueRightY;
+					countYellowRight += tempCountYellowRight;
+					countBlueRight += tempCountBlueRight;
+					tempYellowRightX = 0.0; tempYellowRightY = 0.0;
+					tempBlueRightX = 0.0; tempBlueRightY = 0.0;
+					dotX += tempDotX;
+					dotY += tempDotY;
+					countDot += tempCountDot;
+					tempDotX = 0.0; tempDotY = 0.0;
+					tempCountDot = 0;
+					tempCountYellowRight = 0;
+					tempCountBlueRight = 0;
+					addToTemp = true;
+				}
+				if (addToTemp){
+				if (red > blueMinRed && red < blueMaxRed && blue > blueMinBlue && blue < blueMaxBlue && green > blueMinGreen && green < blueMaxGreen
+						&& hsvColor[0] > blueMinHue && hsvColor[0] < blueMaxHue && hsvColor[1] > blueMinSaturation && hsvColor[1] < blueMaxSaturation && hsvColor[2] > blueMinValue && hsvColor[2] < blueMaxValue){
+					if (bluePixels){
+						img.setRGB(w, h, 0xff9900);
 					}
-					if (h > bottom){
-						bottom = h;
+					tempBlueRightX += w;
+					tempBlueRightY += h;
+					tempCountBlueRight++;
+				}
+				if (red > yellowMinRed && red < yellowMaxRed && blue > yellowMinBlue && blue < yellowMaxBlue && green > yellowMinGreen && green < yellowMaxGreen
+						&& hsvColor[0] > yellowMinHue && hsvColor[0] < yellowMaxHue && hsvColor[1] > yellowMinSaturation && hsvColor[1] < yellowMaxSaturation && hsvColor[2] > yellowMinValue && hsvColor[2] < yellowMaxValue){
+					if (yellowPixels){
+						img.setRGB(w, h, 0x000eee);
+						}
+					tempYellowRightX += w;
+					tempYellowRightY += h;
+					tempCountYellowRight++;
+				}
+				if (red > dotsMinRed && red < dotsMaxRed && blue > dotsMinBlue && blue < dotsMaxBlue && green > dotsMinGreen && green < dotsMaxGreen
+						&& hsvColor[0] > dotsMinHue && hsvColor[0] < dotsMaxHue && hsvColor[1] > dotsMinSaturation && hsvColor[1] < dotsMaxSaturation && hsvColor[2] > dotsMinValue && hsvColor[2] < dotsMaxValue){
+					if (dotsPixels){
+						img.setRGB(w,h,0xffffff);
 					}
-					if (w < left){
-						left = w;
-					}
-					if (w > right){
-						right = w;
-					}
+					tempDotX += w;
+					tempDotY += h;
+					tempCountDot++;
+				}
 				}
 			}
 		}
 		if (world.getDirection() && world.getColor()){
-			blueRight = new Point((left + right)/2,(top+bottom)/2);
+			blueRight = new Point(blueRightX/countBlueRight,blueRightY/countBlueRight);
+			blueRightDot = new Point(dotX/countDot,dotY/countDot);
 		} else if (!world.getDirection() && !world.getColor()){
-			blueRight = new Point((left + right)/2,(top+bottom)/2);			
+			blueRight = new Point(blueRightX/countBlueRight,blueRightY/countBlueRight);
+			blueRightDot = new Point(dotX/countDot,dotY/countDot);
 		} else {
-			yellowRight = new Point((left + right)/2,(top+bottom)/2);			
+			yellowRight = new Point(yellowRightX/countYellowRight,yellowRightY/countYellowRight);
+			yellowRightDot = new Point(dotX/countDot,dotY/countDot);
 		}
 		// find red dots and get the average to find out the location of the ball
 		Point ball = new Point (redX/((double)countRed), redY/((double)countRed));
@@ -545,7 +685,7 @@ public class ImageProcessor {
 		
 		// get the dot for the left yellow robot after we have the coordinates for the yellow/blue pixels
 
-		Point yellowLeftDot = getDot(img, yellowLeft);
+//		Point yellowLeftDot = getDot(img, yellowLeft);
 		if ((Math.abs(yellowLeftDot.getX() - lastDot[0].getX()) + Math.abs(yellowLeftDot.getY() - lastDot[0].getY())) > 10){
 			if (yellowLeftDot.getX() > lastDot[0].getX()){
 				yellowLeftDot = new Point(lastDot[0].getX() + 3, yellowLeftDot.getY());
@@ -566,7 +706,7 @@ public class ImageProcessor {
 		
 		// get the dot for the right yellow robot
 
-		Point yellowRightDot = getDot(img,yellowRight);
+//		Point yellowRightDot = getDot(img,yellowRight);
 		if ((Math.abs(yellowRightDot.getX() - lastDot[1].getX()) + Math.abs(yellowRightDot.getY() - lastDot[1].getY())) > 5){
 			if (yellowRightDot.getX() > lastDot[1].getX()){
 				yellowRightDot = new Point(lastDot[1].getX() + 3, yellowRightDot.getY());
@@ -588,7 +728,7 @@ public class ImageProcessor {
 
 		// get the dot for the left blue robot
 
-		Point blueLeftDot = getDot(img,blueLeft);
+//		Point blueLeftDot = getDot(img,blueLeft);
 		if ((Math.abs(blueLeftDot.getX() - lastDot[2].getX()) + Math.abs(blueLeftDot.getY() - lastDot[2].getY())) > 5){
 			if (blueLeftDot.getX() > lastDot[2].getX()){
 				blueLeftDot = new Point(lastDot[2].getX() + 3, blueLeftDot.getY());
@@ -610,7 +750,7 @@ public class ImageProcessor {
 		
 		// get the dot for the right blue robot
 
-		Point blueRightDot = getDot(img,blueRight);
+//		Point blueRightDot = getDot(img,blueRight);
 		if ((Math.abs(blueRightDot.getX() - lastDot[3].getX()) + Math.abs(blueRightDot.getY() - lastDot[3].getY())) > 5){
 			if (blueRightDot.getX() > lastDot[3].getX()){
 				blueRightDot = new Point(lastDot[3].getX() + 3, blueRightDot.getY());
@@ -632,7 +772,7 @@ public class ImageProcessor {
 				
 		// after setting coordinates, draw the elements on the image
 		Image image = drawEverything(img, ball, yellowLeft, yellowRight, blueLeft, blueRight, yellowLeftDot, yellowRightDot, blueLeftDot, blueRightDot);
-//		image = drawBoundaries((BufferedImage) image);		
+		image = drawBoundaries((BufferedImage) image);		
 		
 		// set the final image
 		world.setBallDirection();
@@ -777,7 +917,7 @@ public class ImageProcessor {
 				return img;
 			}
 		} else {
-			for (int y = world.getPitchTop(); y < (world.getPitchTop() + world.getHeight()); y++){
+			for (int y = (int) startY; y < endY + 40; y++){
 				img.setRGB((int) startX, y, color.getRGB());
 			}
 			return img;

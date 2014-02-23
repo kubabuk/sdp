@@ -34,6 +34,7 @@ public class YellowThresholder extends JPanel implements ItemListener, ChangeLis
 		thresholds.setHueSliderChangeListener(this);
 		thresholds.setSaturationSliderChangeListener(this);
 		thresholds.setValueSliderChangeListener(this);
+		thresholds.setHueSliderValues(0, 40);
 		this.add(thresholds);
 	}
 

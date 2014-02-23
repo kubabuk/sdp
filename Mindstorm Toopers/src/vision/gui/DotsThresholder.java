@@ -24,7 +24,7 @@ public class DotsThresholder extends JPanel implements ItemListener, ChangeListe
 		chk_showLocation.addItemListener(this);
 		this.add(chk_showLocation);
 		
-		chk_showDirection = new JCheckBox("Show Dots Direction");
+		chk_showDirection = new JCheckBox("Show Robot Directions");
 		chk_showDirection.addItemListener(this);
 		this.add(chk_showDirection);
 		

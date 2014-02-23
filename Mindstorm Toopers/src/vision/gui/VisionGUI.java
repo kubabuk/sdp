@@ -91,6 +91,7 @@ public class VisionGUI extends JFrame {
 	private final JPanel ballThresholder;
 	private final JPanel cameraSettings;
 	private final JPanel plateThresholder;
+	private final JPanel generalSettings;
 	private final WindowAdapter windowAdapter = new WindowAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
@@ -114,6 +115,7 @@ public class VisionGUI extends JFrame {
 		this.dotsThresholder = new DotsThresholder(imageProcessor);
 		this.plateThresholder = new PlateThresholder(imageProcessor);
 		this.cameraSettings = new CameraSettingsPanel(vStream);
+		this.generalSettings = new GeneralSettingsPanel(imageProcessor, world);
 
 		Container contentPane = this.getContentPane();
 
@@ -124,7 +126,10 @@ public class VisionGUI extends JFrame {
 		tabbedPane.addTab("Ball", ballThresholder);
 		tabbedPane.addTab("Dots", dotsThresholder);
 		tabbedPane.addTab("Camera Settings", cameraSettings);
-		tabbedPane.addTab("Robots", plateThresholder);
+		tabbedPane.addTab("Green Plates", plateThresholder);
+		tabbedPane.addTab("Blue i", blueThresholder);
+		tabbedPane.addTab("Yellow i", yellowThresholder);
+		tabbedPane.addTab("General", generalSettings);
 		tabbedPane.setFocusable(true);
 		contentPane.add(tabbedPane);
 		BufferedImage blankInitialiser = new BufferedImage(videoWidth,
@@ -134,7 +139,7 @@ public class VisionGUI extends JFrame {
 		this.videoDisplay.setMinimumSize(videoSize);
 		this.videoDisplay.setSize(videoSize);
 		contentPane.add(videoDisplay);
-		this.setSize(videoWidth + 300, videoHeight);
+		this.setSize(videoWidth + 300, videoHeight + 100);
 		this.setVisible(true);
 		this.getGraphics().drawImage(blankInitialiser, 0, 0, null);
 

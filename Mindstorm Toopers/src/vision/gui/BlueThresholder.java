@@ -34,6 +34,7 @@ public class BlueThresholder extends JPanel implements ItemListener, ChangeListe
 		thresholds.setHueSliderChangeListener(this);
 		thresholds.setSaturationSliderChangeListener(this);
 		thresholds.setValueSliderChangeListener(this);
+		thresholds.setHueSliderValues(105, 255);
 		this.add(thresholds);
 	}
 

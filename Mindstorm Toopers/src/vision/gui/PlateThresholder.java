@@ -20,13 +20,6 @@ public class PlateThresholder extends JPanel implements ItemListener, ChangeList
 
 	public PlateThresholder(ImageProcessor imageProcessor){
 		this.imageProcessor = imageProcessor;
-		chk_showYellowLocation = new JCheckBox("Show Yellow Locations");
-		chk_showYellowLocation.addItemListener(this);
-		this.add(chk_showYellowLocation);
-		
-		chk_showBlueLocation = new JCheckBox("Show Blue Locations");
-		chk_showBlueLocation.addItemListener(this);
-		this.add(chk_showBlueLocation);
 		
 		chk_showPixels = new JCheckBox("Show detected pixels");
 		chk_showPixels.addItemListener(this);
@@ -40,8 +33,8 @@ public class PlateThresholder extends JPanel implements ItemListener, ChangeList
 		thresholds.setSaturationSliderChangeListener(this);
 		thresholds.setValueSliderChangeListener(this);
 		thresholds.setHueSliderValues(64, 128);
-		thresholds.setSaturationSliderValues(64, 256);
-		thresholds.setValueSliderValues(110, 160);
+		thresholds.setSaturationSliderValues(45, 256);
+		thresholds.setValueSliderValues(105, 160);
 		this.add(thresholds);
 	}
 
