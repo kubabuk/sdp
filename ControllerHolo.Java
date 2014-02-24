@@ -1,3 +1,5 @@
+package com.mydomain;
+
 import java.util.ArrayList;
 import java.util.List;
 import lejos.robotics.navigation.OmniPilot;
@@ -22,13 +24,8 @@ public class ControllerHolo {
 
 	public ControllerHolo()
 	{
-   
-	  Motor.A.setAcceleration(3000);
-	  Motor.B.setAcceleration(3000);
-	  Motor.C.setAcceleration(3000);
-	  Motor.A.setSpeed(speed);
-	  Motor.B.setSpeed(speed);
-	  Motor.C.setSpeed(speed);
+
+	  robot.setAcceleration(2500);
 	}
 	
 	private void kick(int speed)
@@ -126,17 +123,18 @@ public class ControllerHolo {
 
 
 
-	private void moveDistance(int desiredSpeed,int distance, int angle) //Move forward the distance at desiredSpeed
+	private void moveDistance(int desiredSpeed,int angle, int distance) //Move forward the distance at desiredSpeed
 	{
-		//setSpeed(desiredSpeed);
-		System.out.println("travel");
-		robot.travel(distance, angle);
+		setSpeed(desiredSpeed);
+		System.out.println(distance);
+		robot.travel((distance/1.5), angle);
 	}
 	
 	private void turnAngle(int desiredSpeed, int turnAngle) // turn the angle
 	{
+	        turnAngle=turnAngle*360/255-180;// gives a range of -180 and 180 from bluetooth 0 to 255.
 		 setSpeed(desiredSpeed);
-		robot.rotate(turnAngle);	  
+		robot.rotate(turnAngle*2.25);	  
 	}
 
 }
