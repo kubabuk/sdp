@@ -12,6 +12,7 @@ public class MoveA {
 		//Changeable variables for our robot and enemy defender sizes
 		int robotsize = 40;
 		int enemyrobotsize = 40;
+		int ballsize = 10;
 		
 		//Extract information from Goal
 		commands.CommandNames name = goal.getMove();
@@ -56,7 +57,8 @@ public class MoveA {
 		Point rightgoal = new Point(0,114);
 		
 		//DEBUG VARIABLE
-		boolean PLACEHOLDER = true;
+		//Deprecated
+//		boolean PLACEHOLDER = true;
 		
 		//Find Attacker Quadrant
 		if (robotx > 118 && robotx < 188) { leftq = true; }
@@ -79,14 +81,15 @@ public class MoveA {
 			aq.add(cmd);
 			return;
 		}
-		else if (name.equals(CommandNames.CATCH)) {
-			System.out.println("Move Command: Move to ball");
-			cmd = movetoball(robottoball,robotsize);
-			aq.add(cmd);
-			cmd = new Command(CommandNames.CATCH,0,0);
-			System.out.println("Catch Command: Catch the ball");
-			aq.add(cmd);
-		}
+		//CATCH Method not yet implemented
+//		else if (name.equals(CommandNames.CATCH)) {
+//			System.out.println("Move Command: Move to ball");
+//			cmd = movetoball(robottoball,robotsize,ballsize);
+//			aq.add(cmd);
+//			cmd = new Command(CommandNames.CATCH,0,0);
+//			System.out.println("Catch Command: Catch the ball");
+//			aq.add(cmd);
+//		}
 		//Main Kicking Algorithm
 		else if (name.equals(CommandNames.KICK)) {
 			//Check goal position and choose appropriate point
@@ -123,7 +126,6 @@ public class MoveA {
 				aq.add(cmd);
 				return;
 			}
-			return;
 		}
 		else if (name.equals(CommandNames.MOVE)) {
 			System.out.println("Move Command: Move put into stack");
@@ -132,9 +134,17 @@ public class MoveA {
 		}
 	}
 	
+	//Boundary Checks
+	
 	public static boolean hardboundarycheckleft(Point point) {
 		double pointx = point.getX();
 		if (pointx > 236 && pointx < 376) { return true; }
+		else { return false; }
+	}
+	
+	public static boolean hardboundarycheckright(Point point) {
+		double pointx = point.getX();
+		if (pointx > 96 && pointx < 196) { return true; }
 		else { return false; }
 	}
 	
@@ -145,19 +155,14 @@ public class MoveA {
 //		else { return false; }
 //	}
 	
-	public static boolean hardboundarycheckright(Point point) {
-		double pointx = point.getX();
-		if (pointx > 96 && pointx < 196) { return true; }
-		else { return false; }
-	}
-	
-//	Unusued Code
+//	Unused Code
 //	public static boolean softboundarycheckright(Point point) {
 //		double pointx = point.getX();
 //		if (pointx > 116 && pointx < 176) { return true; }
 //		else { return false; }
 //	}
 	
+	//Methods to easily call from main function
 	public static Command movetopoint(Vector robottopoint) {
 		int distance = (int) robottopoint.getMagnitude();
 		int angle = (int) robottopoint.getOrientation();
@@ -165,10 +170,12 @@ public class MoveA {
 		return cmd;
 	}
 	
-	public static Command movetoball(Vector robottoball, int robotsize) {
+	//Method used to move towards ball, accounting in the robotsize so it does not push the ball away.
+	public static Command movetoball(Vector robottoball, int robotsize, int ballsize) {
 		int distance = (int) robottoball.getMagnitude();
 		int angle = (int) robottoball.getOrientation();
-		Command cmd = new Command(CommandNames.MOVE,(distance - robotsize),angle);
+		int sizeadjustments = robotsize + ballsize;
+		Command cmd = new Command(CommandNames.MOVE,(distance - sizeadjustments),angle);
 		return cmd;
 	}
 	
