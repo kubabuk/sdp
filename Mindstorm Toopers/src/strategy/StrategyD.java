@@ -42,7 +42,7 @@ public class StrategyD {
 		boolean ballInFront;
 		
 		// right side of pitch from cameras perspective
-		if (w.getDirection()) {
+		if (!w.getDirection()) {
 			// if robot is between ball and own goal and robot is facing the opposite goal.
 			if ((ball.getPos().getX() > defRobot.getPos().getX()) && Math.abs(defRobot.getDir().getOrientation() - 180) <= 10) {
 				if (ball.getPos().getY() < goalBottom.getY()) {
