@@ -1,12 +1,14 @@
 package commands;
 
 import java.util.ArrayList;
+import geometry.*;
+
 
 public class Queue{
 
     private ArrayList<Command> commandList;    
 	
-    public Queue(double initialAngle) {
+    public Queue() {
         commandList = new ArrayList<Command>();
     }
     

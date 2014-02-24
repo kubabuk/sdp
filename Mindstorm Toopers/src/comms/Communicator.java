@@ -2,6 +2,8 @@ package comms;
 
 import java.io.IOException;
 
+import commands.CommandNames;
+
 /**
 * This is a communicator. It may be used for abstractly passing messages via bluetooth or virtual
 * devices.
