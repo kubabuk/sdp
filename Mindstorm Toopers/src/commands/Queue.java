@@ -27,7 +27,7 @@ public class Queue{
     
 
     public Command pull() {
-    	System.out.println("pull");
+    	//System.out.println("pull");
     	
     	if(!commandList.isEmpty()) {
     		Command c = commandList.get(0);

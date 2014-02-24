@@ -17,12 +17,23 @@ public class DeathStar {
 
 		
 		World universe = new World(color, direction);
-		Thread.sleep(7000);
+		//Thread.sleep(7000);
 		Queue aq = new Queue();//universe.getAttacker().getDir().getOrientation());
 		Queue dq = new Queue();
 
 		
-		AI emperor = new AI(universe,aq,dq);
+		//test code
+		//aq.add(new Command(CommandNames.MOVE, 50, 0));
+		aq.add(new Command(CommandNames.CHANGEANGLE, 0, 90));
+		//aq.add(new Command(CommandNames.ABORT, 0, 90));
+		//aq.add(new Command(CommandNames.MOVE, 100, 0));
+		//aq.add(new Command(CommandNames.CHANGEANGLE, 0, -90));
+		int count = 0;
+		
+		
+		//test code
+		
+		//AI emperor = new AI(universe,aq,dq);
 		boolean flag = true;
 		
 
@@ -34,19 +45,24 @@ public class DeathStar {
 			
 			
 		while (flag) {
-			emperor.update();
+			//emperor.update();
 				
-			System.out.println("The ball position is " + universe.getBall().getPos().getX()+" , "+universe.getBall().getPos().getY());
+			//System.out.println("The ball position is " + universe.getBall().getPos().getX()+" , "+universe.getBall().getPos().getY());
 				
 //				System.out.println("The ball is at "+universe.getBall().toString());
 //				System.out.println("The attacker is at "+universe.getAttacker().toString());
 //				System.out.println("The defender is at "+universe.getDefender().toString());
 //				System.out.println("The max X,Y are " + universe.getMinX() + " , " + universe.getMinY());
 				
-				
+//			count = count + 1;
+//			if (count == 4)
+//			{
+//				aq.add(new Command(CommandNames.MOVE, 50, 0));
+//				aq.add(new Command(CommandNames.CHANGEANGLE, 0, 120));
+//			}
 
 			Command cmdAttack = aq.pull();
-			System.out.println("command pulled");
+			//System.out.println("command pulled");
 			//System.out.println(cmdDefend.getCommand());
 
 			//sendArgumentsDef[0] = cmdDefend.getSpeed();
@@ -58,6 +74,7 @@ public class DeathStar {
 			//}
 
 			if(!cmdAttack.isNothing()){
+				System.out.println("Attempting to send message");
 				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), cmdAttack.getAngle());
 			}
 				

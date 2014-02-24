@@ -1,8 +1,6 @@
 package strategy;
 
 import commands.*;
-import comms.CommandNames;
-
 import world.World;
 
 public class AI {

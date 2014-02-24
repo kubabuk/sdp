@@ -10,9 +10,9 @@ public class MoveA {
 	
 	public static void makeCommands(World w, Goal goal, Queue aq) {
 		//Changeable variables for our robot and enemy defender sizes
-//		int robotsize = 40;
+		int robotsize = 40;
 		int enemyrobotsize = 40;
-//		int ballsize = 10;
+		int ballsize = 10;
 		
 		//Extract information from Goal
 		commands.CommandNames name = goal.getMove();
@@ -24,26 +24,26 @@ public class MoveA {
 		Robot enemydefender = w.getOtherDefender();
 		Point enemydefenderpos = enemydefender.getPos();
 		Point ball = w.getBall().getPos();
-//		double robotori = robot.getDir().getOrientation();
+		double robotori = robot.getDir().getOrientation();
 		double robotx = robotpos.getX();
 		double roboty = robotpos.getY();
 		double pointx = point.getX();
 		double pointy = point.getY();
-//		double diffx = robotx - pointx;
-//		double diffy = roboty - pointy;
+		double diffx = robotx - pointx;
+		double diffy = roboty - pointy;
 		double dtemp = 0;
 		double dtemp2 = 0;
-//		double interceptionrange = 2;
-//		int distance = (int) Math.sqrt(diffx*diffx + diffy*diffy);
+		double interceptionrange = 2;
+		int distance = (int) Math.sqrt(diffx*diffx + diffy*diffy);
 		Vector robottopoint = new Vector(robotpos,point);
-//		Vector robottoball = new Vector(robotpos,ball);
+		Vector robottoball = new Vector(robotpos,ball);
 		Vector balltogoal;
 		Vector vtemp;
 		Vector vtemp2;
 		Vector vtemp3;
 		Command cmd = movetopoint(robottopoint);
 		Command donothing = new Command(CommandNames.DONOTHING,0,0);
-//		int angle = (int) Math.abs(robotori - robottopoint.getOrientation());
+		int angle = (int) Math.abs(robotori - robottopoint.getOrientation());
 		boolean leftq = false;
 		
 		//Initialise Attacking points
@@ -64,8 +64,8 @@ public class MoveA {
 		if (robotx > 118 && robotx < 188) { leftq = true; }
 		
 		//If Goal is outside boundary, do nothing.
-		if ((leftq && hardboundarycheckleft(point)) || (!leftq && hardboundarycheckright(point))) {
-			System.out.println("Goal point outside boundary: Doing Nothing");
+		if ((leftq && !hardboundarycheckleft(point)) || (!leftq && !hardboundarycheckright(point))) {
+			System.out.println("Goal point outside boundary: Do Nothing put into stack");
 			aq.add(donothing);
 			return;
 		}
@@ -93,12 +93,9 @@ public class MoveA {
 		//Main Kicking Algorithm
 		else if (name.equals(CommandNames.KICK)) {
 			//Check goal position and choose appropriate point
-			if (leftq) { vtemp = new Vector(robotpos,lowerleft); }
-			else { vtemp = new Vector(robotpos,lowerright); }
-			if (robotpos == upperleft && leftq) { vtemp = new Vector(robotpos,lowerleft); }
-			else if (robotpos == upperright) { vtemp = new Vector(robotpos,lowerright); }
+			if (leftq) { vtemp = new Vector(robotpos,lowerleft); System.out.println("Moving to Lower Left Quadrant");}
+			else { vtemp = new Vector(robotpos,lowerright); System.out.println("Moving to Lower Right Quadrant");}
 			//Move to chosen kicking position
-			System.out.println("Moving to: (" + vtemp.getDestination().getX() + "," + vtemp.getDestination().getY() + ")");
 			cmd = movetopoint(vtemp);
 			aq.add(cmd);
 			//Check goal position and change to appropriate angle
@@ -118,11 +115,7 @@ public class MoveA {
 			//If the ball would be intercepted
 			if (dtemp2 < 0 && dtemp > 0) {
 				//Move to new point
-				if (leftq) { vtemp = new Vector(robotpos,upperleft); }
-				else { vtemp = new Vector(robotpos,upperright); }
-				if (robotpos == lowerleft && leftq) { vtemp = new Vector(robotpos,upperleft); }
-				else if (robotpos == lowerright) { vtemp = new Vector(robotpos,upperright); }
-				System.out.println("Moving to: (" + vtemp.getDestination().getX() + "," + vtemp.getDestination().getY() + ")");
+				vtemp = new Vector(robotpos,upperleft);
 				cmd = movetopoint(vtemp);
 				aq.add(cmd);
 				return;
@@ -135,7 +128,7 @@ public class MoveA {
 			}
 		}
 		else if (name.equals(CommandNames.MOVE)) {
-			System.out.println("Moving to: " + goal.getGoal().getX() + "," + goal.getGoal().getY() + ")");
+			System.out.println("Move Command: Move put into stack");
 			aq.add(cmd);
 			return;
 		}
