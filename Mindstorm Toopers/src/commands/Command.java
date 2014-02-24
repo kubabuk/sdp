@@ -1,7 +1,5 @@
 package commands;
 
-import comms.CommandNames;
-
 public class Command {
     private int distance;
     private int angle;
