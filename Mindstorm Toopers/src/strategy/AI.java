@@ -28,13 +28,13 @@ public class AI {
 	{
 		
 		// get goal from Strategy
-		this.ag = a.getGoal();
+		this.ag = a.getGoal(lastag);
 		
 		// feed it to Judge
-		if (JudgeA.judge(lastag,ag))
-		{
+		if (this.ag.isNull())
+		{	
 			MoveA.makeCommands(this.w, ag, aq);
-			this.lastag = ag;
+			this.lastag = this.ag;
 		}
 		// if it passes send it to Move
 		// Move adds Commands to the queue
