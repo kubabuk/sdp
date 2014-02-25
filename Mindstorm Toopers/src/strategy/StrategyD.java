@@ -13,11 +13,19 @@ public class StrategyD {
 	//strategy for attacker
 	private static World w;
 	private int State;
+	private Point leftgoal;
+	private Point rightgoal;
+	private static double goalTop;
+	private static double goalBottom;
 	
 	public StrategyD(World w)
 	{
 		this.w = w;
 		this.State = 0;
+		this.leftgoal = new Point(474,114);
+		this.rightgoal = new Point(0,114);
+		this.goalTop = leftgoal.getY()+31.5;
+		this.goalBottom = rightgoal.getY()+31.5;
 	}
 		
 	public void setState(int State)
@@ -34,9 +42,6 @@ public class StrategyD {
 	{
 		Robot defRobot = w.getDefender();
 		Ball ball = w.getBall();
-		
-		Point goalTop = w.getGoalTop();
-		Point goalBottom = w.getGoalBottom();
 		Point destination;
 		CommandNames cmd;
 		boolean ballInFront;
@@ -45,12 +50,12 @@ public class StrategyD {
 		if (!w.getDirection()) {
 			// if robot is between ball and own goal and robot is facing the opposite goal.
 			if ((ball.getPos().getX() > defRobot.getPos().getX()) && Math.abs(defRobot.getDir().getOrientation() - 180) <= 10) {
-				if (ball.getPos().getY() < goalBottom.getY()) {
-					destination = new Point(defRobot.getPos().getX(), goalBottom.getY() + 10*2.2);
+				if (ball.getPos().getY() < goalBottom) {
+					destination = new Point(defRobot.getPos().getX(), goalBottom + 10*2.2);
 					cmd = CommandNames.MOVE;
 				}
-				else if (ball.getPos().getY() > goalTop.getY()) {
-					destination = new Point(defRobot.getPos().getX(), goalTop.getY() - 10*2.2);
+				else if (ball.getPos().getY() > goalTop) {
+					destination = new Point(defRobot.getPos().getX(), goalTop - 10*2.2);
 					cmd = CommandNames.MOVE;
 				}
 				else {
@@ -61,6 +66,7 @@ public class StrategyD {
 			// if robot is between ball and own goal and robot is facing its own goal
 			else if ((ball.getPos().getX() > defRobot.getPos().getX()) && Math.abs(0 - defRobot.getDir().getOrientation())<= 10) {
 				destination = ball.getPos();
+				cmd = CommandNames.MOVE;
 			}
 			// if ball is between robot and own goal and robot is facing ball
 			else if ((ball.getPos().getX() < defRobot.getPos().getX()) && Math.abs(defRobot.getDir().getOrientation() - 10) <= 10) {
@@ -70,17 +76,18 @@ public class StrategyD {
 			// if ball is between robot and own goal and robot is not facing ball
 			else {
 				destination = ball.getPos();
+				cmd = CommandNames.MOVE;
 			}
 		}
 		else {
 			// if robot is between ball and own goal and robot is facing the opposite goal.
 			if ((ball.getPos().getX() < defRobot.getPos().getX()) && Math.abs(defRobot.getDir().getOrientation() - 180) <= 10) {
-				if (ball.getPos().getY() < goalBottom.getY()) {
-					destination = new Point(defRobot.getPos().getX(), goalBottom.getY() + 10*2.2);
+				if (ball.getPos().getY() < goalBottom) {
+					destination = new Point(defRobot.getPos().getX(), goalBottom + 10*2.2);
 					cmd = CommandNames.MOVE;
 				}
-				else if (ball.getPos().getY() > goalTop.getY()) {
-					destination = new Point(defRobot.getPos().getX(), goalTop.getY() - 10*2.2);
+				else if (ball.getPos().getY() > goalTop) {
+					destination = new Point(defRobot.getPos().getX(), goalTop - 10*2.2);
 					cmd = CommandNames.MOVE;
 				}
 				else {
@@ -91,6 +98,7 @@ public class StrategyD {
 			// if robot is between ball and own goal and robot is facing its own goal
 			else if ((ball.getPos().getX() > defRobot.getPos().getX()) && Math.abs(0 - defRobot.getDir().getOrientation())<= 10) {
 				destination = ball.getPos();
+				cmd = CommandNames.MOVE;
 			}
 			// if ball is between robot and own goal and robot is facing ball
 			else if ((ball.getPos().getX() > defRobot.getPos().getX()) && Math.abs(defRobot.getDir().getOrientation() - 10) <= 10) {
@@ -100,6 +108,7 @@ public class StrategyD {
 			// if ball is between robot and own goal and robot is not facing ball
 			else {
 				destination = ball.getPos();
+				cmd = CommandNames.MOVE;
 			}
 		}
 		
