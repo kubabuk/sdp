@@ -65,10 +65,7 @@ public class MoveA {
 		if (robotx > 118 && robotx < 188) { leftq = true; }
 		
 		//If Goal is null, do nothing.
-		if (goal.getGoal().equals(null)) {
-			aq.add(donothing);
-			return;
-		}
+		if (goal.isNull()) { return; }
 		
 		//If Goal is outside boundary, do nothing.
 		if ((leftq && !hardboundarycheckleft(point)) || (!leftq && !hardboundarycheckright(point))) {
