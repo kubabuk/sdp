@@ -10,9 +10,9 @@ public class MoveA {
 	
 	public static void makeCommands(World w, Goal goal, Queue aq) {
 		//Changeable variables for our robot and enemy defender sizes
-//		int robotsize = 40;
+		int robotsize = 40;
 		int enemyrobotsize = 40;
-//		int ballsize = 10;
+		int ballsize = 10;
 		
 		//Extract information from Goal
 		commands.CommandNames name = goal.getMove();
@@ -24,26 +24,26 @@ public class MoveA {
 		Robot enemydefender = w.getOtherDefender();
 		Point enemydefenderpos = enemydefender.getPos();
 		Point ball = w.getBall().getPos();
-//		double robotori = robot.getDir().getOrientation();
+		double robotori = robot.getDir().getOrientation();
 		double robotx = robotpos.getX();
-//		double roboty = robotpos.getY();
-//		double pointx = point.getX();
-//		double pointy = point.getY();
-//		double diffx = robotx - pointx;
-//		double diffy = roboty - pointy;
+		double roboty = robotpos.getY();
+		double pointx = point.getX();
+		double pointy = point.getY();
+		double diffx = robotx - pointx;
+		double diffy = roboty - pointy;
 		double dtemp = 0;
 		double dtemp2 = 0;
-//		double interceptionrange = 2;
-//		int distance = (int) Math.sqrt(diffx*diffx + diffy*diffy);
+		double interceptionrange = 2;
+		int distance = (int) Math.sqrt(diffx*diffx + diffy*diffy);
 		Vector robottopoint = new Vector(robotpos,point);
-//		Vector robottoball = new Vector(robotpos,ball);
+		Vector robottoball = new Vector(robotpos,ball);
 		Vector balltogoal;
 		Vector vtemp;
 		Vector vtemp2;
 		Vector vtemp3;
 		Command cmd = movetopoint(robottopoint);
 		Command donothing = new Command(CommandNames.DONOTHING,0,0);
-//		int angle = (int) Math.abs(robotori - robottopoint.getOrientation());
+		int angle = (int) Math.abs(robotori - robottopoint.getOrientation());
 		boolean leftq = false;
 		
 		//Initialise Attacking points
@@ -86,14 +86,14 @@ public class MoveA {
 			return;
 		}
 		//CATCH Method not yet implemented
-//		else if (name.equals(CommandNames.CATCH)) {
-//			System.out.println("Move Command: Move to ball");
-//			cmd = movetoball(robottoball,robotsize,ballsize);
-//			aq.add(cmd);
-//			cmd = new Command(CommandNames.CATCH,0,0);
-//			System.out.println("Catch Command: Catch the ball");
-//			aq.add(cmd);
-//		}
+		else if (name.equals(CommandNames.CATCH)) {
+			System.out.println("Move Command: Move to ball");
+			cmd = movetoball(robottoball,robotsize,ballsize);
+			aq.add(cmd);
+			cmd = new Command(CommandNames.CATCH,0,0);
+			System.out.println("Catch Command: Catch the ball");
+			aq.add(cmd);
+		}
 		//Main Kicking Algorithm
 		else if (name.equals(CommandNames.KICK)) {
 			//Check goal position and choose appropriate point
