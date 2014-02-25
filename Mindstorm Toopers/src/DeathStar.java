@@ -12,11 +12,11 @@ import world.*;
 public class DeathStar {
 
 	public static void main (String[] args) throws InterruptedException, IOException{
-		boolean color = args[0].equals("yellow");
-		boolean direction = args[1].equals("right");
+		//boolean color = args[0].equals("yellow");
+		//boolean direction = args[1].equals("right");
 
 		
-		World universe = new World(color, direction);
+		//World universe = new World(color, direction);
 		//Thread.sleep(7000);
 		Queue aq = new Queue();//universe.getAttacker().getDir().getOrientation());
 		Queue dq = new Queue();
@@ -24,7 +24,15 @@ public class DeathStar {
 		
 		//test code
 		//aq.add(new Command(CommandNames.MOVE, 50, 0));
-		aq.add(new Command(CommandNames.CHANGEANGLE, 0, 90));
+		aq.add(new Command(CommandNames.CATCH, 10, 15));
+		aq.add(new Command(CommandNames.KICK, 10, 15));
+		
+		aq.add(new Command(CommandNames.CATCH, 10, 15));
+		aq.add(new Command(CommandNames.KICK, 10, 15));
+
+		aq.add(new Command(CommandNames.CATCH, 10, 15));
+		aq.add(new Command(CommandNames.KICK, 10, 15));
+		//dq.add(new Command(CommandNames.CATCH, 0, 0));
 		//aq.add(new Command(CommandNames.ABORT, 0, 90));
 		//aq.add(new Command(CommandNames.MOVE, 100, 0));
 		//aq.add(new Command(CommandNames.CHANGEANGLE, 0, -90));
@@ -39,9 +47,6 @@ public class DeathStar {
 
 		//MainComm theForceDef = new MainComm(1);
 		MainComm theForceAttack = new MainComm(2);
-
-
-			
 			
 			
 		while (flag) {
@@ -60,8 +65,11 @@ public class DeathStar {
 //				aq.add(new Command(CommandNames.MOVE, 50, 0));
 //				aq.add(new Command(CommandNames.CHANGEANGLE, 0, 120));
 //			}
-
+			
+			
+			//dq.add(new Command(CommandNames.CATCH, 0, 0));
 			Command cmdAttack = aq.pull();
+			//Command cmdDefend = dq.pull();
 			//System.out.println("command pulled");
 			//System.out.println(cmdDefend.getCommand());
 
