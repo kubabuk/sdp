@@ -30,7 +30,7 @@ public class World {
 	private Point ball;
 	
 	private int pitchWidth, pitchHeight, pitchCentre;
-	private Vector yLeft, yRight, bLeft, bRight;
+	private Vector yellowLeftDir, yellowRightDir, blueLeftDir, blueRightDir;
 	private int pitchLeft, pitchTop;
 	private int firstSectionBoundary, secondSectionBoundary, thirdSectionBoundary;
 	public Boolean getColor() {
@@ -76,7 +76,7 @@ public class World {
 		Point start = new Point(10,10);
 		Vector startVector = new Vector(start, new Point(11,10));
 		ballObject = new Ball(start);
-		yLeft = startVector;
+		yellowLeftDir = startVector;
 		attacker = new Robot(start, new Vector(start,start));
 		defender = new Robot(start, new Vector(start,start));
 		
@@ -166,14 +166,24 @@ public class World {
 				otherAttacker.setPos(blueLeft);
 				otherDefender.setPos(blueRight);
 				attacker.setPos(yellowRight);
-				attacker.setPos(yellowLeft);
+				defender.setPos(yellowLeft);
+				
+				otherAttacker.setDir(blueLeftDir);
+				otherDefender.setDir(blueRightDir);
+				attacker.setDir(yellowRightDir);
+				defender.setDir(yellowLeftDir);
 			}
 			else
 			{
 				otherAttacker.setPos(blueRight);
 				otherDefender.setPos(blueLeft);
 				attacker.setPos(yellowLeft);
-				attacker.setPos(yellowRight);
+				defender.setPos(yellowRight);
+				
+				otherAttacker.setDir(blueRightDir);
+				otherDefender.setDir(blueLeftDir);
+				attacker.setDir(yellowLeftDir);
+				defender.setDir(yellowRightDir);
 			}
 		}
 		else
@@ -184,13 +194,23 @@ public class World {
 				otherDefender.setPos(yellowRight);
 				attacker.setPos(blueRight);
 				defender.setPos(blueLeft);
+				
+				otherAttacker.setDir(yellowLeftDir);
+				otherDefender.setDir(yellowRightDir);
+				attacker.setDir(blueRightDir);
+				defender.setDir(blueLeftDir);
 			}
 			else
 			{
 				otherAttacker.setPos(yellowRight);
 				otherDefender.setPos(yellowLeft);
 				attacker.setPos(blueLeft);
-				attacker.setPos(blueRight);
+				defender.setPos(blueRight);
+				
+				otherAttacker.setDir(yellowRightDir);
+				otherDefender.setDir(yellowLeftDir);
+				attacker.setDir(blueLeftDir);
+				defender.setDir(blueRightDir);
 			}
 		}
 	}
@@ -201,19 +221,6 @@ public class World {
 		int x = (int) ((gridConstant * (yellowLeftXY.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (yellowLeftXY.getY() - this.pitchTop)) / this.pitchWidth);
 		this.yellowLeft = new Point(x,y);
-		if (color){
-			if (direction){
-				defender.setPos(new Point(x,y));
-			} else {
-				attacker.setPos(new Point(x,y));
-			}
-		} else {
-			if (direction){
-				otherAttacker.setPos(new Point(x,y));
-			} else {
-				otherDefender.setPos(new Point(x,y));
-			}
-		}
 	}
 	
 	public void setVectorYellowLeft(Point dot)
@@ -221,19 +228,6 @@ public class World {
 		int x = (int) ((gridConstant * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (dot.getY() - this.pitchTop)) / this.pitchWidth);
 		this.setyLeft(new Vector(new Point(x,y), yellowLeft));
-		if (color){
-			if (direction){
-				defender.setDir(new Vector(new Point(x,y), yellowLeft));
-			} else {
-				attacker.setDir(new Vector(new Point(x,y), yellowLeft));
-			}
-		} else {
-			if (direction){
-				otherAttacker.setDir(new Vector(new Point(x,y), yellowLeft));
-			} else {
-				otherDefender.setDir(new Vector(new Point(x,y), yellowLeft));
-			}
-		}
 	}
 	
 	public void setVectorYellowRight(Point dot)
@@ -241,19 +235,6 @@ public class World {
 		int x = (int) ((gridConstant * (dot.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (dot.getY() - this.pitchTop)) / this.pitchWidth);
 		this.setyRight(new Vector(new Point(x,y), yellowRight));
-		if (color){
-			if (direction){
-				attacker.setDir(new Vector(new Point(x,y), yellowRight));
-			} else {
-				defender.setDir(new Vector(new Point(x,y), yellowRight));
-			}
-		} else {
-			if (direction){
-				otherDefender.setDir(new Vector(new Point(x,y), yellowRight));
-			} else {
-				otherAttacker.setDir(new Vector(new Point(x,y), yellowRight));
-			}
-		}
 	}
 	
 	public Point getYellowLeft()
@@ -268,19 +249,6 @@ public class World {
 		int x = (int) ((gridConstant * (yellowRightXY.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (yellowRightXY.getY() - this.pitchTop)) / this.pitchWidth);
 		this.yellowRight = new Point(x,y);
-		if (color){
-			if (direction){
-				attacker.setPos(new Point(x,y));
-			} else {
-				defender.setPos(new Point(x,y));
-			}
-		} else {
-			if (direction){
-				otherDefender.setPos(new Point(x,y));
-			} else {
-				otherAttacker.setPos(new Point(x,y));
-			}
-		}
 	}
 	
 	public Point getYellowRight()
@@ -294,20 +262,6 @@ public class World {
 		int x = (int) ((gridConstant * (blueLeftXY.getX() - this.pitchLeft)) / this.pitchWidth);
 		int y = (int) ((gridConstant * (blueLeftXY.getY() - this.pitchTop)) / this.pitchWidth);
 		this.blueLeft = new Point(x,y);
-		
-		if (!color){
-			if (direction){
-				defender.setPos(new Point(x,y));
-			} else {
-				attacker.setPos(new Point(x,y));
-			}
-		} else {
-			if (direction){
-				otherAttacker.setPos(new Point(x,y));
-			} else {
-				otherDefender.setPos(new Point(x,y));
-			}
-		}
 	}
 	
 	public void setVectorBlueLeft(Point dot)
@@ -453,35 +407,35 @@ public class World {
 	}
 
 	public void setyLeft(Vector yLeft) {
-		this.yLeft = yLeft;
+		this.yellowLeftDir = yLeft;
 	}
 
 	public Vector getyLeft() {
-		return yLeft;
+		return yellowLeftDir;
 	}
 
 	public void setyRight(Vector yRight) {
-		this.yRight = yRight;
+		this.yellowRightDir = yRight;
 	}
 
 	public Vector getyRight() {
-		return yRight;
+		return yellowRightDir;
 	}
 
 	public void setbLeft(Vector bLeft) {
-		this.bLeft = bLeft;
+		this.blueLeftDir = bLeft;
 	}
 
 	public Vector getbLeft() {
-		return bLeft;
+		return blueLeftDir;
 	}
 
 	public void setbRight(Vector bRight) {
-		this.bRight = bRight;
+		this.blueRightDir = bRight;
 	}
 
 	public Vector getbRight() {
-		return bRight;
+		return blueRightDir;
 	}
 	
 	public void setPitchLeft(int pitchLeft) {

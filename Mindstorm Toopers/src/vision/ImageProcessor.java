@@ -117,6 +117,8 @@ public class ImageProcessor {
 	private static boolean plateVisible;
 	private static boolean platePixels;
 	private static boolean directionsVisible;
+	private static boolean showBoundaries;
+	private static boolean recalculateBoundaries;
 	
 	// This constructor sets a default starting position for each of the objects.
 	// The vision system will take a few seconds to stabilise after initialisation.
@@ -742,7 +744,7 @@ public class ImageProcessor {
 			}
 //			blueLeftDot = new Point((blueLeftDot.getX() + lastDot[2].getX())/2, (blueLeftDot.getY() + lastDot[2].getY())/2);
 			lastDot[2] = blueLeftDot;
-			world.setBlueLeft(blueLeftDot);
+			world.setVectorBlueLeft(blueLeftDot);
 		} else {
 			lastDot[2] = blueLeftDot;
 			world.setVectorBlueLeft(blueLeftDot);
@@ -770,13 +772,21 @@ public class ImageProcessor {
 			world.setVectorBlueRight(blueRightDot);
 		}
 				
+		if (recalculateBoundaries){
+			trackBoundaries(img);
+			recalculateBoundaries = false;
+		}
+		
 		// after setting coordinates, draw the elements on the image
 		Image image = drawEverything(img, ball, yellowLeft, yellowRight, blueLeft, blueRight, yellowLeftDot, yellowRightDot, blueLeftDot, blueRightDot);
-		image = drawBoundaries((BufferedImage) image);		
+		if (showBoundaries){
+			image = drawBoundaries((BufferedImage) image);
+		}		
 		
 		// set the final image
 		world.setBallDirection();
 		world.setImage(image);
+		world.setRobots();
 		return image;
 	}
 	
@@ -957,13 +967,13 @@ public class ImageProcessor {
 		// Detecting left edge.
 		for (int w = 1; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, height / 2));
-			if (c.getBlue() > 75){
+			if (c.getBlue() > 150){
 				temp = 0;
-				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
+				for (int h = (height / 2) - 100; h < (height / 2) + 100; h++){
 					c = new Color(img.getRGB(w, h));
 					temp += c.getBlue();
 				}
-				if (temp / 100 > 100){
+				if (temp / 200 > 100){
 					leftEdge = w;
 					break;
 				}
@@ -975,7 +985,7 @@ public class ImageProcessor {
 			Color c = new Color(img.getRGB(w, height / 2));
 			if (c.getBlue() > 75){
 				temp = 0;
-				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
+				for (int h = (height / 2) - 100; h < (height / 2) + 100; h++){
 					c = new Color(img.getRGB(w, h));
 					temp += c.getBlue();
 				}
@@ -991,7 +1001,7 @@ public class ImageProcessor {
 			Color c = new Color(img.getRGB(width / 2, h));
 			if (c.getBlue() > 75){
 				temp = 0;
-				for (int w = (width / 2) - 50; w < (width / 2) + 50; w++){
+				for (int w = (width / 2) - 100; w < (width / 2) + 100; w++){
 					c = new Color(img.getRGB(w, h));
 					temp += c.getBlue();
 				}
@@ -1007,7 +1017,7 @@ public class ImageProcessor {
 			Color c = new Color(img.getRGB(width / 2, h));
 			if (c.getBlue() > 75){
 				temp = 0;
-				for (int w = (width / 2) - 50; w < (width / 2) + 50; w++){
+				for (int w = (width / 2) - 100; w < (width / 2) + 100; w++){
 					c = new Color(img.getRGB(w, h));
 					temp += c.getBlue();
 				}
@@ -1380,5 +1390,13 @@ public class ImageProcessor {
 	
 	public void showDirections(boolean b){
 		this.directionsVisible = b;
+	}
+	
+	public void showBoundaries(boolean b){
+		this.showBoundaries = b;
+	}
+	
+	public void recalculateBoundaries(boolean b){
+		this.recalculateBoundaries = b;
 	}
 }
