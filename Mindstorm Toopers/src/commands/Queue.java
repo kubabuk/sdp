@@ -1,15 +1,14 @@
 package commands;
 
 import java.util.ArrayList;
-import java.util.ArrayList;
 import geometry.*;
-import comms.CommandNames;
+
 
 public class Queue{
 
     private ArrayList<Command> commandList;    
 	
-    public Queue(double initialAngle) {
+    public Queue() {
         commandList = new ArrayList<Command>();
     }
     
@@ -28,7 +27,7 @@ public class Queue{
     
 
     public Command pull() {
-    	System.out.println("pull");
+    	//System.out.println("pull");
     	
     	if(!commandList.isEmpty()) {
     		Command c = commandList.get(0);

@@ -45,4 +45,14 @@ public class Goal {
 		return this.isNull;
 	}
 	
+	public void setNull(boolean a)
+	{
+		this.isNull = a;
+	}
+	
+	public void setAbort(boolean a)
+	{
+		this.abort = a;
+	}
+	
 }

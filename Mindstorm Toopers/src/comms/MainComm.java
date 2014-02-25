@@ -13,6 +13,8 @@ import java.util.ArrayList;
 //import java.util.Arrays;
 import java.util.Iterator;
 
+import commands.CommandNames;
+
 
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommException;

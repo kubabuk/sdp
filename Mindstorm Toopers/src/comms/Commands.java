@@ -1,4 +1,5 @@
 package comms;
+import commands.CommandNames;
 
 public class Commands {
 
@@ -14,4 +15,3 @@ public class Commands {
 
 
 }
-

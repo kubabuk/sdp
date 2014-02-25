@@ -30,7 +30,7 @@ public class StrategyD {
 		return this.State;
 	}
 	
-	public static Goal getGoal()
+	public static Goal getGoal(Goal lastgoal)
 	{
 		Robot defRobot = w.getDefender();
 		Ball ball = w.getBall();
@@ -42,7 +42,7 @@ public class StrategyD {
 		boolean ballInFront;
 		
 		// right side of pitch from cameras perspective
-		if (w.getDirection()) {
+		if (!w.getDirection()) {
 			// if robot is between ball and own goal and robot is facing the opposite goal.
 			if ((ball.getPos().getX() > defRobot.getPos().getX()) && Math.abs(defRobot.getDir().getOrientation() - 180) <= 10) {
 				if (ball.getPos().getY() < goalBottom.getY()) {
@@ -106,8 +106,51 @@ public class StrategyD {
 		
 		
 		//Goal g = new Goal(new Point(0,0), CommandNames.MOVE,false,false); 
-		return new Goal(destination, cmd, false);
+		Goal g = new Goal(destination, cmd, false);
 		
+		return judge(lastgoal,g);
 	}
 	
+	
+	public static Goal judge(Goal currentgoal, Goal newgoalG)
+	{
+		Goal newgoal = newgoalG;
+		if (newgoal.getAbort())
+		{
+			//send abort command and pass the new goal
+			return newgoal;
+		}
+		
+		else if (newgoal.isNull())
+		{
+			
+			
+			return newgoal;
+		}
+		
+		else 
+		{
+			// do judge and decide if we should send the command
+			if (currentgoal.getMove() != newgoal.getMove())
+			{
+				return newgoal;
+			}
+			else
+			{
+				if (Point.pointDistance(currentgoal.getGoal(), newgoal.getGoal())< 10)
+				{
+					newgoal.setNull(true);
+					return newgoal;
+				}
+				else
+				{
+					newgoal.setAbort(true);
+					return newgoal;
+				}
+			}
+				
+		}
+		
+
+	}
 }

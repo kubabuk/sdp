@@ -34,7 +34,7 @@ public class StrategyA {
 	
 	
 	
-	public Goal getGoal()
+	public Goal getGoal(Goal lastgoal)
 	{
 		Goal g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 		switch (this.State)
@@ -82,7 +82,50 @@ public class StrategyA {
 		
 		
 		
-		return g;
+		return judge(lastgoal,g);
+	}
+	
+	
+	public static Goal judge(Goal currentgoal, Goal newgoalG)
+	{
+		Goal newgoal = newgoalG;
+		if (newgoal.getAbort())
+		{
+			//send abort command and pass the new goal
+			return newgoal;
+		}
+		
+		else if (newgoal.isNull())
+		{
+			
+			
+			return newgoal;
+		}
+		
+		else 
+		{
+			// do judge and decide if we should send the command
+			if (currentgoal.getMove() != newgoal.getMove())
+			{
+				return newgoal;
+			}
+			else
+			{
+				if (Point.pointDistance(currentgoal.getGoal(), newgoal.getGoal())< 10)
+				{
+					newgoal.setNull(true);
+					return newgoal;
+				}
+				else
+				{
+					newgoal.setAbort(true);
+					return newgoal;
+				}
+			}
+				
+		}
+		
+
 	}
 	
 }
