@@ -61,7 +61,14 @@ public class MoveA {
 //		boolean PLACEHOLDER = true;
 		
 		//Find Attacker Quadrant
+		//If in the left quadrant
 		if (robotx > 118 && robotx < 188) { leftq = true; }
+		
+		//If Goal is null, do nothing.
+		if (goal.getGoal().equals(null)) {
+			aq.add(donothing);
+			return;
+		}
 		
 		//If Goal is outside boundary, do nothing.
 		if ((leftq && !hardboundarycheckleft(point)) || (!leftq && !hardboundarycheckright(point))) {
