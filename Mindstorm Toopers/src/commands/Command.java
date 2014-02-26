@@ -8,7 +8,7 @@ public class Command {
     public Command(CommandNames c, int distance, int angle) {
         this.command = c;
         this.distance = distance;
-        this.angle = (int)((double)(angle+180)*255.0/360.0);
+        this.angle = (int)((double)(angle)*255.0/360.0);
     }
 
     public CommandNames getCommand() {

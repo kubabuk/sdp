@@ -25,17 +25,17 @@ public class MoveA {
 		Robot enemydefender = w.getOtherDefender();
 		Point enemydefenderpos = enemydefender.getPos();
 		Point ball = w.getBall().getPos();
-		double robotori = robot.getDir().getOrientation();
+//		double robotori = robot.getDir().getOrientation();
 		double robotx = robotpos.getX();
-		double roboty = robotpos.getY();
+//		double roboty = robotpos.getY();
 		double pointx = point.getX();
-		double pointy = point.getY();
-		double diffx = robotx - pointx;
-		double diffy = roboty - pointy;
+//		double pointy = point.getY();
+//		double diffx = robotx - pointx;
+//		double diffy = roboty - pointy;
 		double dtemp = 0;
 		double dtemp2 = 0;
-		double interceptionrange = 2;
-		int distance = (int) Math.sqrt(diffx*diffx + diffy*diffy);
+//		double interceptionrange = 2;
+//		int distance = (int) Math.sqrt(diffx*diffx + diffy*diffy);
 		Vector robottopoint = new Vector(robotpos,point);
 		Vector robottoball = new Vector(robotpos,ball);
 		Vector balltogoal;
@@ -44,7 +44,7 @@ public class MoveA {
 		Vector vtemp3;
 		Command cmd = movetopoint(robottopoint);
 		Command donothing = new Command(CommandNames.DONOTHING,0,0);
-		int angle = (int) Math.abs(robotori - robottopoint.getOrientation());
+//		int angle = (int) Math.abs(robotori - robottopoint.getOrientation());
 		boolean leftq = false;
 		
 		//Initialise Attacking points
