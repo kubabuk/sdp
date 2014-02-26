@@ -25,7 +25,7 @@ public class MoveA {
 		Robot enemydefender = w.getOtherDefender();
 		Point enemydefenderpos = enemydefender.getPos();
 		Point ball = w.getBall().getPos();
-//		double robotori = robot.getDir().getOrientation();
+		double robotori = robot.getDir().getOrientation();
 		double robotx = robotpos.getX();
 //		double roboty = robotpos.getY();
 		double pointx = point.getX();
@@ -106,15 +106,20 @@ public class MoveA {
 			cmd = movetopoint(vtemp);
 			aq.add(cmd);
 			//Check goal position and change to appropriate angle
+			robotpos = robot.getPos();
 			if (leftq) { balltogoal = new Vector(robotpos,leftgoal); System.out.println("Change Angle to face left goal");} //If the attacker is on the left
 			else { balltogoal = new Vector(robotpos,rightgoal); System.out.println("Change Angle to face right goal");} //If the attacker is on the right
-			cmd = new Command(CommandNames.CHANGEANGLE,0,(int) (180 - balltogoal.getOrientation()));
+			cmd = new Command(CommandNames.CHANGEANGLE,0,(int) (robotori - balltogoal.getOrientation()));
 			aq.add(cmd);
 			//Algorithm to check if the ball would be intercepted if defender doesn't move
 			//Check goal position and get a Vector defining the interception range
+			enemydefenderpos = w.getOtherDefender().getPos();
+			ball = w.getBall().getPos();
 			if (leftq) { vtemp = getInterceptionRange(ball,enemydefenderpos,leftgoal,enemyrobotsize); }
 			else { vtemp = getInterceptionRange(ball,enemydefenderpos,rightgoal,enemyrobotsize); }
 			//Calculations if the ball would be intercepted
+			if (leftq) { balltogoal = new Vector(ball,leftgoal); }
+			else { balltogoal = new Vector(ball,rightgoal); }
 			vtemp2 = new Vector(balltogoal.getOrigin(),vtemp.getOrigin());
 			vtemp3 = new Vector(balltogoal.getOrigin(),vtemp.getDestination());
 			dtemp = vtemp3.getOrientation() - balltogoal.getOrientation();
@@ -178,7 +183,7 @@ public class MoveA {
 	//Methods to easily call from main function
 	public static Command movetopoint(Vector robottopoint) {
 		int distance = (int) robottopoint.getMagnitude();
-		int angle = (int) (180 - robottopoint.getOrientation());
+		int angle = (int) robottopoint.getOrientation();
 		Command cmd = new Command(CommandNames.MOVE,distance,angle);
 		return cmd;
 	}
@@ -186,7 +191,7 @@ public class MoveA {
 	//Method used to move towards ball, accounting in the robotsize so it does not push the ball away.
 	public static Command movetoball(Vector robottoball, int robotsize, int ballsize) {
 		int distance = (int) robottoball.getMagnitude();
-		int angle = (int) (180 - robottoball.getOrientation());
+		int angle = (int) robottoball.getOrientation();
 		int sizeadjustments = robotsize + ballsize;
 		Command cmd = new Command(CommandNames.MOVE,(distance - sizeadjustments),angle);
 		return cmd;
