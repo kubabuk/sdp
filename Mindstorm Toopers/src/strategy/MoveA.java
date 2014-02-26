@@ -9,6 +9,7 @@ import world.World;
 public class MoveA {
 	
 	public static void makeCommands(World w, Goal goal, Queue aq) {
+		System.out.println("MoveA is called");
 		//Changeable variables for our robot and enemy defender sizes
 		int robotsize = 40;
 		int enemyrobotsize = 40;
@@ -62,12 +63,15 @@ public class MoveA {
 		
 		//Find Attacker Quadrant
 		//If in the left quadrant
-		if (robotx > 118 && robotx < 188) { leftq = true; }
+		if (robotx > 236 && robotx < 376) { leftq = true; }
 		
 		//If Goal is null, do nothing.
-		if (goal.isNull()) { return; }
+		if (goal.isNull()) { System.out.println("Null"); return; }
 		
 		//If Goal is outside boundary, do nothing.
+		System.out.println(pointx);
+		System.out.println(hardboundarycheckleft(point));
+		System.out.println(hardboundarycheckright(point));
 		if ((leftq && !hardboundarycheckleft(point)) || (!leftq && !hardboundarycheckright(point))) {
 			System.out.println("Goal point outside boundary: Do Nothing put into stack");
 			aq.add(donothing);
@@ -79,14 +83,14 @@ public class MoveA {
 			System.out.println("Abort Command: Abort put into stack");
 			aq.add(cmd);
 		}
-		else if (name.equals(CommandNames.EXIT)) {
-			cmd = new Command(CommandNames.EXIT,0,0);
-			System.out.println("Exit Command: Exit put into stack");
-			aq.add(cmd);
-			return;
-		}
+//		if (name.equals(CommandNames.EXIT)) {
+//			cmd = new Command(CommandNames.EXIT,0,0);
+//			System.out.println("Exit Command: Exit put into stack");
+//			aq.add(cmd);
+//			return;
+//		}
 		//CATCH Method not yet implemented
-		else if (name.equals(CommandNames.CATCH)) {
+		if (name.equals(CommandNames.CATCH)) {
 			System.out.println("Move Command: Move to ball");
 			cmd = movetoball(robottoball,robotsize,ballsize);
 			aq.add(cmd);
@@ -135,10 +139,13 @@ public class MoveA {
 			}
 		}
 		else if (name.equals(CommandNames.MOVE)) {
+			cmd = movetopoint(robottopoint);
 			System.out.println("Moving to (" + goal.getGoal().getX() + "," + goal.getGoal().getY() + ")");
 			aq.add(cmd);
+			System.out.println(cmd.getCommand() + ", " + cmd.getDistance() + ", " + cmd.getAngle());
 			return;
 		}
+		else { System.out.println("The code is not working"); }
 	}
 	
 	//Boundary Checks

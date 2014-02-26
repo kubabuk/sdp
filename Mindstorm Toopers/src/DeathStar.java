@@ -12,36 +12,36 @@ import world.*;
 public class DeathStar {
 
 	public static void main (String[] args) throws InterruptedException, IOException{
-		//boolean color = args[0].equals("yellow");
-		//boolean direction = args[1].equals("right");
+		boolean color = args[0].equals("yellow");
+		boolean direction = args[1].equals("right");
 
 		
-		//World universe = new World(color, direction);
-		//Thread.sleep(7000);
+		World universe = new World(color, direction);
+		Thread.sleep(3000);
 		Queue aq = new Queue();//universe.getAttacker().getDir().getOrientation());
 		Queue dq = new Queue();
 
 		
 		//test code
-		//aq.add(new Command(CommandNames.MOVE, 50, 0));
-		aq.add(new Command(CommandNames.CATCH, 10, 15));
-		aq.add(new Command(CommandNames.KICK, 10, 15));
-		
-		aq.add(new Command(CommandNames.CATCH, 10, 15));
-		aq.add(new Command(CommandNames.KICK, 10, 15));
-
-		aq.add(new Command(CommandNames.CATCH, 10, 15));
-		aq.add(new Command(CommandNames.KICK, 10, 15));
+		aq.add(new Command(CommandNames.MOVE, 117, 0));
+//		aq.add(new Command(CommandNames.CATCH, 10, 15));
+//		aq.add(new Command(CommandNames.KICK, 10, 15));
+//		
+//		aq.add(new Command(CommandNames.CATCH, 10, 15));
+//		aq.add(new Command(CommandNames.KICK, 10, 15));
+//
+//		aq.add(new Command(CommandNames.CATCH, 10, 15));
+//		aq.add(new Command(CommandNames.KICK, 10, 15));
 		//dq.add(new Command(CommandNames.CATCH, 0, 0));
-		//aq.add(new Command(CommandNames.ABORT, 0, 90));
-		//aq.add(new Command(CommandNames.MOVE, 100, 0));
+		aq.add(new Command(CommandNames.ABORT, 0, 90));
+		aq.add(new Command(CommandNames.MOVE, 100, 60));
 		//aq.add(new Command(CommandNames.CHANGEANGLE, 0, -90));
 		int count = 0;
 		
 		
 		//test code
 		
-		//AI emperor = new AI(universe,aq,dq);
+		AI emperor = new AI(universe,aq,dq);
 		boolean flag = true;
 		
 
@@ -59,7 +59,7 @@ public class DeathStar {
 //				System.out.println("The defender is at "+universe.getDefender().toString());
 //				System.out.println("The max X,Y are " + universe.getMinX() + " , " + universe.getMinY());
 				
-//			count = count + 1;
+			count = count + 1;
 //			if (count == 4)
 //			{
 //				aq.add(new Command(CommandNames.MOVE, 50, 0));
@@ -91,8 +91,8 @@ public class DeathStar {
 
 //				theForceAttack.sendMessage(cmdAttack.getCommand(), 
 //						cmdAttack.getSpeed(), cmdAttack.getDistAngle());
-
-				//flag = false;
+			
+				if (count == 4) {	flag = false;}
 			}
 
 		

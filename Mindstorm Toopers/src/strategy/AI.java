@@ -1,5 +1,6 @@
 package strategy;
 
+import geometry.Point;
 import commands.*;
 import world.World;
 
@@ -21,6 +22,8 @@ public class AI {
 		this.a = new StrategyA(w);
 		this.aq = aq;
 		this.dq = dq;
+		this.lastag = new Goal(new Point(0,0),CommandNames.DONOTHING,false,false) ;
+		this.lastdg = new Goal(new Point(0,0),CommandNames.DONOTHING,false,false) ;
 	}
 	
 	
@@ -28,12 +31,16 @@ public class AI {
 	{
 		
 		// get goal from Strategy
-		this.ag = a.getGoal(lastag);
+		System.out.println("asdhdjkasdk");
+		System.out.println("The last goal before feeding is " + this.lastag.toString());
 		
+		this.ag = this.a.getGoal(this.lastag);
+		System.out.println("will try if statement");
 		// feed it to Judge
-		if (this.ag.isNull())
+		if (!this.ag.isNull())
 		{	
-			MoveA.makeCommands(this.w, ag, aq);
+			System.out.println("The Goal in AI is not null");
+			MoveA.makeCommands(this.w, this.ag, this.aq);
 			this.lastag = this.ag;
 		}
 		// if it passes send it to Move

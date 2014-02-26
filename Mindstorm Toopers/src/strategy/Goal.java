@@ -55,4 +55,9 @@ public class Goal {
 		this.abort = a;
 	}
 	
+	public String toString()
+	{
+		return "Goal( " +this.goal.toString()+ " , " + this.move.toString() + " , " + this.abort+ " , " + this.isNull +" )";
+	}
+	
 }
