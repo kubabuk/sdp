@@ -38,6 +38,8 @@ public class Vector {
 	
 	public double getOrientation() {return theta;}
 	
+	public double getOrientationDegrees() { return (theta / Math.PI) * 180; }
+	
 	public double getMagnitude() {
 		return r;
 	}
