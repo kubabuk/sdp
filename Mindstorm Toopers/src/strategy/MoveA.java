@@ -8,6 +8,24 @@ import world.World;
 
 public class MoveA {
 	
+	//Test Method
+	public static void main(String[] args) {
+		Point point = new Point(306,152); //Goto Upper Left
+		Point robot = new Point(306,76);
+		Vector robottopoint = new Vector(robot,point);
+		
+		//Movetopoint Code
+		int distance = (int) robottopoint.getMagnitude();
+		int angle = (int) rad2deg(robottopoint.getOrientation());
+		
+		//Initial Orientation of the robot is looking left, 180 degrees.
+		Command cmd = new Command(CommandNames.MOVE,distance, angle);
+		
+		System.out.println("Moving to (" + point.getX() + "," + point.getY() + ")");
+		System.out.println(cmd.getCommand() + ", " + cmd.getDistance() + ", " + cmd.getAngle());
+		return;
+	}
+	
 	public static void makeCommands(World w, Goal goal, Queue aq) {
 		System.out.println("MoveA is called");
 		//Changeable variables for our robot and enemy defender sizes
@@ -28,7 +46,7 @@ public class MoveA {
 		double robotori = robot.getDir().getOrientation();
 		double robotx = robotpos.getX();
 //		double roboty = robotpos.getY();
-		double pointx = point.getX();
+//		double pointx = point.getX();
 //		double pointy = point.getY();
 //		double diffx = robotx - pointx;
 //		double diffy = roboty - pointy;
@@ -69,9 +87,9 @@ public class MoveA {
 		if (goal.isNull()) { System.out.println("Null"); return; }
 		
 		//If Goal is outside boundary, do nothing.
-		System.out.println(pointx);
-		System.out.println(hardboundarycheckleft(point));
-		System.out.println(hardboundarycheckright(point));
+//		System.out.println(pointx);
+//		System.out.println(hardboundarycheckleft(point));
+//		System.out.println(hardboundarycheckright(point));
 		if ((leftq && !hardboundarycheckleft(point)) || (!leftq && !hardboundarycheckright(point))) {
 			System.out.println("Goal point outside boundary: Do Nothing put into stack");
 			aq.add(donothing);
@@ -91,7 +109,7 @@ public class MoveA {
 //		}
 		if (name.equals(CommandNames.CATCH)) {
 			System.out.println("Move Command: Move to ball");
-			cmd = movetoball(robottoball,robotsize,ballsize);
+			cmd = movetoball(robottoball,robotsize,ballsize,robot);
 			aq.add(cmd);
 			cmd = new Command(CommandNames.CATCH,0,0);
 			System.out.println("Catch Command: Catch the ball");
@@ -103,7 +121,7 @@ public class MoveA {
 			if (leftq) { vtemp = new Vector(robotpos,lowerleft); System.out.println("Moving to (" + vtemp.getX() + "," + vtemp.getY() + ")"); }
 			else { vtemp = new Vector(robotpos,lowerright); System.out.println("Moving to (" + vtemp.getX() + "," + vtemp.getY() + ")"); }
 			//Move to chosen kicking position
-			cmd = movetopoint(vtemp);
+			cmd = movetopoint(vtemp,robot);
 			aq.add(cmd);
 			//Check goal position and change to appropriate angle
 			robotpos = robot.getPos();
@@ -131,7 +149,7 @@ public class MoveA {
 				else { vtemp = new Vector(robotpos,lowerleft); System.out.println("Moving to (" + vtemp.getX() + "," + vtemp.getY() + ")"); }
 				if (robotpos == lowerright) { vtemp = new Vector(robotpos,upperright); System.out.println("Moving to (" + vtemp.getX() + "," + vtemp.getY() + ")"); }
 				else { vtemp = new Vector(robotpos,lowerright); System.out.println("Moving to (" + vtemp.getX() + "," + vtemp.getY() + ")"); }
-				cmd = movetopoint(vtemp);
+				cmd = movetopoint(vtemp,robot);
 				aq.add(cmd);
 				return;
 			}
@@ -143,7 +161,7 @@ public class MoveA {
 			}
 		}
 		else if (name.equals(CommandNames.MOVE)) {
-			cmd = movetopoint(robottopoint);
+			cmd = movetopoint(robottopoint,robot);
 			System.out.println("Moving to (" + goal.getGoal().getX() + "," + goal.getGoal().getY() + ")");
 			aq.add(cmd);
 			System.out.println(cmd.getCommand() + ", " + cmd.getDistance() + ", " + cmd.getAngle());
@@ -181,21 +199,24 @@ public class MoveA {
 //	}
 	
 	//Methods to easily call from main function
-	public static Command movetopoint(Vector robottopoint) {
+	public static Command movetopoint(Vector robottopoint, Robot robot) {
 		int distance = (int) robottopoint.getMagnitude();
 		int angle = (int) robottopoint.getOrientation();
-		Command cmd = new Command(CommandNames.MOVE,distance,angle);
+		Command cmd = new Command(CommandNames.MOVE,distance,(int) (robot.getDir().getOrientation() - angle));
 		return cmd;
 	}
 	
 	//Method used to move towards ball, accounting in the robotsize so it does not push the ball away.
-	public static Command movetoball(Vector robottoball, int robotsize, int ballsize) {
+	public static Command movetoball(Vector robottoball, int robotsize, int ballsize, Robot robot) {
 		int distance = (int) robottoball.getMagnitude();
 		int angle = (int) robottoball.getOrientation();
 		int sizeadjustments = robotsize + ballsize;
-		Command cmd = new Command(CommandNames.MOVE,(distance - sizeadjustments),angle);
+		Command cmd = new Command(CommandNames.MOVE,(distance - sizeadjustments),(int) (robot.getDir().getOrientation() - angle));
 		return cmd;
 	}
+	
+	//Converts from Radians recieved from getOrientation() to degrees.
+	public static double rad2deg(double radians) { return 180 * (radians / Math.PI); }
 	
 	//Calculates the range of interception the enemy defender robot can intercept by not moving
 	//Returns a Vector -- The origin, the left boundary and the destination the right boundary.
