@@ -97,6 +97,7 @@ public class ImageProcessor {
 	// This is used to reduce noise in the values returned for their locations.
 	private static Point[] lastDot;
 	private static Point[] lastRobot;
+	private static Point[] lastPlate;
 	
 	// This is the main world object which is passed to ImageProcessor1 when
 	// it's initialised.
@@ -120,6 +121,8 @@ public class ImageProcessor {
 	private static boolean showBoundaries;
 	private static boolean recalculateBoundaries;
 	
+	private static int count;
+	
 	// This constructor sets a default starting position for each of the objects.
 	// The vision system will take a few seconds to stabilise after initialisation.
 	public ImageProcessor(World newWorld){
@@ -135,11 +138,19 @@ public class ImageProcessor {
 		lastRobot[1] = start;
 		lastRobot[2] = start;
 		lastRobot[3] = start;
+		recalculateBoundaries = true;
+		lastPlate = new Point[4];
+		lastPlate[0] = new Point(100,100);
+		lastPlate[1] = start;
+		lastPlate[2] = start;
+		lastPlate[3] = start;
+		count = 0;
 	}
 	
 	// This is the main method which updates the state of the world.
 	// It updates the static world object which was initialised in the constructor.
 	public static Image trackWorld(BufferedImage img) {
+		count++;
 		double redX = 0.0, redY = 0.0;
 		double yellowLeftX = 0.0, yellowLeftY = 0.0;
 		double yellowRightX = 0.0, yellowRightY = 0.0;
@@ -151,6 +162,9 @@ public class ImageProcessor {
 		double tempYellowRightX = 0.0, tempYellowRightY = 0.0;
 		double tempBlueLeftX = 0.0, tempBlueLeftY = 0.0;
 		double tempBlueRightX = 0.0, tempBlueRightY = 0.0;
+		double plateLLX = 0.0, plateLLY = 0.0, plateLX = 0.0, plateLY = 0.0;
+		double plateRX = 0.0, plateRY = 0.0, plateRRX = 0.0, plateRRY = 0.0;
+		int plateLLCount = 0, plateLCount = 0, plateRCount = 0, plateRRCount = 0;
 		int countDot = 0;
 		int countRed = 0;
 		int countYellowLeft = 0;
@@ -201,25 +215,55 @@ public class ImageProcessor {
 				// finding coordinates for robot plates
 				if (red > plateMinRed && red < plateMaxRed && blue > plateMinBlue && blue < plateMaxBlue && green > plateMinGreen && green < plateMaxGreen
 						&& hsvColor[0] > plateMinHue && hsvColor[0] < plateMaxHue && hsvColor[1] > plateMinSaturation && hsvColor[1] < plateMaxSaturation && hsvColor[2] > plateMinValue && hsvColor[2] < plateMaxValue){
-					if (platePixels){
-						img.setRGB(w,h,0xff00ff);
+					if (count < 40 || !(lastPlate[0].getX() > 20)){
+						if (platePixels){
+							img.setRGB(w,h,0xff00ff);
+						}
+						plateLLX += w;
+						plateLLY += h;
+						plateLLCount++;
+						yellowLeftX += tempYellowLeftX;
+						yellowLeftY += tempYellowLeftY;
+						blueLeftX += tempBlueLeftX;
+						blueLeftY += tempBlueLeftY;
+						dotX += tempDotX;
+						dotY += tempDotY;
+						countDot += tempCountDot;
+						tempDotX = 0.0; tempDotY = 0.0;
+						tempCountDot = 0;
+						countYellowLeft += tempCountYellowLeft;
+						countBlueLeft += tempCountBlueLeft;
+						tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
+						tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
+						tempCountYellowLeft = 0;
+						tempCountBlueLeft = 0;
+						addToTemp = true;
+					} else {
+						if (Math.abs(w - lastPlate[0].getX()) < 20 && Math.abs(h - lastPlate[0].getY()) < 20){
+							if (platePixels){
+								img.setRGB(w,h,0xff00ff);
+							}
+							plateLLX += w;
+							plateLLY += h;
+							plateLLCount++;
+							yellowLeftX += tempYellowLeftX;
+							yellowLeftY += tempYellowLeftY;
+							blueLeftX += tempBlueLeftX;
+							blueLeftY += tempBlueLeftY;
+							dotX += tempDotX;
+							dotY += tempDotY;
+							countDot += tempCountDot;
+							tempDotX = 0.0; tempDotY = 0.0;
+							tempCountDot = 0;
+							countYellowLeft += tempCountYellowLeft;
+							countBlueLeft += tempCountBlueLeft;
+							tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
+							tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
+							tempCountYellowLeft = 0;
+							tempCountBlueLeft = 0;
+							addToTemp = true;
+						}
 					}
-					yellowLeftX += tempYellowLeftX;
-					yellowLeftY += tempYellowLeftY;
-					blueLeftX += tempBlueLeftX;
-					blueLeftY += tempBlueLeftY;
-					dotX += tempDotX;
-					dotY += tempDotY;
-					countDot += tempCountDot;
-					tempDotX = 0.0; tempDotY = 0.0;
-					tempCountDot = 0;
-					countYellowLeft += tempCountYellowLeft;
-					countBlueLeft += tempCountBlueLeft;
-					tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
-					tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
-					tempCountYellowLeft = 0;
-					tempCountBlueLeft = 0;
-					addToTemp = true;
 				}
 				if (addToTemp){
 				if (red > blueMinRed && red < blueMaxRed && blue > blueMinBlue && blue < blueMaxBlue && green > blueMinGreen && green < blueMaxGreen
@@ -252,6 +296,9 @@ public class ImageProcessor {
 				}
 			}
 		}
+		
+		lastPlate[0] = new Point(plateLLX/plateLLCount, plateLLY/plateLLCount);
+		
 		Point yellowLeft = new Point(0,0);
 		Point blueLeft = new Point(0,0);
 		Point yellowLeftDot = new Point(0,0);
@@ -315,25 +362,55 @@ public class ImageProcessor {
 				// finding coordinates for robot plates
 				if (red > plateMinRed && red < plateMaxRed && blue > plateMinBlue && blue < plateMaxBlue && green > plateMinGreen && green < plateMaxGreen
 						&& hsvColor[0] > plateMinHue && hsvColor[0] < plateMaxHue && hsvColor[1] > plateMinSaturation && hsvColor[1] < plateMaxSaturation && hsvColor[2] > plateMinValue && hsvColor[2] < plateMaxValue){
-					if (platePixels){
-						img.setRGB(w,h,0xff00ff);
+//					System.out.println(lastPlate[1].getX());
+					if (count < 40 || !(lastPlate[1].getX() > 20)){
+//						System.out.println("Hi");
+						if (platePixels){
+							img.setRGB(w,h,0xff00ff);
+						}
+						plateLX += w;
+						plateLY += h;
+						plateLCount++;
+						yellowLeftX += tempYellowLeftX;
+						yellowLeftY += tempYellowLeftY;
+						blueLeftX += tempBlueLeftX;
+						blueLeftY += tempBlueLeftY;
+						dotX += tempDotX;
+						dotY += tempDotY;
+						countDot += tempCountDot;
+						tempDotX = 0.0; tempDotY = 0.0;
+						tempCountDot = 0;
+						countYellowLeft += tempCountYellowLeft;
+						countBlueLeft += tempCountBlueLeft;
+						tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
+						tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
+						tempCountYellowLeft = 0;
+						tempCountBlueLeft = 0;
+						addToTemp = true;
+					} else if (Math.abs(w - lastPlate[1].getX()) < 20 && Math.abs(h - lastPlate[1].getY()) < 20){
+						if (platePixels){
+							img.setRGB(w,h,0xff00ff);
+						}
+						plateLX += w;
+						plateLY += h;
+						plateLCount++;
+						yellowLeftX += tempYellowLeftX;
+						yellowLeftY += tempYellowLeftY;
+						blueLeftX += tempBlueLeftX;
+						blueLeftY += tempBlueLeftY;
+						dotX += tempDotX;
+						dotY += tempDotY;
+						countDot += tempCountDot;
+						tempDotX = 0.0; tempDotY = 0.0;
+						tempCountDot = 0;
+						countYellowLeft += tempCountYellowLeft;
+						countBlueLeft += tempCountBlueLeft;
+						tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
+						tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
+						tempCountYellowLeft = 0;
+						tempCountBlueLeft = 0;
+						addToTemp = true;
 					}
-					yellowLeftX += tempYellowLeftX;
-					yellowLeftY += tempYellowLeftY;
-					blueLeftX += tempBlueLeftX;
-					blueLeftY += tempBlueLeftY;
-					dotX += tempDotX;
-					dotY += tempDotY;
-					countDot += tempCountDot;
-					tempDotX = 0.0; tempDotY = 0.0;
-					tempCountDot = 0;
-					countYellowLeft += tempCountYellowLeft;
-					countBlueLeft += tempCountBlueLeft;
-					tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
-					tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
-					tempCountYellowLeft = 0;
-					tempCountBlueLeft = 0;
-					addToTemp = true;
 				}
 				if (addToTemp){
 				if (red > blueMinRed && red < blueMaxRed && blue > blueMinBlue && blue < blueMaxBlue && green > blueMinGreen && green < blueMaxGreen
@@ -366,6 +443,9 @@ public class ImageProcessor {
 				}
 			}
 		}
+		
+		lastPlate[1] = new Point(plateLX/plateLCount,plateLY/plateLCount);
+		
 		if (world.getDirection() && world.getColor()){
 			blueLeft = new Point(blueLeftX/countBlueLeft,blueLeftY/countBlueLeft);
 			blueLeftDot = new Point(dotX/countDot,dotY/countDot);
@@ -425,25 +505,53 @@ public class ImageProcessor {
 				// finding coordinates for robot plates
 				if (red > plateMinRed && red < plateMaxRed && blue > plateMinBlue && blue < plateMaxBlue && green > plateMinGreen && green < plateMaxGreen
 						&& hsvColor[0] > plateMinHue && hsvColor[0] < plateMaxHue && hsvColor[1] > plateMinSaturation && hsvColor[1] < plateMaxSaturation && hsvColor[2] > plateMinValue && hsvColor[2] < plateMaxValue){
-					if (platePixels){
-						img.setRGB(w,h,0xff00ff);
+					if (count < 40 || !(lastPlate[2].getX() > 20)){
+						if (platePixels){
+							img.setRGB(w,h,0xff00ff);
+						}
+						plateRX += w;
+						plateRY += h;
+						plateRCount++;
+						yellowRightX += tempYellowRightX;
+						yellowRightY += tempYellowRightY;
+						blueRightX += tempBlueRightX;
+						blueRightY += tempBlueRightY;
+						countYellowRight += tempCountYellowRight;
+						countBlueRight += tempCountBlueRight;
+						tempYellowRightX = 0.0; tempYellowRightY = 0.0;
+						tempBlueRightX = 0.0; tempBlueRightY = 0.0;
+						dotX += tempDotX;
+						dotY += tempDotY;
+						countDot += tempCountDot;
+						tempDotX = 0.0; tempDotY = 0.0;
+						tempCountDot = 0;
+						tempCountYellowRight = 0;
+						tempCountBlueRight = 0;
+						addToTemp = true;
+					} else if (Math.abs(w - lastPlate[2].getX()) < 20 && Math.abs(h - lastPlate[2].getY()) < 20){
+						if (platePixels){
+							img.setRGB(w,h,0xff00ff);
+						}
+						plateRX += w;
+						plateRY += h;
+						plateRCount++;
+						yellowRightX += tempYellowRightX;
+						yellowRightY += tempYellowRightY;
+						blueRightX += tempBlueRightX;
+						blueRightY += tempBlueRightY;
+						countYellowRight += tempCountYellowRight;
+						countBlueRight += tempCountBlueRight;
+						tempYellowRightX = 0.0; tempYellowRightY = 0.0;
+						tempBlueRightX = 0.0; tempBlueRightY = 0.0;
+						dotX += tempDotX;
+						dotY += tempDotY;
+						countDot += tempCountDot;
+						tempDotX = 0.0; tempDotY = 0.0;
+						tempCountDot = 0;
+						tempCountYellowRight = 0;
+						tempCountBlueRight = 0;
+						addToTemp = true;
 					}
-					yellowRightX += tempYellowRightX;
-					yellowRightY += tempYellowRightY;
-					blueRightX += tempBlueRightX;
-					blueRightY += tempBlueRightY;
-					countYellowRight += tempCountYellowRight;
-					countBlueRight += tempCountBlueRight;
-					tempYellowRightX = 0.0; tempYellowRightY = 0.0;
-					tempBlueRightX = 0.0; tempBlueRightY = 0.0;
-					dotX += tempDotX;
-					dotY += tempDotY;
-					countDot += tempCountDot;
-					tempDotX = 0.0; tempDotY = 0.0;
-					tempCountDot = 0;
-					tempCountYellowRight = 0;
-					tempCountBlueRight = 0;
-					addToTemp = true;
 				}
 				if (addToTemp){
 				if (red > blueMinRed && red < blueMaxRed && blue > blueMinBlue && blue < blueMaxBlue && green > blueMinGreen && green < blueMaxGreen
@@ -476,6 +584,9 @@ public class ImageProcessor {
 				}
 			}
 		}
+		
+		lastPlate[2] = new Point(plateRX/plateRCount, plateRY/plateRCount);
+		
 		Point yellowRight = new Point(0,0);
 		Point blueRight = new Point(0,0);
 		Point yellowRightDot = new Point(0,0);
@@ -539,25 +650,53 @@ public class ImageProcessor {
 				// finding coordinates for robot plates
 				if (red > plateMinRed && red < plateMaxRed && blue > plateMinBlue && blue < plateMaxBlue && green > plateMinGreen && green < plateMaxGreen
 						&& hsvColor[0] > plateMinHue && hsvColor[0] < plateMaxHue && hsvColor[1] > plateMinSaturation && hsvColor[1] < plateMaxSaturation && hsvColor[2] > plateMinValue && hsvColor[2] < plateMaxValue){
-					if (platePixels){
-						img.setRGB(w,h,0xff00ff);
+					if (count < 40 || !(lastPlate[3].getX() > 20)){
+						if (platePixels){
+							img.setRGB(w,h,0xff00ff);
+						}
+						plateRRX += w;
+						plateRRY += h;
+						plateRRCount++;
+						yellowRightX += tempYellowRightX;
+						yellowRightY += tempYellowRightY;
+						blueRightX += tempBlueRightX;
+						blueRightY += tempBlueRightY;
+						countYellowRight += tempCountYellowRight;
+						countBlueRight += tempCountBlueRight;
+						tempYellowRightX = 0.0; tempYellowRightY = 0.0;
+						tempBlueRightX = 0.0; tempBlueRightY = 0.0;
+						dotX += tempDotX;
+						dotY += tempDotY;
+						countDot += tempCountDot;
+						tempDotX = 0.0; tempDotY = 0.0;
+						tempCountDot = 0;
+						tempCountYellowRight = 0;
+						tempCountBlueRight = 0;
+						addToTemp = true;
+					} else if (Math.abs(w - lastPlate[3].getX()) < 20 && Math.abs(h - lastPlate[3].getY()) < 20){
+						if (platePixels){
+							img.setRGB(w,h,0xff00ff);
+						}
+						plateRRX += w;
+						plateRRY += h;
+						plateRRCount++;
+						yellowRightX += tempYellowRightX;
+						yellowRightY += tempYellowRightY;
+						blueRightX += tempBlueRightX;
+						blueRightY += tempBlueRightY;
+						countYellowRight += tempCountYellowRight;
+						countBlueRight += tempCountBlueRight;
+						tempYellowRightX = 0.0; tempYellowRightY = 0.0;
+						tempBlueRightX = 0.0; tempBlueRightY = 0.0;
+						dotX += tempDotX;
+						dotY += tempDotY;
+						countDot += tempCountDot;
+						tempDotX = 0.0; tempDotY = 0.0;
+						tempCountDot = 0;
+						tempCountYellowRight = 0;
+						tempCountBlueRight = 0;
+						addToTemp = true;
 					}
-					yellowRightX += tempYellowRightX;
-					yellowRightY += tempYellowRightY;
-					blueRightX += tempBlueRightX;
-					blueRightY += tempBlueRightY;
-					countYellowRight += tempCountYellowRight;
-					countBlueRight += tempCountBlueRight;
-					tempYellowRightX = 0.0; tempYellowRightY = 0.0;
-					tempBlueRightX = 0.0; tempBlueRightY = 0.0;
-					dotX += tempDotX;
-					dotY += tempDotY;
-					countDot += tempCountDot;
-					tempDotX = 0.0; tempDotY = 0.0;
-					tempCountDot = 0;
-					tempCountYellowRight = 0;
-					tempCountBlueRight = 0;
-					addToTemp = true;
 				}
 				if (addToTemp){
 				if (red > blueMinRed && red < blueMaxRed && blue > blueMinBlue && blue < blueMaxBlue && green > blueMinGreen && green < blueMaxGreen
@@ -590,6 +729,10 @@ public class ImageProcessor {
 				}
 			}
 		}
+		
+		lastPlate[3] = new Point(plateRRX/plateRRCount, plateRRY/plateRRCount);
+//		System.out.println(lastPlate[3]);
+		
 		if (world.getDirection() && world.getColor()){
 			blueRight = new Point(blueRightX/countBlueRight,blueRightY/countBlueRight);
 			blueRightDot = new Point(dotX/countDot,dotY/countDot);
@@ -967,7 +1110,7 @@ public class ImageProcessor {
 		// Detecting left edge.
 		for (int w = 1; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, height / 2));
-			if (c.getBlue() > 150){
+			if (c.getBlue() > 100){
 				temp = 0;
 				for (int h = (height / 2) - 100; h < (height / 2) + 100; h++){
 					c = new Color(img.getRGB(w, h));
@@ -983,13 +1126,13 @@ public class ImageProcessor {
 		// Detecting right edge.
 		for (int w = width - 1; w > 0; w--){
 			Color c = new Color(img.getRGB(w, height / 2));
-			if (c.getBlue() > 75){
+			if (c.getBlue() > 100){
 				temp = 0;
 				for (int h = (height / 2) - 100; h < (height / 2) + 100; h++){
 					c = new Color(img.getRGB(w, h));
 					temp += c.getBlue();
 				}
-				if (temp / 100 > 100){
+				if (temp / 200 > 100){
 					rightEdge = w;
 					break;
 				}
@@ -999,13 +1142,13 @@ public class ImageProcessor {
 		// Detecting top edge.
 		for (int h = 1; h < height; h++){
 			Color c = new Color(img.getRGB(width / 2, h));
-			if (c.getBlue() > 75){
+			if (c.getBlue() > 100){
 				temp = 0;
 				for (int w = (width / 2) - 100; w < (width / 2) + 100; w++){
 					c = new Color(img.getRGB(w, h));
 					temp += c.getBlue();
 				}
-				if (temp / 100 > 100){
+				if (temp / 200 > 100){
 					topEdge = h;
 					break;
 				}
@@ -1015,13 +1158,13 @@ public class ImageProcessor {
 		// Detecting bottom edge.
 		for (int h = height - 1; h > 0; h--){
 			Color c = new Color(img.getRGB(width / 2, h));
-			if (c.getBlue() > 75){
+			if (c.getBlue() > 100){
 				temp = 0;
 				for (int w = (width / 2) - 100; w < (width / 2) + 100; w++){
 					c = new Color(img.getRGB(w, h));
 					temp += c.getBlue();
 				}
-				if (temp / 100 > 100){
+				if (temp / 200 > 100){
 					bottomEdge = h;
 					break;
 				}

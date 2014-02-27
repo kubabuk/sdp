@@ -165,9 +165,6 @@ public class VisionGUI extends JFrame {
 		this.frame = frame;
 		this.fps = fps;
 		this.frameCounter = frameCounter;
-		if (frameCounter % 1000 < 10) {
-			imageProcessor.trackBoundaries(frame);
-		}
 		Image img = imageProcessor.trackWorld(frame);
 		this.videoDisplay.getGraphics().drawImage((BufferedImage) img, 0, 0, this.videoWidth, this.videoHeight, null);
 	}

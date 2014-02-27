@@ -97,6 +97,8 @@ public class CameraSettingsPanel extends JPanel {
 		chromaGainPanel.add(chromaGainSlider);
 		chromaGainSlider.addChangeListener(new ChromaGainChangeListener());
 		this.add(chromaGainPanel);
+		
+		loadDefaultSettings();
 	}
 	/**
 	 * A ChangeListener to update the video stream's brightness setting when the
