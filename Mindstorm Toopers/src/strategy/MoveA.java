@@ -202,7 +202,7 @@ public class MoveA {
 		double pointx = point.getX();
 		double pointy = point.getY();
 		//pointy restraints so robot doesn't run into wall
-		if (pointx > 236 && pointx < 376 && pointy > 10 && pointy < 218) {
+		if (pointx > 236 && pointx < 376 && pointy > 20 && pointy < 208) {
 			return true;
 		} else {
 			return false;
@@ -213,7 +213,7 @@ public class MoveA {
 		double pointx = point.getX();
 		double pointy = point.getY();
 		//pointy restraints so robot doesn't run into wall
-		if (pointx > 96 && pointx < 196 && pointy > 10 && pointy < 218) {
+		if (pointx > 96 && pointx < 196 && pointy > 20 && pointy < 208) {
 			return true;
 		} else {
 			return false;
