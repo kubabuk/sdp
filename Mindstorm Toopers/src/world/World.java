@@ -32,7 +32,11 @@ public class World {
 	private int pitchWidth, pitchHeight, pitchCentre;
 	private Vector yellowLeftDir, yellowRightDir, blueLeftDir, blueRightDir;
 	private int pitchLeft, pitchTop;
+	// These are the raw pixel values for the pitch boundaries.
 	private int firstSectionBoundary, secondSectionBoundary, thirdSectionBoundary;
+	// These are the boundary values 
+	private int firstBoundary, secondBoundary, thirdBoundary;
+	private Boolean ready;
 	public Boolean getColor() {
 		return color;
 	}
@@ -83,7 +87,7 @@ public class World {
 		// not sure if the other team's robots are initialized the same way
 		otherAttacker = new Robot(start, new Vector(start,start));
 		otherDefender = new Robot(start, new Vector(start,start));
-		
+		ready = false;
 		lastBallLocation = start;
 		gridConstant = 474;
 		count = 0;
@@ -492,6 +496,14 @@ public class World {
 
 	public int getThirdSectionBoundary() {
 		return thirdSectionBoundary;
+	}
+
+	public void setReady(Boolean ready) {
+		this.ready = ready;
+	}
+
+	public Boolean getReady() {
+		return ready;
 	}
 	
 	/*

@@ -9,10 +9,12 @@ public class TestVision {
 	public static void main(String[] args) throws InterruptedException {
 		world = new World(true,true);
 //		panel = new CameraSettingsPanel(world, world.);
-		Thread.sleep(5000);
+		while(!world.getReady()){
+			Thread.sleep(100);
+		}
 		while(true){
 			Thread.sleep(200);
-			System.out.println(world.getOtherAttacker().getDir().toString());
+			System.out.println("Hi");
 		}
 	}
 }

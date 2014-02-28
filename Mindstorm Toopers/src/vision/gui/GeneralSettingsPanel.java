@@ -28,6 +28,7 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 	JPanel boundaries;
 	JPanel boundariesButton;
 	JPanel saveButton;
+	JPanel readyButton;
 	
 	World world;
 	ImageProcessor imageProcessor;
@@ -35,9 +36,10 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 	private JButton calculateBoundaries;
 	private JButton saveState;
 	private JButton loadState;
+	private JButton ready;
 	private PitchConstants pitchConstants;
 	
-	public GeneralSettingsPanel(final ImageProcessor imageProcessor, World world, PitchConstants pitchConstants){
+	public GeneralSettingsPanel(final ImageProcessor imageProcessor, final World world, PitchConstants pitchConstants){
 		this.world = world;
 		this.imageProcessor = imageProcessor;
 		this.pitchConstants = pitchConstants;
@@ -47,6 +49,7 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 		boundaries = new JPanel();
 		boundariesButton = new JPanel();
 		saveButton = new JPanel();
+		readyButton = new JPanel();
 		ourColor = new JLabel("Choose our teams color:");
 		ourDirection = new JLabel("Choose our shooting direction:");
 		right = new JRadioButton("Right");
@@ -86,6 +89,13 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 			}
 		});
 		
+		ready = new JButton("Ready!");
+		ready.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				world.setReady(true);
+			}
+		});
+		
 		ButtonGroup btnGroupColor = new ButtonGroup();
 		ButtonGroup btnGroupDirection = new ButtonGroup();
 		btnGroupColor.add(yellow);
@@ -106,6 +116,8 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 		this.add(boundariesButton);
 		saveButton.add(saveState);
 		this.add(saveButton);
+		readyButton.add(ready);
+		this.add(readyButton);
 		
 	}
 	
