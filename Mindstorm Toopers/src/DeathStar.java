@@ -23,7 +23,7 @@ public class DeathStar {
 
 		
 		//test code
-		aq.add(new Command(CommandNames.MOVE, 117, 0));
+//		aq.add(new Command(CommandNames.MOVE, 117, 0));
 //		aq.add(new Command(CommandNames.CATCH, 10, 15));
 //		aq.add(new Command(CommandNames.KICK, 10, 15));
 //		
@@ -33,8 +33,8 @@ public class DeathStar {
 //		aq.add(new Command(CommandNames.CATCH, 10, 15));
 //		aq.add(new Command(CommandNames.KICK, 10, 15));
 		//dq.add(new Command(CommandNames.CATCH, 0, 0));
-		aq.add(new Command(CommandNames.ABORT, 0, 90));
-		aq.add(new Command(CommandNames.MOVE, 100, 60));
+//		aq.add(new Command(CommandNames.ABORT, 0, 90));
+//		aq.add(new Command(CommandNames.MOVE, 100, 60));
 		//aq.add(new Command(CommandNames.CHANGEANGLE, 0, -90));
 		int count = 0;
 		
@@ -50,7 +50,7 @@ public class DeathStar {
 			
 			
 		while (flag) {
-			//emperor.update();
+			emperor.update();
 				
 			//System.out.println("The ball position is " + universe.getBall().getPos().getX()+" , "+universe.getBall().getPos().getY());
 				
@@ -82,7 +82,7 @@ public class DeathStar {
 			//}
 
 			if(!cmdAttack.isNothing()){
-				System.out.println("Attempting to send message");
+				System.out.println("Attempting to s00end message");
 				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), cmdAttack.getAngle());
 			}
 				
