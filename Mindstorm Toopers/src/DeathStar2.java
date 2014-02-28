@@ -25,7 +25,7 @@ public class DeathStar2 {
 		
 		// Allow vision time to instantiate
 		while (!universe.getReady()){
-			
+			Thread.sleep(100);
 		}
 
 //		MainComm theForceDef = new MainComm(1);
