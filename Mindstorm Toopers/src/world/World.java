@@ -34,7 +34,7 @@ public class World {
 	private int pitchLeft, pitchTop;
 	// These are the raw pixel values for the pitch boundaries.
 	private int firstSectionBoundary, secondSectionBoundary, thirdSectionBoundary;
-	// These are the boundary values 
+	// These are the boundary values in the coordinate system.
 	private int firstBoundary, secondBoundary, thirdBoundary;
 	private Boolean ready;
 	public Boolean getColor() {
@@ -476,6 +476,7 @@ public class World {
 
 	public void setFirstSectionBoundary(int firstSectionBoundary) {
 		this.firstSectionBoundary = firstSectionBoundary;
+		this.setFirstBoundary((firstSectionBoundary - pitchLeft) / (pitchWidth / gridConstant));
 	}
 
 	public int getFirstSectionBoundary() {
@@ -484,6 +485,7 @@ public class World {
 
 	public void setSecondSectionBoundary(int secondSectionBoundary) {
 		this.secondSectionBoundary = secondSectionBoundary;
+		this.setSecondBoundary((secondSectionBoundary - pitchLeft) / (pitchWidth / gridConstant));
 	}
 
 	public int getSecondSectionBoundary() {
@@ -492,6 +494,7 @@ public class World {
 
 	public void setThirdSectionBoundary(int thirdSectionBoundary) {
 		this.thirdSectionBoundary = thirdSectionBoundary;
+		this.setThirdBoundary((thirdSectionBoundary - pitchLeft) / (pitchWidth / gridConstant));
 	}
 
 	public int getThirdSectionBoundary() {
@@ -504,6 +507,30 @@ public class World {
 
 	public Boolean getReady() {
 		return ready;
+	}
+
+	public void setFirstBoundary(int firstBoundary) {
+		this.firstBoundary = firstBoundary;
+	}
+
+	public int getFirstBoundary() {
+		return firstBoundary;
+	}
+
+	public void setSecondBoundary(int secondBoundary) {
+		this.secondBoundary = secondBoundary;
+	}
+
+	public int getSecondBoundary() {
+		return secondBoundary;
+	}
+
+	public void setThirdBoundary(int thirdBoundary) {
+		this.thirdBoundary = thirdBoundary;
+	}
+
+	public int getThirdBoundary() {
+		return thirdBoundary;
 	}
 	
 	/*
