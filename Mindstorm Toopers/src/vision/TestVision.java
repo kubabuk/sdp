@@ -13,8 +13,10 @@ public class TestVision {
 			Thread.sleep(100);
 		}
 		while(true){
-			Thread.sleep(200);
-			System.out.println("Hi");
+			Thread.sleep(500);
+			System.out.println(world.getFirstBoundary());
+			System.out.println(world.getSecondBoundary());
+			System.out.println(world.getThirdBoundary());
 		}
 	}
 }
