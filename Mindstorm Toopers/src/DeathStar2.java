@@ -12,8 +12,8 @@ import world.*;
 public class DeathStar2 {
 
 	public static void main (String[] args) throws InterruptedException, IOException{
-		boolean color = args[0].equals("yellow");
-		boolean direction = args[1].equals("right");
+		boolean color = true;
+		boolean direction = true;
 		boolean flag = true;
 		
 		// Instantiate arguments for AI - World, Queue (for attacker), Queue (for defender)
@@ -24,7 +24,9 @@ public class DeathStar2 {
 		AI emperor = new AI(universe, aq, dq);
 		
 		// Allow vision time to instantiate
-		Thread.sleep(10000);
+		while (!universe.getReady()){
+			
+		}
 
 //		MainComm theForceDef = new MainComm(1);
 		MainComm theForceAttack = new MainComm(2);
@@ -39,7 +41,7 @@ public class DeathStar2 {
 				
 			// Retrieve commands from the queue.
 			Command cmdAttack = aq.pull();
-			Command cmdDefend = dq.pull();
+			//Command cmdDefend = dq.pull();
 
 //			if(!cmdDefend.isNothing()){
 //				theForceDef.sendMessage(cmdDefend.getCommand(), cmdDefend.getDistance(), cmdDefend.getAngle());
@@ -49,7 +51,7 @@ public class DeathStar2 {
 				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), cmdAttack.getAngle());
 			}
 			count++;
-			if (count == 4) {	flag = false;}
+			//if (count == 4) {	flag = false;}
 		}
 
 		
