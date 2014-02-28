@@ -170,13 +170,13 @@ public class MainComm implements Communicator {
 	//@Override
 	public synchronized void sendMessage(CommandNames op, int args1, int args2) throws IOException {
 
-	System.out.println(op +" sent");
+	System.out.println(op +" sent command PEAK"+ args2);
 
 
 	// send a message to device
 	os.write(op.ordinal()); // write opcode
 	os.write(args1);
-	os.write(args2);
+	os.write(args2 );
 	os.flush(); // send message
 	}
 

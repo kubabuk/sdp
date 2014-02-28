@@ -26,9 +26,10 @@ public class DeathStar2 {
 		// Allow vision time to instantiate
 		Thread.sleep(10000);
 
-		MainComm theForceDef = new MainComm(1);
+//		MainComm theForceDef = new MainComm(1);
 		MainComm theForceAttack = new MainComm(2);
-			
+		
+		int count = 0;
 			
 		while (flag) {
 			// Update the AI with new actions for the robots. Store them in the queue.
@@ -40,14 +41,15 @@ public class DeathStar2 {
 			Command cmdAttack = aq.pull();
 			Command cmdDefend = dq.pull();
 
-			if(!cmdDefend.isNothing()){
-				theForceDef.sendMessage(cmdDefend.getCommand(), cmdDefend.getDistance(), cmdDefend.getAngle());
-			}
+//			if(!cmdDefend.isNothing()){
+//				theForceDef.sendMessage(cmdDefend.getCommand(), cmdDefend.getDistance(), cmdDefend.getAngle());
+//			}
 
 			if(!cmdAttack.isNothing()){
 				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), cmdAttack.getAngle());
 			}
-				
+			count++;
+			if (count == 4) {	flag = false;}
 		}
 
 		
