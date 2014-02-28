@@ -1110,13 +1110,13 @@ public class ImageProcessor {
 		// Detecting left edge.
 		for (int w = 1; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, height / 2));
-			if (c.getBlue() > 100){
+			if (c.getBlue() > 75){
 				temp = 0;
-				for (int h = (height / 2) - 100; h < (height / 2) + 100; h++){
+				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
 					c = new Color(img.getRGB(w, h));
 					temp += c.getBlue();
 				}
-				if (temp / 200 > 100){
+				if (temp / 100 > 75){
 					leftEdge = w;
 					break;
 				}
@@ -1126,13 +1126,13 @@ public class ImageProcessor {
 		// Detecting right edge.
 		for (int w = width - 1; w > 0; w--){
 			Color c = new Color(img.getRGB(w, height / 2));
-			if (c.getBlue() > 100){
+			if (c.getBlue() > 75){
 				temp = 0;
-				for (int h = (height / 2) - 100; h < (height / 2) + 100; h++){
+				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
 					c = new Color(img.getRGB(w, h));
 					temp += c.getBlue();
 				}
-				if (temp / 200 > 100){
+				if (temp / 100 > 75){
 					rightEdge = w;
 					break;
 				}
@@ -1142,13 +1142,13 @@ public class ImageProcessor {
 		// Detecting top edge.
 		for (int h = 1; h < height; h++){
 			Color c = new Color(img.getRGB(width / 2, h));
-			if (c.getBlue() > 100){
+			if (c.getBlue() > 75){
 				temp = 0;
-				for (int w = (width / 2) - 100; w < (width / 2) + 100; w++){
+				for (int w = (width / 2) - 50; w < (width / 2) + 50; w++){
 					c = new Color(img.getRGB(w, h));
 					temp += c.getBlue();
 				}
-				if (temp / 200 > 100){
+				if (temp / 100 > 75){
 					topEdge = h;
 					break;
 				}
@@ -1158,13 +1158,13 @@ public class ImageProcessor {
 		// Detecting bottom edge.
 		for (int h = height - 1; h > 0; h--){
 			Color c = new Color(img.getRGB(width / 2, h));
-			if (c.getBlue() > 100){
+			if (c.getBlue() > 75){
 				temp = 0;
-				for (int w = (width / 2) - 100; w < (width / 2) + 100; w++){
+				for (int w = (width / 2) - 50; w < (width / 2) + 50; w++){
 					c = new Color(img.getRGB(w, h));
 					temp += c.getBlue();
 				}
-				if (temp / 200 > 100){
+				if (temp / 100 > 75){
 					bottomEdge = h;
 					break;
 				}
@@ -1178,46 +1178,88 @@ public class ImageProcessor {
 		int[] sections = new int[6];
 		for (int w = leftEdge + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() > 120){
-				sections[0] = w;
-				break;
+			if (c.getBlue() > 75){
+				temp = 0;
+				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
+					c = new Color(img.getRGB(w, h));
+					temp += c.getBlue();
+				}
+				if (temp / 100 > 75){
+					sections[0] = w;
+					break;
+				}
 			}
 		}
 		for (int w = sections[0] + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() < 120){
-				sections[1] = w;
-				break;
+			if (c.getBlue() < 75){
+				temp = 0;
+				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
+					c = new Color(img.getRGB(w, h));
+					temp += c.getBlue();
+				}
+				if (temp / 100 < 75){
+					sections[1] = w;
+					break;
+				}
 			}
 		}
 
 		for (int w = sections[1] + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() > 120){
-				sections[2] = w;
-				break;
+			if (c.getBlue() > 75){
+				temp = 0;
+				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
+					c = new Color(img.getRGB(w, h));
+					temp += c.getBlue();
+				}
+				if (temp / 100 > 75){
+					sections[2] = w;
+					break;
+				}
 			}
 		}
 		for (int w = sections[2] + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() < 120){
-				sections[3] = w;
-				break;
+			if (c.getBlue() < 75){
+				temp = 0;
+				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
+					c = new Color(img.getRGB(w, h));
+					temp += c.getBlue();
+				}
+				if (temp / 100 < 75){
+					sections[3] = w;
+					break;
+				}
 			}
 		}
 
 		for (int w = sections[3] + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() > 120){
-				sections[4] = w;
-				break;
+			if (c.getBlue() > 75){
+				temp = 0;
+				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
+					c = new Color(img.getRGB(w, h));
+					temp += c.getBlue();
+				}
+				if (temp / 100 > 75){
+					sections[4] = w;
+					break;
+				}
 			}
 		}
 		for (int w = sections[4] + 50; w < img.getWidth(); w++){
 			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() < 120){
-				sections[5] = w;
-				break;
+			if (c.getBlue() < 75){
+				temp = 0;
+				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
+					c = new Color(img.getRGB(w, h));
+					temp += c.getBlue();
+				}
+				if (temp / 100 < 75){
+					sections[5] = w;
+					break;
+				}
 			}
 		}
 		int firstBoundary = (sections[0] + sections[1]) / 2;

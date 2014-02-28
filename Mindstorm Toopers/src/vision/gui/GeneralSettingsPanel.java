@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import vision.ImageProcessor;
+import vision.PitchConstants;
 import world.World;
 
 public class GeneralSettingsPanel extends JPanel implements ActionListener, ItemListener {
@@ -26,20 +27,26 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 	JPanel directions;
 	JPanel boundaries;
 	JPanel boundariesButton;
+	JPanel saveButton;
 	
 	World world;
 	ImageProcessor imageProcessor;
 	private JCheckBox showBoundaries;
 	private JButton calculateBoundaries;
+	private JButton saveState;
+	private JButton loadState;
+	private PitchConstants pitchConstants;
 	
-	public GeneralSettingsPanel(final ImageProcessor imageProcessor, World world){
+	public GeneralSettingsPanel(final ImageProcessor imageProcessor, World world, PitchConstants pitchConstants){
 		this.world = world;
 		this.imageProcessor = imageProcessor;
+		this.pitchConstants = pitchConstants;
 		
 		colors = new JPanel();
 		directions = new JPanel();
 		boundaries = new JPanel();
 		boundariesButton = new JPanel();
+		saveButton = new JPanel();
 		ourColor = new JLabel("Choose our teams color:");
 		ourDirection = new JLabel("Choose our shooting direction:");
 		right = new JRadioButton("Right");
@@ -63,6 +70,22 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 			}
 		});
 		
+		saveState = new JButton("Save Thresholds");
+		saveState.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				System.out.println("Saving threshold values...");
+				saveState();
+			}
+		});
+		
+		loadState = new JButton("Load Thresholds");
+		loadState.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				System.out.println("Loading threshold values...");
+//				loadState();
+			}
+		});
+		
 		ButtonGroup btnGroupColor = new ButtonGroup();
 		ButtonGroup btnGroupDirection = new ButtonGroup();
 		btnGroupColor.add(yellow);
@@ -81,6 +104,13 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 		this.add(boundaries);
 		boundariesButton.add(calculateBoundaries);
 		this.add(boundariesButton);
+		saveButton.add(saveState);
+		this.add(saveButton);
+		
+	}
+	
+	public void saveState(){
+		pitchConstants.saveConstants("mainPitchDimensions");
 	}
 
 	@Override

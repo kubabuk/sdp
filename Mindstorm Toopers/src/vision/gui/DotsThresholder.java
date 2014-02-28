@@ -10,6 +10,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import vision.ImageProcessor;
+import vision.PitchConstants;
 
 public class DotsThresholder extends JPanel implements ItemListener, ChangeListener {
 	private ImageProcessor imageProcessor;
@@ -17,9 +18,11 @@ public class DotsThresholder extends JPanel implements ItemListener, ChangeListe
 	private JCheckBox chk_showDirection;
 	private JCheckBox chk_showPixels;
 	private ThresholdsPanel thresholds;
+	private PitchConstants pitchConstants;
 
-	public DotsThresholder(ImageProcessor imageProcessor){
+	public DotsThresholder(ImageProcessor imageProcessor, PitchConstants pitchConstants){
 		this.imageProcessor = imageProcessor;
+		this.pitchConstants = pitchConstants;
 		chk_showLocation = new JCheckBox("Show Dots Location");
 		chk_showLocation.addItemListener(this);
 		this.add(chk_showLocation);
@@ -39,7 +42,13 @@ public class DotsThresholder extends JPanel implements ItemListener, ChangeListe
 		thresholds.setHueSliderChangeListener(this);
 		thresholds.setSaturationSliderChangeListener(this);
 		thresholds.setValueSliderChangeListener(this);
-		thresholds.setValueSliderValues(0, 64);
+		
+		thresholds.setRedSliderValues(pitchConstants.getRedLower(pitchConstants.GREY), pitchConstants.getRedUpper(pitchConstants.GREY));
+		thresholds.setBlueSliderValues(pitchConstants.getBlueLower(pitchConstants.GREY), pitchConstants.getBlueUpper(pitchConstants.GREY));
+		thresholds.setGreenSliderValues(pitchConstants.getGreenLower(pitchConstants.GREY), pitchConstants.getGreenUpper(pitchConstants.GREY));
+		thresholds.setHueSliderValues(pitchConstants.getHueLower(pitchConstants.GREY), pitchConstants.getHueUpper(pitchConstants.GREY));
+		thresholds.setValueSliderValues(pitchConstants.getValueLower(pitchConstants.GREY), pitchConstants.getValueUpper(pitchConstants.GREY));
+		thresholds.setSaturationSliderValues(pitchConstants.getSaturationLower(pitchConstants.GREY), pitchConstants.getSaturationUpper(pitchConstants.GREY));
 		this.add(thresholds);
 	}
 
@@ -79,26 +88,38 @@ public class DotsThresholder extends JPanel implements ItemListener, ChangeListe
 			RangeSlider source = (RangeSlider) arg0.getSource();
 			imageProcessor.setDotsMinRed(source.getLowerValue());
 			imageProcessor.setDotsMaxRed(source.getUpperValue());
+			pitchConstants.setRedLower(pitchConstants.GREY, source.getLowerValue());
+			pitchConstants.setRedUpper(pitchConstants.GREY, source.getUpperValue());
 		} else if (arg0.getSource().equals(thresholds.getBlueSlider())){
 			RangeSlider source = (RangeSlider) arg0.getSource();
 			imageProcessor.setDotsMinBlue(source.getLowerValue());
 			imageProcessor.setDotsMaxBlue(source.getUpperValue());
+			pitchConstants.setBlueLower(pitchConstants.GREY, source.getLowerValue());
+			pitchConstants.setBlueUpper(pitchConstants.GREY, source.getUpperValue());
 		} else if (arg0.getSource().equals(thresholds.getGreenSlider())){
 			RangeSlider source = (RangeSlider) arg0.getSource();
 			imageProcessor.setDotsMinGreen(source.getLowerValue());
 			imageProcessor.setDotsMaxGreen(source.getUpperValue());
+			pitchConstants.setGreenLower(pitchConstants.GREY, source.getLowerValue());
+			pitchConstants.setGreenUpper(pitchConstants.GREY, source.getUpperValue());
 		} else if (arg0.getSource().equals(thresholds.getHueSlider())){
 			RangeSlider source = (RangeSlider) arg0.getSource();
 			imageProcessor.setDotsMinHue(source.getLowerValue());
 			imageProcessor.setDotsMaxHue(source.getUpperValue());
+			pitchConstants.setHueLower(pitchConstants.GREY, source.getLowerValue());
+			pitchConstants.setHueUpper(pitchConstants.GREY, source.getUpperValue());
 		} else if (arg0.getSource().equals(thresholds.getSaturationSlider())){
 			RangeSlider source = (RangeSlider) arg0.getSource();
 			imageProcessor.setDotsMinSaturation(source.getLowerValue());
 			imageProcessor.setDotsMaxSaturation(source.getUpperValue());
+			pitchConstants.setSaturationLower(pitchConstants.GREY, source.getLowerValue());
+			pitchConstants.setSaturationUpper(pitchConstants.GREY, source.getUpperValue());
 		} else if (arg0.getSource().equals(thresholds.getValueSlider())){
 			RangeSlider source = (RangeSlider) arg0.getSource();
 			imageProcessor.setDotsMinValue(source.getLowerValue());
 			imageProcessor.setDotsMaxValue(source.getUpperValue());
+			pitchConstants.setValueLower(pitchConstants.GREY, source.getLowerValue());
+			pitchConstants.setValueUpper(pitchConstants.GREY, source.getUpperValue());
 		}
 	}
 }
