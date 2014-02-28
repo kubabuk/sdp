@@ -200,7 +200,9 @@ public class MoveA {
 
 	public static boolean hardboundarycheckleft(Point point) {
 		double pointx = point.getX();
-		if (pointx > 236 && pointx < 376) {
+		double pointy = point.getY();
+		//pointy restraints so robot doesn't run into wall
+		if (pointx > 236 && pointx < 376 && pointy > 10 && pointy < 218) {
 			return true;
 		} else {
 			return false;
@@ -209,7 +211,9 @@ public class MoveA {
 
 	public static boolean hardboundarycheckright(Point point) {
 		double pointx = point.getX();
-		if (pointx > 96 && pointx < 196) {
+		double pointy = point.getY();
+		//pointy restraints so robot doesn't run into wall
+		if (pointx > 96 && pointx < 196 && pointy > 10 && pointy < 218) {
 			return true;
 		} else {
 			return false;
@@ -237,7 +241,7 @@ public class MoveA {
 		int angle = (int) robottoball.getOrientationDegrees();
 		int sizeadjustments = robotsize + ballsize;
 		Command cmd = new Command(CommandNames.MOVE,
-				(distance - sizeadjustments), angle);
+				(distance - sizeadjustments), (int) (angle - robot.getDir().getOrientationDegrees()));
 		return cmd;
 	}
 
