@@ -41,6 +41,10 @@ public class StrategyA {
 		{
 		case 0:
 		{
+			if(!w.getBall().isMoving()){
+				this.State = 1;
+				break;
+			}
 			Point b = w.getBall().getPos();
 			Point r = w.getAttackerPos();
 			Point gp = new Point(r.getX(),b.getY());
@@ -60,19 +64,26 @@ public class StrategyA {
 		}
 		case 1:
 		{
-			
+			//if the ball is caught, switch to state 3
+			/*if(w.getBall().iscaught()){
+			//g = new Goal(b, CommandNames.DONOTHING,false,false);
+			this.State=2;
+			break;
+			}
+			*/
 			Point b = w.getBall().getPos();
 			
-			//do catch
+			//do catch0
+			g = new Goal(b, CommandNames.CATCH,false,false);
 			
-			//if the ball is caught, switch to state 3
-			g = new Goal(b, CommandNames.DONOTHING,false,false);
+			//if the ball is caught, switch to state 3s
 			break;
+			
 		}
 		case 2:
 		{
 			Point r = w.getAttackerPos();
-			
+
 			g = new Goal(r, CommandNames.KICK,false,false);
 			//if the ball status changed to not caught. change the state to 1
 			
