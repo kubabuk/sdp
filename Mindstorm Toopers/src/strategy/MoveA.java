@@ -81,7 +81,7 @@ public class MoveA {
 		}
 
 		if (name.equals(CommandNames.CATCH)) {
-			robottoball = new Vector(robotpos, ball);
+			robottoball = new Vector(robotpos,point);
 			cmd = new Command(CommandNames.CHANGEANGLE, 0,
 					(int) (robotori - robottoball.getOrientationDegrees()));
 			System.out.println("Change Angle towards the ball");
