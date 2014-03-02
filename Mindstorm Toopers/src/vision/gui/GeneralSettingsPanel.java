@@ -57,12 +57,19 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 		blue = new JRadioButton("Blue");
 		yellow = new JRadioButton("Yellow");
 		yellow.addActionListener(this);
-		yellow.setSelected(true);
+		if (pitchConstants.isColor()){
+			yellow.setSelected(true);
+		} else {
+			blue.setSelected(true);
+		}
 		blue.addActionListener(this);
 		right.addActionListener(this);
 		left.addActionListener(this);
-		right.setSelected(true);
-		
+		if (pitchConstants.isDirection()){
+			right.setSelected(true);
+		} else {
+			left.setSelected(true);
+		}
 		showBoundaries = new JCheckBox("Show boundaries");
 		showBoundaries.addItemListener(this);
 		calculateBoundaries = new JButton("Recalculate Boundaries");
@@ -129,12 +136,16 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(yellow)){
 			world.setColor(true);
+			pitchConstants.setColor(true);
 		} else if (arg0.getSource().equals(blue)){
 			world.setColor(false);
+			pitchConstants.setColor(false);
 		} else if (arg0.getSource().equals(right)){
 			world.setDirection(true);
+			pitchConstants.setDirection(true);
 		} else if (arg0.getSource().equals(left)){
 			world.setDirection(false);
+			pitchConstants.setDirection(false);
 		}
 	}
 

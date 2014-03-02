@@ -104,7 +104,7 @@ public class VisionGUI extends JFrame {
 		this.blueThresholder = new BlueThresholder(imageProcessor, pitchConstants);
 		this.dotsThresholder = new DotsThresholder(imageProcessor, pitchConstants);
 		this.plateThresholder = new PlateThresholder(imageProcessor, pitchConstants);
-		this.cameraSettings = new CameraSettingsPanel(vStream);
+		this.cameraSettings = new CameraSettingsPanel(vStream, pitchConstants);
 		this.generalSettings = new GeneralSettingsPanel(imageProcessor, world, pitchConstants);
 
 		Container contentPane = this.getContentPane();
