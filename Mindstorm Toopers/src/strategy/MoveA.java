@@ -13,7 +13,7 @@ public class MoveA {
 		// Changeable variables for our robot and enemy defender sizes
 		int robotsize = 40;
 		int enemyrobotsize = 40;
-		int ballsize = 10;
+		int ballsize = 20;
 
 		// Extract information from Goal
 		commands.CommandNames name = goal.getMove();
@@ -25,22 +25,22 @@ public class MoveA {
 		Robot enemydefender = w.getOtherDefender();
 		Point enemydefenderpos = enemydefender.getPos();
 		Point ball = w.getBall().getPos();
-		
+
 		double robotori = robot.getDir().getOrientationDegrees();
 		double robotx = robotpos.getX();
 		double dtemp = 0;
 		double dtemp2 = 0;
-		
+
 		Vector robottopoint;
 		Vector robottoball;
 		Vector balltogoal;
 		Vector vtemp;
 		Vector vtemp2;
 		Vector vtemp3;
-		
+
 		Command cmd;
-		
-		boolean leftq = false;
+
+		boolean rightq = false;
 
 		// Initialise Attacking points
 		Point lowerleft = new Point(306, 76);
@@ -54,8 +54,8 @@ public class MoveA {
 
 		// Find Attacker Quadrant
 		// If in the left quadrant
-		if (robotx > 236 && robotx < 376) {
-			leftq = true;
+		if (robotx > 216 && robotx < 396) {
+			rightq = true;
 		}
 
 		// If Goal is null, do nothing.
@@ -65,36 +65,40 @@ public class MoveA {
 		}
 
 		// If Goal is outside boundary, do nothing.
-		if ((leftq && !hardboundarycheckleft(point))
-				|| (!leftq && !hardboundarycheckright(point))) {
+		if ((rightq && !softboundarycheckright(point))
+				|| (!rightq && !softboundarycheckleft(point))) {
 			System.out
 					.println("Goal point outside boundary: Do Nothing put into stack");
 			aq.add(new Command(CommandNames.DONOTHING, 0, 0));
 			return;
 		}
-		
+
 		// Main If-Else to determine path
 		if (goal.getAbort()) {
 			cmd = new Command(commands.CommandNames.ABORT, 0, 0);
 			System.out.println("Abort Command: Abort put into stack");
 			aq.add(cmd);
 		}
-		
+
 		if (name.equals(CommandNames.CATCH)) {
-			System.out.println("Move Command: Move to ball");
-			robottoball = new Vector(robotpos, ball);
+			robottoball = new Vector(robotpos,point);
+			cmd = new Command(CommandNames.CHANGEANGLE, 0,
+					(int) (robottoball.getOrientationDegrees() - robotori));
+			System.out.println("Change Angle towards the ball " + (robottoball.getOrientationDegrees() - robotori));
+			aq.add(cmd);
 			cmd = movetoball(robottoball, robotsize, ballsize, robot);
+			System.out.println("Move Command: Move to ball distance " + robottoball.getMagnitude());
 			aq.add(cmd);
 			cmd = new Command(CommandNames.CATCH, 0, 0);
-			System.out.println("Catch Command: Catch the ball");
+			System.out.println("Catch Command: Catch the ball ");
 			aq.add(cmd);
 		}
-		
+
 		// Main Kicking Algorithm
 		else if (name.equals(CommandNames.KICK)) {
-			
+
 			// Check goal position and choose appropriate point
-			if (leftq) {
+			if (rightq) {
 				vtemp = new Vector(robotpos, lowerleft);
 				System.out.println("Moving to (" + vtemp.getX() + ","
 						+ vtemp.getY() + ")");
@@ -103,25 +107,25 @@ public class MoveA {
 				System.out.println("Moving to (" + vtemp.getX() + ","
 						+ vtemp.getY() + ")");
 			}
-			
+
 			// Move to chosen kicking position
 			cmd = movetopoint(vtemp, robot);
 			aq.add(cmd);
 			// Check goal position and change to appropriate angle
 			robotpos = robot.getPos();
-			
-			if (leftq) {
+
+			if (rightq) {
 				balltogoal = new Vector(robotpos, leftgoal);
 				System.out.println("Change Angle to face left goal");
 			} // If the attacker is on the left
-			
+
 			else {
 				balltogoal = new Vector(robotpos, rightgoal);
 				System.out.println("Change Angle to face right goal");
 			} // If the attacker is on the right
-			
+
 			cmd = new Command(CommandNames.CHANGEANGLE, 0,
-					(int) (robotori - balltogoal.getOrientationDegrees()));
+					(int) (balltogoal.getOrientationDegrees() - robotori));
 			aq.add(cmd);
 			// Algorithm to check if the ball would be intercepted if defender
 			// doesn't move
@@ -129,8 +133,8 @@ public class MoveA {
 			// range
 			enemydefenderpos = w.getOtherDefender().getPos();
 			ball = w.getBall().getPos();
-			
-			if (leftq) {
+
+			if (rightq) {
 				vtemp = getInterceptionRange(ball, enemydefenderpos, leftgoal,
 						enemyrobotsize);
 			} else {
@@ -138,23 +142,23 @@ public class MoveA {
 						enemyrobotsize);
 			}
 			// Calculations if the ball would be intercepted
-			if (leftq) {
+			if (rightq) {
 				balltogoal = new Vector(ball, leftgoal);
 			} else {
 				balltogoal = new Vector(ball, rightgoal);
 			}
-			
+
 			vtemp2 = new Vector(balltogoal.getOrigin(), vtemp.getOrigin());
 			vtemp3 = new Vector(balltogoal.getOrigin(), vtemp.getDestination());
 			dtemp = vtemp3.getOrientationDegrees()
 					- balltogoal.getOrientationDegrees();
 			dtemp2 = vtemp2.getOrientationDegrees()
 					- balltogoal.getOrientationDegrees();
-			
+
 			// If the ball would be intercepted
 			if (dtemp2 < 0 && dtemp > 0) {
 				// Move to new point
-				if (leftq && robotpos == lowerleft) {
+				if (rightq && robotpos == lowerleft) {
 					vtemp = new Vector(robotpos, upperleft);
 					System.out.println("Moving to (" + vtemp.getX() + ","
 							+ vtemp.getY() + ")");
@@ -198,28 +202,52 @@ public class MoveA {
 
 	// Boundary Checks
 
-	public static boolean hardboundarycheckleft(Point point) {
+//	public static boolean hardboundarycheckleft(Point point) {
+//		double pointx = point.getX();
+//		double pointy = point.getY();
+//		// pointy restraints so robot doesn't run into wall
+//		if (pointx > 236 && pointx < 376/* && pointy > 20 && pointy < 208*/) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
+	
+	public static boolean softboundarycheckright(Point point) {
+		System.out.println("Left Quad");
 		double pointx = point.getX();
 		double pointy = point.getY();
-		//pointy restraints so robot doesn't run into wall
-		if (pointx > 236 && pointx < 376 && pointy > 20 && pointy < 208) {
+		// pointy restraints so robot doesn't run into wall
+		if (pointx > 216 && pointx < 396/* && pointy > 20 && pointy < 208*/) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-
-	public static boolean hardboundarycheckright(Point point) {
+	
+//	public static boolean hardboundarycheckright(Point point) {
+//		double pointx = point.getX();
+//		double pointy = point.getY();
+//		// pointy restraints so robot doesn't run into wall
+//		if (pointx > 96 && pointx < 196/* && pointy > 20 && pointy < 208*/) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
+	
+	public static boolean softboundarycheckleft(Point point) {
+		System.out.println("Right Quad");
 		double pointx = point.getX();
 		double pointy = point.getY();
-		//pointy restraints so robot doesn't run into wall
-		if (pointx > 96 && pointx < 196 && pointy > 20 && pointy < 208) {
+		// pointy restraints so robot doesn't run into wall
+		if (pointx > 76 && pointx < 216/* && pointy > 20 && pointy < 208*/) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-
+	
 	// Methods to easily call from main function
 	public static Command movetopoint(Vector robottopoint, Robot robot) {
 		int distance = (int) robottopoint.getMagnitude();
@@ -240,8 +268,9 @@ public class MoveA {
 		int distance = (int) robottoball.getMagnitude();
 		int angle = (int) robottoball.getOrientationDegrees();
 		int sizeadjustments = robotsize + ballsize;
+		System.out.println("Robot Position = " + robot.getPos().toString());
 		Command cmd = new Command(CommandNames.MOVE,
-				(distance - sizeadjustments), (int) (angle - robot.getDir().getOrientationDegrees()));
+				(distance - sizeadjustments),0);
 		return cmd;
 	}
 
