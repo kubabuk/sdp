@@ -16,8 +16,8 @@ public class DeathStar {
 		boolean direction = args[1].equals("right");
 
 		
-		World universe = new World(color, direction);
-		Thread.sleep(3000);
+		//World universe = new World(color, direction);
+		//Thread.sleep(3000);
 		Queue aq = new Queue();//universe.getAttacker().getDir().getOrientation());
 		Queue dq = new Queue();
 
@@ -41,7 +41,7 @@ public class DeathStar {
 		
 		//test code
 		
-		AI emperor = new AI(universe,aq,dq);
+		//AI emperor = new AI(universe,aq,dq);
 		boolean flag = true;
 		
 
@@ -50,7 +50,7 @@ public class DeathStar {
 			
 			
 		while (flag) {
-			emperor.update();
+			//emperor.update();
 				
 			//System.out.println("The ball position is " + universe.getBall().getPos().getX()+" , "+universe.getBall().getPos().getY());
 				
@@ -60,11 +60,12 @@ public class DeathStar {
 //				System.out.println("The max X,Y are " + universe.getMinX() + " , " + universe.getMinY());
 				
 			count = count + 1;
-//			if (count == 4)
-//			{
-//				aq.add(new Command(CommandNames.MOVE, 50, 0));
-//				aq.add(new Command(CommandNames.CHANGEANGLE, 0, 120));
-//			}
+			if (count == 4)
+			{
+				aq.add(new Command(CommandNames.MOVE, 50, 0));
+				aq.add(new Command(CommandNames.CHANGEANGLE, 0, 120));
+				theForceAttack.sendMessage(CommandNames.KICK, 0, 0);
+			}
 			
 			
 			//dq.add(new Command(CommandNames.CATCH, 0, 0));
