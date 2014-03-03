@@ -202,23 +202,11 @@ public class MoveA {
 
 	// Boundary Checks
 
-//	public static boolean hardboundarycheckleft(Point point) {
-//		double pointx = point.getX();
-//		double pointy = point.getY();
-//		// pointy restraints so robot doesn't run into wall
-//		if (pointx > 236 && pointx < 376/* && pointy > 20 && pointy < 208*/) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
-	
 	public static boolean softboundarycheckright(Point point) {
-		System.out.println("Left Quad");
 		double pointx = point.getX();
 		double pointy = point.getY();
 		// pointy restraints so robot doesn't run into wall
-		if (pointx > 216 && pointx < 396/* && pointy > 20 && pointy < 208*/) {
+		if (pointx > 236 && pointx < 376 && pointy > 20 && pointy < 208) {
 			return true;
 		} else {
 			return false;
@@ -226,10 +214,11 @@ public class MoveA {
 	}
 	
 //	public static boolean hardboundarycheckright(Point point) {
+//		System.out.println("Left Quad");
 //		double pointx = point.getX();
 //		double pointy = point.getY();
 //		// pointy restraints so robot doesn't run into wall
-//		if (pointx > 96 && pointx < 196/* && pointy > 20 && pointy < 208*/) {
+//		if (pointx > 216 && pointx < 396/* && pointy > 20 && pointy < 208*/) {
 //			return true;
 //		} else {
 //			return false;
@@ -237,16 +226,27 @@ public class MoveA {
 //	}
 	
 	public static boolean softboundarycheckleft(Point point) {
-		System.out.println("Right Quad");
 		double pointx = point.getX();
 		double pointy = point.getY();
 		// pointy restraints so robot doesn't run into wall
-		if (pointx > 76 && pointx < 216/* && pointy > 20 && pointy < 208*/) {
+		if (pointx > 96 && pointx < 196 && pointy > 20 && pointy < 208) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
+//	public static boolean hardboundarycheckleft(Point point) {
+//		System.out.println("Right Quad");
+//		double pointx = point.getX();
+//		double pointy = point.getY();
+//		// pointy restraints so robot doesn't run into wall
+//		if (pointx > 76 && pointx < 216/* && pointy > 20 && pointy < 208*/) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
 	
 	// Methods to easily call from main function
 	public static Command movetopoint(Vector robottopoint, Robot robot) {

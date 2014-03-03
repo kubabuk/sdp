@@ -20,7 +20,7 @@ public class StrategyA {
 		
 	public void setState(int State)
 	{
-		this.State = State;
+		this.State=State;
 	}
 	
 	public int getState()
@@ -52,9 +52,10 @@ public class StrategyA {
 			System.out.println("The ball is at "+b.toString());
 			System.out.println("The attacker is at "+r.toString());
 			
-			if (Point.pointDistance(r, b)<30)
-			{
+			if (Point.pointDistance(r, b)<30) {
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 				this.State = 1;
+				
 				break;
 			}
 			
@@ -64,19 +65,18 @@ public class StrategyA {
 		}
 		case 1:
 		{
-			//if the ball is caught, switch to state 3
-			/*if(w.getBall().iscaught()){
-			//g = new Goal(b, CommandNames.DONOTHING,false,false);
-			this.State=2;
-			break;
+			//if the ball is caught, switch to state 2
+			if(w.getBall().iscaught()) {
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+				this.State=2;
+				break;
 			}
-			*/
-			Point b = w.getBall().getPos();
 			
+			Point b = w.getBall().getPos();
+			w.getBall().setCaught(true);
 			//do catch0
 			g = new Goal(b, CommandNames.CATCH,false,false);
 			
-			//if the ball is caught, switch to state 3s
 			break;
 			
 		}
@@ -85,7 +85,8 @@ public class StrategyA {
 			Point r = w.getAttackerPos();
 
 			g = new Goal(r, CommandNames.KICK,false,false);
-			//if the ball status changed to not caught. change the state to 1
+			w.getBall().setCaught(false);
+			this.State = 0;
 			
 			break;
 		}

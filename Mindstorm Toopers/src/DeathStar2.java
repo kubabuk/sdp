@@ -29,7 +29,7 @@ public class DeathStar2 {
 		}
 
 //		MainComm theForceDef = new MainComm(1);
-		MainComm theForceAttack = new MainComm(2);
+		MainComm theForceAttack = new MainComm(1);
 		
 		int count = 0;
 			
@@ -51,7 +51,7 @@ public class DeathStar2 {
 				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), cmdAttack.getAngle());
 			}
 			count++;
-			//if (count == 4) {	flag = false;}
+			//if (count == 50) {	flag = false;}
 		}
 
 		
