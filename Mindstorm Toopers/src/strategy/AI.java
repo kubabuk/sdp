@@ -36,7 +36,7 @@ public class AI {
 		System.out.println("The last goal before feeding is " + this.lastag.toString());
 		
 		this.ag = this.a.getGoal(this.lastag);
-		this.dg = this.a.getGoal(this.lastdg);
+		this.dg = this.d.getGoal(this.lastdg);
 		// feed it to Judge
 		if (!this.ag.isNull())
 		{	
