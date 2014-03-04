@@ -1,6 +1,7 @@
 package strategy;
 
 import geometry.Point;
+import geometry.Vector;
 import commands.CommandNames;
 
 import world.World;
@@ -30,7 +31,8 @@ public class StrategyA {
 		//State     |Movement
 		//0         |intercept the ball
 		//1         |catch the ball
-		//2         |kick the ball
+		//2         |move to the kick point
+		//3			|kick
 	
 	
 	
@@ -47,8 +49,34 @@ public class StrategyA {
 			}
 			Point b = w.getBall().getPos();
 			Point r = w.getAttackerPos();
-			Point gp = new Point(r.getX(),b.getY());
+			Point gp;
 			
+			//intercept at the boundary strategy
+			if (w.getDirection())
+			{
+				if (b.getX()>r.getX())
+				{
+					gp = new Point(96,b.getY());
+				}
+				else
+				{
+					gp = new Point(196,b.getY());
+				}
+			}
+			else
+			{
+				if (b.getX()>r.getX())
+				{
+					gp = new Point(236,b.getY());
+				}
+				else
+				{
+					gp = new Point(336,b.getY());
+				}
+			}
+			
+
+
 			System.out.println("The ball is at "+b.toString());
 			System.out.println("The attacker is at "+r.toString());
 			
@@ -62,17 +90,34 @@ public class StrategyA {
 			g = new Goal(gp, CommandNames.MOVE,false,false);
 			
 			break;
+			
+			
 		}
 		case 1:
 		{
 			//if the ball is caught, switch to state 2
-			if(w.getBall().iscaught()) {
+			
+			//if(w.getBall().iscaught()) 
+			//The iscaught can not be implemented now
+			//so I wrote a function here for it
+			Point r = w.getAttackerPos();
+			Vector v = w.getAttackerDir();
+			Point b = w.getBallPos();
+			Vector rb = new Vector(r, 20, v.getOrientation());
+			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
+			boolean iscaught = Point.pointDistance(b, bc) < 10;
+			
+			
+			//
+			if (iscaught)
+			
+			{
 				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 				this.State=2;
 				break;
 			}
 			
-			Point b = w.getBall().getPos();
+			//Point b = w.getBall().getPos();
 			//w.getBall().setCaught(true);
 			//do catch0
 			g = new Goal(b, CommandNames.CATCH,false,false);
@@ -82,13 +127,64 @@ public class StrategyA {
 		}
 		case 2:
 		{
+			//We now have 2 options for kick positions
 			Point r = w.getAttackerPos();
+			Point kp;
+			if  (w.getDirection())
+			{
+				if (Point.pointDistance(w.getOtherDefenderPos(), new Point(350,50))<60)
+				{
+					kp = new Point(300,50);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+				}
+				else
+				{
+					kp = new Point(300,170);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+				}
+			
+			}
+			else
+			{
+				if (Point.pointDistance(w.getOtherDefenderPos(), new Point(50,50))<60)
+				{
+					kp = new Point(150,50);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+				}
+				else
+				{
+					kp = new Point(150,170);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+				}
+			}
+			
+			if (Point.pointDistance(r, kp)<20)
+			{
+				this.State = 3;
+			}
+			
+			break;
+		}
+		case 3:
+		{
+			//The point is the point we want to kick the ball to.
+			Point goal;
+			if (w.getDirection())
+			{
+				goal = new Point (474,114);
+			}
+			else
+			{
+				goal = new Point (0,114);
+			}
 
-			g = new Goal(r, CommandNames.KICK,false,false);
+			g = new Goal(goal, CommandNames.KICK,false,false);
 			w.getBall().setCaught(false);
 			this.State = 0;
 			
 			break;
+			
+			
 		}
 		default:
 		{
