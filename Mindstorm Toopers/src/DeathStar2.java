@@ -32,7 +32,14 @@ public class DeathStar2 {
 		MainComm theForceAttack = new MainComm(2);
 		
 		int count = 0;
-			
+		
+		
+		theForceAttack.sendMessage(CommandNames.CATCH, 0, 0);
+		Thread.sleep(1000);
+		theForceAttack.sendMessage(CommandNames.KICK, 0, 0);
+		
+		
+		/*	
 		while (flag) {
 			// Update the AI with new actions for the robots. Store them in the queue.
 			emperor.update();
@@ -51,8 +58,8 @@ public class DeathStar2 {
 				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), cmdAttack.getAngle());
 			}
 			count++;
-			//if (count == 50) {	flag = false;}
-		}
+			//if (count == 10) {	flag = false;}
+		}*/
 
 		
 	}
