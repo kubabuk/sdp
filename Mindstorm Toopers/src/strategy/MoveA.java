@@ -65,14 +65,24 @@ public class MoveA {
 		}
 
 		// If Goal is outside boundary, do nothing.
-		if ((rightq && !softboundarycheckright(point))
-				|| (!rightq && !softboundarycheckleft(point))) {
+		if ((rightq && !hardboundarycheckright(point))
+				|| (!rightq && !hardboundarycheckleft(point))) {
 			System.out
 					.println("Goal point outside boundary: Do Nothing put into stack");
 			aq.add(new Command(CommandNames.DONOTHING, 0, 0));
 			return;
 		}
-
+		
+		if (!name.equals(CommandNames.CATCH)) {
+			if ((rightq && !softboundarycheckright(point))
+					|| (!rightq && !softboundarycheckleft(point))) {
+				System.out
+				.println("Goal point outside boundary: Do Nothing put into stack");
+				aq.add(new Command(CommandNames.DONOTHING,0,0));
+				return;
+			}
+		}
+		
 		// Main If-Else to determine path
 		if (goal.getAbort()) {
 			cmd = new Command(commands.CommandNames.ABORT, 0, 0);
@@ -90,6 +100,7 @@ public class MoveA {
 			System.out.println("Move Command: Move to ball distance " + robottoball.getMagnitude());
 			aq.add(cmd);
 			cmd = new Command(CommandNames.CATCH, 0, 0);
+			w.getBall().setCaught(true);
 			System.out.println("Catch Command: Catch the ball ");
 			aq.add(cmd);
 		}
@@ -213,17 +224,17 @@ public class MoveA {
 		}
 	}
 	
-//	public static boolean hardboundarycheckright(Point point) {
-//		System.out.println("Left Quad");
-//		double pointx = point.getX();
+	public static boolean hardboundarycheckright(Point point) {
+		System.out.println("Left Quad");
+		double pointx = point.getX();
 //		double pointy = point.getY();
-//		// pointy restraints so robot doesn't run into wall
-//		if (pointx > 216 && pointx < 396/* && pointy > 20 && pointy < 208*/) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
+		// pointy restraints so robot doesn't run into wall
+		if (pointx > 216 && pointx < 396/* && pointy > 20 && pointy < 208*/) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	public static boolean softboundarycheckleft(Point point) {
 		double pointx = point.getX();
@@ -236,17 +247,17 @@ public class MoveA {
 		}
 	}
 	
-//	public static boolean hardboundarycheckleft(Point point) {
-//		System.out.println("Right Quad");
-//		double pointx = point.getX();
+	public static boolean hardboundarycheckleft(Point point) {
+		System.out.println("Right Quad");
+		double pointx = point.getX();
 //		double pointy = point.getY();
-//		// pointy restraints so robot doesn't run into wall
-//		if (pointx > 76 && pointx < 216/* && pointy > 20 && pointy < 208*/) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
+		// pointy restraints so robot doesn't run into wall
+		if (pointx > 76 && pointx < 216/* && pointy > 20 && pointy < 208*/) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	// Methods to easily call from main function
 	public static Command movetopoint(Vector robottopoint, Robot robot) {

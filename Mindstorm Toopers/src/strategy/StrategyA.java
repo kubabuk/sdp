@@ -73,7 +73,7 @@ public class StrategyA {
 			}
 			
 			Point b = w.getBall().getPos();
-			w.getBall().setCaught(true);
+			//w.getBall().setCaught(true);
 			//do catch0
 			g = new Goal(b, CommandNames.CATCH,false,false);
 			
