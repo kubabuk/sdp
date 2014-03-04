@@ -36,7 +36,7 @@ public class AI {
 		System.out.println("The last goal before feeding is " + this.lastag.toString());
 		
 		this.ag = this.a.getGoal(this.lastag);
-		this.dg = this.a.getGoal(this.lastdg);
+//		this.dg = this.d.getGoal(this.lastdg);
 		// feed it to Judge
 		if (!this.ag.isNull())
 		{	
@@ -45,12 +45,12 @@ public class AI {
 			this.lastag = this.ag;
 		}
 		
-		if (!this.dg.isNull())
-		{	
-			System.out.println("The Goal in AI is not null");
-			MoveD.makeCommands(this.w, this.dg, this.dq);
-			this.lastdg = this.dg;
-		}
+//		if (!this.dg.isNull())
+//		{	
+//			System.out.println("The Goal in AI is not null");
+//			MoveD.makeCommands(this.w, this.dg, this.dq);
+//			this.lastdg = this.dg;
+//		}
 		// if it passes send it to Move
 		// Move adds Commands to the queue
 		

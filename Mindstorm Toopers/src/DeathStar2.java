@@ -34,12 +34,12 @@ public class DeathStar2 {
 		int count = 0;
 		
 		
-		theForceAttack.sendMessage(CommandNames.CATCH, 0, 0);
-		Thread.sleep(1000);
-		theForceAttack.sendMessage(CommandNames.KICK, 0, 0);
+		//theForceAttack.sendMessage(CommandNames.CATCH, 0, 0);
+		//Thread.sleep(1000);
+		//theForceAttack.sendMessage(CommandNames.KICK, 0, 0);
 		
 		
-		/*	
+			
 		while (flag) {
 			// Update the AI with new actions for the robots. Store them in the queue.
 			emperor.update();
@@ -55,11 +55,12 @@ public class DeathStar2 {
 //			}
 
 			if(!cmdAttack.isNothing()){
+				System.out.println("Attempting to send " + cmdAttack.getCommand());
 				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), cmdAttack.getAngle());
 			}
 			count++;
 			//if (count == 10) {	flag = false;}
-		}*/
+		}
 
 		
 	}

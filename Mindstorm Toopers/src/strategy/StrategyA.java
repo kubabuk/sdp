@@ -43,10 +43,10 @@ public class StrategyA {
 		{
 		case 0:
 		{
-			if(!w.getBall().isMoving()){
-				this.State = 1;
-				break;
-			}
+//			if(!w.getBall().isMoving()){
+//				this.State = 1;
+//				break;
+//			}
 			Point b = w.getBall().getPos();
 			Point r = w.getAttackerPos();
 			Point gp;
@@ -56,22 +56,23 @@ public class StrategyA {
 			{
 				if (b.getX()>r.getX())
 				{
-					gp = new Point(96,b.getY());
+					gp = new Point(256,b.getY());
 				}
 				else
 				{
-					gp = new Point(196,b.getY());
+					gp = new Point(316,b.getY());
 				}
 			}
 			else
 			{
 				if (b.getX()>r.getX())
 				{
-					gp = new Point(236,b.getY());
+					gp = new Point(116,b.getY());
 				}
 				else
 				{
-					gp = new Point(336,b.getY());
+					gp = new Point(176,b.getY());
+					
 				}
 			}
 			
