@@ -53,8 +53,8 @@ public class MoveA {
 		Point rightgoal = new Point(0, 114);
 
 		// Find Attacker Quadrant
-		// If in the left quadrant
-		if (robotx > 216 && robotx < 396) {
+		// If in the right quadrant
+		if (robotx > 237 && robotx < 336) {
 			rightq = true;
 		}
 
@@ -219,32 +219,32 @@ public class MoveA {
 
 	// Boundary Checks
 
-	public static boolean softboundarycheckright(World w, Point point) {
+	public static boolean hardboundarycheckright(World w, Point point) {
 		double pointx = point.getX();
 		double pointy = point.getY();
 		double maxy = w.getMaxY();
 
 		// pointy restraints so robot doesn't run into wall
-		if (pointx > 236 && pointx < 376 && pointy > 20 && pointy < maxy - 20) {
+		if (pointx > 236 && pointx < 336 && pointy > 20 && pointy < maxy - 20) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public static boolean hardboundarycheckright(World w, Point point) {
-		System.out.println("Left Quad");
+	public static boolean softboundarycheckright(World w, Point point) {
+		System.out.println("Right Quad");
 		double pointx = point.getX();
 		// double pointy = point.getY();
 		// pointy restraints so robot doesn't run into wall
-		if (pointx > 216 && pointx < 396/* && pointy > 20 && pointy < 208 */) {
+		if (pointx > 256 && pointx < 316/* && pointy > 20 && pointy < 208 */) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public static boolean softboundarycheckleft(World w, Point point) {
+	public static boolean hardboundarycheckleft(World w, Point point) {
 		double pointx = point.getX();
 		double pointy = point.getY();
 		double maxy = w.getMaxY();
@@ -256,12 +256,12 @@ public class MoveA {
 		}
 	}
 
-	public static boolean hardboundarycheckleft(World w, Point point) {
-		System.out.println("Right Quad");
+	public static boolean softboundarycheckleft(World w, Point point) {
+		System.out.println("Left Quad");
 		double pointx = point.getX();
 		// double pointy = point.getY();
 		// pointy restraints so robot doesn't run into wall
-		if (pointx > 76 && pointx < 216/* && pointy > 20 && pointy < 208 */) {
+		if (pointx > 116 && pointx < 176/* && pointy > 20 && pointy < 208 */) {
 			return true;
 		} else {
 			return false;
