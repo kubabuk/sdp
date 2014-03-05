@@ -78,7 +78,7 @@ public class StrategyD {
 			//The iscaught can not be implemented now
 			//so I wrote a function here for it
 			Point r = w.getDefenderPos();
-			Vector v = w.getAttackerDir();
+			Vector v = w.getDefenderDir();
 			Point b = w.getBallPos();
 			Vector rb = new Vector(r, 20, v.getOrientation());
 			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
@@ -135,7 +135,7 @@ public class StrategyD {
 				}
 			}
 			
-			if (Point.pointDistance(r, kp)<20)
+			if (Point.pointDistance(r, kp)<40)
 			{
 				this.State = 3;
 			}

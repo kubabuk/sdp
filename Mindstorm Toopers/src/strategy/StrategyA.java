@@ -62,6 +62,20 @@ public class StrategyA {
 				{
 					gp = new Point(316,b.getY());
 				}
+				System.out.println("The ball is at "+b.toString());
+				System.out.println("The attacker is at "+r.toString());
+				
+				if (b.getX()>236&&b.getX()<336) {
+					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+					this.State = 1;
+					
+					break;
+				}
+				
+				g = new Goal(gp, CommandNames.MOVE,false,false);
+				
+				break;
+				
 			}
 			else
 			{
@@ -74,23 +88,25 @@ public class StrategyA {
 					gp = new Point(176,b.getY());
 					
 				}
-			}
-			
-
-
-			System.out.println("The ball is at "+b.toString());
-			System.out.println("The attacker is at "+r.toString());
-			
-			if (Point.pointDistance(r, b)<30) {
-				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-				this.State = 1;
+				System.out.println("The ball is at "+b.toString());
+				System.out.println("The attacker is at "+r.toString());
+				
+				if (b.getX()>96&&b.getX()<176) {
+					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+					this.State = 1;
+					
+					break;
+				}
+				
+				g = new Goal(gp, CommandNames.MOVE,false,false);
 				
 				break;
+				
 			}
 			
-			g = new Goal(gp, CommandNames.MOVE,false,false);
+
+
 			
-			break;
 			
 			
 		}
@@ -131,6 +147,7 @@ public class StrategyA {
 			//We now have 2 options for kick positions
 			Point r = w.getAttackerPos();
 			Point kp;
+			System.out.println("kick The attacker is at "+w.getAttacker().toString());
 			if  (w.getDirection())
 			{
 				if (Point.pointDistance(w.getOtherDefenderPos(), new Point(350,50))<60)
@@ -159,7 +176,7 @@ public class StrategyA {
 				}
 			}
 			
-			if (Point.pointDistance(r, kp)<20)
+			if (Point.pointDistance(r, kp)<30)
 			{
 				this.State = 3;
 			}

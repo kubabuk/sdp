@@ -9,7 +9,7 @@ import world.World;
 
 
 
-public class StrategyD {
+public class StrategyDbackup {
 	//strategy for attacker
 	private static World w;
 	private int State;
@@ -18,7 +18,7 @@ public class StrategyD {
 	private static double goalTop;
 	private static double goalBottom;
 	
-	public StrategyD(World w)
+	public StrategyDbackup(World w)
 	{
 		this.w = w;
 		this.State = 0;

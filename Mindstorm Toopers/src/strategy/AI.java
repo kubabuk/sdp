@@ -32,20 +32,16 @@ public class AI {
 	{
 		
 		// get goal from Strategy
-		System.out.println("asdhdjkasdk");
+//		System.out.println("asdhdjkasdk");
 		System.out.println("The last goal before feeding is " + this.lastag.toString());
 		
 		this.ag = this.a.getGoal(this.lastag);
-
 //		this.dg = this.d.getGoal(this.lastdg);
-
-		this.dg = this.d.getGoal(this.lastdg);
-
 		// feed it to Judge
 		if (!this.ag.isNull())
 		{	
 			System.out.println("The Goal in AI is not null");
-			MoveA.makeCommands(this.w, this.ag, this.aq);
+			MoveA2.makeCommands(this.w, this.ag, this.aq);
 			this.lastag = this.ag;
 		}
 		
