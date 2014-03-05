@@ -113,8 +113,13 @@ public class MoveD {
 
 		// Main Kicking Algorithm
 		else if (name.equals(CommandNames.KICK)) {
-			
-			//TODO
+			robottopoint = new Vector(robotpos,goal.getGoal());
+			cmd = new Command(CommandNames.CHANGEANGLE, 0,
+					(int) (robottopoint.getOrientationDegrees() - robotori));
+			aq.add(cmd);
+			cmd = new Command(CommandNames.KICK,0,0);
+			aq.add(cmd);
+			return;
 			
 		} else if (name.equals(CommandNames.MOVE)) {
 			robottopoint = new Vector(robotpos, point);

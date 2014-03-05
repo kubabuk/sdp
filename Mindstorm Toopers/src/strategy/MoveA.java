@@ -113,96 +113,103 @@ public class MoveA {
 
 		// Main Kicking Algorithm
 		else if (name.equals(CommandNames.KICK)) {
-
-			// Check goal position and choose appropriate point
-			if (rightq) {
-				vtemp = new Vector(robotpos, lowerleft);
-				System.out.println("Moving to (" + vtemp.getX() + ","
-						+ vtemp.getY() + ")");
-			} else {
-				vtemp = new Vector(robotpos, lowerright);
-				System.out.println("Moving to (" + vtemp.getX() + ","
-						+ vtemp.getY() + ")");
-			}
-
-			// Move to chosen kicking position
-			cmd = movetopoint(vtemp, robot);
-			aq.add(cmd);
-			// Check goal position and change to appropriate angle
-			robotpos = robot.getPos();
-
-			if (rightq) {
-				balltogoal = new Vector(robotpos, leftgoal);
-				System.out.println("Change Angle to face left goal");
-			} // If the attacker is on the left
-
-			else {
-				balltogoal = new Vector(robotpos, rightgoal);
-				System.out.println("Change Angle to face right goal");
-			} // If the attacker is on the right
-
+			robottopoint = new Vector(robotpos,goal.getGoal());
 			cmd = new Command(CommandNames.CHANGEANGLE, 0,
-					(int) (balltogoal.getOrientationDegrees() - robotori));
+					(int) (robottopoint.getOrientationDegrees() - robotori));
 			aq.add(cmd);
-			// Algorithm to check if the ball would be intercepted if defender
-			// doesn't move
-			// Check goal position and get a Vector defining the interception
-			// range
-			enemydefenderpos = w.getOtherDefender().getPos();
-			ball = w.getBall().getPos();
-
-			if (rightq) {
-				vtemp = getInterceptionRange(ball, enemydefenderpos, leftgoal,
-						enemyrobotsize);
-			} else {
-				vtemp = getInterceptionRange(ball, enemydefenderpos, rightgoal,
-						enemyrobotsize);
-			}
-			// Calculations if the ball would be intercepted
-			if (rightq) {
-				balltogoal = new Vector(ball, leftgoal);
-			} else {
-				balltogoal = new Vector(ball, rightgoal);
-			}
-
-			vtemp2 = new Vector(balltogoal.getOrigin(), vtemp.getOrigin());
-			vtemp3 = new Vector(balltogoal.getOrigin(), vtemp.getDestination());
-			dtemp = vtemp3.getOrientationDegrees()
-					- balltogoal.getOrientationDegrees();
-			dtemp2 = vtemp2.getOrientationDegrees()
-					- balltogoal.getOrientationDegrees();
-
-			// If the ball would be intercepted
-			if (dtemp2 < 0 && dtemp > 0) {
-				// Move to new point
-				if (rightq && robotpos == lowerleft) {
-					vtemp = new Vector(robotpos, upperleft);
-					System.out.println("Moving to (" + vtemp.getX() + ","
-							+ vtemp.getY() + ")");
-				} else {
-					vtemp = new Vector(robotpos, lowerleft);
-					System.out.println("Moving to (" + vtemp.getX() + ","
-							+ vtemp.getY() + ")");
-				}
-				if (robotpos == lowerright) {
-					vtemp = new Vector(robotpos, upperright);
-					System.out.println("Moving to (" + vtemp.getX() + ","
-							+ vtemp.getY() + ")");
-				} else {
-					vtemp = new Vector(robotpos, lowerright);
-					System.out.println("Moving to (" + vtemp.getX() + ","
-							+ vtemp.getY() + ")");
-				}
-				cmd = movetopoint(vtemp, robot);
-				aq.add(cmd);
-				return;
-			}
-			// Else kick
-			else {
-				cmd = new Command(CommandNames.KICK, 0, 0);
-				aq.add(cmd);
-				return;
-			}
+			cmd = new Command(CommandNames.KICK,0,0);
+			aq.add(cmd);
+			return;
+			
+//			// Check goal position and choose appropriate point
+//			if (rightq) {
+//				vtemp = new Vector(robotpos, lowerleft);
+//				System.out.println("Moving to (" + vtemp.getX() + ","
+//						+ vtemp.getY() + ")");
+//			} else {
+//				vtemp = new Vector(robotpos, lowerright);
+//				System.out.println("Moving to (" + vtemp.getX() + ","
+//						+ vtemp.getY() + ")");
+//			}
+//
+//			// Move to chosen kicking position
+//			cmd = movetopoint(vtemp, robot);
+//			aq.add(cmd);
+//			// Check goal position and change to appropriate angle
+//			robotpos = robot.getPos();
+//
+//			if (rightq) {
+//				balltogoal = new Vector(robotpos, leftgoal);
+//				System.out.println("Change Angle to face left goal");
+//			} // If the attacker is on the left
+//
+//			else {
+//				balltogoal = new Vector(robotpos, rightgoal);
+//				System.out.println("Change Angle to face right goal");
+//			} // If the attacker is on the right
+//
+//			cmd = new Command(CommandNames.CHANGEANGLE, 0,
+//					(int) (balltogoal.getOrientationDegrees() - robotori));
+//			aq.add(cmd);
+//			// Algorithm to check if the ball would be intercepted if defender
+//			// doesn't move
+//			// Check goal position and get a Vector defining the interception
+//			// range
+//			enemydefenderpos = w.getOtherDefender().getPos();
+//			ball = w.getBall().getPos();
+//
+//			if (rightq) {
+//				vtemp = getInterceptionRange(ball, enemydefenderpos, leftgoal,
+//						enemyrobotsize);
+//			} else {
+//				vtemp = getInterceptionRange(ball, enemydefenderpos, rightgoal,
+//						enemyrobotsize);
+//			}
+//			// Calculations if the ball would be intercepted
+//			if (rightq) {
+//				balltogoal = new Vector(ball, leftgoal);
+//			} else {
+//				balltogoal = new Vector(ball, rightgoal);
+//			}
+//
+//			vtemp2 = new Vector(balltogoal.getOrigin(), vtemp.getOrigin());
+//			vtemp3 = new Vector(balltogoal.getOrigin(), vtemp.getDestination());
+//			dtemp = vtemp3.getOrientationDegrees()
+//					- balltogoal.getOrientationDegrees();
+//			dtemp2 = vtemp2.getOrientationDegrees()
+//					- balltogoal.getOrientationDegrees();
+//
+//			// If the ball would be intercepted
+//			if (dtemp2 < 0 && dtemp > 0) {
+//				// Move to new point
+//				if (rightq && robotpos == lowerleft) {
+//					vtemp = new Vector(robotpos, upperleft);
+//					System.out.println("Moving to (" + vtemp.getX() + ","
+//							+ vtemp.getY() + ")");
+//				} else {
+//					vtemp = new Vector(robotpos, lowerleft);
+//					System.out.println("Moving to (" + vtemp.getX() + ","
+//							+ vtemp.getY() + ")");
+//				}
+//				if (robotpos == lowerright) {
+//					vtemp = new Vector(robotpos, upperright);
+//					System.out.println("Moving to (" + vtemp.getX() + ","
+//							+ vtemp.getY() + ")");
+//				} else {
+//					vtemp = new Vector(robotpos, lowerright);
+//					System.out.println("Moving to (" + vtemp.getX() + ","
+//							+ vtemp.getY() + ")");
+//				}
+//				cmd = movetopoint(vtemp, robot);
+//				aq.add(cmd);
+//				return;
+//			}
+//			// Else kick
+//			else {
+//				cmd = new Command(CommandNames.KICK, 0, 0);
+//				aq.add(cmd);
+//				return;
+//			}
 		} else if (name.equals(CommandNames.MOVE)) {
 			robottopoint = new Vector(robotpos, point);
 			cmd = movetopoint(robottopoint, robot);
