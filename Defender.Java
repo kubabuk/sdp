@@ -7,7 +7,7 @@ public class Defender {
 	 */
 	private static Communicator mCont;
 	public static void main(String[] args) {
-		final ControllerHolo nxt = new ControllerHolo();
+		final Controller nxt = new Controller();
 		 
 	   
 
