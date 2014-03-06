@@ -13,7 +13,7 @@ import javax.swing.event.ChangeListener;
 @SuppressWarnings("serial")
 class ThresholdsPanel extends JPanel {
 	private static final int SLIDER_MIN = 0;
-	private static final int SLIDER_MAX = 256;
+	private static final int SLIDER_MAX = 257;
 
 	private final int redMin = SLIDER_MIN;
 	private final int redMax = SLIDER_MAX;

@@ -63,6 +63,16 @@ public class PitchConstants {
 	private int bottomBuffer;
 	private int leftBuffer;
 	private int rightBuffer;
+	
+	// Color and direction we're shooting
+	private boolean color;
+	private boolean direction;
+	
+	private int brightness;
+	private int contrast;
+	private int hue;
+	private int saturation;
+	private int chroma_gain;
 
 	/**
 	 * Default constructor.
@@ -595,6 +605,14 @@ public class PitchConstants {
 				pitchFile.write(String.valueOf(getValueLower(i)) + "\n");
 				pitchFile.write(String.valueOf(getValueUpper(i)) + "\n");
 			}
+			pitchFile.write(String.valueOf(getBrightness()) + '\n');
+			pitchFile.write(String.valueOf(getContrast()) + '\n');
+			pitchFile.write(String.valueOf(getHue()) + '\n');
+			pitchFile.write(String.valueOf(getSaturation()) + '\n');
+			pitchFile.write(String.valueOf(getChroma_gain()) + '\n');
+			
+			pitchFile.write(String.valueOf(isColor()) + '\n');
+			pitchFile.write(String.valueOf(isDirection()) + '\n');
 			pitchFile.close();
 
 			System.out.println("Wrote successfully!");
@@ -663,6 +681,15 @@ public class PitchConstants {
 			this.valueLower[i] = scanner.nextInt();
 			this.valueUpper[i] = scanner.nextInt();
 		}
+		
+		this.brightness = scanner.nextInt();
+		this.contrast = scanner.nextInt();
+		this.hue = scanner.nextInt();
+		this.saturation = scanner.nextInt();
+		this.chroma_gain = scanner.nextInt();
+		
+		this.color = scanner.nextBoolean();
+		this.direction = scanner.nextBoolean();
 
 		scanner.close();
 	}
@@ -694,5 +721,61 @@ public class PitchConstants {
 		this.bottomBuffer = 40;
 		this.leftBuffer = 20;
 		this.rightBuffer = 20;
+	}
+
+	public void setColor(boolean color) {
+		this.color = color;
+	}
+
+	public boolean isColor() {
+		return color;
+	}
+
+	public void setDirection(boolean direction) {
+		this.direction = direction;
+	}
+
+	public boolean isDirection() {
+		return direction;
+	}
+
+	public void setBrightness(int brightness) {
+		this.brightness = brightness;
+	}
+
+	public int getBrightness() {
+		return brightness;
+	}
+
+	public void setContrast(int contrast) {
+		this.contrast = contrast;
+	}
+
+	public int getContrast() {
+		return contrast;
+	}
+
+	public void setHue(int hue) {
+		this.hue = hue;
+	}
+
+	public int getHue() {
+		return hue;
+	}
+
+	public void setSaturation(int saturation) {
+		this.saturation = saturation;
+	}
+
+	public int getSaturation() {
+		return saturation;
+	}
+
+	public void setChroma_gain(int chroma_gain) {
+		this.chroma_gain = chroma_gain;
+	}
+
+	public int getChroma_gain() {
+		return chroma_gain;
 	}
 }
