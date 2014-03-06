@@ -1,265 +1,120 @@
 package strategy;
 
-import geometry.Point;
 import geometry.Vector;
 import commands.*;
 import world.Robot;
 import world.World;
 
-public class MoveA {
-
+public class NewMoveA {
+	
 	public static void makeCommands(World w, Goal goal, Queue aq) {
-		System.out.println("MoveA is called");
-		// Changeable variables for our robot and enemy defender sizes
-		int robotsize = 40;
-		int enemyrobotsize = 40;
-		int ballsize = 20;
-
-		// Extract information from Goal
-		commands.CommandNames name = goal.getMove();
-		Point point = goal.getGoal();
-
-		// Initialise Variables
+		
 		Robot robot = w.getAttacker();
-		Point robotpos = robot.getPos();
-		Robot enemydefender = w.getOtherDefender();
-		Point enemydefenderpos = enemydefender.getPos();
-		Point ball = w.getBall().getPos();
-
-		double robotori = robot.getDir().getOrientationDegrees();
-		double robotx = robotpos.getX();
-		double dtemp = 0;
-		double dtemp2 = 0;
-
+		
+		CommandNames name = goal.getMove();
+		
 		Vector robottopoint;
 		Vector robottoball;
-		Vector balltogoal;
-		Vector vtemp;
-		Vector vtemp2;
-		Vector vtemp3;
-
+		
+		double robotori;
+		
+		int robotsize = 40;
+		int ballsize = 10;
+		
 		Command cmd;
-
-		boolean rightq = false;
-
-		// Initialise Attacking points
-		Point lowerleft = new Point(306, 76);
-		Point upperleft = new Point(306, 152);
-		Point lowerright = new Point(146, 76);
-		Point upperright = new Point(146, 152);
-
-		// Initialise Goals
-		Point leftgoal = new Point(474, 114);
-		Point rightgoal = new Point(0, 114);
-
-		// Find Attacker Quadrant
-		// If in the left quadrant
-		if (robotx > 216 && robotx < 396) {
-			rightq = true;
-		}
-
-		// If Goal is null, do nothing.
-		if (goal.isNull()) {
-			System.out.println("Null");
-			return;
-		}
-
-		// If Goal is outside boundary, do nothing.
-		if ((rightq && !hardboundarycheckright(point))
-				|| (!rightq && !hardboundarycheckleft(point))) {
-			System.out
-					.println("Goal point outside boundary: Do Nothing put into stack");
-			aq.add(new Command(CommandNames.DONOTHING, 0, 0));
-			return;
-		}
 		
-		if (!name.equals(CommandNames.CATCH)) {
-			if ((rightq && !softboundarycheckright(point))
-					|| (!rightq && !softboundarycheckleft(point))) {
-				System.out
-				.println("Goal point outside boundary: Do Nothing put into stack");
-				aq.add(new Command(CommandNames.DONOTHING,0,0));
-				return;
-			}
-		}
-		
-		// Main If-Else to determine path
 		if (goal.getAbort()) {
 			cmd = new Command(commands.CommandNames.ABORT, 0, 0);
 			System.out.println("Abort Command: Abort put into stack");
 			aq.add(cmd);
 		}
-
+		
+		if (goal.getMove().equals(CommandNames.MOVE)) {
+			
+			//Gets point of Robot and where it wants to move to and makes it into a vector
+			
+			robottopoint = new Vector(robot.getPos(),goal.getGoal());
+			
+			//Assigns the Command via movetopoint method
+			
+			cmd = movetopoint(robottopoint,robot);
+			
+			//Add the command onto the queue.
+			
+			aq.add(cmd);
+			
+			//Prints out onto terminal for debugging purposes and then ends the MoveA instance.
+			
+			System.out.println("Robot Position: " + robot.getPos().toString());
+			System.out.println("Goal Position: " + goal.getGoal().toString());
+			System.out.println("Moving distance: " + cmd.getDistance());
+			System.out.println("Angle to move in: " + cmd.getAngle());
+			
+			return;
+		}
+		
 		if (name.equals(CommandNames.CATCH)) {
-			robottoball = new Vector(robotpos,point);
+			
+			//Creates a new Vector for the orientation
+			
+			robottoball = new Vector(robot.getPos(),goal.getGoal());
+			
+			//Gets the orientation of the robot
+			
+			robotori = robot.getDir().getOrientationDegrees();
+			
+			//Face towards the ball
+			
 			cmd = new Command(CommandNames.CHANGEANGLE, 0,
 					(int) (robottoball.getOrientationDegrees() - robotori));
+			
 			System.out.println("Change Angle towards the ball " + (robottoball.getOrientationDegrees() - robotori));
 			aq.add(cmd);
+			
+			//Calls movetoball which is a modified movetopoint but takes into consideration the size of robot and ball
+			
 			cmd = movetoball(robottoball, robotsize, ballsize, robot);
-			System.out.println("Move Command: Move to ball distance " + robottoball.getMagnitude());
+			System.out.println("Moving Distance: " + robottoball.getMagnitude());
 			aq.add(cmd);
+			
 			cmd = new Command(CommandNames.CATCH, 0, 0);
 			w.getBall().setCaught(true);
-			System.out.println("Catch Command: Catch the ball ");
+			System.out.println("Catch");
 			aq.add(cmd);
 		}
-
-		// Main Kicking Algorithm
-		else if (name.equals(CommandNames.KICK)) {
-
-			// Check goal position and choose appropriate point
-			if (rightq) {
-				vtemp = new Vector(robotpos, lowerleft);
-				System.out.println("Moving to (" + vtemp.getX() + ","
-						+ vtemp.getY() + ")");
-			} else {
-				vtemp = new Vector(robotpos, lowerright);
-				System.out.println("Moving to (" + vtemp.getX() + ","
-						+ vtemp.getY() + ")");
-			}
-
-			// Move to chosen kicking position
-			cmd = movetopoint(vtemp, robot);
-			aq.add(cmd);
-			// Check goal position and change to appropriate angle
-			robotpos = robot.getPos();
-
-			if (rightq) {
-				balltogoal = new Vector(robotpos, leftgoal);
-				System.out.println("Change Angle to face left goal");
-			} // If the attacker is on the left
-
-			else {
-				balltogoal = new Vector(robotpos, rightgoal);
-				System.out.println("Change Angle to face right goal");
-			} // If the attacker is on the right
-
+		
+		if (name.equals(CommandNames.KICK)) {
+			
+			//Creates a new Vector for the orientation
+			
+			robottoball = new Vector(robot.getPos(),goal.getGoal());
+			
+			//Gets the orientation of the robot
+			
+			robotori = robot.getDir().getOrientationDegrees();
+			
+			//Face towards the ball
+			
 			cmd = new Command(CommandNames.CHANGEANGLE, 0,
-					(int) (balltogoal.getOrientationDegrees() - robotori));
+					(int) (robottoball.getOrientationDegrees() - robotori));
+			
+			System.out.println("Changing angle by: " + cmd.getAngle());
+			
 			aq.add(cmd);
-			// Algorithm to check if the ball would be intercepted if defender
-			// doesn't move
-			// Check goal position and get a Vector defining the interception
-			// range
-			enemydefenderpos = w.getOtherDefender().getPos();
-			ball = w.getBall().getPos();
-
-			if (rightq) {
-				vtemp = getInterceptionRange(ball, enemydefenderpos, leftgoal,
-						enemyrobotsize);
-			} else {
-				vtemp = getInterceptionRange(ball, enemydefenderpos, rightgoal,
-						enemyrobotsize);
-			}
-			// Calculations if the ball would be intercepted
-			if (rightq) {
-				balltogoal = new Vector(ball, leftgoal);
-			} else {
-				balltogoal = new Vector(ball, rightgoal);
-			}
-
-			vtemp2 = new Vector(balltogoal.getOrigin(), vtemp.getOrigin());
-			vtemp3 = new Vector(balltogoal.getOrigin(), vtemp.getDestination());
-			dtemp = vtemp3.getOrientationDegrees()
-					- balltogoal.getOrientationDegrees();
-			dtemp2 = vtemp2.getOrientationDegrees()
-					- balltogoal.getOrientationDegrees();
-
-			// If the ball would be intercepted
-			if (dtemp2 < 0 && dtemp > 0) {
-				// Move to new point
-				if (rightq && robotpos == lowerleft) {
-					vtemp = new Vector(robotpos, upperleft);
-					System.out.println("Moving to (" + vtemp.getX() + ","
-							+ vtemp.getY() + ")");
-				} else {
-					vtemp = new Vector(robotpos, lowerleft);
-					System.out.println("Moving to (" + vtemp.getX() + ","
-							+ vtemp.getY() + ")");
-				}
-				if (robotpos == lowerright) {
-					vtemp = new Vector(robotpos, upperright);
-					System.out.println("Moving to (" + vtemp.getX() + ","
-							+ vtemp.getY() + ")");
-				} else {
-					vtemp = new Vector(robotpos, lowerright);
-					System.out.println("Moving to (" + vtemp.getX() + ","
-							+ vtemp.getY() + ")");
-				}
-				cmd = movetopoint(vtemp, robot);
-				aq.add(cmd);
-				return;
-			}
-			// Else kick
-			else {
-				cmd = new Command(CommandNames.KICK, 0, 0);
-				aq.add(cmd);
-				return;
-			}
-		} else if (name.equals(CommandNames.MOVE)) {
-			robottopoint = new Vector(robotpos, point);
-			cmd = movetopoint(robottopoint, robot);
-			System.out.println("Moving to (" + goal.getGoal().getX() + ","
-					+ goal.getGoal().getY() + ")");
+			
+			//Then Kick
+			
+			cmd = new Command(CommandNames.KICK,0,0);
+			
+			System.out.println("Kick");
+			
 			aq.add(cmd);
-			System.out.println(cmd.getCommand() + ", " + cmd.getDistance()
-					+ ", " + cmd.getAngle());
 			return;
-		} else {
-			System.out.println("The code is not working");
 		}
-	}
-
-	// Boundary Checks
-
-	public static boolean softboundarycheckright(Point point) {
-		double pointx = point.getX();
-		double pointy = point.getY();
-		// pointy restraints so robot doesn't run into wall
-		if (pointx > 236 && pointx < 376 && pointy > 20 && pointy < 208) {
-			return true;
-		} else {
-			return false;
-		}
+		
 	}
 	
-	public static boolean hardboundarycheckright(Point point) {
-		System.out.println("Left Quad");
-		double pointx = point.getX();
-//		double pointy = point.getY();
-		// pointy restraints so robot doesn't run into wall
-		if (pointx > 216 && pointx < 396/* && pointy > 20 && pointy < 208*/) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public static boolean softboundarycheckleft(Point point) {
-		double pointx = point.getX();
-		double pointy = point.getY();
-		// pointy restraints so robot doesn't run into wall
-		if (pointx > 96 && pointx < 196 && pointy > 20 && pointy < 208) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public static boolean hardboundarycheckleft(Point point) {
-		System.out.println("Right Quad");
-		double pointx = point.getX();
-//		double pointy = point.getY();
-		// pointy restraints so robot doesn't run into wall
-		if (pointx > 76 && pointx < 216/* && pointy > 20 && pointy < 208*/) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	// Methods to easily call from main function
+	//Calculates and returns a Command for moving from the current position to a specified point
 	public static Command movetopoint(Vector robottopoint, Robot robot) {
 		int distance = (int) robottopoint.getMagnitude();
 		int angle = (int) robottopoint.getOrientationDegrees();
@@ -271,42 +126,18 @@ public class MoveA {
 				(int) (angle - robot.getDir().getOrientationDegrees()));
 		return cmd;
 	}
-
-	// Method used to move towards ball, accounting in the robotsize so it does
-	// not push the ball away.
+	
+	//Same as movetopoint, but takes into consideration the size of the robot and the ball
 	public static Command movetoball(Vector robottoball, int robotsize,
 			int ballsize, Robot robot) {
+		
+		//This method assumes you face towards the ball first, hence a 0 angle
+		
 		int distance = (int) robottoball.getMagnitude();
-		int angle = (int) robottoball.getOrientationDegrees();
 		int sizeadjustments = robotsize + ballsize;
 		System.out.println("Robot Position = " + robot.getPos().toString());
 		Command cmd = new Command(CommandNames.MOVE,
 				(distance - sizeadjustments),0);
 		return cmd;
-	}
-
-	// Calculates the range of interception the enemy defender robot can
-	// intercept by not moving
-	// Returns a Vector -- The origin, the left boundary and the destination the
-	// right boundary.
-	// Takes in the point of where the ball is, the enemy defender, the goal and
-	// the size of the enemy robot (range)
-	public static Vector getInterceptionRange(Point ball,
-			Point enemydefenderpos, Point goal, int range) {
-		// Initialise Variables
-		double enemyrobotx = enemydefenderpos.getX();
-		double enemyroboty = enemydefenderpos.getY();
-		double leftrange = enemyroboty - (range / 2);
-		double rightrange = enemyroboty + (range / 2);
-		Point leftboundary = new Point(enemyrobotx, leftrange);
-		Point rightboundary = new Point(enemyrobotx, rightrange);
-		Vector lefttrajectoryboundary = new Vector(ball, leftboundary);
-		Vector righttrajectoryboundary = new Vector(ball, rightboundary);
-		double leftori = lefttrajectoryboundary.getOrientationDegrees();
-		double rightori = righttrajectoryboundary.getOrientationDegrees();
-		Vector defenderrange = new Vector(new Point(enemyrobotx, leftori),
-				new Point(enemyrobotx, rightori));
-		// Main function -- Lulzno everything's already computed
-		return defenderrange;
 	}
 }
