@@ -14,9 +14,6 @@ public class TestVision {
 		}
 		while(true){
 			Thread.sleep(500);
-			System.out.println(world.getFirstBoundary());
-			System.out.println(world.getSecondBoundary());
-			System.out.println(world.getThirdBoundary());
 		}
 	}
 }

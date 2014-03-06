@@ -82,6 +82,7 @@ public class VisionGUI extends JFrame {
 	private final JPanel cameraSettings;
 	private final JPanel plateThresholder;
 	private final JPanel generalSettings;
+	private final StatePanel statePanel;
 	private final WindowAdapter windowAdapter = new WindowAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
@@ -98,6 +99,7 @@ public class VisionGUI extends JFrame {
 		this.videoWidth = videoWidth;
 		this.videoHeight = videoHeight;
 		this.world = world;
+		this.statePanel = new StatePanel(this.world);
 		this.imageProcessor = new ImageProcessor(this.world); 
 		this.ballThresholder = new BallThresholder(imageProcessor, pitchConstants);
 		this.yellowThresholder = new YellowThresholder(imageProcessor, pitchConstants);
@@ -122,6 +124,7 @@ public class VisionGUI extends JFrame {
 		tabbedPane.addTab("General", generalSettings);
 		tabbedPane.setFocusable(true);
 		contentPane.add(tabbedPane);
+		
 		BufferedImage blankInitialiser = new BufferedImage(videoWidth,
 				videoHeight, BufferedImage.TYPE_INT_RGB);
 		getContentPane().setLayout(null);
@@ -129,9 +132,13 @@ public class VisionGUI extends JFrame {
 		this.videoDisplay.setMinimumSize(videoSize);
 		this.videoDisplay.setSize(videoSize);
 		contentPane.add(videoDisplay);
-		this.setSize(videoWidth + 300, videoHeight + 100);
+		this.setSize(videoWidth + 300, videoHeight + 300);
 		this.setVisible(true);
 		this.getGraphics().drawImage(blankInitialiser, 0, 0, null);
+		
+		statePanel.setSize(this.videoWidth, 300);
+		statePanel.setLocation(0,videoHeight);
+		contentPane.add(statePanel);
 
 		this.setResizable(false);
 		videoDisplay.setFocusable(true);
@@ -157,6 +164,7 @@ public class VisionGUI extends JFrame {
 		this.frameCounter = frameCounter;
 		Image img = imageProcessor.trackWorld(frame);
 		this.videoDisplay.getGraphics().drawImage((BufferedImage) img, 0, 0, this.videoWidth, this.videoHeight, null);
+		this.statePanel.updateState();
 	}
 
 	public void sendWorldState(World worldState) {
