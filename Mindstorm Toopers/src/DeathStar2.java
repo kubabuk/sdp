@@ -48,7 +48,7 @@ public class DeathStar2 {
 //			}
 
 			if(!cmdAttack.isNothing()){
-				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), cmdAttack.getAngle());
+				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), cmdAttack.getDirection(), cmdAttack.getAngle());
 			}
 			count++;
 			//if (count == 50) {	flag = false;}

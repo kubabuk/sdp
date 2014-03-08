@@ -168,7 +168,7 @@ public class MainComm implements Communicator {
 		}
 	}
 	//@Override
-	public synchronized void sendMessage(CommandNames op, int args1, int args2) throws IOException {
+	public synchronized void sendMessage(CommandNames op, int args1, int args2, int args3) throws IOException {
 
 	System.out.println(op +" sent command PEAK"+ args2);
 
