@@ -47,17 +47,22 @@ public class DeathStar2 {
 //				theForceDef.sendMessage(cmdDefend.getCommand(), cmdDefend.getDistance(), cmdDefend.getAngle());
 //			}
 
+//			if (cmdAttack.getAngle()>180)
+//				theForceAttack.sendMessage(CommandNames.MOVE, 50,50, 50);
 			if(!cmdAttack.isNothing()){
-				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), cmdAttack.getAngle());
+				System.out.println("Attempting to send message");
+				if (cmdAttack.getAngle()>180){
+					System.out.println(cmdAttack.getCommand().toString());					
+				}
+				else theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle());
+				System.out.println(cmdAttack.getDistance());
+				System.out.println(cmdAttack.getAngle());
+				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle()-180);
+				
 			}
-			count++;
+//			count++;
 			//if (count == 50) {	flag = false;}
 		}
-
-		
 	}
-
-
-
 
 }

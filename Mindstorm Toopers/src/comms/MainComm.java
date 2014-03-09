@@ -161,22 +161,24 @@ public class MainComm implements Communicator {
 		CommandNames op = CommandNames.values()[b];
 		int args1 = is.read();
 		int args2 = is.read();
+		int args3= is.read();
 		// notify all listeners
 		Iterator<MessageListener> ml = mListener.iterator();
 		while (ml.hasNext()) {
-			ml.next().receiveMessage(op, args1, args2, MainComm.this);	
+			ml.next().receiveMessage(op, args1, args2,args3, MainComm.this);	
 		}
 	}
 	//@Override
-	public synchronized void sendMessage(CommandNames op, int args1, int args2) throws IOException {
+	public synchronized void sendMessage(CommandNames op, int args1, int args2,int args3) throws IOException {
 
-	System.out.println(op +" sent command PEAK"+ args2);
+	System.out.println(op +" sent command PEAK"+args1+ args2+args3);
 
 
 	// send a message to device
 	os.write(op.ordinal()); // write opcode
 	os.write(args1);
 	os.write(args2 );
+	os.write(args3);
 	os.flush(); // send message
 	}
 

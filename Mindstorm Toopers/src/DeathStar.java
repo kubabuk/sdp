@@ -64,7 +64,7 @@ public class DeathStar {
 			{
 				aq.add(new Command(CommandNames.MOVE, 50, 0));
 				aq.add(new Command(CommandNames.CHANGEANGLE, 0, 120));
-				theForceAttack.sendMessage(CommandNames.KICK, 0, 0);
+				theForceAttack.sendMessage(CommandNames.KICK, 0,0, 0);
 			}
 			
 			
@@ -83,9 +83,13 @@ public class DeathStar {
 			//}
 
 			if(!cmdAttack.isNothing()){
-				System.out.println("Attempting to s00end message");
-				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), cmdAttack.getAngle());
+				System.out.println("Attempting to send message");
+				if (cmdAttack.getAngle()>180)
+				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle()-180);
+				else theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle());
+				
 			}
+			
 				
 		
 //				theForceAttack.sendMessage(cmdAttack.getCommand(), sendArgumentsAttk);
