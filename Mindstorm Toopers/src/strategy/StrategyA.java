@@ -1,6 +1,7 @@
 package strategy;
 
 import geometry.Point;
+import geometry.Vector;
 import commands.CommandNames;
 
 import world.World;
@@ -30,7 +31,8 @@ public class StrategyA {
 		//State     |Movement
 		//0         |intercept the ball
 		//1         |catch the ball
-		//2         |kick the ball
+		//2         |move to the kick point
+		//3			|kick
 	
 	
 	
@@ -41,38 +43,144 @@ public class StrategyA {
 		{
 		case 0:
 		{
-			if(!w.getBall().isMoving()){
-				this.State = 1;
-				break;
-			}
 			Point b = w.getBall().getPos();
 			Point r = w.getAttackerPos();
-			Point gp = new Point(r.getX(),b.getY());
+			Point gp;
 			
-			System.out.println("The ball is at "+b.toString());
-			System.out.println("The attacker is at "+r.toString());
-			
-			if (Point.pointDistance(r, b)<30) {
-				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-				this.State = 1;
-				
+			//vision bug tolerance
+			if ((b.getX()==0&&b.getY()==0)||(r.getX()==0&&r.getY()==0))
+			{
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
 				break;
 			}
 			
-			g = new Goal(gp, CommandNames.MOVE,false,false);
-			
-			break;
+			//intercept at the boundary strategy
+			if (w.getDirection())
+			{
+				//facing right
+				//go to the boundary on the far side of the ball in the attacker zone
+				if (b.getX()>r.getX())
+				{
+					gp = new Point(256,b.getY());
+				}
+				else
+				{
+					gp = new Point(316,b.getY());
+				}
+				
+				System.out.println("The ball is at "+b.toString());
+				System.out.println("The attacker is at "+r.toString());
+				
+				if (b.getX()>236&&b.getX()<336) {
+					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+					this.State = 1;
+					
+					break;
+				}
+				
+				g = new Goal(gp, CommandNames.MOVE,false,false);
+				
+				break;
+				
+			}
+			else
+			{
+				// facing left
+				if (b.getX()>r.getX())
+				{
+					gp = new Point(116,b.getY());
+				}
+				else
+				{
+					gp = new Point(176,b.getY());
+					
+				}
+				System.out.println("The ball is at "+b.toString());
+				System.out.println("The attacker is at "+r.toString());
+				
+				if (b.getX()>96&&b.getX()<176) {
+					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+					this.State = 1;
+					
+					break;
+				}
+				
+				g = new Goal(gp, CommandNames.MOVE,false,false);
+				
+				break;				
+			}
+		
 		}
 		case 1:
 		{
 			//if the ball is caught, switch to state 2
-			if(w.getBall().iscaught()) {
+			
+			//if(w.getBall().iscaught()) 
+			//The iscaught can not be implemented now
+			//so I wrote a function here for it
+			Point r = w.getAttackerPos();
+			Vector v = w.getAttackerDir();
+			Point b = w.getBallPos();
+			
+			//vision bug tolerance
+			if ((b.getX()==0&&b.getY()==0)||(r.getX()==0&&r.getY()==0))
+			{
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
+				break;
+			}
+			
+			// if the ball is not in the attacker zone, switch back to interception mode
+			if (w.getDirection())
+			{
+				//facing right
+				//go to the boundary on the far side of the ball in the attacker zone
+
+				System.out.println("The ball is at "+b.toString());
+				System.out.println("The attacker is at "+r.toString());
+				
+				if (!(b.getX()>236&&b.getX()<336)) {
+					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+					this.State = 0;
+					
+					break;
+				}
+				
+				
+			}
+			else
+			{
+				// facing left
+			
+				System.out.println("The ball is at "+b.toString());
+				System.out.println("The attacker is at "+r.toString());
+		
+				if (!(b.getX()>96&&b.getX()<176)) {
+					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+					this.State = 0;
+					
+					break;
+				}
+				
+				
+			}
+			
+			
+			//temporary function for iscaught
+			//when the real one is done, please remove the code below
+			Vector rb = new Vector(r, 20, v.getOrientation());
+			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
+			boolean iscaught = Point.pointDistance(b, bc) < 10;
+			
+			
+			//to here
+			if (iscaught)
+			{
 				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 				this.State=2;
 				break;
 			}
 			
-			Point b = w.getBall().getPos();
+			//Point b = w.getBall().getPos();
 			//w.getBall().setCaught(true);
 			//do catch0
 			g = new Goal(b, CommandNames.CATCH,false,false);
@@ -81,17 +189,131 @@ public class StrategyA {
 			
 		}
 		case 2:
-		{
+		{		
+			//We now have 2 options for kick positions
 			Point r = w.getAttackerPos();
-
-			g = new Goal(r, CommandNames.KICK,false,false);
-			w.getBall().setCaught(false);
-			this.State = 0;
+			Point b = w.getBallPos();
+			Vector v = w.getAttackerDir();
+			
+			//vision bug tolerance
+			if ((b.getX()==0&&b.getY()==0)||(r.getX()==0&&r.getY()==0))
+			{
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,true,false);
+				break;
+			}
+			
+			//if ball is not caught, switch back to state 1
+			//temporary function for iscaught
+			//when the real one is done, please remove the code below
+			Vector rb = new Vector(r, 20, v.getOrientation());
+			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
+			boolean iscaught = Point.pointDistance(b, bc) < 10;
+			
+			if (!iscaught)
+			{
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+				this.State=1;
+				break;
+			}
+			
+			
+			Point kp;
+			System.out.println("kick The attacker is at "+w.getAttacker().toString());
+			if  (w.getDirection())
+			{
+				//facing right
+				if (Point.pointDistance(w.getOtherDefenderPos(), new Point(350,50))<60)
+				{
+					kp = new Point(300,50);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+					
+				}
+				else
+				{
+					kp = new Point(300,170);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+					
+				}
+			
+			}
+			else
+			{
+				//facing left
+				if (Point.pointDistance(w.getOtherDefenderPos(), new Point(50,50))<60)
+				{
+					kp = new Point(150,50);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+					
+				}
+				else
+				{
+					kp = new Point(150,170);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+					
+				}
+			}
+			
+			// when the robot is close enough to the kick point
+			// and has the ball
+			// then switch to the kick mode
+			// if not, switch back to catch mode
+			// and open the catcher
+			if (iscaught&&Point.pointDistance(r, kp)<30)
+			{
+				this.State = 3;
+			}
+			else
+			{
+				this.State = 1;
+				g = new Goal(new Point(0,0), CommandNames.KICK,false,false);
+			}
 			
 			break;
 		}
+		case 3:
+		{
+			Point r = w.getAttackerPos();
+			Point b = w.getBallPos();
+			Vector v = w.getAttackerDir();
+			//vision bug tolerance
+			if ((b.getX()==0&&b.getY()==0)||(r.getX()==0&&r.getY()==0))
+			{
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
+				break;
+			}
+			
+			//The point is the point we want to kick the ball to.
+			Point goal;
+			if (w.getDirection())
+			{
+				//facing right
+				goal = new Point (474,114);
+			}
+			else
+			{
+				//facing left
+				goal = new Point (0,114);
+			}
+
+			g = new Goal(goal, CommandNames.KICK,false,false);
+			
+			//temporary function for iscaught
+			//when the real one is done, please remove the code below
+			Vector rb = new Vector(r, 20, v.getOrientation());
+			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
+			boolean iscaught = Point.pointDistance(b, bc) < 10;
+			if (!iscaught)
+			{
+				this.State = 0;
+			}
+			break;
+			
+			
+		}
 		default:
 		{
+			// generally won't be called
+			// in special situation this will not be called either
 			g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
 			System.out.println("going default");
 			break;
@@ -130,14 +352,21 @@ public class StrategyA {
 		else 
 		{
 			// do judge and decide if we should send the command
+			// when the command name is different from the last one (except donothing command)
 			if (currentgoal.getMove() != newgoal.getMove())
 			{
-				System.out.println("This is set to be an abort goal");
+				System.out.println("This is set to be an abort goal, a new command goal will be executed.");
 				newgoal.setAbort(true);
 				return newgoal;
 			}
 			else
 			{
+				// when the command has the same move as the last one, 
+				// we compare the goal point where we want the robot to go
+				// if that's a close point to the old one
+				// do not change the command
+				// if not
+				// update the old goal
 				if (Point.pointDistance(currentgoal.getGoal(), newgoal.getGoal())< 10)
 				{
 					System.out.println("old goal " + currentgoal.toString());
