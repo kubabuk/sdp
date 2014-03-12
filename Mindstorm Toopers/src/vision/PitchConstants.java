@@ -726,6 +726,14 @@ public class PitchConstants {
 	public void setColor(boolean color) {
 		this.color = color;
 	}
+	
+	public boolean getColor() {
+		return this.color;
+	}
+	
+	public boolean getDirection() {
+		return this.direction;
+	}
 
 	public boolean isColor() {
 		return color;

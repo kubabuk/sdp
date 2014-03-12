@@ -120,6 +120,8 @@ public class VisionGUI extends JFrame {
 		imageProcessor.setLeft(pitchConstants.getLeftBuffer());
 		imageProcessor.setRight(videoWidth - pitchConstants.getRightBuffer());
 		imageProcessor.setBottom(videoHeight - pitchConstants.getBottomBuffer());
+		world.setColor(pitchConstants.getColor());
+		world.setDirection(pitchConstants.getDirection());
 
 		Container contentPane = this.getContentPane();
 
