@@ -1,0 +1,32 @@
+\documentclass[dvips]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{layout}
+\usepackage[margin=1in]{geometry}
+
+%\setlength{\voffset}{-0.75in}
+%\setlength{\headsep}{5pt} 
+ 
+\begin{document}
+\sloppy
+
+\title{Performance Review 4 Group 6 Summary}
+ 
+\maketitle
+\begin{itemize}
+\item Peter Macgregor - 3.5 - 
+\item Patricia Dragan -  - 
+\item Egidijus Skinkys - 3.5 - Egidijus wrote code to run on the robot to implement the commands that are sent to the robot. He responded to the needs of the team and updated his code as the robot design changed.
+\item Andrew Leith - 4 - Andrew set up the external motor board. He helped implement holonomic wheels into the robot design. He then spent a long time testing the robots before the friendlies.
+\item Nursultan Askarbekuly -  - 
+\item Peak Limpiti - 4.5 - Peak has been working on AI, implementing the interface between the high level strategy to the commands sent to the robot. He also stepped in to help build the robot and test the design.
+\item Zhang Chen -  - 
+\item Aris Tsialos - 2 - Aris was unavailable for the first two weeks, but remained familiar with the updated code. He then contributed to the strategy and helped with testing.
+\item Kuba Kaszyk - 4 - Kuba lead the team, liasing with everyone on the team and ensuring that every task was on track. He helped with the AI team to code the strategy, and then tested extensively before the friendlies.
+\end{itemize}
+
+
+\end{document}
+
