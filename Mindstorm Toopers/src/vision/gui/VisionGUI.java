@@ -6,18 +6,25 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.MouseInputAdapter;
+
 import vision.ImageProcessor;
 import vision.PitchConstants;
 import vision.VisionRunner;
@@ -108,6 +115,11 @@ public class VisionGUI extends JFrame {
 		this.plateThresholder = new PlateThresholder(imageProcessor, pitchConstants);
 		this.cameraSettings = new CameraSettingsPanel(vStream, pitchConstants);
 		this.generalSettings = new GeneralSettingsPanel(imageProcessor, world, pitchConstants);
+		
+		imageProcessor.setTop(pitchConstants.getTopBuffer());
+		imageProcessor.setLeft(pitchConstants.getLeftBuffer());
+		imageProcessor.setRight(videoWidth - pitchConstants.getRightBuffer());
+		imageProcessor.setBottom(videoHeight - pitchConstants.getBottomBuffer());
 
 		Container contentPane = this.getContentPane();
 
@@ -153,6 +165,79 @@ public class VisionGUI extends JFrame {
 			public void keyTyped(KeyEvent e) {
 			}
 		});
+
+		MouseInputAdapter mouseSelector = new MouseInputAdapter() {
+			Rectangle selection;
+
+			public void mousePressed(MouseEvent e) {
+				selectionActive = true;
+				System.out.println("Initialised anchor");
+				// Pitch dimension selector
+				anchor = e.getPoint();
+				System.out.println(anchor.x);
+				System.out.println(anchor.y);
+				selection = new Rectangle(anchor);
+			}
+
+			public void mouseDragged(MouseEvent e) {
+				selection.setBounds((int) Math.min(anchor.x, e.getX()),
+						(int) Math.min(anchor.y, e.getY()),
+						(int) Math.abs(e.getX() - anchor.x),
+						(int) Math.abs(e.getY() - anchor.y));
+				a = (int) Math.min(anchor.x, e.getX());
+				b = (int) Math.min(anchor.y, e.getY());
+				c = (int) Math.abs(e.getX() - anchor.x);
+				d = (int) Math.abs(e.getY() - anchor.y);
+			}
+
+			public void mouseReleased(MouseEvent e) {
+				selectionActive = false;
+				if (e.getPoint().distance(anchor) > 5) {
+					try {
+						int top = b;
+						int bottom = videoHeight - d - b;
+						int left = a;
+						int right = videoWidth - c - a;
+						if (top > 0 && bottom > 0 && left > 0
+									&& right > 0) {
+						// 	Update pitch constants
+							pitchConstants.setTopBuffer(top);
+							pitchConstants.setBottomBuffer(bottom);
+							pitchConstants.setLeftBuffer(left);
+							pitchConstants.setRightBuffer(right);
+							
+//							Update imageProcessor with new values.
+							imageProcessor.setTop(pitchConstants.getTopBuffer());
+							imageProcessor.setLeft(pitchConstants.getLeftBuffer());
+							imageProcessor.setRight(videoWidth - pitchConstants.getRightBuffer());
+							imageProcessor.setBottom(videoHeight - pitchConstants.getBottomBuffer());
+
+						// 	Writing the new dimensions to file
+							FileWriter writer = new FileWriter(
+								new File("constants/pitch" + "0" + "Dimensions"));
+							writer.write("" + top + "\n");
+							writer.write("" + bottom + "\n");
+							writer.write("" + left + "\n");
+							writer.write("" + right + "\n");
+							writer.close();
+							System.out.println("Wrote pitch const");
+						} else {
+							System.out.println("Pitch selection NOT succesful");
+						}
+						System.out.print("Top: " + top + " Bottom " + bottom);
+						System.out.println(" Right " + right + " Left "	+ left);
+					} catch (IOException e1) {
+						System.out.println("Error writing pitch dimensions to file");
+						e1.printStackTrace();
+					}
+					System.out.println("A: " + a + " B: " + b + " C: " + c + " D:" + d);
+					repaint();
+					}
+			}
+		};
+
+		this.videoDisplay.addMouseListener(mouseSelector);
+		this.videoDisplay.addMouseMotionListener(mouseSelector);
 
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.addWindowListener(windowAdapter);

@@ -93,6 +93,11 @@ public class ImageProcessor {
 	private static int plateMinValue = 105;
 	private static int plateMaxValue = 160;
 	
+	private static int top = 1;
+	private static int left = 1;
+	private static int right = 1;
+	private static int bottom = 1;
+	
 	// These variables keep track of the last location of the various objects.
 	// This is used to reduce noise in the values returned for their locations.
 	private static Point[] lastDot;
@@ -177,15 +182,8 @@ public class ImageProcessor {
 		int tempCountBlueLeft = 0;
 		int tempCountBlueRight = 0;
 		boolean addToTemp = false;
-		int minWidth = world.getPitchLeft();
-		int maxWidth = minWidth + world.getWidth();
-		int minHeight = world.getPitchTop();
-		int maxHeight = minHeight + world.getHeight();
-		int middleWidth = world.getSecondSectionBoundary();
-		int firstWidth = world.getFirstSectionBoundary();
-		int thirdWidth = world.getThirdSectionBoundary();
 
-		for (int w = minWidth; w < firstWidth; w++) {
+		for (int w = left; w < left + ((right - left) / 4.5); w++) {
 			tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
 			tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
 			tempCountYellowLeft = 0;
@@ -193,7 +191,7 @@ public class ImageProcessor {
 			tempDotX = 0.0; tempDotY = 0.0;
 			tempCountDot = 0;
 			addToTemp = false;
-			for (int h = minHeight; h < maxHeight; h++) {
+			for (int h = top; h < bottom; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
@@ -332,7 +330,7 @@ public class ImageProcessor {
 			countYellowLeft = 0;
 		}
 		
-		for (int w = firstWidth; w < middleWidth; w++) {
+		for (int w = (int) (left + ((right - left) / 4.5)); w < left + ((right - left) / 2); w++) {
 			tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
 			tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
 			tempCountYellowLeft = 0;
@@ -340,7 +338,7 @@ public class ImageProcessor {
 			tempDotX = 0.0; tempDotY = 0.0;
 			tempCountDot = 0;
 			addToTemp = false;
-			for (int h = minHeight; h < maxHeight; h++) {
+			for (int h = top; h < bottom; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
@@ -475,7 +473,7 @@ public class ImageProcessor {
 			countBlueLeft = 0;
 		}
 		
-		for (int w = middleWidth; w < thirdWidth; w++) {
+		for (int w = left + ((right - left) / 2); w < right - ((right - left) / 4.5); w++) {
 			tempYellowRightX = 0.0; tempYellowRightY = 0.0;
 			tempBlueRightX = 0.0; tempBlueRightY = 0.0;
 			tempCountYellowRight = 0;
@@ -483,7 +481,7 @@ public class ImageProcessor {
 			tempDotX = 0.0; tempDotY = 0.0;
 			tempCountDot = 0;
 			addToTemp = false;
-			for (int h = minHeight; h < maxHeight; h++) {
+			for (int h = top; h < bottom; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
@@ -620,7 +618,7 @@ public class ImageProcessor {
 			countYellowRight = 0;
 		}
 		
-		for (int w = thirdWidth; w < maxWidth; w++) {
+		for (int w = (int) (right - ((right - left) / 4.5)); w < right; w++) {
 			tempYellowRightX = 0.0; tempYellowRightY = 0.0;
 			tempBlueRightX = 0.0; tempBlueRightY = 0.0;
 			tempCountYellowRight = 0;
@@ -628,7 +626,7 @@ public class ImageProcessor {
 			tempDotX = 0.0; tempDotY = 0.0;
 			tempCountDot = 0;
 			addToTemp = false;
-			for (int h = minHeight; h < maxHeight; h++) {
+			for (int h = top; h < bottom; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
@@ -1116,13 +1114,9 @@ public class ImageProcessor {
 	
 	// Draws a green outline of the pitch on the given BufferedImage
 	public static Image drawBoundaries(BufferedImage img){
-		int left = world.getPitchLeft();
-		int top = world.getPitchTop();
-		int right = left + world.getWidth();
-		int bottom = top + world.getHeight();
-		int first = world.getFirstSectionBoundary();
-		int second = world.getSecondSectionBoundary();
-		int third = world.getThirdSectionBoundary();
+		int first = (int) (left + ((right - left) / 4.5));
+		int second = left + ((right - left) / 2);
+		int third = (int) (right - ((right - left) / 4.5));
 		for (int w = left; w < right; w++){
 			img.setRGB(w, top, green.getRGB());
 			img.setRGB(w, bottom, green.getRGB());
@@ -1428,4 +1422,38 @@ public class ImageProcessor {
 	public void recalculateBoundaries(boolean b){
 		this.recalculateBoundaries = b;
 	}
+
+	public static int getTop() {
+		return top;
+	}
+
+	public static void setTop(int top) {
+		ImageProcessor.top = top;
+	}
+
+	public static int getLeft() {
+		return left;
+	}
+
+	public static void setLeft(int left) {
+		ImageProcessor.left = left;
+	}
+
+	public static int getRight() {
+		return right;
+	}
+
+	public static void setRight(int right) {
+		ImageProcessor.right = right;
+	}
+
+	public static int getBottom() {
+		return bottom;
+	}
+
+	public static void setBottom(int bottom) {
+		ImageProcessor.bottom = bottom;
+	}
+	
+	
 }

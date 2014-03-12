@@ -631,26 +631,26 @@ public class PitchConstants {
 	 *            The file to load the constants from.
 	 */
 	public void loadConstants(String fileName) {
-//		Scanner scannerDim;
+		Scanner scannerDim;
 
-//		try {
-//			scannerDim = new Scanner(new File(fileName + "Dimensions"));
-//			assert (scannerDim != null);
-//
-//			// Pitch Dimensions
-//			this.topBuffer = scannerDim.nextInt();
-//			this.bottomBuffer = scannerDim.nextInt();
-//			this.leftBuffer = scannerDim.nextInt();
-//			this.rightBuffer = scannerDim.nextInt();
-//
-//			scannerDim.close();
-//		} catch (Exception e) {
-//			System.err.println("Cannot load pitch dimensions file " + fileName
-//					+ "Dimensions:");
-//			System.err.println(e.getMessage());
-//			loadDefaultConstants();
-//			return;
-//		}
+		try {
+			scannerDim = new Scanner(new File(fileName + "Dimensions"));
+			assert (scannerDim != null);
+
+			// Pitch Dimensions
+			this.topBuffer = scannerDim.nextInt();
+			this.bottomBuffer = scannerDim.nextInt();
+			this.leftBuffer = scannerDim.nextInt();
+			this.rightBuffer = scannerDim.nextInt();
+
+			scannerDim.close();
+		} catch (Exception e) {
+			System.err.println("Cannot load pitch dimensions file " + fileName
+					+ "Dimensions:");
+			System.err.println(e.getMessage());
+			loadDefaultConstants();
+			return;
+		}
 
 		Scanner scanner;
 
