@@ -9,6 +9,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import world.World;
+import vision.PitchConstants;
 import vision.VisionRunner;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -68,37 +69,41 @@ public class CameraSettingsPanel extends JPanel {
 	private final JLabel chromaGainLabel = new JLabel("Chroma Gain:");
 	private final JSlider chromaGainSlider = new JSlider(chromaGainMin,
 			chromaGainMax + 1);
+	
+	private PitchConstants pitchConstants;
 
-	public CameraSettingsPanel(VisionRunner vStream){
+	public CameraSettingsPanel(VisionRunner vStream, PitchConstants pitchConstants){
+		this.pitchConstants = pitchConstants;
 		this.vStream = vStream;
 		brightnessPanel.add(brightnessLabel);
 		brightnessPanel.add(brightnessSlider);
 		brightnessSlider.addChangeListener(new BrightnessChangeListener());
+		brightnessSlider.setValue(pitchConstants.getBrightness());
 		this.add(brightnessPanel);
 		
 		contrastPanel.add(contrastLabel);
 		contrastPanel.add(contrastSlider);
 		contrastSlider.addChangeListener(new ContrastChangeListener());
-		contrastSlider.setValue(127);
+		contrastSlider.setValue(pitchConstants.getContrast());
 		this.add(contrastPanel);
 		
 		huePanel.add(hueLabel);
 		huePanel.add(hueSlider);
 		hueSlider.addChangeListener(new HueChangeListener());
+		hueSlider.setValue(pitchConstants.getHue());
 		this.add(huePanel);
 		
 		saturationPanel.add(saturationLabel);
 		saturationPanel.add(saturationSlider);
 		saturationSlider.addChangeListener(new SaturationChangeListener());
-		saturationSlider.setValue(127);
+		saturationSlider.setValue(pitchConstants.getSaturation());
 		this.add(saturationPanel);
 		
 		chromaGainPanel.add(chromaGainLabel);
 		chromaGainPanel.add(chromaGainSlider);
 		chromaGainSlider.addChangeListener(new ChromaGainChangeListener());
+		chromaGainSlider.setValue(pitchConstants.getChroma_gain());
 		this.add(chromaGainPanel);
-		
-		loadDefaultSettings();
 	}
 	/**
 	 * A ChangeListener to update the video stream's brightness setting when the
@@ -110,6 +115,8 @@ public class CameraSettingsPanel extends JPanel {
 			vStream.setBrightness(Math.min(brightnessMax,
 					brightnessSlider.getValue()));
 			vStream.updateVideoSettings();
+			pitchConstants.setBrightness(Math.min(brightnessMax,
+					brightnessSlider.getValue()));
 		}
 	}
 
@@ -122,6 +129,7 @@ public class CameraSettingsPanel extends JPanel {
 		public void stateChanged(ChangeEvent e) {
 			vStream.setContrast(Math.min(contrastMax, contrastSlider.getValue()));
 			vStream.updateVideoSettings();
+			pitchConstants.setContrast(Math.min(contrastMax,contrastSlider.getValue()));
 		}
 	}
 
@@ -135,6 +143,7 @@ public class CameraSettingsPanel extends JPanel {
 			vStream.setSaturation(Math.min(saturationMax,
 					saturationSlider.getValue()));
 			vStream.updateVideoSettings();
+			pitchConstants.setSaturation(Math.min(saturationMax, saturationSlider.getValue()));
 		}
 	}
 
@@ -147,6 +156,7 @@ public class CameraSettingsPanel extends JPanel {
 		public void stateChanged(ChangeEvent e) {
 			vStream.setHue(Math.min(hueMax, hueSlider.getValue()));
 			vStream.updateVideoSettings();
+			pitchConstants.setHue(Math.min(hueMax, hueSlider.getValue()));
 		}
 	}
 
@@ -160,6 +170,7 @@ public class CameraSettingsPanel extends JPanel {
 			vStream.setChromaGain(Math.min(chromaGainMax,
 					chromaGainSlider.getValue()));
 			vStream.updateVideoSettings();
+			pitchConstants.setChroma_gain(Math.min(chromaGainMax,chromaGainSlider.getValue()));
 		}
 	}
 
@@ -220,8 +231,6 @@ public class CameraSettingsPanel extends JPanel {
 		chromaAGCCheckBox.addActionListener(new ChromaAGCActionListener());
 		chromaAGCPanel.add(chromaAGCCheckBox);
 		this.add(chromaAGCPanel);
-
-		loadDefaultSettings();
 	}
 
 	/**

@@ -29,7 +29,7 @@ public class DeathStar2 {
 		}
 
 //		MainComm theForceDef = new MainComm(1);
-		MainComm theForceAttack = new MainComm(2);
+		MainComm theForceAttack = new MainComm(1);
 		
 		int count = 0;
 			

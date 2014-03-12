@@ -93,6 +93,11 @@ public class ImageProcessor {
 	private static int plateMinValue = 105;
 	private static int plateMaxValue = 160;
 	
+	private static int top = 1;
+	private static int left = 1;
+	private static int right = 1;
+	private static int bottom = 1;
+	
 	// These variables keep track of the last location of the various objects.
 	// This is used to reduce noise in the values returned for their locations.
 	private static Point[] lastDot;
@@ -177,15 +182,8 @@ public class ImageProcessor {
 		int tempCountBlueLeft = 0;
 		int tempCountBlueRight = 0;
 		boolean addToTemp = false;
-		int minWidth = world.getPitchLeft();
-		int maxWidth = minWidth + world.getWidth();
-		int minHeight = world.getPitchTop();
-		int maxHeight = minHeight + world.getHeight();
-		int middleWidth = world.getSecondSectionBoundary();
-		int firstWidth = world.getFirstSectionBoundary();
-		int thirdWidth = world.getThirdSectionBoundary();
 
-		for (int w = minWidth; w < firstWidth; w++) {
+		for (int w = left; w < left + ((right - left) / 4.5); w++) {
 			tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
 			tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
 			tempCountYellowLeft = 0;
@@ -193,7 +191,7 @@ public class ImageProcessor {
 			tempDotX = 0.0; tempDotY = 0.0;
 			tempCountDot = 0;
 			addToTemp = false;
-			for (int h = minHeight; h < maxHeight; h++) {
+			for (int h = top; h < bottom; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
@@ -332,7 +330,7 @@ public class ImageProcessor {
 			countYellowLeft = 0;
 		}
 		
-		for (int w = firstWidth; w < middleWidth; w++) {
+		for (int w = (int) (left + ((right - left) / 4.5)); w < left + ((right - left) / 2); w++) {
 			tempYellowLeftX = 0.0; tempYellowLeftY = 0.0;
 			tempBlueLeftX = 0.0; tempBlueLeftY = 0.0;
 			tempCountYellowLeft = 0;
@@ -340,7 +338,7 @@ public class ImageProcessor {
 			tempDotX = 0.0; tempDotY = 0.0;
 			tempCountDot = 0;
 			addToTemp = false;
-			for (int h = minHeight; h < maxHeight; h++) {
+			for (int h = top; h < bottom; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
@@ -475,7 +473,7 @@ public class ImageProcessor {
 			countBlueLeft = 0;
 		}
 		
-		for (int w = middleWidth; w < thirdWidth; w++) {
+		for (int w = left + ((right - left) / 2); w < right - ((right - left) / 4.5); w++) {
 			tempYellowRightX = 0.0; tempYellowRightY = 0.0;
 			tempBlueRightX = 0.0; tempBlueRightY = 0.0;
 			tempCountYellowRight = 0;
@@ -483,7 +481,7 @@ public class ImageProcessor {
 			tempDotX = 0.0; tempDotY = 0.0;
 			tempCountDot = 0;
 			addToTemp = false;
-			for (int h = minHeight; h < maxHeight; h++) {
+			for (int h = top; h < bottom; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
@@ -620,7 +618,7 @@ public class ImageProcessor {
 			countYellowRight = 0;
 		}
 		
-		for (int w = thirdWidth; w < maxWidth; w++) {
+		for (int w = (int) (right - ((right - left) / 4.5)); w < right; w++) {
 			tempYellowRightX = 0.0; tempYellowRightY = 0.0;
 			tempBlueRightX = 0.0; tempBlueRightY = 0.0;
 			tempCountYellowRight = 0;
@@ -628,7 +626,7 @@ public class ImageProcessor {
 			tempDotX = 0.0; tempDotY = 0.0;
 			tempCountDot = 0;
 			addToTemp = false;
-			for (int h = minHeight; h < maxHeight; h++) {
+			for (int h = top; h < bottom; h++) {
 				Color c = new Color(img.getRGB(w, h), true);
 				int blue = c.getBlue();
 				int green = c.getGreen();
@@ -731,7 +729,6 @@ public class ImageProcessor {
 		}
 		
 		lastPlate[3] = new Point(plateRRX/plateRRCount, plateRRY/plateRRCount);
-//		System.out.println(lastPlate[3]);
 		
 		if (world.getDirection() && world.getColor()){
 			blueRight = new Point(blueRightX/countBlueRight,blueRightY/countBlueRight);
@@ -745,175 +742,16 @@ public class ImageProcessor {
 		}
 		// find red dots and get the average to find out the location of the ball
 		Point ball = new Point (redX/((double)countRed), redY/((double)countRed));
-//		}
 		world.setBallXY(ball);
-//		Point yellowLeft = new Point(yellowLeftX/((double)countYellowLeft),yellowLeftY/((double)countYellowLeft));
-		if ((Math.abs(yellowLeft.getX() - lastRobot[0].getX()) + Math.abs(yellowLeft.getY() - lastRobot[0].getY())) > 10){
-			if (yellowLeft.getX() > lastRobot[0].getX()){
-				yellowLeft = new Point(lastRobot[0].getX() + 3, yellowLeft.getY());
-			} else {
-				yellowLeft = new Point(lastRobot[0].getX() - 3, yellowLeft.getY());
-			}
-			if (yellowLeft.getY() > lastRobot[0].getY()){
-				yellowLeft = new Point(yellowLeft.getX(), lastRobot[0].getY() + 3);
-			} else {
-				yellowLeft = new Point(yellowLeft.getX(), lastRobot[0].getY() - 3);
-			}
-			lastRobot[0] = yellowLeft;
-			world.setYellowLeft(yellowLeft);
-		} else {
-			lastRobot[0] = yellowLeft;
-			world.setYellowLeft(yellowLeft);
-		}
-//		world.setYellowLeft(yellowLeft);
-//		Point yellowRight = new Point (yellowRightX/((double)countYellowRight),yellowRightY/((double)countYellowRight));
-		if ((Math.abs(yellowRight.getX() - lastRobot[1].getX()) + Math.abs(yellowRight.getY() - lastRobot[1].getY())) > 10){
-			if (yellowRight.getX() > lastRobot[1].getX()){
-				yellowRight = new Point(lastRobot[1].getX() + 3, yellowRight.getY());
-			} else {
-				yellowRight = new Point(lastRobot[1].getX() - 3, yellowRight.getY());
-			}
-			if (yellowRight.getY() > lastRobot[1].getY()){
-				yellowRight = new Point(yellowRight.getX(), lastRobot[1].getY() + 3);
-			} else {
-				yellowRight = new Point(yellowRight.getX(), lastRobot[1].getY() - 3);
-			}
-			lastRobot[1] = yellowRight;
-			world.setYellowRight(yellowRight);
-		} else {
-			lastRobot[1] = yellowRight;
-			world.setYellowRight(yellowRight);
-		}
-//		world.setYellowRight(yellowRight);
-		
-		
-//		blueLeft = new Point(blueLeftX/((double)countBlueLeft),blueLeftY/((double)countBlueLeft));
-		if ((Math.abs(blueLeft.getX() - lastRobot[2].getX()) + Math.abs(blueLeft.getY() - lastRobot[2].getY())) > 10){
-			if (blueLeft.getX() > lastRobot[2].getX()){
-				blueLeft = new Point(lastRobot[2].getX() + 3, blueLeft.getY());
-			} else {
-				blueLeft = new Point(lastRobot[2].getX() - 3, blueLeft.getY());
-			}
-			if (blueLeft.getY() > lastRobot[2].getY()){
-				blueLeft = new Point(blueLeft.getX(), lastRobot[2].getY() + 3);
-			} else {
-				blueLeft = new Point(blueLeft.getX(), lastRobot[2].getY() - 3);
-			}
-			lastRobot[2] = blueLeft;
-			world.setBlueLeft(blueLeft);
-		} else {
-			lastRobot[2] = blueLeft;
-			world.setBlueLeft(blueLeft);
-		}
-//		world.setBlueLeft(blueLeft);
-		
-//		Point blueRight = new Point(blueRightX/((double)countBlueRight),blueRightY/((double)countBlueRight));
-		if ((Math.abs(blueRight.getX() - lastRobot[3].getX()) + Math.abs(blueRight.getY() - lastRobot[3].getY())) > 10){
-			if (blueRight.getX() > lastRobot[3].getX()){
-				blueRight = new Point(lastRobot[3].getX() + 3, blueRight.getY());
-			} else {
-				blueRight = new Point(lastRobot[3].getX() - 3, blueRight.getY());
-			}
-			if (blueRight.getY() > lastRobot[3].getY()){
-				blueRight = new Point(blueRight.getX(), lastRobot[3].getY() + 3);
-			} else {
-				blueRight = new Point(blueRight.getX(), lastRobot[3].getY() - 3);
-			}
-			lastRobot[3] = blueRight;
-			world.setBlueRight(blueRight);
-		} else {
-			lastRobot[3] = blueRight;
-			world.setBlueRight(blueRight);
-		}
-
-		
-		
-		// get the dot for the left yellow robot after we have the coordinates for the yellow/blue pixels
-
-//		Point yellowLeftDot = getDot(img, yellowLeft);
-		if ((Math.abs(yellowLeftDot.getX() - lastDot[0].getX()) + Math.abs(yellowLeftDot.getY() - lastDot[0].getY())) > 10){
-			if (yellowLeftDot.getX() > lastDot[0].getX()){
-				yellowLeftDot = new Point(lastDot[0].getX() + 3, yellowLeftDot.getY());
-			} else {
-				yellowLeftDot = new Point(lastDot[0].getX() - 3, yellowLeftDot.getY());
-			}
-			if (yellowLeftDot.getY() > lastDot[0].getY()){
-				yellowLeftDot = new Point(yellowLeftDot.getX(), lastDot[0].getY() + 3);
-			} else {
-				yellowLeftDot = new Point(yellowLeftDot.getX(), lastDot[0].getY() - 3);
-			}
-			lastDot[0] = yellowLeftDot;
-			world.setVectorYellowLeft(yellowLeftDot);
-		} else {
-			lastDot[0] = yellowLeftDot;
-			world.setVectorYellowLeft(yellowLeftDot);
-		}
-		
-		// get the dot for the right yellow robot
-
-//		Point yellowRightDot = getDot(img,yellowRight);
-		if ((Math.abs(yellowRightDot.getX() - lastDot[1].getX()) + Math.abs(yellowRightDot.getY() - lastDot[1].getY())) > 5){
-			if (yellowRightDot.getX() > lastDot[1].getX()){
-				yellowRightDot = new Point(lastDot[1].getX() + 3, yellowRightDot.getY());
-			} else {
-				yellowRightDot = new Point(lastDot[1].getX() - 3, yellowRightDot.getY());
-			}
-			if (yellowRightDot.getY() > lastDot[1].getY()){
-				yellowRightDot = new Point(yellowRightDot.getX(), lastDot[1].getY() + 3);
-			} else {
-				yellowRightDot = new Point(yellowRightDot.getX(), lastDot[1].getY() - 3);
-			}
-//			yellowLeftDot = new Point((yellowRightDot.getX() + lastDot[1].getX())/2, (yellowRightDot.getY() + lastDot[1].getY())/2);
-			lastDot[1] = yellowRightDot;
-			world.setVectorYellowRight(yellowRightDot);
-		} else {
-			lastDot[1] = yellowRightDot;
-			world.setVectorYellowRight(yellowRightDot);
-		}
-
-		// get the dot for the left blue robot
-
-//		Point blueLeftDot = getDot(img,blueLeft);
-		if ((Math.abs(blueLeftDot.getX() - lastDot[2].getX()) + Math.abs(blueLeftDot.getY() - lastDot[2].getY())) > 5){
-			if (blueLeftDot.getX() > lastDot[2].getX()){
-				blueLeftDot = new Point(lastDot[2].getX() + 3, blueLeftDot.getY());
-			} else {
-				blueLeftDot = new Point(lastDot[2].getX() - 3, blueLeftDot.getY());
-			}
-			if (blueLeftDot.getY() > lastDot[2].getY()){
-				blueLeftDot = new Point(blueLeftDot.getX(), lastDot[2].getY() + 3);
-			} else {
-				blueLeftDot = new Point(blueLeftDot.getX(), lastDot[2].getY() - 3);
-			}
-//			blueLeftDot = new Point((blueLeftDot.getX() + lastDot[2].getX())/2, (blueLeftDot.getY() + lastDot[2].getY())/2);
-			lastDot[2] = blueLeftDot;
-			world.setVectorBlueLeft(blueLeftDot);
-		} else {
-			lastDot[2] = blueLeftDot;
-			world.setVectorBlueLeft(blueLeftDot);
-		}
-		
-		// get the dot for the right blue robot
-
-//		Point blueRightDot = getDot(img,blueRight);
-		if ((Math.abs(blueRightDot.getX() - lastDot[3].getX()) + Math.abs(blueRightDot.getY() - lastDot[3].getY())) > 5){
-			if (blueRightDot.getX() > lastDot[3].getX()){
-				blueRightDot = new Point(lastDot[3].getX() + 3, blueRightDot.getY());
-			} else {
-				blueRightDot = new Point(lastDot[3].getX() - 3, blueRightDot.getY());
-			}
-			if (blueRightDot.getY() > lastDot[3].getY()){
-				blueRightDot = new Point(blueRightDot.getX(), lastDot[3].getY() + 3);
-			} else {
-				blueRightDot = new Point(blueRightDot.getX(), lastDot[3].getY() - 3);
-			}
-//			blueRightDot = new Point((blueRightDot.getX() + lastDot[3].getX())/2, (blueRightDot.getY() + lastDot[3].getY())/2);
-			lastDot[3] = blueRightDot;
-			world.setVectorBlueRight(blueRightDot);
-		} else {
-			lastDot[3] = blueRightDot;
-			world.setVectorBlueRight(blueRightDot);
-		}
+		world.setYellowLeft(yellowLeft);
+		world.setYellowRight(yellowRight);
+		world.setBlueLeft(blueLeft);
+		world.setBlueRight(blueRight);
+		world.setVectorYellowLeft(yellowLeftDot);
+		world.setVectorYellowRight(yellowRightDot);
+		world.setVectorBlueLeft(blueLeftDot);
+;
+		world.setVectorBlueRight(blueRightDot);
 				
 		if (recalculateBoundaries){
 			trackBoundaries(img);
@@ -1026,58 +864,62 @@ public class ImageProcessor {
 		double endX = vector.getDestination().getX();
 		double endY = vector.getDestination().getY();
 		double m = 1;
-		if (Math.floor(endX) != Math.floor(startX)){
-			if (Math.abs(startX - endX) > Math.abs(startY - endY)){
-				m = (endY - startY)/(endX - startX);
-				double c = startY - (m * startX);
-				int y = 0;
-				if (startX > endX){
-					for (int x = (int) startX; x > endX - 40; x--){
-						y = (int) ((m * x) + c);
-						if (y > world.getPitchTop() && y < (world.getPitchTop() + world.getHeight())){
-							img.setRGB(x, y, color.getRGB());
+		if (startX > 50 && startY > 50 && endX > 50 && endY > 50 && startX < 590 && startY < 430 && endX < 590 && endY < 430){
+			if (Math.floor(endX) != Math.floor(startX)){
+				if (Math.abs(startX - endX) > Math.abs(startY - endY)){
+					m = (endY - startY)/(endX - startX);
+					double c = startY - (m * startX);
+					int y = 0;
+					if (startX > endX){
+						for (int x = (int) startX; x > endX - 40; x--){
+							y = (int) ((m * x) + c);
+							if (y > world.getPitchTop() && y < (world.getPitchTop() + world.getHeight())){
+								img.setRGB(x, y, color.getRGB());
+							}
+						}
+					} else {
+						for (int x = (int) startX; x < endX + 40; x++){
+							y = (int) ((m * x) + c);
+							if (y > world.getPitchTop() && y < (world.getPitchTop() + world.getHeight())){
+								img.setRGB(x, y, color.getRGB());
+							}
 						}
 					}
+					return img;
 				} else {
-					for (int x = (int) startX; x < endX + 40; x++){
-						y = (int) ((m * x) + c);
-						if (y > world.getPitchTop() && y < (world.getPitchTop() + world.getHeight())){
-							img.setRGB(x, y, color.getRGB());
+					m = (endX - startX)/(endY - startY);
+					double c = startX - (m * startY);
+					int x = 0;
+					if (startY > endY){
+						for (int y = (int) startY; y > endY - 40; y--){
+							x = (int) ((m * y) + c);
+							if (x > world.getPitchLeft() && x < (world.getPitchLeft() + world.getWidth())){
+								img.setRGB(x, y, color.getRGB());
+							}
+						}
+					} else {
+						for (int y = (int) startY; y < endY + 40; y++){
+							x = (int) ((m * y) + c);
+							if (x > world.getPitchLeft() && x < (world.getPitchLeft() + world.getWidth())){
+								img.setRGB(x, y, color.getRGB());
+							}
 						}
 					}
+					return img;
 				}
-				return img;
 			} else {
-				m = (endX - startX)/(endY - startY);
-				double c = startX - (m * startY);
-				int x = 0;
-				if (startY > endY){
-					for (int y = (int) startY; y > endY - 40; y--){
-						x = (int) ((m * y) + c);
-						if (x > world.getPitchLeft() && x < (world.getPitchLeft() + world.getWidth())){
-							img.setRGB(x, y, color.getRGB());
-						}
+				if (startY < endY){
+					for (int y = (int) startY; y < endY + 40; y++){
+						img.setRGB((int) startX, y, color.getRGB());
 					}
 				} else {
-					for (int y = (int) startY; y < endY + 40; y++){
-						x = (int) ((m * y) + c);
-						if (x > world.getPitchLeft() && x < (world.getPitchLeft() + world.getWidth())){
-							img.setRGB(x, y, color.getRGB());
-						}
+					for (int y = (int) startY; y > endY - 40; y--){
+						img.setRGB((int) startX, y, color.getRGB());
 					}
 				}
 				return img;
 			}
 		} else {
-			if (startY < endY){
-				for (int y = (int) startY; y < endY + 40; y++){
-					img.setRGB((int) startX, y, color.getRGB());
-				}
-			} else {
-				for (int y = (int) startY; y > endY - 40; y--){
-					img.setRGB((int) startX, y, color.getRGB());
-				}
-			}
 			return img;
 		}
 	}
@@ -1272,13 +1114,9 @@ public class ImageProcessor {
 	
 	// Draws a green outline of the pitch on the given BufferedImage
 	public static Image drawBoundaries(BufferedImage img){
-		int left = world.getPitchLeft();
-		int top = world.getPitchTop();
-		int right = left + world.getWidth();
-		int bottom = top + world.getHeight();
-		int first = world.getFirstSectionBoundary();
-		int second = world.getSecondSectionBoundary();
-		int third = world.getThirdSectionBoundary();
+		int first = (int) (left + ((right - left) / 4.5));
+		int second = left + ((right - left) / 2);
+		int third = (int) (right - ((right - left) / 4.5));
 		for (int w = left; w < right; w++){
 			img.setRGB(w, top, green.getRGB());
 			img.setRGB(w, bottom, green.getRGB());
@@ -1584,4 +1422,38 @@ public class ImageProcessor {
 	public void recalculateBoundaries(boolean b){
 		this.recalculateBoundaries = b;
 	}
+
+	public static int getTop() {
+		return top;
+	}
+
+	public static void setTop(int top) {
+		ImageProcessor.top = top;
+	}
+
+	public static int getLeft() {
+		return left;
+	}
+
+	public static void setLeft(int left) {
+		ImageProcessor.left = left;
+	}
+
+	public static int getRight() {
+		return right;
+	}
+
+	public static void setRight(int right) {
+		ImageProcessor.right = right;
+	}
+
+	public static int getBottom() {
+		return bottom;
+	}
+
+	public static void setBottom(int bottom) {
+		ImageProcessor.bottom = bottom;
+	}
+	
+	
 }
