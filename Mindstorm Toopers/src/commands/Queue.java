@@ -17,7 +17,7 @@ public class Queue{
         if (cmd.getCommand() == CommandNames.ABORT) {
             System.out.println("Clearing queue");
             commandList = new ArrayList<Command>();
-            commandList.add(new Command(CommandNames.ABORT, 0, 0, 0));
+            commandList.add(new Command(CommandNames.ABORT, 0, 0));
         }
         else {
             System.out.println("New command added to the queue");
@@ -35,7 +35,7 @@ public class Queue{
     		return c;
         }
     	else {
-    		return new Command(CommandNames.DONOTHING,0,0,0);
+    		return new Command(CommandNames.DONOTHING,0,0);
     	}
         
     }
