@@ -46,7 +46,7 @@ public class DeathStar {
 		
 
 		//MainComm theForceDef = new MainComm(1);
-		MainComm theForceAttack = new MainComm(2);
+		MainComm theForceAttack = new MainComm(1);
 			
 			
 		while (flag) {
@@ -97,7 +97,7 @@ public class DeathStar {
 //				theForceAttack.sendMessage(cmdAttack.getCommand(), 
 //						cmdAttack.getSpeed(), cmdAttack.getDistAngle());
 			
-				if (count == 4) {	flag = false;}
+				if (count == 10) {	flag = false;}
 			}
 
 		

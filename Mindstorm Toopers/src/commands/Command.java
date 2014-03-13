@@ -6,9 +6,10 @@ public class Command {
     private int angle;
     private CommandNames command;
     
-    public Command(CommandNames c, int distance, int angle) {
+    public Command(CommandNames c, int distance, int dir, int angle) {
         this.command = c;
         this.distance = distance;
+        this.angledirec = dir;
         if (angle<0)
         {
         	angledirec=0;

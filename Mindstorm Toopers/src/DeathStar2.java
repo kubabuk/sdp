@@ -29,7 +29,11 @@ public class DeathStar2 {
 		}
 
 //		MainComm theForceDef = new MainComm(1);
-		MainComm theForceAttack = new MainComm(1);
+		MainComm theForceAttack = new MainComm(2);
+		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,0);
+		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,180);
+		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,90);
+		theForceAttack.sendMessage(CommandNames.MOVE, 25, 1,90);
 		
 		int count = 0;
 			
@@ -61,8 +65,8 @@ public class DeathStar2 {
 				
 			}
 //			count++;
-			//if (count == 50) {	flag = false;}
+			if (count == 10) {	flag = false;}
 		}
 	}
-
+	}
 }
