@@ -68,5 +68,4 @@ public class DeathStar2 {
 			if (count == 10) {	flag = false;}
 		}
 	}
-	}
 }
