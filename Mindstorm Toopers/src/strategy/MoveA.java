@@ -24,7 +24,7 @@ public class MoveA {
 		Command cmd;
 
 		if (goal.getAbort()) {
-			cmd = new Command(commands.CommandNames.ABORT, 0, 0);
+			cmd = new Command(commands.CommandNames.ABORT,0,0);
 			System.out.println("Abort Command: Abort put into stack");
 			// aq.add(cmd);
 		}
