@@ -22,7 +22,12 @@ public class MoveA {
 		int ballsize = 10;
 
 		Command cmd;
-
+		
+		if (goal.isNull()) {
+			System.out.println("Null Goal, returning nothing");
+			return;
+		}
+		
 		if (goal.getAbort()) {
 			cmd = new Command(commands.CommandNames.ABORT,0,0);
 			System.out.println("Abort Command: Abort put into stack");
