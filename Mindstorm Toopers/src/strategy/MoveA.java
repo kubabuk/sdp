@@ -33,7 +33,12 @@ public class MoveA {
 			System.out.println("Abort Command: Abort put into stack");
 			// aq.add(cmd);
 		}
-
+		
+		if (!boundarycheck(w,goal)) {
+			System.out.println("Goal outside boundary");
+			return;
+		}
+		
 		if (goal.getMove().equals(CommandNames.MOVE)) {
 
 			// Gets point of Robot and where it wants to move to and makes it
@@ -158,5 +163,38 @@ public class MoveA {
 			return (-(angle - 180));
 		} else
 			return angle;
+	}
+	
+	public static boolean boundarycheck(World w, Goal goal) {
+		//dir = True; Right -- dir = False; Left
+		boolean dir = w.getDirection();
+		boolean check = false;
+		double maxy = w.getMaxY();
+		double miny = w.getMinY();
+		double goaly = goal.getGoal().getY();
+		double goalx = goal.getGoal().getX();
+		
+		
+		if (goaly < maxy && goaly > miny) {
+			
+			//Check for Right direction
+			
+			if (dir && goalx > w.getSecondBoundary() && goalx < w.getThirdBoundary()) {
+				check = true;
+			}
+			
+			//Check for Left direction
+			
+			else if (!dir && goalx > w.getFirstBoundary() && goalx < w.getSecondBoundary()) {
+				check = true;
+			}
+			
+			//Should be simple enough to figure out
+			
+			else {
+				System.out.println("This shouldn't be happening!");
+			}
+		}
+		return check;
 	}
 }
