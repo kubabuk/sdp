@@ -44,5 +44,8 @@ public class Queue{
     	return commandList.isEmpty();
     }
     
+    public int size() {
+    	return commandList.size();
+    }
 }
     
