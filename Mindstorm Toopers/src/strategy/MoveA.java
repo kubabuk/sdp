@@ -139,7 +139,7 @@ public class MoveA {
 		System.out.println("Robot Orientation = "
 				+ robot.getDir().getOrientationDegrees());
 		Command cmd = new Command(CommandNames.MOVE, distance,
-				(int) anglerecalculation(angle - robot.getDir().getOrientationDegrees()));
+				(int) anglerecalculation(robot.getDir().getOrientationDegrees() - angle));
 		return cmd;
 	}
 
