@@ -34,14 +34,16 @@ public class DeathStar2 {
 //		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,180);
 //		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,90);
 //		theForceAttack.sendMessage(CommandNames.MOVE, 25, 1,90);
+		Goal goal = new Goal(new Point(300,20),CommandNames.MOVE,false);
+		MoveA.makeCommands(universe,goal,aq);
 		
 		int count = 0;
 			
-		while (flag) {
+//		while (flag) {
 			// Update the AI with new actions for the robots. Store them in the queue.
-			emperor.update();
+//			emperor.update();
 				
-			System.out.println("The ball position is deathstar " + universe.getBall().getPos().getX()+" , "+universe.getBall().getPos().getY());
+//			System.out.println("The ball position is deathstar " + universe.getBall().getPos().getX()+" , "+universe.getBall().getPos().getY());
 				
 			// Retrieve commands from the queue.
 			Command cmdAttack = aq.pull();
@@ -61,11 +63,12 @@ public class DeathStar2 {
 				else theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle());
 				System.out.println(cmdAttack.getDistance());
 				System.out.println(cmdAttack.getAngle());
-				theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle()-180);
+				//theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle()-180);
 				
 			}
 //			count++;
 //			if (count == 10) {	flag = false;}
-		}
+//			Thread.sleep(1000);
+//		}
 	}
 }

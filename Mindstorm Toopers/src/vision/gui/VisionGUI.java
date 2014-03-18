@@ -208,7 +208,9 @@ public class VisionGUI extends JFrame {
 							
 //							Update imageProcessor with new values.
 							imageProcessor.setTop(pitchConstants.getTopBuffer());
+							world.setPitchTop(pitchConstants.getTopBuffer());
 							imageProcessor.setLeft(pitchConstants.getLeftBuffer());
+							world.setPitchLeft(pitchConstants.getLeftBuffer());
 							imageProcessor.setRight(videoWidth - pitchConstants.getRightBuffer());
 							imageProcessor.setBottom(videoHeight - pitchConstants.getBottomBuffer());
 
