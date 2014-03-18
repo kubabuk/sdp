@@ -43,13 +43,17 @@ public class DotsThresholder extends JPanel implements ItemListener, ChangeListe
 		thresholds.setSaturationSliderChangeListener(this);
 		thresholds.setValueSliderChangeListener(this);
 		
+		updateNewValues();
+		this.add(thresholds);
+	}
+	
+	public void updateNewValues(){
 		thresholds.setRedSliderValues(pitchConstants.getRedLower(pitchConstants.GREY), pitchConstants.getRedUpper(pitchConstants.GREY));
 		thresholds.setBlueSliderValues(pitchConstants.getBlueLower(pitchConstants.GREY), pitchConstants.getBlueUpper(pitchConstants.GREY));
 		thresholds.setGreenSliderValues(pitchConstants.getGreenLower(pitchConstants.GREY), pitchConstants.getGreenUpper(pitchConstants.GREY));
 		thresholds.setHueSliderValues(pitchConstants.getHueLower(pitchConstants.GREY), pitchConstants.getHueUpper(pitchConstants.GREY));
 		thresholds.setValueSliderValues(pitchConstants.getValueLower(pitchConstants.GREY), pitchConstants.getValueUpper(pitchConstants.GREY));
 		thresholds.setSaturationSliderValues(pitchConstants.getSaturationLower(pitchConstants.GREY), pitchConstants.getSaturationUpper(pitchConstants.GREY));
-		this.add(thresholds);
 	}
 
 	@Override

@@ -38,13 +38,17 @@ public class BlueThresholder extends JPanel implements ItemListener, ChangeListe
 		thresholds.setSaturationSliderChangeListener(this);
 		thresholds.setValueSliderChangeListener(this);
 		
+		updateNewValues();
+		this.add(thresholds);
+	}
+	
+	public void updateNewValues(){
 		thresholds.setRedSliderValues(pitchConstants.getRedLower(pitchConstants.BLUE), pitchConstants.getRedUpper(pitchConstants.BLUE));
 		thresholds.setBlueSliderValues(pitchConstants.getBlueLower(pitchConstants.BLUE), pitchConstants.getBlueUpper(pitchConstants.BLUE));
 		thresholds.setGreenSliderValues(pitchConstants.getGreenLower(pitchConstants.BLUE), pitchConstants.getGreenUpper(pitchConstants.BLUE));
 		thresholds.setHueSliderValues(pitchConstants.getHueLower(pitchConstants.BLUE), pitchConstants.getHueUpper(pitchConstants.BLUE));
 		thresholds.setValueSliderValues(pitchConstants.getValueLower(pitchConstants.BLUE), pitchConstants.getValueUpper(pitchConstants.BLUE));
 		thresholds.setSaturationSliderValues(pitchConstants.getSaturationLower(pitchConstants.BLUE), pitchConstants.getSaturationUpper(pitchConstants.BLUE));
-		this.add(thresholds);
 	}
 
 	@Override
