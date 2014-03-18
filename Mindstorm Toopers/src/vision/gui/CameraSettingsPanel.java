@@ -78,33 +78,39 @@ public class CameraSettingsPanel extends JPanel {
 		brightnessPanel.add(brightnessLabel);
 		brightnessPanel.add(brightnessSlider);
 		brightnessSlider.addChangeListener(new BrightnessChangeListener());
-		brightnessSlider.setValue(pitchConstants.getBrightness());
 		this.add(brightnessPanel);
 		
 		contrastPanel.add(contrastLabel);
 		contrastPanel.add(contrastSlider);
 		contrastSlider.addChangeListener(new ContrastChangeListener());
-		contrastSlider.setValue(pitchConstants.getContrast());
 		this.add(contrastPanel);
 		
 		huePanel.add(hueLabel);
 		huePanel.add(hueSlider);
 		hueSlider.addChangeListener(new HueChangeListener());
-		hueSlider.setValue(pitchConstants.getHue());
 		this.add(huePanel);
 		
 		saturationPanel.add(saturationLabel);
 		saturationPanel.add(saturationSlider);
 		saturationSlider.addChangeListener(new SaturationChangeListener());
-		saturationSlider.setValue(pitchConstants.getSaturation());
 		this.add(saturationPanel);
 		
 		chromaGainPanel.add(chromaGainLabel);
 		chromaGainPanel.add(chromaGainSlider);
 		chromaGainSlider.addChangeListener(new ChromaGainChangeListener());
-		chromaGainSlider.setValue(pitchConstants.getChroma_gain());
 		this.add(chromaGainPanel);
+		
+		updateNewValues();
 	}
+	
+	public void updateNewValues(){
+		brightnessSlider.setValue(pitchConstants.getBrightness());
+		contrastSlider.setValue(pitchConstants.getContrast());
+		hueSlider.setValue(pitchConstants.getHue());
+		saturationSlider.setValue(pitchConstants.getSaturation());
+		chromaGainSlider.setValue(pitchConstants.getChroma_gain());
+	}
+	
 	/**
 	 * A ChangeListener to update the video stream's brightness setting when the
 	 * brightness slider is adjusted

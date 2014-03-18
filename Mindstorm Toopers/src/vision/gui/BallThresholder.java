@@ -38,13 +38,17 @@ public class BallThresholder extends JPanel implements ItemListener, ChangeListe
 		thresholds.setSaturationSliderChangeListener(this);
 		thresholds.setValueSliderChangeListener(this);
 		
+		updateNewValues();
+		this.add(thresholds);
+	}
+	
+	public void updateNewValues(){
 		thresholds.setRedSliderValues(pitchConstants.getRedLower(pitchConstants.BALL), pitchConstants.getRedUpper(pitchConstants.BALL));
 		thresholds.setBlueSliderValues(pitchConstants.getBlueLower(pitchConstants.BALL), pitchConstants.getBlueUpper(pitchConstants.BALL));
 		thresholds.setGreenSliderValues(pitchConstants.getGreenLower(pitchConstants.BALL), pitchConstants.getGreenUpper(pitchConstants.BALL));
 		thresholds.setHueSliderValues(pitchConstants.getHueLower(pitchConstants.BALL), pitchConstants.getHueUpper(pitchConstants.BALL));
 		thresholds.setValueSliderValues(pitchConstants.getValueLower(pitchConstants.BALL), pitchConstants.getValueUpper(pitchConstants.BALL));
 		thresholds.setSaturationSliderValues(pitchConstants.getSaturationLower(pitchConstants.BALL), pitchConstants.getSaturationUpper(pitchConstants.BALL));
-		this.add(thresholds);
 	}
 
 	@Override

@@ -29,6 +29,9 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 	JPanel boundariesButton;
 	JPanel saveButton;
 	JPanel readyButton;
+	JPanel whichPitch;
+	JRadioButton main, side;
+	JLabel pitch;
 	
 	World world;
 	ImageProcessor imageProcessor;
@@ -38,8 +41,10 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 	private JButton loadState;
 	private JButton ready;
 	private PitchConstants pitchConstants;
+	private VisionGUI visionGUI;
 	
-	public GeneralSettingsPanel(final ImageProcessor imageProcessor, final World world, PitchConstants pitchConstants){
+	public GeneralSettingsPanel(final ImageProcessor imageProcessor, final World world, PitchConstants pitchConstants, VisionGUI visionGUI){
+		this.visionGUI = visionGUI;
 		this.world = world;
 		this.imageProcessor = imageProcessor;
 		this.pitchConstants = pitchConstants;
@@ -50,6 +55,15 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 		boundariesButton = new JPanel();
 		saveButton = new JPanel();
 		readyButton = new JPanel();
+		whichPitch = new JPanel();
+		pitch = new JLabel("Which pitch are we playing on?");
+		main = new JRadioButton("Main Pitch");
+		side = new JRadioButton("Side Pitch");
+		main.addActionListener(this);
+		side.addActionListener(this);
+		main.setSelected(true);
+		side.setSelected(false);
+		
 		ourColor = new JLabel("Choose our teams color:");
 		ourDirection = new JLabel("Choose our shooting direction:");
 		right = new JRadioButton("Right");
@@ -59,16 +73,20 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 		yellow.addActionListener(this);
 		if (pitchConstants.isColor()){
 			yellow.setSelected(true);
+			world.setColor(true);
 		} else {
 			blue.setSelected(true);
+			world.setColor(false);
 		}
 		blue.addActionListener(this);
 		right.addActionListener(this);
 		left.addActionListener(this);
 		if (pitchConstants.isDirection()){
 			right.setSelected(true);
+			world.setDirection(true);
 		} else {
 			left.setSelected(true);
+			world.setDirection(false);
 		}
 		showBoundaries = new JCheckBox("Show boundaries");
 		showBoundaries.addItemListener(this);
@@ -105,6 +123,13 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 		
 		ButtonGroup btnGroupColor = new ButtonGroup();
 		ButtonGroup btnGroupDirection = new ButtonGroup();
+		ButtonGroup btnGroupPitch = new ButtonGroup();
+		btnGroupPitch.add(main);
+		btnGroupPitch.add(side);
+		this.add(pitch);
+		whichPitch.add(main);
+		whichPitch.add(side);
+		this.add(whichPitch);
 		btnGroupColor.add(yellow);
 		btnGroupColor.add(blue);
 		btnGroupDirection.add(right);
@@ -146,6 +171,12 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 		} else if (arg0.getSource().equals(left)){
 			world.setDirection(false);
 			pitchConstants.setDirection(false);
+		} else if (arg0.getSource().equals(main)){
+			pitchConstants.setPitchNum(0);
+			visionGUI.refreshThresholds();
+		} else if (arg0.getSource().equals(side)){
+			pitchConstants.setPitchNum(1);
+			visionGUI.refreshThresholds();
 		}
 	}
 

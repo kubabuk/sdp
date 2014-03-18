@@ -35,13 +35,17 @@ public class PlateThresholder extends JPanel implements ItemListener, ChangeList
 		thresholds.setSaturationSliderChangeListener(this);
 		thresholds.setValueSliderChangeListener(this);
 		
+		updateNewValues();
+		this.add(thresholds);
+	}
+	
+	public void updateNewValues(){
 		thresholds.setRedSliderValues(pitchConstants.getRedLower(pitchConstants.GREEN), pitchConstants.getRedUpper(pitchConstants.GREEN));
 		thresholds.setBlueSliderValues(pitchConstants.getBlueLower(pitchConstants.GREEN), pitchConstants.getBlueUpper(pitchConstants.GREEN));
 		thresholds.setGreenSliderValues(pitchConstants.getGreenLower(pitchConstants.GREEN), pitchConstants.getGreenUpper(pitchConstants.GREEN));
 		thresholds.setHueSliderValues(pitchConstants.getHueLower(pitchConstants.GREEN), pitchConstants.getHueUpper(pitchConstants.GREEN));
 		thresholds.setValueSliderValues(pitchConstants.getValueLower(pitchConstants.GREEN), pitchConstants.getValueUpper(pitchConstants.GREEN));
 		thresholds.setSaturationSliderValues(pitchConstants.getSaturationLower(pitchConstants.GREEN), pitchConstants.getSaturationUpper(pitchConstants.GREEN));
-		this.add(thresholds);
 	}
 
 	@Override

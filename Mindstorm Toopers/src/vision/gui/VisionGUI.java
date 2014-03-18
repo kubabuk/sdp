@@ -114,7 +114,7 @@ public class VisionGUI extends JFrame {
 		this.dotsThresholder = new DotsThresholder(imageProcessor, pitchConstants);
 		this.plateThresholder = new PlateThresholder(imageProcessor, pitchConstants);
 		this.cameraSettings = new CameraSettingsPanel(vStream, pitchConstants);
-		this.generalSettings = new GeneralSettingsPanel(imageProcessor, world, pitchConstants);
+		this.generalSettings = new GeneralSettingsPanel(imageProcessor, world, pitchConstants, this);
 		
 		imageProcessor.setTop(pitchConstants.getTopBuffer());
 		imageProcessor.setLeft(pitchConstants.getLeftBuffer());
@@ -127,13 +127,13 @@ public class VisionGUI extends JFrame {
 		
 		tabbedPane.setSize(300, this.videoHeight);
 		tabbedPane.setLocation(videoWidth, 0);
+		tabbedPane.addTab("General", generalSettings);
 		tabbedPane.addTab("Ball", ballThresholder);
 		tabbedPane.addTab("Dots", dotsThresholder);
 		tabbedPane.addTab("Camera Settings", cameraSettings);
 		tabbedPane.addTab("Green Plates", plateThresholder);
 		tabbedPane.addTab("Blue i", blueThresholder);
 		tabbedPane.addTab("Yellow i", yellowThresholder);
-		tabbedPane.addTab("General", generalSettings);
 		tabbedPane.setFocusable(true);
 		contentPane.add(tabbedPane);
 		
@@ -214,7 +214,7 @@ public class VisionGUI extends JFrame {
 
 						// 	Writing the new dimensions to file
 							FileWriter writer = new FileWriter(
-								new File("constants/pitch" + "0" + "Dimensions"));
+								new File("constants/pitch" + pitchConstants.getPitchNum() + "Dimensions"));
 							writer.write("" + top + "\n");
 							writer.write("" + bottom + "\n");
 							writer.write("" + left + "\n");
@@ -241,6 +241,19 @@ public class VisionGUI extends JFrame {
 
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.addWindowListener(windowAdapter);
+	}
+	
+	public void refreshThresholds(){
+		((BallThresholder) ballThresholder).updateNewValues();
+		((BlueThresholder) blueThresholder).updateNewValues();
+		((CameraSettingsPanel) cameraSettings).updateNewValues();
+		((DotsThresholder) dotsThresholder).updateNewValues();
+		((PlateThresholder) plateThresholder).updateNewValues();
+		((YellowThresholder) yellowThresholder).updateNewValues();
+		imageProcessor.setTop(pitchConstants.getTopBuffer());
+		imageProcessor.setLeft(pitchConstants.getLeftBuffer());
+		imageProcessor.setRight(videoWidth - pitchConstants.getRightBuffer());
+		imageProcessor.setBottom(videoHeight - pitchConstants.getBottomBuffer());
 	}
 
 	public void sendFrame(BufferedImage frame, int fps, int frameCounter) {
