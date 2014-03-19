@@ -36,7 +36,6 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 	World world;
 	ImageProcessor imageProcessor;
 	private JCheckBox showBoundaries;
-	private JButton calculateBoundaries;
 	private JButton saveState;
 	private JButton loadState;
 	private JButton ready;
@@ -90,13 +89,6 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 		}
 		showBoundaries = new JCheckBox("Show boundaries");
 		showBoundaries.addItemListener(this);
-		calculateBoundaries = new JButton("Recalculate Boundaries");
-		calculateBoundaries.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				System.out.println("Recalculating boundaries.");
-				imageProcessor.recalculateBoundaries(true);
-			}
-		});
 		
 		saveState = new JButton("Save Thresholds");
 		saveState.addActionListener(new ActionListener() {
@@ -144,8 +136,6 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 		this.add(directions);
 		boundaries.add(showBoundaries);
 		this.add(boundaries);
-		boundariesButton.add(calculateBoundaries);
-		this.add(boundariesButton);
 		saveButton.add(saveState);
 		this.add(saveButton);
 		readyButton.add(ready);

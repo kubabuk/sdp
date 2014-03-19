@@ -37,6 +37,7 @@ public class VisionGUI extends JFrame {
 
 	// Pitch dimension selector variables
 	private boolean selectionActive = false;
+	private boolean justClick = false;
 	private Point anchor;
 	private int a;
 	private int b;
@@ -116,10 +117,17 @@ public class VisionGUI extends JFrame {
 		this.cameraSettings = new CameraSettingsPanel(vStream, pitchConstants);
 		this.generalSettings = new GeneralSettingsPanel(imageProcessor, world, pitchConstants, this);
 		
+		int pitchWidth = videoWidth - (pitchConstants.getLeftBuffer() + pitchConstants.getRightBuffer());
+		world.setWidth(pitchWidth);
 		imageProcessor.setTop(pitchConstants.getTopBuffer());
+		world.setPitchTop(pitchConstants.getTopBuffer());
 		imageProcessor.setLeft(pitchConstants.getLeftBuffer());
+		world.setPitchLeft(pitchConstants.getLeftBuffer());
 		imageProcessor.setRight(videoWidth - pitchConstants.getRightBuffer());
 		imageProcessor.setBottom(videoHeight - pitchConstants.getBottomBuffer());
+		world.setFirstSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.21 * pitchWidth)));
+		world.setSecondSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.5 * pitchWidth)));
+		world.setThirdSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.79 * pitchWidth)));
 
 		Container contentPane = this.getContentPane();
 
@@ -171,6 +179,7 @@ public class VisionGUI extends JFrame {
 
 			public void mousePressed(MouseEvent e) {
 				selectionActive = true;
+				justClick = true;
 				System.out.println("Initialised anchor");
 				// Pitch dimension selector
 				anchor = e.getPoint();
@@ -180,6 +189,7 @@ public class VisionGUI extends JFrame {
 			}
 
 			public void mouseDragged(MouseEvent e) {
+				justClick = false;
 				selection.setBounds((int) Math.min(anchor.x, e.getX()),
 						(int) Math.min(anchor.y, e.getY()),
 						(int) Math.abs(e.getX() - anchor.x),
@@ -191,6 +201,9 @@ public class VisionGUI extends JFrame {
 			}
 
 			public void mouseReleased(MouseEvent e) {
+				if (justClick){
+					imageProcessor.setRobot(e.getPoint());
+				}
 				selectionActive = false;
 				if (e.getPoint().distance(anchor) > 5) {
 					try {
@@ -207,12 +220,17 @@ public class VisionGUI extends JFrame {
 							pitchConstants.setRightBuffer(right);
 							
 //							Update imageProcessor with new values.
+							int pitchWidth = videoWidth - (pitchConstants.getLeftBuffer() + pitchConstants.getRightBuffer());
+							world.setWidth(pitchWidth);
 							imageProcessor.setTop(pitchConstants.getTopBuffer());
 							world.setPitchTop(pitchConstants.getTopBuffer());
 							imageProcessor.setLeft(pitchConstants.getLeftBuffer());
 							world.setPitchLeft(pitchConstants.getLeftBuffer());
 							imageProcessor.setRight(videoWidth - pitchConstants.getRightBuffer());
 							imageProcessor.setBottom(videoHeight - pitchConstants.getBottomBuffer());
+							world.setFirstSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.21 * pitchWidth)));
+							world.setSecondSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.5 * pitchWidth)));
+							world.setThirdSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.79 * pitchWidth)));
 
 						// 	Writing the new dimensions to file
 							FileWriter writer = new FileWriter(

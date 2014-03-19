@@ -19,24 +19,30 @@ public class World {
 	// image generated only once
 	private Image img;
 	
+	// Object used to represent the ball and our robots.
 	private Ball ballObject ;
 	private Robot attacker,defender;
 	
 	// use the get methods for the other team's robots
 	private Robot otherAttacker, otherDefender;
 		
+	// These points represent the locations of the robots.
 	private  Point yellowLeft , yellowRight;
 	private  Point blueLeft , blueRight;
+	// The location of the ball.
 	private Point ball;
 	
 	private int pitchWidth, pitchHeight, pitchCentre;
 	private Vector yellowLeftDir, yellowRightDir, blueLeftDir, blueRightDir;
+	// The pixel values of the left and top edges of the pitch
 	private int pitchLeft, pitchTop;
 	// These are the raw pixel values for the pitch boundaries.
 	private int firstSectionBoundary, secondSectionBoundary, thirdSectionBoundary;
 	// These are the boundary values in the coordinate system.
 	private int firstBoundary, secondBoundary, thirdBoundary;
+	// A flag used to tell the robots when vision set-up is done.
 	private Boolean ready;
+	
 	public Boolean getColor() {
 		return color;
 	}

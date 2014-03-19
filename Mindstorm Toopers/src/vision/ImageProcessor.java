@@ -752,11 +752,6 @@ public class ImageProcessor {
 		world.setVectorBlueLeft(blueLeftDot);
 ;
 		world.setVectorBlueRight(blueRightDot);
-				
-		if (recalculateBoundaries){
-			trackBoundaries(img);
-			recalculateBoundaries = false;
-		}
 		
 		// after setting coordinates, draw the elements on the image
 		Image image = drawEverything(img, ball, yellowLeft, yellowRight, blueLeft, blueRight, yellowLeftDot, yellowRightDot, blueLeftDot, blueRightDot);
@@ -938,185 +933,12 @@ public class ImageProcessor {
 		}
 		return img;
 	}
-
-	// Locates the boundaries of the pitch, including the different sections,
-	// and updates the world accordingly.
-	public static void trackBoundaries(BufferedImage img){
-		int height = img.getHeight();
-		int width = img.getWidth();
-		int leftEdge = 0;
-		int topEdge = 0;
-		int bottomEdge = height - 1;
-		int rightEdge = width - 1;
-		int temp = 0;
-		// Detecting left edge.
-		for (int w = 1; w < img.getWidth(); w++){
-			Color c = new Color(img.getRGB(w, height / 2));
-			if (c.getBlue() > 75){
-				temp = 0;
-				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
-					c = new Color(img.getRGB(w, h));
-					temp += c.getBlue();
-				}
-				if (temp / 100 > 75){
-					leftEdge = w;
-					break;
-				}
-			}
-		}
-
-		// Detecting right edge.
-		for (int w = width - 1; w > 0; w--){
-			Color c = new Color(img.getRGB(w, height / 2));
-			if (c.getBlue() > 75){
-				temp = 0;
-				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
-					c = new Color(img.getRGB(w, h));
-					temp += c.getBlue();
-				}
-				if (temp / 100 > 75){
-					rightEdge = w;
-					break;
-				}
-			}
-		}
-
-		// Detecting top edge.
-		for (int h = 1; h < height; h++){
-			Color c = new Color(img.getRGB(width / 2, h));
-			if (c.getBlue() > 75){
-				temp = 0;
-				for (int w = (width / 2) - 50; w < (width / 2) + 50; w++){
-					c = new Color(img.getRGB(w, h));
-					temp += c.getBlue();
-				}
-				if (temp / 100 > 75){
-					topEdge = h;
-					break;
-				}
-			}
-		}
-
-		// Detecting bottom edge.
-		for (int h = height - 1; h > 0; h--){
-			Color c = new Color(img.getRGB(width / 2, h));
-			if (c.getBlue() > 75){
-				temp = 0;
-				for (int w = (width / 2) - 50; w < (width / 2) + 50; w++){
-					c = new Color(img.getRGB(w, h));
-					temp += c.getBlue();
-				}
-				if (temp / 100 > 75){
-					bottomEdge = h;
-					break;
-				}
-			}
-		}
-		world.setPitchLeft(leftEdge);
-		world.setPitchTop(topEdge);
-		world.setWidth(rightEdge - leftEdge);
-		world.setHeight(bottomEdge - topEdge);
-		
-		int[] sections = new int[6];
-		for (int w = leftEdge + 50; w < img.getWidth(); w++){
-			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() > 75){
-				temp = 0;
-				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
-					c = new Color(img.getRGB(w, h));
-					temp += c.getBlue();
-				}
-				if (temp / 100 > 75){
-					sections[0] = w;
-					break;
-				}
-			}
-		}
-		for (int w = sections[0] + 50; w < img.getWidth(); w++){
-			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() < 75){
-				temp = 0;
-				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
-					c = new Color(img.getRGB(w, h));
-					temp += c.getBlue();
-				}
-				if (temp / 100 < 75){
-					sections[1] = w;
-					break;
-				}
-			}
-		}
-
-		for (int w = sections[1] + 50; w < img.getWidth(); w++){
-			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() > 75){
-				temp = 0;
-				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
-					c = new Color(img.getRGB(w, h));
-					temp += c.getBlue();
-				}
-				if (temp / 100 > 75){
-					sections[2] = w;
-					break;
-				}
-			}
-		}
-		for (int w = sections[2] + 50; w < img.getWidth(); w++){
-			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() < 75){
-				temp = 0;
-				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
-					c = new Color(img.getRGB(w, h));
-					temp += c.getBlue();
-				}
-				if (temp / 100 < 75){
-					sections[3] = w;
-					break;
-				}
-			}
-		}
-
-		for (int w = sections[3] + 50; w < img.getWidth(); w++){
-			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() > 75){
-				temp = 0;
-				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
-					c = new Color(img.getRGB(w, h));
-					temp += c.getBlue();
-				}
-				if (temp / 100 > 75){
-					sections[4] = w;
-					break;
-				}
-			}
-		}
-		for (int w = sections[4] + 50; w < img.getWidth(); w++){
-			Color c = new Color(img.getRGB(w, (topEdge + bottomEdge) / 2));
-			if (c.getBlue() < 75){
-				temp = 0;
-				for (int h = (height / 2) - 50; h < (height / 2) + 50; h++){
-					c = new Color(img.getRGB(w, h));
-					temp += c.getBlue();
-				}
-				if (temp / 100 < 75){
-					sections[5] = w;
-					break;
-				}
-			}
-		}
-		int firstBoundary = (sections[0] + sections[1]) / 2;
-		int secondBoundary = (sections[2] + sections[3]) / 2;
-		int thirdBoundary = (sections[4] + sections[5]) / 2;
-		world.setFirstSectionBoundary(firstBoundary);
-		world.setSecondSectionBoundary(secondBoundary);
-		world.setThirdSectionBoundary(thirdBoundary);
-	}
 	
 	// Draws a green outline of the pitch on the given BufferedImage
 	public static Image drawBoundaries(BufferedImage img){
-		int first = (int) (left + ((right - left) / 4.5));
-		int second = left + ((right - left) / 2);
-		int third = (int) (right - ((right - left) / 4.5));
+		int first = world.getFirstSectionBoundary();
+		int second = world.getSecondSectionBoundary();
+		int third = world.getThirdSectionBoundary();
 		for (int w = left; w < right; w++){
 			img.setRGB(w, top, green.getRGB());
 			img.setRGB(w, bottom, green.getRGB());
@@ -1129,6 +951,19 @@ public class ImageProcessor {
 			img.setRGB(third, h, green.getRGB());
 		}
 		return img;
+	}
+	
+	public void setRobot(java.awt.Point point){
+		Point newPoint = new Point(point.getX(),point.getY());
+		if (point.getX() < world.getFirstSectionBoundary()){
+			lastPlate[0] = newPoint;
+		} else if (point.getX() < world.getSecondSectionBoundary()){
+			lastPlate[1] = newPoint;
+		} else if (point.getX() < world.getThirdSectionBoundary()){
+			lastPlate[2] = newPoint;
+		} else {
+			lastPlate[3] = newPoint;
+		}
 	}
 
 	public void showBall(boolean b) {
@@ -1427,32 +1262,32 @@ public class ImageProcessor {
 		return top;
 	}
 
-	public static void setTop(int top) {
-		ImageProcessor.top = top;
+	public void setTop(int top) {
+		this.top = top;
 	}
 
 	public static int getLeft() {
 		return left;
 	}
 
-	public static void setLeft(int left) {
-		ImageProcessor.left = left;
+	public void setLeft(int left) {
+		this.left = left;
 	}
 
 	public static int getRight() {
 		return right;
 	}
 
-	public static void setRight(int right) {
-		ImageProcessor.right = right;
+	public void setRight(int right) {
+		this.right = right;
 	}
 
 	public static int getBottom() {
 		return bottom;
 	}
 
-	public static void setBottom(int bottom) {
-		ImageProcessor.bottom = bottom;
+	public void setBottom(int bottom) {
+		this.bottom = bottom;
 	}
 	
 	
