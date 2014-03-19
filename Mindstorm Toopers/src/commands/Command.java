@@ -9,16 +9,14 @@ public class Command {
     public Command(CommandNames c, int distance, int angle) {
         this.command = c;
         this.distance = distance;
-        if (angle<0)
-        {
-        	angledirec=0;
-        	this.angle=Math.abs(angle);
+        if (angle < 0){
+        	angledirec = 0;
+        	this.angle = Math.abs(angle);
         }
-        else 
-        	{
-        	angledirec=1;
-        	this.angle=angle;
-        	}
+        else {
+        	angledirec = 1;
+        	this.angle = angle;
+        }
        
     }
 

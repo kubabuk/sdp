@@ -63,7 +63,7 @@ public class DeathStar {
 			if (count == 4)
 			{
 				aq.add(new Command(CommandNames.MOVE, 50, 0));
-				aq.add(new Command(CommandNames.CHANGEANGLE, 0, 120));
+				aq.add(new Command(CommandNames.TURN, 0, 120));
 				theForceAttack.sendMessage(CommandNames.KICK, 0,0, 0);
 			}
 			

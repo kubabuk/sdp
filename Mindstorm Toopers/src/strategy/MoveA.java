@@ -77,11 +77,11 @@ public class MoveA {
 
 			// Face towards the ball
 
-			cmd = new Command(CommandNames.CHANGEANGLE, 0,
-					(int) anglerecalculation(robottoball.getOrientationDegrees() - robotori));
+			cmd = new Command(CommandNames.TURN, 0,
+					(int) anglerecalculation(robotori - robottoball.getOrientationDegrees()));
 
 			System.out.println("Change Angle towards the ball "
-					+ anglerecalculation(robottoball.getOrientationDegrees() - robotori));
+					+ anglerecalculation(robotori - robottoball.getOrientationDegrees()));
 			aq.add(cmd);
 
 			// Calls movetoball which is a modified movetopoint but takes into
@@ -110,7 +110,7 @@ public class MoveA {
 
 			// Face towards the ball
 
-			cmd = new Command(CommandNames.CHANGEANGLE, 0,
+			cmd = new Command(CommandNames.TURN, 0,
 					(int) anglerecalculation(robottoball.getOrientationDegrees() - robotori));
 
 			System.out.println("Changing angle by: " + cmd.getAngle());

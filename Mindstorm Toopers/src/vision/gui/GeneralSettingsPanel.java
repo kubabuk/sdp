@@ -109,7 +109,11 @@ public class GeneralSettingsPanel extends JPanel implements ActionListener, Item
 		ready = new JButton("Ready!");
 		ready.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				world.setReady(true);
+				if (world.getReady()){
+					world.setReady(false);
+				} else {
+					world.setReady(true);
+				}
 			}
 		});
 		
