@@ -119,6 +119,8 @@ public class VisionGUI extends JFrame {
 		
 		int pitchWidth = videoWidth - (pitchConstants.getLeftBuffer() + pitchConstants.getRightBuffer());
 		world.setWidth(pitchWidth);
+                int pitchHeight = videoHeight - (pitchConstants.getTopBuffer() + pitchConstants.getBottomBuffer());
+                world.setHeight(pitchHeight);
 		imageProcessor.setTop(pitchConstants.getTopBuffer());
 		world.setPitchTop(pitchConstants.getTopBuffer());
 		imageProcessor.setLeft(pitchConstants.getLeftBuffer());
@@ -222,6 +224,8 @@ public class VisionGUI extends JFrame {
 //							Update imageProcessor with new values.
 							int pitchWidth = videoWidth - (pitchConstants.getLeftBuffer() + pitchConstants.getRightBuffer());
 							world.setWidth(pitchWidth);
+                                                        int pitchHeight = videoHeight - (pitchConstants.getTopBuffer() + pitchConstants.getBottomBuffer());
+                                                        world.setHeight(pitchHeight);
 							imageProcessor.setTop(pitchConstants.getTopBuffer());
 							world.setPitchTop(pitchConstants.getTopBuffer());
 							imageProcessor.setLeft(pitchConstants.getLeftBuffer());
