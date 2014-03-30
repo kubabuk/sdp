@@ -169,8 +169,8 @@ public class MoveA {
 		//dir = True; Right -- dir = False; Left
 		boolean dir = w.getDirection();
 		boolean check = false;
-		//double maxy = w.getMaxY();
-		double maxy = 360;
+		double maxy = w.getMaxY();
+		//double maxy = 360;
 		double miny = w.getMinY();
 		double goaly = goal.getGoal().getY();
 		double goalx = goal.getGoal().getX();
@@ -181,9 +181,9 @@ public class MoveA {
 			//Check for Right direction
 			System.out.println("Dir: " + dir);
 			System.out.println("Goal X: " + goalx);
-			System.out.println("First Section Boundary: " + w.getFirstSectionBoundary());
-			System.out.println("Second Section Boundary: " + w.getSecondSectionBoundary());
-			System.out.println("Third Section Boundary: " + w.getThirdSectionBoundary());
+//			System.out.println("First Section Boundary: " + w.getFirstSectionBoundary());
+//			System.out.println("Second Section Boundary: " + w.getSecondSectionBoundary());
+//			System.out.println("Third Section Boundary: " + w.getThirdSectionBoundary());
 			if (!dir && goalx > w.getFirstSectionBoundary() && goalx < w.getSecondSectionBoundary()) {
 				check = true;
 			}

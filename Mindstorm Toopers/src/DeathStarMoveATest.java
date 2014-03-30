@@ -16,6 +16,7 @@ public class DeathStarMoveATest {
 		boolean direction = true;
 		boolean flag = true;
 		Goal goal;
+		Command cmd;
 		
 		// Instantiate arguments for AI - World, Queue (for attacker), Queue (for defender)
 		World universe = new World(color, direction);
@@ -40,6 +41,7 @@ public class DeathStarMoveATest {
 		goal = new Goal(new Point(universe.getFirstSectionBoundary() + 100 ,20),CommandNames.MOVE,false, false);
 		MoveA.makeCommands(universe,goal,aq);
 		
+//		
 		// Test moving within boundaries
 		System.out.println(universe.getFirstSectionBoundary());
 		goal = new Goal(new Point(universe.getFirstSectionBoundary() + 10 ,20),CommandNames.MOVE,false, false);
@@ -60,14 +62,14 @@ public class DeathStarMoveATest {
 //		MoveA.makeCommands(universe,goal,aq);
 //		goal = new Goal(new Point(universe.getFirstSectionBoundary() + 10 ,100),CommandNames.MOVE,false, false);
 //		MoveA.makeCommands(universe,goal,aq);
-//		
-//		goal = new Goal(new Point(300,20),CommandNames.MOVE,true, false);
-//		MoveA.makeCommands(universe,goal,aq);
+		
+		goal = new Goal(new Point(300,20),CommandNames.MOVE,true, false);
+		MoveA.makeCommands(universe,goal,aq);
 		
 		int count = 0;
 		
 		while (aq.size() != 0) {
-			Command cmd = aq.pull();
+			cmd = aq.pull();
 			theForceAttack.sendMessage(cmd.getCommand(), 
 					cmd.getDistance(), cmd.getAngleDirec(), cmd.getAngle());
 		}	
