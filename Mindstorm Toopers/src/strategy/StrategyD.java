@@ -27,10 +27,10 @@ public class StrategyD {
 		
 		if (w.getDirection())
 		{
-			strictfrontboundary =76; //316;
-			softfrontboundary =96; //336;
-			strictbackboundary =26; //256;
-			softbackboundary =6; //236;
+			strictfrontboundary =76; 
+			softfrontboundary =96; 
+			strictbackboundary =26; 
+			softbackboundary =6; 
 		}
 		else
 		{
