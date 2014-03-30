@@ -189,21 +189,22 @@ public class MoveA {
 			System.out.println("Second Boundary: " + w.getSecondBoundary());
 			System.out.println("Third Boundary: " + w.getThirdBoundary());
 			System.out.println("Third Boundary: " + w.getThirdSectionBoundary());
-			if (!dir && goalx > w.getFirstBoundary() && goalx < w.getSecondBoundary()) {
-				check = true;
-			}
-			
-			//Check for Left direction
-			
-			else if (dir && goalx > w.getSecondBoundary() && goalx < w.getThirdBoundary()) {
-				check = true;
-			}
-			
-			//Should be simple enough to figure out
-			
-			else {
-				System.out.println("This shouldn't be happening!");
-			}
+//			if (!dir && goalx > w.getFirstBoundary() && goalx < w.getSecondBoundary()) {
+//				check = true;
+//			}
+//			
+//			//Check for Left direction
+//			
+//			else if (dir && goalx > w.getSecondBoundary() && goalx < w.getThirdBoundary()) {
+//				check = true;
+//			}
+//			
+//			//Should be simple enough to figure out
+//			
+//			else {
+//				System.out.println("This shouldn't be happening!");
+//			}
+			check = true;
 		}
 		return check;
 	}

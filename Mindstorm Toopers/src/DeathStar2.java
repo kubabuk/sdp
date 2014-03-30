@@ -44,7 +44,7 @@ public class DeathStar2 {
 				// Update the AI with new actions for the robots. Store them in the queue.
 				emperor.update();
 					
-				System.out.println("The ball position is deathstar " + universe.getBall().getPos().getX()+" , "+universe.getBall().getPos().getY());
+				//System.out.println("The ball position is deathstar " + universe.getBall().getPos().getX()+" , "+universe.getBall().getPos().getY());
 					
 				// Retrieve commands from the queue.
 				Command cmdAttack = aq.pull();
@@ -67,8 +67,8 @@ public class DeathStar2 {
 					//theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle()-180);
 					
 				}
-	//			count++;
-	//			if (count == 10) {	flag = false;}
+				count++;
+				if (count == 10) {	flag = false;}
 				Thread.sleep(1000);
 			}
 		}
