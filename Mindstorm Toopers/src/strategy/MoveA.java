@@ -186,9 +186,9 @@ public class MoveA {
 			System.out.println("Dir: " + dir);
 			System.out.println("Goal X: " + goalx);
 			System.out.println("First Boundary: " + w.getFirstBoundary());
-			System.out.println("First Section Boundary: " + w.getFirstSectionBoundary());
-			System.out.println("Second Section Boundary: " + w.getSecondSectionBoundary());
-			System.out.println("Third Section Boundary: " + w.getThirdSectionBoundary());
+			System.out.println("Second Boundary: " + w.getSecondBoundary());
+			System.out.println("Third Boundary: " + w.getThirdBoundary());
+			System.out.println("Third Boundary: " + w.getThirdSectionBoundary());
 			if (!dir && goalx > w.getFirstBoundary() && goalx < w.getSecondBoundary()) {
 				check = true;
 			}

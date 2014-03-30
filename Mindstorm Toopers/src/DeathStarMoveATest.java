@@ -43,22 +43,25 @@ public class DeathStarMoveATest {
 		
 //		
 		// Test moving within boundaries
-		System.out.println(universe.getFirstSectionBoundary());
+		// Shooting left
+//		System.out.println(universe.getFirstSectionBoundary());
 		
 //		goal = new Goal(new Point(162,215),CommandNames.MOVE,false, false);
 //		MoveA.makeCommands(universe,goal,aq);
 		
-		goal = new Goal(new Point(162,20),CommandNames.MOVE,false, false);
-		MoveA.makeCommands(universe,goal,aq);
+//		goal = new Goal(new Point(162,20),CommandNames.MOVE,false, false);
+//		MoveA.makeCommands(universe,goal,aq);
 
-//		goal = new Goal(new Point(universe.getFirstSectionBoundary()+2,20),
+
+		// Shooting Right
+//		goal = new Goal(new Point(universe.getThirdBoundary()-2,20),
 //				CommandNames.MOVE,false, false);
 //		MoveA.makeCommands(universe,goal,aq);
 //		
-//		goal = new Goal(new Point(universe.getFirstSectionBoundary()+2,215),
+//		goal = new Goal(new Point(universe.getThirdBoundary()-10,215),
 //				CommandNames.MOVE,false, false);
 //		MoveA.makeCommands(universe,goal,aq);
-//		
+		
 		
 		// Test Abort -- tested, working
 //		goal = new Goal(new Point(universe.getFirstSectionBoundary() + 10 ,100),CommandNames.MOVE,false, false);
