@@ -12,11 +12,33 @@ public class StrategyA {
 	//strategy for attacker
 	private World w;
 	private int State;
+	private int strictfrontboundary;
+	private int softfrontboundary;
+	private int strictbackboundary;
+	private int softbackboundary;
+	
+	
+	
 	
 	public StrategyA(World w)
 	{
 		this.w = w;
 		this.State = 0;
+		
+		if (w.getDirection())
+		{
+			strictfrontboundary = 316;
+			softfrontboundary = 336;
+			strictbackboundary = 256;
+			softbackboundary = 236;
+		}
+		else
+		{
+			strictfrontboundary = 116;
+			softfrontboundary = 96;
+			strictbackboundary = 176;
+			softbackboundary = 196;
+		}
 	}
 		
 	public void setState(int State)
@@ -61,17 +83,17 @@ public class StrategyA {
 				//go to the boundary on the far side of the ball in the attacker zone
 				if (b.getX()>r.getX())
 				{
-					gp = new Point(256,b.getY());
+					gp = new Point(strictbackboundary,b.getY());
 				}
 				else
 				{
-					gp = new Point(316,b.getY());
+					gp = new Point(strictfrontboundary,b.getY());
 				}
 				
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 				
-				if (b.getX()>236&&b.getX()<336) {
+				if (b.getX()>softbackboundary&&b.getX()<softfrontboundary) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 1;
 					
@@ -88,17 +110,17 @@ public class StrategyA {
 				// facing left
 				if (b.getX()>r.getX())
 				{
-					gp = new Point(116,b.getY());
+					gp = new Point(strictfrontboundary,b.getY());
 				}
 				else
 				{
-					gp = new Point(176,b.getY());
+					gp = new Point(strictbackboundary,b.getY());
 					
 				}
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 				
-				if (b.getX()>96&&b.getX()<176) {
+				if (b.getX()>softfrontboundary&&b.getX()<softbackboundary) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 1;
 					
@@ -138,7 +160,7 @@ public class StrategyA {
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 				
-				if (!(b.getX()>236&&b.getX()<336)) {
+				if (!(b.getX()>softbackboundary&&b.getX()<softfrontboundary)) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 0;
 					
@@ -154,7 +176,7 @@ public class StrategyA {
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 		
-				if (!(b.getX()>96&&b.getX()<176)) {
+				if (!(b.getX()>softfrontboundary&&b.getX()<softbackboundary)) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 0;
 					
