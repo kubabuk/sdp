@@ -33,21 +33,34 @@ public class DeathStarMoveATest {
 		//MainComm theForceDef = new MainComm(1);
 		MainComm theForceAttack = new MainComm(2);
 		
-		// Test Null goal rejection
-		goal = new Goal(new Point(universe.getSecondSectionBoundary() + 100 ,175), CommandNames.MOVE, false, true);
-		MoveA.makeCommands(universe,goal,aq);
-		
-		// Test check for moving outside of boundaries
-		goal = new Goal(new Point(universe.getFirstSectionBoundary() + 100 ,20),CommandNames.MOVE,false, false);
-		MoveA.makeCommands(universe,goal,aq);
+//		// Test Null goal rejection
+//		goal = new Goal(new Point(universe.getSecondSectionBoundary() + 100 ,175), CommandNames.MOVE, false, true);
+//		MoveA.makeCommands(universe,goal,aq);
+//		
+//		// Test check for moving outside of boundaries
+//		goal = new Goal(new Point(175, 200),CommandNames.MOVE,false, false);
+//		MoveA.makeCommands(universe,goal,aq);
 		
 //		
 		// Test moving within boundaries
 		System.out.println(universe.getFirstSectionBoundary());
-		goal = new Goal(new Point(universe.getFirstSectionBoundary() + 10 ,20),CommandNames.MOVE,false, false);
-		MoveA.makeCommands(universe,goal,aq);
 		
-		// Test Abort
+//		goal = new Goal(new Point(162,215),CommandNames.MOVE,false, false);
+//		MoveA.makeCommands(universe,goal,aq);
+		
+		goal = new Goal(new Point(162,20),CommandNames.MOVE,false, false);
+		MoveA.makeCommands(universe,goal,aq);
+
+//		goal = new Goal(new Point(universe.getFirstSectionBoundary()+2,20),
+//				CommandNames.MOVE,false, false);
+//		MoveA.makeCommands(universe,goal,aq);
+//		
+//		goal = new Goal(new Point(universe.getFirstSectionBoundary()+2,215),
+//				CommandNames.MOVE,false, false);
+//		MoveA.makeCommands(universe,goal,aq);
+//		
+		
+		// Test Abort -- tested, working
 //		goal = new Goal(new Point(universe.getFirstSectionBoundary() + 10 ,100),CommandNames.MOVE,false, false);
 //		MoveA.makeCommands(universe,goal,aq);
 //		goal = new Goal(new Point(universe.getFirstSectionBoundary() + 10 ,20),CommandNames.MOVE,false, false);
@@ -63,8 +76,8 @@ public class DeathStarMoveATest {
 //		goal = new Goal(new Point(universe.getFirstSectionBoundary() + 10 ,100),CommandNames.MOVE,false, false);
 //		MoveA.makeCommands(universe,goal,aq);
 		
-		goal = new Goal(new Point(300,20),CommandNames.MOVE,true, false);
-		MoveA.makeCommands(universe,goal,aq);
+//		goal = new Goal(new Point(300,20),CommandNames.MOVE,true, false);
+//		MoveA.makeCommands(universe,goal,aq);
 		
 		int count = 0;
 		

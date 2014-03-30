@@ -43,7 +43,7 @@ public class MoveA {
 
 			// Gets point of Robot and where it wants to move to and makes it
 			// into a vector
-
+			System.out.println("ROBOTS POS: " + robot.getPos());
 			robottopoint = new Vector(robot.getPos(), goal.getGoal());
 
 			// Assigns the Command via movetopoint method
@@ -56,7 +56,8 @@ public class MoveA {
 
 			// Prints out onto terminal for debugging purposes and then ends the
 			// MoveA instance.
-
+			
+			System.out.println("Robot Direction: " + robot.getDir().getOrientationDegrees());
 			System.out.println("Robot Position: " + robot.getPos().toString());
 			System.out.println("Goal Position: " + goal.getGoal().toString());
 			System.out.println("Moving distance: " + cmd.getDistance());
@@ -101,7 +102,7 @@ public class MoveA {
 		if (name.equals(CommandNames.KICK)) {
 
 			// Creates a new Vector for the orientation
-
+			
 			robottoball = new Vector(robot.getPos(), goal.getGoal());
 
 			// Gets the orientation of the robot
@@ -161,7 +162,10 @@ public class MoveA {
 	public static double anglerecalculation(double angle) {
 		if (angle > 180) {
 			return (-(angle - 180));
-		} else
+		} else if (angle < -180) {
+			return (-(angle + 180));
+		}
+		else
 			return angle;
 	}
 	
@@ -181,16 +185,17 @@ public class MoveA {
 			//Check for Right direction
 			System.out.println("Dir: " + dir);
 			System.out.println("Goal X: " + goalx);
-//			System.out.println("First Section Boundary: " + w.getFirstSectionBoundary());
-//			System.out.println("Second Section Boundary: " + w.getSecondSectionBoundary());
-//			System.out.println("Third Section Boundary: " + w.getThirdSectionBoundary());
-			if (!dir && goalx > w.getFirstSectionBoundary() && goalx < w.getSecondSectionBoundary()) {
+			System.out.println("First Boundary: " + w.getFirstBoundary());
+			System.out.println("First Section Boundary: " + w.getFirstSectionBoundary());
+			System.out.println("Second Section Boundary: " + w.getSecondSectionBoundary());
+			System.out.println("Third Section Boundary: " + w.getThirdSectionBoundary());
+			if (!dir && goalx > w.getFirstBoundary() && goalx < w.getSecondBoundary()) {
 				check = true;
 			}
 			
 			//Check for Left direction
 			
-			else if (dir && goalx > w.getSecondSectionBoundary() && goalx < w.getThirdSectionBoundary()) {
+			else if (dir && goalx > w.getSecondBoundary() && goalx < w.getThirdBoundary()) {
 				check = true;
 			}
 			
