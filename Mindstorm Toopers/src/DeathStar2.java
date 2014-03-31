@@ -18,16 +18,15 @@ public class DeathStar2 {
 		
 		// Instantiate arguments for AI - World, Queue (for attacker), Queue (for defender)
 		World universe = new World(color, direction);
+		while (!universe.getReady()){
+			Thread.sleep(100);
+		}
 		Queue aq = new Queue();
 		Queue dq = new Queue();
-		
 		AI emperor = new AI(universe, aq, dq);
 		
 		// Allow vision time to instantiate
 		while(true){
-			while (!universe.getReady()){
-				Thread.sleep(100);
-			}
 	
 	//		MainComm theForceDef = new MainComm(1);
 			MainComm theForceAttack = new MainComm(2);
@@ -57,19 +56,19 @@ public class DeathStar2 {
 	//			if (cmdAttack.getAngle()>180)
 	//				theForceAttack.sendMessage(CommandNames.MOVE, 50,50, 50);
 				if(!cmdAttack.isNothing()){
-					System.out.println("Attempting to send message");
+//					System.out.println("Attempting to send message");
 					if (cmdAttack.getAngle()>180){
-						System.out.println(cmdAttack.getCommand().toString());					
+//						System.out.println(cmdAttack.getCommand().toString());					
 					}
 					else theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle());
-					System.out.println(cmdAttack.getDistance());
-					System.out.println(cmdAttack.getAngle());
+//					System.out.println(cmdAttack.getDistance());
+//					System.out.println(cmdAttack.getAngle());
 					//theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle()-180);
 					
 				}
 				count++;
 				if (count == 10) {	flag = false;}
-				Thread.sleep(1000);
+				Thread.sleep(3000);
 			}
 		}
 	}

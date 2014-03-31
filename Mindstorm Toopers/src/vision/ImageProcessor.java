@@ -644,7 +644,6 @@ public class ImageProcessor {
 					redY += (double)h;
 					countRed++;
 				}
-
 				// finding coordinates for robot plates
 				if (red > plateMinRed && red < plateMaxRed && blue > plateMinBlue && blue < plateMaxBlue && green > plateMinGreen && green < plateMaxGreen
 						&& hsvColor[0] > plateMinHue && hsvColor[0] < plateMaxHue && hsvColor[1] > plateMinSaturation && hsvColor[1] < plateMaxSaturation && hsvColor[2] > plateMinValue && hsvColor[2] < plateMaxValue){

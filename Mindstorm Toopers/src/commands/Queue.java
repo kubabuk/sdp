@@ -15,12 +15,12 @@ public class Queue{
     public void add(Command cmd) {
         //commandList.add(translate(v));
         if (cmd.getCommand() == CommandNames.ABORT) {
-            System.out.println("Clearing queue");
+//            System.out.println("Clearing queue");
             commandList = new ArrayList<Command>();
             commandList.add(new Command(CommandNames.ABORT, 0, 0));
         }
         else {
-            System.out.println("New command added to the queue");
+//            System.out.println("New command added to the queue");
             commandList.add(cmd);
         }
     }
