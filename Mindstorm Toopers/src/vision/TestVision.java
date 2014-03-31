@@ -7,6 +7,9 @@ public class TestVision {
 		World world = new World(true,true); // A whole new world...
 		while (true){
 			Thread.sleep(500);
+			System.out.println(world.getThirdBoundary());
+			System.out.println(world.getSecondBoundary());
+			System.out.println(world.getFirstBoundary());
 		}
 	}
 }

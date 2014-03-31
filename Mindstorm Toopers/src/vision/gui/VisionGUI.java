@@ -78,9 +78,9 @@ public class VisionGUI extends JFrame {
 
 	private World world;
 	private ImageProcessor imageProcessor;
-	
+
 	private final PitchConstants pitchConstants;
-	
+
 	private final JPanel videoDisplay = new JPanel();
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	private final JPanel blueThresholder;
@@ -108,25 +108,36 @@ public class VisionGUI extends JFrame {
 		this.videoHeight = videoHeight;
 		this.world = world;
 		this.statePanel = new StatePanel(this.world);
-		this.imageProcessor = new ImageProcessor(this.world); 
-		this.ballThresholder = new BallThresholder(imageProcessor, pitchConstants);
-		this.yellowThresholder = new YellowThresholder(imageProcessor, pitchConstants);
-		this.blueThresholder = new BlueThresholder(imageProcessor, pitchConstants);
-		this.dotsThresholder = new DotsThresholder(imageProcessor, pitchConstants);
-		this.plateThresholder = new PlateThresholder(imageProcessor, pitchConstants);
+		this.imageProcessor = new ImageProcessor(this.world);
+		this.ballThresholder = new BallThresholder(imageProcessor,
+				pitchConstants);
+		this.yellowThresholder = new YellowThresholder(imageProcessor,
+				pitchConstants);
+		this.blueThresholder = new BlueThresholder(imageProcessor,
+				pitchConstants);
+		this.dotsThresholder = new DotsThresholder(imageProcessor,
+				pitchConstants);
+		this.plateThresholder = new PlateThresholder(imageProcessor,
+				pitchConstants);
 		this.cameraSettings = new CameraSettingsPanel(vStream, pitchConstants);
-		this.generalSettings = new GeneralSettingsPanel(imageProcessor, world, pitchConstants, this);
-		
-		int pitchWidth = videoWidth - (pitchConstants.getLeftBuffer() + pitchConstants.getRightBuffer());
+		this.generalSettings = new GeneralSettingsPanel(imageProcessor, world,
+				pitchConstants, this);
+
+		int pitchWidth = videoWidth
+				- (pitchConstants.getLeftBuffer() + pitchConstants
+						.getRightBuffer());
 		world.setWidth(pitchWidth);
-                int pitchHeight = videoHeight - (pitchConstants.getTopBuffer() + pitchConstants.getBottomBuffer());
-                world.setHeight(pitchHeight);
+		int pitchHeight = videoHeight
+				- (pitchConstants.getTopBuffer() + pitchConstants
+						.getBottomBuffer());
+		world.setHeight(pitchHeight);
 		imageProcessor.setTop(pitchConstants.getTopBuffer());
 		world.setPitchTop(pitchConstants.getTopBuffer());
 		imageProcessor.setLeft(pitchConstants.getLeftBuffer());
 		world.setPitchLeft(pitchConstants.getLeftBuffer());
 		imageProcessor.setRight(videoWidth - pitchConstants.getRightBuffer());
-		imageProcessor.setBottom(videoHeight - pitchConstants.getBottomBuffer());
+		imageProcessor
+				.setBottom(videoHeight - pitchConstants.getBottomBuffer());
 		world.setFirstSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.21 * pitchWidth)));
 		world.setSecondSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.5 * pitchWidth)));
 		world.setThirdSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.79 * pitchWidth)));
@@ -134,7 +145,7 @@ public class VisionGUI extends JFrame {
 		Container contentPane = this.getContentPane();
 
 		Dimension videoSize = new Dimension(videoWidth, videoHeight);
-		
+
 		tabbedPane.setSize(300, this.videoHeight);
 		tabbedPane.setLocation(videoWidth, 0);
 		tabbedPane.addTab("General", generalSettings);
@@ -146,7 +157,7 @@ public class VisionGUI extends JFrame {
 		tabbedPane.addTab("Yellow i", yellowThresholder);
 		tabbedPane.setFocusable(true);
 		contentPane.add(tabbedPane);
-		
+
 		BufferedImage blankInitialiser = new BufferedImage(videoWidth,
 				videoHeight, BufferedImage.TYPE_INT_RGB);
 		getContentPane().setLayout(null);
@@ -157,9 +168,9 @@ public class VisionGUI extends JFrame {
 		this.setSize(videoWidth + 300, videoHeight + 300);
 		this.setVisible(true);
 		this.getGraphics().drawImage(blankInitialiser, 0, 0, null);
-		
+
 		statePanel.setSize(this.videoWidth, 300);
-		statePanel.setLocation(0,videoHeight);
+		statePanel.setLocation(0, videoHeight);
 		contentPane.add(statePanel);
 
 		this.setResizable(false);
@@ -203,7 +214,7 @@ public class VisionGUI extends JFrame {
 			}
 
 			public void mouseReleased(MouseEvent e) {
-				if (justClick){
+				if (justClick) {
 					imageProcessor.setRobot(e.getPoint());
 				}
 				selectionActive = false;
@@ -213,32 +224,44 @@ public class VisionGUI extends JFrame {
 						int bottom = videoHeight - d - b;
 						int left = a;
 						int right = videoWidth - c - a;
-						if (top > 0 && bottom > 0 && left > 0
-									&& right > 0) {
-						// 	Update pitch constants
+						if (top > 0 && bottom > 0 && left > 0 && right > 0) {
+							// Update pitch constants
 							pitchConstants.setTopBuffer(top);
 							pitchConstants.setBottomBuffer(bottom);
 							pitchConstants.setLeftBuffer(left);
 							pitchConstants.setRightBuffer(right);
-							
-//							Update imageProcessor with new values.
-							int pitchWidth = videoWidth - (pitchConstants.getLeftBuffer() + pitchConstants.getRightBuffer());
-							world.setWidth(pitchWidth);
-                                                        int pitchHeight = videoHeight - (pitchConstants.getTopBuffer() + pitchConstants.getBottomBuffer());
-                                                        world.setHeight(pitchHeight);
-							imageProcessor.setTop(pitchConstants.getTopBuffer());
-							world.setPitchTop(pitchConstants.getTopBuffer());
-							imageProcessor.setLeft(pitchConstants.getLeftBuffer());
-							world.setPitchLeft(pitchConstants.getLeftBuffer());
-							imageProcessor.setRight(videoWidth - pitchConstants.getRightBuffer());
-							imageProcessor.setBottom(videoHeight - pitchConstants.getBottomBuffer());
-							world.setFirstSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.21 * pitchWidth)));
-							world.setSecondSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.5 * pitchWidth)));
-							world.setThirdSectionBoundary((int) (pitchConstants.getLeftBuffer() + (0.79 * pitchWidth)));
 
-						// 	Writing the new dimensions to file
-							FileWriter writer = new FileWriter(
-								new File("constants/pitch" + pitchConstants.getPitchNum() + "Dimensions"));
+							// Update imageProcessor with new values.
+							int pitchWidth = videoWidth
+									- (pitchConstants.getLeftBuffer() + pitchConstants
+											.getRightBuffer());
+							world.setWidth(pitchWidth);
+							int pitchHeight = videoHeight
+									- (pitchConstants.getTopBuffer() + pitchConstants
+											.getBottomBuffer());
+							world.setHeight(pitchHeight);
+							imageProcessor
+									.setTop(pitchConstants.getTopBuffer());
+							world.setPitchTop(pitchConstants.getTopBuffer());
+							imageProcessor.setLeft(pitchConstants
+									.getLeftBuffer());
+							world.setPitchLeft(pitchConstants.getLeftBuffer());
+							imageProcessor.setRight(videoWidth
+									- pitchConstants.getRightBuffer());
+							imageProcessor.setBottom(videoHeight
+									- pitchConstants.getBottomBuffer());
+							world.setFirstSectionBoundary((int) (pitchConstants
+									.getLeftBuffer() + (0.21 * pitchWidth)));
+							world.setSecondSectionBoundary((int) (pitchConstants
+									.getLeftBuffer() + (0.5 * pitchWidth)));
+							world.setThirdSectionBoundary((int) (pitchConstants
+									.getLeftBuffer() + (0.79 * pitchWidth)));
+
+							// Writing the new dimensions to file
+							FileWriter writer = new FileWriter(new File(
+									"constants/pitch"
+											+ pitchConstants.getPitchNum()
+											+ "Dimensions"));
 							writer.write("" + top + "\n");
 							writer.write("" + bottom + "\n");
 							writer.write("" + left + "\n");
@@ -249,25 +272,30 @@ public class VisionGUI extends JFrame {
 							System.out.println("Pitch selection NOT succesful");
 						}
 						System.out.print("Top: " + top + " Bottom " + bottom);
-						System.out.println(" Right " + right + " Left "	+ left);
+						System.out.println(" Right " + right + " Left " + left);
 					} catch (IOException e1) {
-						System.out.println("Error writing pitch dimensions to file");
+						System.out
+								.println("Error writing pitch dimensions to file");
 						e1.printStackTrace();
 					}
-					System.out.println("A: " + a + " B: " + b + " C: " + c + " D:" + d);
+					System.out.println("A: " + a + " B: " + b + " C: " + c
+							+ " D:" + d);
 					repaint();
-					}
+				}
+			}
+			
+			public void mouseMoved(MouseEvent e){
+				world.setMouse(new geometry.Point(e.getX(), e.getY()));
 			}
 		};
 
 		this.videoDisplay.addMouseListener(mouseSelector);
 		this.videoDisplay.addMouseMotionListener(mouseSelector);
-
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.addWindowListener(windowAdapter);
 	}
-	
-	public void refreshThresholds(){
+
+	public void refreshThresholds() {
 		((BallThresholder) ballThresholder).updateNewValues();
 		((BlueThresholder) blueThresholder).updateNewValues();
 		((CameraSettingsPanel) cameraSettings).updateNewValues();
@@ -277,7 +305,8 @@ public class VisionGUI extends JFrame {
 		imageProcessor.setTop(pitchConstants.getTopBuffer());
 		imageProcessor.setLeft(pitchConstants.getLeftBuffer());
 		imageProcessor.setRight(videoWidth - pitchConstants.getRightBuffer());
-		imageProcessor.setBottom(videoHeight - pitchConstants.getBottomBuffer());
+		imageProcessor
+				.setBottom(videoHeight - pitchConstants.getBottomBuffer());
 	}
 
 	public void sendFrame(BufferedImage frame, int fps, int frameCounter) {
@@ -285,7 +314,8 @@ public class VisionGUI extends JFrame {
 		this.fps = fps;
 		this.frameCounter = frameCounter;
 		Image img = imageProcessor.trackWorld(frame);
-		this.videoDisplay.getGraphics().drawImage((BufferedImage) img, 0, 0, this.videoWidth, this.videoHeight, null);
+		this.videoDisplay.getGraphics().drawImage((BufferedImage) img, 0, 0,
+				this.videoWidth, this.videoHeight, null);
 		this.statePanel.updateState();
 	}
 
@@ -305,8 +335,8 @@ public class VisionGUI extends JFrame {
 
 		// Display Ball & Robot Positions
 		frameGraphics.drawString("Ball:", 15, 45);
-		frameGraphics.drawString("(" + worldState.getBall().getPos().getX() + ", "
-				+ worldState.getBall().getPos().getY() + ")", 60, 45);
+		frameGraphics.drawString("(" + worldState.getBall().getPos().getX()
+				+ ", " + worldState.getBall().getPos().getY() + ")", 60, 45);
 
 	}
 }

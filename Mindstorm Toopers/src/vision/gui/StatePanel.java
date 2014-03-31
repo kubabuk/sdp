@@ -34,6 +34,9 @@ public class StatePanel extends JPanel {
 	private JLabel theirDefenderDirTxt;
 	private JLabel theirDefenderDir;
 	
+	private JLabel mouseLocTxt;
+	private JLabel mouseLoc;
+	
 	public StatePanel(World world){
 		this.setLayout(null);
 		this.world = world;
@@ -157,7 +160,17 @@ public class StatePanel extends JPanel {
 		this.add(theirDefenderDir);
 		theirDefenderDir.setLocation(455,120);
 		theirDefenderDir.setSize(200, 15);
-	}
+		
+		mouseLocTxt = new JLabel("Mouse Location:");
+		this.add(mouseLocTxt);
+		mouseLocTxt.setLocation(5,160);
+		mouseLocTxt.setSize(200,15);
+		
+		mouseLoc = new JLabel("(0,0)");
+		this.add(mouseLoc);
+		mouseLoc.setLocation(160,160);
+		mouseLoc.setSize(200,15);
+		}
 	
 	public void updateState(){
 		ballLoc.setText(world.getBallPos().toString());
@@ -179,5 +192,7 @@ public class StatePanel extends JPanel {
 		theirDefenderLoc.setText(world.getOtherDefenderPos().toString());
 		theirAttackerDir.setText(world.getOtherAttackerDir().toString());
 		theirDefenderDir.setText(world.getOtherDefenderDir().toString());
+		
+		mouseLoc.setText(world.getMouse().toString());
 	}
 }

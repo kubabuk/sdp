@@ -32,6 +32,9 @@ public class World {
 	// The location of the ball.
 	private Point ball;
 	
+	// The location of the mouse pointer.
+	private Point mouse;
+	
 	private int pitchWidth, pitchHeight, pitchCentre;
 	private Vector yellowLeftDir, yellowRightDir, blueLeftDir, blueRightDir;
 	// The pixel values of the left and top edges of the pitch
@@ -97,6 +100,8 @@ public class World {
 		lastBallLocation = start;
 		gridConstant = 474;
 		count = 0;
+		
+		mouse = new Point(0,0);
 	}
 	
 	public void runVision(final World world){
@@ -166,7 +171,7 @@ public class World {
 	}
 	
 	
-	// use this method after to track other team's robots after deciding which ones are ours
+	// use this method after processing to track robots
 	public void setRobots()
 	{
 		if(color)
@@ -482,7 +487,7 @@ public class World {
 
 	public void setFirstSectionBoundary(int firstSectionBoundary) {
 		this.firstSectionBoundary = firstSectionBoundary;
-		this.setFirstBoundary((firstSectionBoundary - pitchLeft) / (pitchWidth / gridConstant));
+		this.setFirstBoundary((gridConstant * (firstSectionBoundary - pitchLeft)) / pitchWidth);
 	}
 
 	public int getFirstSectionBoundary() {
@@ -491,7 +496,7 @@ public class World {
 
 	public void setSecondSectionBoundary(int secondSectionBoundary) {
 		this.secondSectionBoundary = secondSectionBoundary;
-		this.setSecondBoundary((secondSectionBoundary - pitchLeft) / (pitchWidth / gridConstant));
+		this.setSecondBoundary((gridConstant * (secondSectionBoundary - pitchLeft)) / pitchWidth);
 	}
 
 	public int getSecondSectionBoundary() {
@@ -500,7 +505,7 @@ public class World {
 
 	public void setThirdSectionBoundary(int thirdSectionBoundary) {
 		this.thirdSectionBoundary = thirdSectionBoundary;
-		this.setThirdBoundary((thirdSectionBoundary - pitchLeft) / (pitchWidth / gridConstant));
+		this.setThirdBoundary((gridConstant * (thirdSectionBoundary - pitchLeft)) / pitchWidth);
 	}
 
 	public int getThirdSectionBoundary() {
@@ -537,6 +542,16 @@ public class World {
 
 	public int getThirdBoundary() {
 		return thirdBoundary;
+	}
+
+	public void setMouse(Point mouse) {
+		int x = (int) ((gridConstant * (mouse.getX() - this.pitchLeft)) / this.pitchWidth);
+		int y = (int) ((gridConstant * (mouse.getY() - this.pitchTop)) / this.pitchWidth);
+		this.mouse = new Point(x,y);
+	}
+
+	public Point getMouse() {
+		return mouse;
 	}
 	
 	/*
