@@ -290,15 +290,16 @@ public class StrategyA {
 			// if not, switch back to catch mode
 			// and open the catcher
 //			if (iscaught&&Point.pointDistance(r, kp)<30)
-//			{
-//				this.State = 3;
-//			}
-//			else
+			if (Point.pointDistance(r, kp)<30)
+			{
+				this.State = 3;
+			}	
+//			else if (!iscaught)
 //			{
 //				this.State = 1;
 //				g = new Goal(new Point(0,0), CommandNames.KICK,false,false);
 //			}
-			this.State = 3;
+//			this.State = 3;
 			break;
 		}
 		case 3:
