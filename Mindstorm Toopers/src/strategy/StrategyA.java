@@ -23,7 +23,7 @@ public class StrategyA {
 	public StrategyA(World w)
 	{
 		this.w = w;
-		this.State = 0;
+		this.State = 2; // Should be 0 for gameplay
 		
 		if (w.getDirection())
 		{
@@ -150,6 +150,8 @@ public class StrategyA {
 			Point b = w.getBallPos();
 			
 			//vision bug tolerance
+			
+			System.out.println(w.getDirection());
 			if ((b.getX()==0&&b.getY()==0)||(r.getX()==0&&r.getY()==0))
 			{
 				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
@@ -210,8 +212,13 @@ public class StrategyA {
 			//Point b = w.getBall().getPos();
 			//w.getBall().setCaught(true);
 			//do catch0
-			g = new Goal(b, CommandNames.CATCH,false,false);
-			this.State=2;
+			g = new Goal(b, CommandNames.MOVE,false,false);
+			
+			if (Point.pointDistance(r, g.getGoal()) < 3) {
+				g = new Goal(b, CommandNames.CATCH,false,false);
+				this.State=2;
+			}
+			
 			break;
 			
 		}
@@ -290,7 +297,7 @@ public class StrategyA {
 			// if not, switch back to catch mode
 			// and open the catcher
 //			if (iscaught&&Point.pointDistance(r, kp)<30)
-			if (Point.pointDistance(r, kp)<30)
+			if (Point.pointDistance(r, kp)<50)
 			{
 				this.State = 3;
 			}	
@@ -326,7 +333,7 @@ public class StrategyA {
 				//facing left
 				goal = new Point (0,114);
 			}
-
+			
 			g = new Goal(goal, CommandNames.KICK,false,false);
 			
 			//temporary function for iscaught
@@ -334,10 +341,11 @@ public class StrategyA {
 			Vector rb = new Vector(r, 20, v.getOrientation());
 			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
 			boolean iscaught = Point.pointDistance(b, bc) < 10;
-			if (!iscaught)
-			{
-				this.State = 0;
-			}
+
+//			if (!iscaught)
+//			{
+//				this.State = 0;
+//			}
 			break;
 			
 			
@@ -388,6 +396,8 @@ public class StrategyA {
 			if (currentgoal.getMove() != newgoal.getMove())
 			{
 //				System.out.println("This is set to be an abort goal, a new command goal will be executed.");
+				System.out.println("In judge: " + currentgoal.getGoal().toString() + 
+						", " + newgoal.getGoal().toString());
 				newgoal.setAbort(true);
 				return newgoal;
 			}
@@ -410,7 +420,7 @@ public class StrategyA {
 				}
 				else
 				{
-//					System.out.println("This is set to be an abort goal");
+					System.out.println("This is set to be an abort goal");
 					newgoal.setAbort(true);
 					return newgoal;
 				}

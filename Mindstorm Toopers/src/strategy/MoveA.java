@@ -31,7 +31,36 @@ public class MoveA {
 		if (goal.getAbort()) {
 			cmd = new Command(commands.CommandNames.ABORT,0,0);
 //			System.out.println("Abort Command: Abort put into stack");
-			// aq.add(cmd);
+			aq.add(cmd);
+		}
+		
+		if (name.equals(CommandNames.KICK)) {
+
+			// Creates a new Vector for the orientation
+			
+			robottoball = new Vector(robot.getPos(), goal.getGoal());
+
+			// Gets the orientation of the robot
+
+			robotori = robot.getDir().getOrientationDegrees();
+
+			// Face towards the ball
+
+			cmd = new Command(CommandNames.TURN, 0,
+					(int) anglerecalculation(robottoball.getOrientationDegrees() - robotori));
+
+//			System.out.println("Changing angle by: " + cmd.getAngle());
+
+			aq.add(cmd);
+
+			// Then Kick
+
+			cmd = new Command(CommandNames.KICK, 0, 0);
+
+//			System.out.println("Kick");
+
+			aq.add(cmd);
+			return;
 		}
 		
 		if (!boundarycheck(w,goal)) {
@@ -97,37 +126,9 @@ public class MoveA {
 //			System.out.println("Catch");
 			aq.add(cmd);
 		}
-
-		if (name.equals(CommandNames.KICK)) {
-
-			// Creates a new Vector for the orientation
-			
-			robottoball = new Vector(robot.getPos(), goal.getGoal());
-
-			// Gets the orientation of the robot
-
-			robotori = robot.getDir().getOrientationDegrees();
-
-			// Face towards the ball
-
-			cmd = new Command(CommandNames.TURN, 0,
-					(int) anglerecalculation(robottoball.getOrientationDegrees() - robotori));
-
-//			System.out.println("Changing angle by: " + cmd.getAngle());
-
-			aq.add(cmd);
-
-			// Then Kick
-
-			cmd = new Command(CommandNames.KICK, 0, 0);
-
-//			System.out.println("Kick");
-
-			aq.add(cmd);
-			return;
-		}
-
 	}
+
+		
 
 	// Calculates and returns a Command for moving from the current position to
 	// a specified point
