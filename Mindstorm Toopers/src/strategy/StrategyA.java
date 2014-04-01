@@ -371,6 +371,60 @@ public class StrategyA {
 		return output;
 	}
 	
+	private Point getKickPoint(){
+		//Returns the point towards which we want to kick the ball.
+		//I made it private since it should only be called from within StrategyA
+		//This is called in case 3 of the switch statement.
+		Point goal;
+		Point defPos = w.getOtherDefenderPos();
+		Point ourPos = w.getAttackerPos();
+		
+		if (w.getDirection())
+		{
+			//facing right
+			Point goalCenter = new Point (474,114); //the center of the GoalPost
+			//the trajectory vector if we kick the ball to the center of the goalpost.
+			Vector defaultKick = new Vector(ourPos,goalCenter);
+			//The point where the ball might be intercepted by the defender. 
+			Point counter = defaultKick.intersectLong(defPos.longtitude());
+			
+			if(Point.pointDistance(counter,defPos)<15){
+				//if the ball will be intercepted then...
+				//TODO: calibrate constant 15 with the radius of the robot (should correspond to 10cm )
+				if(defPos.getY()<114){
+					//if the opponent defender is closer to the bottom then shoot high
+					//TODO: Calibrate the Y coordinate of the goal. This implementation is very naive. A better implementation will calculate goal based on defPos and with the possibility of kicking off the wall.
+					goal = new Point(474,140);
+				}else{
+					//else shoot low
+					//TODO: Calibrate the Y coordinate of the goal. See comment above.
+					goal = new Point(474,90);
+				}
+			}else{
+				//if the ball isn't going to be intercepted by the opponent shoot towards the center of the goalpost.
+				goal = goalCenter;
+			}
+			
+		}
+		else
+			//Symmetrical implementation for the other side of the pitch. Exactly as above. See comments above.
+		{
+			//facing left
+			Point goalCenter = new Point (0,114);
+			Vector defaultKick = new Vector(ourPos,goalCenter);
+			Point counter = defaultKick.intersectLong(defPos.longtitude());
+			if(Point.pointDistance(counter,defPos)<15){
+				if(defPos.getY()<114){
+					goal = new Point(0,140);
+				}else{
+					goal = new Point(0,90);
+				}
+			}else{
+				goal = goalCenter;
+			}
+		}
+		return goal;
+	}
 	
 	public static Goal judge(Goal currentgoal, Goal newgoalG)
 	{
