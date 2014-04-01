@@ -93,7 +93,7 @@ public class StrategyD {
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 				
-				if (b.getX()>softbackboundary&&b.getX()<softfrontboundary) {
+				if (b.getX()>softbackboundary&&b.getX()<softfrontboundary&&w.getBall().isMoving()) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 1;
 					
@@ -125,6 +125,15 @@ public class StrategyD {
 					this.State = 1;
 					
 					break;
+				}
+				
+				if (gp.getY()>150)
+				{
+					gp = new Point(gp.getX(), 150);
+				}
+				else if (gp.getY()<70)
+				{
+					gp = new Point(gp.getX(), 70);
 				}
 				
 				g = new Goal(gp, CommandNames.MOVE,false,false);
@@ -280,11 +289,11 @@ public class StrategyD {
 			// then switch to the kick mode
 			// if not, switch back to catch mode
 			// and open the catcher
-			if (iscaught&&Point.pointDistance(r, kp)<30)
+			if (Point.pointDistance(r, kp)<50)
 			{
 				this.State = 3;
 			}
-			else
+			else if (!iscaught)
 			{
 				this.State = 1;
 				g = new Goal(new Point(0,0), CommandNames.KICK,false,false);
