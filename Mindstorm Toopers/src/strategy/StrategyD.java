@@ -27,17 +27,17 @@ public class StrategyD {
 		
 		if (w.getDirection())
 		{
-			strictfrontboundary =76; 
-			softfrontboundary =96; 
-			strictbackboundary =26; 
-			softbackboundary =6; 
+			strictfrontboundary = w.getFirstBoundary() - 40;
+			softfrontboundary =  w.getFirstBoundary();
+			strictbackboundary = (int) w.getMinX() + 40;
+			softbackboundary = (int) w.getMinX();
 		}
 		else
 		{
-			strictfrontboundary = 356;
-			softfrontboundary = 336;
-			strictbackboundary = 406;
-			softbackboundary = 426;
+			strictfrontboundary = w.getThirdBoundary() + 40;
+			softfrontboundary = w.getThirdBoundary() ;
+			strictbackboundary = (int) w.getMaxX() - 40;
+			softbackboundary = (int) w.getMaxX();
 		}
 	}
 		
@@ -55,7 +55,7 @@ public class StrategyD {
 		//1         |catch the ball
 		//2         |move to the kick point
 		//3			|kick
-	
+		//4 		|pass the ball
 	
 	
 	public Goal getGoal(Goal lastgoal)
@@ -93,7 +93,7 @@ public class StrategyD {
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 				
-				if (b.getX()>softbackboundary&&b.getX()<softfrontboundary&&w.getBall().isMoving()) {
+				if (b.getX()>softbackboundary && b.getX()<softfrontboundary && w.getBall().isMoving()) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 1;
 					
@@ -120,7 +120,7 @@ public class StrategyD {
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 				
-				if (b.getX()>softfrontboundary&&b.getX()<softbackboundary) {
+				if (b.getX()>softfrontboundary && b.getX()<softbackboundary) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 1;
 					
@@ -185,7 +185,7 @@ public class StrategyD {
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 		
-				if (!(b.getX()>softfrontboundary&&b.getX()<softbackboundary)) {
+				if (!(b.getX()>softfrontboundary && b.getX()<softbackboundary)) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 0;
 					
@@ -249,7 +249,7 @@ public class StrategyD {
 			
 			
 			Point kp;
-			System.out.println("kick The attacker is at "+w.getDefender().toString());
+			System.out.println("kick The defender is at "+w.getDefender().toString());
 			if  (w.getDirection())
 			{
 				//facing right
@@ -291,7 +291,7 @@ public class StrategyD {
 			// and open the catcher
 			if (Point.pointDistance(r, kp)<50)
 			{
-				this.State = 3;
+				this.State = 4;
 			}
 			else if (!iscaught)
 			{
@@ -300,8 +300,8 @@ public class StrategyD {
 			}
 			
 			break;
-		}
-		case 3:
+		} // TODO: I think it's OK to skip a case if this doesn't work when testing add an " empty " case 3: (i.e. same as default.
+		case 4:
 		{
 			Point r = w.getDefenderPos();
 			Point b = w.getBallPos();
@@ -314,19 +314,9 @@ public class StrategyD {
 			}
 			
 			//The point is the point we want to kick the ball to.
-			Point goal;
-			if (w.getDirection())
-			{
-				//facing right
-				goal = new Point (474,114);
-			}
-			else
-			{
-				//facing left
-				goal = new Point (0,114);
-			}
+			Point pass = getPassPoint();
 
-			g = new Goal(goal, CommandNames.KICK,false,false);
+			g = new Goal(pass, CommandNames.KICK,false,false);
 			
 			//temporary function for iscaught
 			//when the real one is done, please remove the code below
@@ -337,16 +327,22 @@ public class StrategyD {
 			{
 				this.State = 0;
 			}
+			
+			// TODO: The following line might be necessary to get out of this state. Uncomment it if you see that it gets stuck at state 4.
+			// this.State = 0;
 			break;
 			
 			
 		}
 		default:
-		{
+		{   
 			// generally won't be called
 			// in special situation this will not be called either
+			
+			System.out.println("ERROR: State not recognised, revert to default behaviour. ERROR! This state should not be reached!");
 			g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
-			System.out.println("going default");
+//			System.out.println("going default");
+			this.State = 0;
 			break;
 		}
 		
@@ -362,6 +358,39 @@ public class StrategyD {
 		return output;
 	}
 	
+	private Point getPassPoint(){
+		//Returns the point towards which we want to pass the ball.
+		//I made it private since it should only be called from within StrategyD
+		//This is called in case 4 of the switch statement.
+		Point pass;
+		Point opponentPos = w.getOtherAttackerPos();
+		Point ourPos = w.getDefenderPos();
+		Point allyPos = w.getAttackerPos();
+		Vector defaultPass = new Vector(ourPos,allyPos);
+		//The point where the ball might be intercepted by the defender. 
+		Point counter = defaultPass.intersectLong(opponentPos.longtitude());
+		
+		if(Point.pointDistance(counter,opponentPos)<15){
+			//if the ball will be intercepted then...
+			//TODO: calibrate constant 15 with the radius of the robot (should correspond to 10cm )
+			if(opponentPos.getY()< w.getMaxY()/2){
+				//if the opponent attacker is closer to the bottom then shoot high
+				//TODO: Calibrate the 40 constant. 40 should actually be fine but just to be sure we want sth slightly larger than the robot radius, maybe corresponding to 15-20cm. The idea is that the ball will pass 40 units above the opponent. 
+				//This implementation is very naive. A better implementation will consider the possibility of kicking off the wall.
+				pass = new Point(opponentPos.getX(),opponentPos.getY() + 40);
+			
+			}else{
+					//else shoot low
+					//TODO: Calibrate the 40 constant. See comment above.
+					pass = new Point(opponentPos.getX(),opponentPos.getY() - 40);
+				}
+		}else{
+				//if the ball isn't going to be intercepted by the opponent shoot towards the position of our Attacker.
+				pass = allyPos;
+		}
+
+		return pass;
+	}
 	
 	public static Goal judge(Goal currentgoal, Goal newgoalG)
 	{

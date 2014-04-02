@@ -28,7 +28,13 @@ public class AI {
 	
 	
 	public void update()
-	{
+	{	
+		
+		//If the defender is about to pass the ball then set the attacker ready to receive it.
+		//TODO: This might need to be commented out until we test both robots together.
+		if (this.d.getState() == 4){
+			this.a.setState(4);
+		}
 		
 		// get goal from Strategy
 //		System.out.println("The last goal before feeding is " + this.lastag.toString());
