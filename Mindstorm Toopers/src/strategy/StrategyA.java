@@ -59,13 +59,13 @@ public class StrategyA {
 		//1         |catch the ball
 		//2         |move to the kick point
 		//3			|kick
-		//4 		|pass the ball
 	
 	
 	
 	public Goal getGoal(Goal lastgoal)
 	{
 		Goal g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+		System.out.println("The current state is: " + this.State);
 		switch (this.State)
 		{
 		case 0:
@@ -125,8 +125,7 @@ public class StrategyA {
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 				
-				if (b.getX()>softfrontboundary && b.getX()<softbackboundary) 
-				{
+				if (b.getX()>softfrontboundary&&b.getX()<softbackboundary) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 1;
 					
@@ -351,31 +350,12 @@ public class StrategyA {
 			
 			
 		}
-		case 4:
-		{
-			/* In state 4 the attacker waits to receive the ball from the defender. 
-			 * If the ball is moving (the defender has already kicked it) then move to intercept.
-			 * Otherwise wait for the ball to start moving.*/
-			
-			if(w.getBall().isMoving()){
-				this.State = 0;
-				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
-				break;
-			}
-			else{
-				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
-				break;
-			}
-		}
 		default:
-		{   
+		{
 			// generally won't be called
 			// in special situation this will not be called either
-			
-			System.out.println("ERROR: State not recognised, revert to default behaviour. ERROR! This state should not be reached!");
 			g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
 //			System.out.println("going default");
-			this.State = 0;
 			break;
 		}
 		
@@ -391,60 +371,6 @@ public class StrategyA {
 		return output;
 	}
 	
-	private Point getKickPoint(){
-		//Returns the point towards which we want to kick the ball.
-		//I made it private since it should only be called from within StrategyA
-		//This is called in case 3 of the switch statement.
-		Point goal;
-		Point defPos = w.getOtherDefenderPos();
-		Point ourPos = w.getAttackerPos();
-		
-		if (w.getDirection())
-		{
-			//facing right
-			Point goalCenter = new Point (474,114); //the center of the GoalPost
-			//the trajectory vector if we kick the ball to the center of the goalpost.
-			Vector defaultKick = new Vector(ourPos,goalCenter);
-			//The point where the ball might be intercepted by the defender. 
-			Point counter = defaultKick.intersectLong(defPos.longtitude());
-			
-			if(Point.pointDistance(counter,defPos)<15){
-				//if the ball will be intercepted then...
-				//TODO: calibrate constant 15 with the radius of the robot (should correspond to 10cm )
-				if(defPos.getY()<114){
-					//if the opponent defender is closer to the bottom then shoot high
-					//TODO: Calibrate the Y coordinate of the goal. This implementation is very naive. A better implementation will calculate goal based on defPos and with the possibility of kicking off the wall.
-					goal = new Point(474,140);
-				}else{
-					//else shoot low
-					//TODO: Calibrate the Y coordinate of the goal. See comment above.
-					goal = new Point(474,90);
-				}
-			}else{
-				//if the ball isn't going to be intercepted by the opponent shoot towards the center of the goalpost.
-				goal = goalCenter;
-			}
-			
-		}
-		else
-			//Symmetrical implementation for the other side of the pitch. Exactly as above. See comments above.
-		{
-			//facing left
-			Point goalCenter = new Point (0,114);
-			Vector defaultKick = new Vector(ourPos,goalCenter);
-			Point counter = defaultKick.intersectLong(defPos.longtitude());
-			if(Point.pointDistance(counter,defPos)<15){
-				if(defPos.getY()<114){
-					goal = new Point(0,140);
-				}else{
-					goal = new Point(0,90);
-				}
-			}else{
-				goal = goalCenter;
-			}
-		}
-		return goal;
-	}
 	
 	public static Goal judge(Goal currentgoal, Goal newgoalG)
 	{

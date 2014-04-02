@@ -28,7 +28,7 @@ public class DeathStar3 {
 		// Allow vision time to instantiate
 		while(true){
 	
-			MainComm theForceDef = new MainComm(1);
+			MainComm theForceDef = new MainComm(2);
 	//		MainComm theForceAttack = new MainComm(2);
 			int count = 0;
 				
@@ -52,20 +52,6 @@ public class DeathStar3 {
 					}
 
 				}
-	
-	//			if (cmdAttack.getAngle()>180)
-	//				theForceAttack.sendMessage(CommandNames.MOVE, 50,50, 50);
-//				if(!cmdAttack.isNothing()){
-////					System.out.println("Attempting to send message");
-//					if (cmdAttack.getAngle()>180){
-////						System.out.println(cmdAttack.getCommand().toString());					
-//					}
-//					else theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle());
-////					System.out.println(cmdAttack.getDistance());
-////					System.out.println(cmdAttack.getAngle());
-////					//theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle()-180);
-//					
-//				}
 				count++;
 				if (count == 10) {	flag = false;}
 				Thread.sleep(1000);

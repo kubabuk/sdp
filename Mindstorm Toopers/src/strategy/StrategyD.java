@@ -91,8 +91,8 @@ public class StrategyD {
 					gp = new Point(strictfrontboundary,b.getY());
 				}
 				
-				System.out.println("The ball is at "+b.toString());
-				System.out.println("The attacker is at "+r.toString());
+//				System.out.println("The ball is at "+b.toString());
+//				System.out.println("The attacker is at "+r.toString());
 				
 				if (b.getX()>softbackboundary && b.getX()<softfrontboundary && !w.getBall().isMoving()) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
@@ -167,8 +167,8 @@ public class StrategyD {
 				//facing right
 				//go to the boundary on the far side of the ball in the attacker zone
 
-				System.out.println("The ball is at "+b.toString());
-				System.out.println("The attacker is at "+r.toString());
+//				System.out.println("The ball is at "+b.toString());
+//				System.out.println("The attacker is at "+r.toString());
 				
 				if (!(b.getX()>softbackboundary&&b.getX()<softfrontboundary)) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
@@ -183,8 +183,8 @@ public class StrategyD {
 			{
 				// facing left
 			
-				System.out.println("The ball is at "+b.toString());
-				System.out.println("The attacker is at "+r.toString());
+//				System.out.println("The ball is at "+b.toString());
+//				System.out.println("The attacker is at "+r.toString());
 		
 				if (!(b.getX()>softfrontboundary && b.getX()<softbackboundary)) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
@@ -340,7 +340,7 @@ public class StrategyD {
 			// generally won't be called
 			// in special situation this will not be called either
 			
-			System.out.println("ERROR: State not recognised, revert to default behaviour. ERROR! This state should not be reached!");
+//			System.out.println("ERROR: State not recognised, revert to default behaviour. ERROR! This state should not be reached!");
 			g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
 //			System.out.println("going default");
 			this.State = 0;
@@ -350,12 +350,12 @@ public class StrategyD {
 		}
 		
 		
-		System.out.println("Goal before judge is "+g.toString());
+//		System.out.println("Goal before judge is "+g.toString());
 		
 		
 		Goal output = judge(lastgoal,g);
-		System.out.println("The state is " + this.State);
-		System.out.println(output.toString());
+//		System.out.println("The state is " + this.State);
+//		System.out.println(output.toString());
 		return output;
 	}
 	
@@ -395,8 +395,8 @@ public class StrategyD {
 	
 	public static Goal judge(Goal currentgoal, Goal newgoalG)
 	{
-		System.out.println("KUBA IS PRINTING THIS IN JUDGE: " + currentgoal.toString());
-		System.out.println("KUBA IS PRINTING THIS IN JUDGE: " + newgoalG.toString());
+//		System.out.println("KUBA IS PRINTING THIS IN JUDGE: " + currentgoal.toString());
+//		System.out.println("KUBA IS PRINTING THIS IN JUDGE: " + newgoalG.toString());
 		
 		Goal newgoal = newgoalG;
 		if (newgoal.getAbort())
