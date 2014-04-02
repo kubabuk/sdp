@@ -23,7 +23,7 @@ public class StrategyD {
 	public StrategyD(World w)
 	{
 		this.w = w;
-		this.State = 2;
+		this.State = 0;
 		
 		if (w.getDirection())
 		{
