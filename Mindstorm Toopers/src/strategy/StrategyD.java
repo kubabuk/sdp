@@ -60,6 +60,7 @@ public class StrategyD {
 	
 	public Goal getGoal(Goal lastgoal)
 	{
+		System.out.println("The current state is: " + this.State);
 		Goal g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 		switch (this.State)
 		{

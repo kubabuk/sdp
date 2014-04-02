@@ -23,7 +23,7 @@ public class StrategyA {
 	public StrategyA(World w)
 	{
 		this.w = w;
-		this.State = 2; // Should be 0 for gameplay
+		this.State = 0; // Should be 0 for gameplay
 		
 		if (w.getDirection())
 		{
@@ -66,7 +66,6 @@ public class StrategyA {
 	public Goal getGoal(Goal lastgoal)
 	{
 		Goal g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-		System.out.println("The current state is: " + this.State);
 		switch (this.State)
 		{
 		case 0:
