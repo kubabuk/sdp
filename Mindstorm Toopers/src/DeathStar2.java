@@ -29,7 +29,7 @@ public class DeathStar2 {
 		while(true){
 	
 	//		MainComm theForceDef = new MainComm(1);
-			MainComm theForceAttack = new MainComm(2);
+			MainComm theForceAttack = new MainComm(1);
 	//		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,0);
 	//		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,180);
 	//		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,90);

@@ -94,9 +94,9 @@ public class StrategyD {
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 				
-				if (b.getX()>softbackboundary && b.getX()<softfrontboundary && w.getBall().isMoving()) {
+				if (b.getX()>softbackboundary && b.getX()<softfrontboundary && !w.getBall().isMoving()) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-					this.State = 1;
+//					this.State = 1;
 					
 					break;
 				}
@@ -121,21 +121,21 @@ public class StrategyD {
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 				
-				if (b.getX()>softfrontboundary && b.getX()<softbackboundary) {
+				if (b.getX()>softfrontboundary && b.getX()<softbackboundary && !w.getBall().isMoving()) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-					this.State = 1;
+//					this.State = 1;
 					
 					break;
 				}
 				
-				if (gp.getY()>150)
-				{
-					gp = new Point(gp.getX(), 150);
-				}
-				else if (gp.getY()<70)
-				{
-					gp = new Point(gp.getX(), 70);
-				}
+//				if (gp.getY()>150)
+//				{
+//					gp = new Point(gp.getX(), 150);
+//				}
+//				else if (gp.getY()<70)
+//				{
+//					gp = new Point(gp.getX(), 70);
+//				}
 				
 				g = new Goal(gp, CommandNames.MOVE,false,false);
 				
@@ -395,6 +395,9 @@ public class StrategyD {
 	
 	public static Goal judge(Goal currentgoal, Goal newgoalG)
 	{
+		System.out.println("KUBA IS PRINTING THIS IN JUDGE: " + currentgoal.toString());
+		System.out.println("KUBA IS PRINTING THIS IN JUDGE: " + newgoalG.toString());
+		
 		Goal newgoal = newgoalG;
 		if (newgoal.getAbort())
 		{

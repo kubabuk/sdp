@@ -125,7 +125,7 @@ public class StrategyA {
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 				
-				if (b.getX()>softfrontboundary&&b.getX()<softbackboundary&&!w.getBall().isMoving()) 
+				if (b.getX()>softfrontboundary && b.getX()<softbackboundary) 
 				{
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 1;

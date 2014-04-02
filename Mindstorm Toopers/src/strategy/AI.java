@@ -56,7 +56,7 @@ public class AI {
 		if (!this.dg.isNull())
 		{	
 //			System.out.println("The Goal in AI is not null");
-			MoveA.makeCommands(this.w, this.dg, this.dq);
+			MoveD.makeCommands(this.w, this.dg, this.dq);
 			this.lastdg = this.dg;
 		}
 		
