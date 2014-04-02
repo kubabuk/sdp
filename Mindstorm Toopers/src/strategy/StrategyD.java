@@ -23,7 +23,7 @@ public class StrategyD {
 	public StrategyD(World w)
 	{
 		this.w = w;
-		this.State = 0;
+		this.State = 2;
 		
 		if (w.getDirection())
 		{
@@ -78,69 +78,50 @@ public class StrategyD {
 			}
 			
 			//intercept at the boundary strategy
-			if (w.getDirection())
+			
+			//facing right
+			//go to the boundary on the far side of the ball in the attacker zone
+				
+			if (b.getY()>150)
 			{
-				//facing right
-				//go to the boundary on the far side of the ball in the attacker zone
-				if (b.getX()>r.getX())
-				{
-					gp = new Point(strictbackboundary,b.getY());
-				}
-				else
-				{
-					gp = new Point(strictfrontboundary,b.getY());
-				}
-				
-				System.out.println("The ball is at "+b.toString());
-				System.out.println("The attacker is at "+r.toString());
-				
-				if (b.getX()>softbackboundary && b.getX()<softfrontboundary && !w.getBall().isMoving()) {
-					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-//					this.State = 1;
-					
-					break;
-				}
-				
-				g = new Goal(gp, CommandNames.MOVE,false,false);
-				
-				break;
-				
+				gp = new Point(strictbackboundary, 160);
+			}
+			else if (b.getY()<70)
+			{
+				gp = new Point(strictbackboundary, 70);
 			}
 			else
 			{
-				// facing left
-				if (b.getX()>r.getX())
-				{
-					gp = new Point(strictfrontboundary,b.getY());
-				}
-				else
-				{
-					gp = new Point(strictbackboundary,b.getY());
-					
-				}
-				System.out.println("The ball is at "+b.toString());
-				System.out.println("The attacker is at "+r.toString());
+				gp = new Point(strictbackboundary,b.getY());
+			}
+			System.out.println("The ball is at "+b.toString());
+			System.out.println("The attacker is at "+r.toString());
 				
-				if (b.getX()>softfrontboundary && b.getX()<softbackboundary && !w.getBall().isMoving()) {
+			if (w.getDirection())
+			{
+				if (b.getX()>softbackboundary && b.getX()<softfrontboundary && !w.getBall().isMoving()) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-//					this.State = 1;
+					this.State = 1;
 					
 					break;
 				}
-				
-//				if (gp.getY()>150)
-//				{
-//					gp = new Point(gp.getX(), 150);
-//				}
-//				else if (gp.getY()<70)
-//				{
-//					gp = new Point(gp.getX(), 70);
-//				}
-				
-				g = new Goal(gp, CommandNames.MOVE,false,false);
-				
-				break;				
 			}
+			else
+			{
+				if (b.getX()<softbackboundary && b.getX()>softfrontboundary && !w.getBall().isMoving()) {
+					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+					this.State = 1;
+					
+					break;
+				}
+			}
+				
+			g = new Goal(gp, CommandNames.MOVE,false,false);
+				
+			break;
+				
+			
+			
 		
 		}
 		case 1:
@@ -241,12 +222,12 @@ public class StrategyD {
 			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
 			boolean iscaught = Point.pointDistance(b, bc) < 10;
 			
-			if (!iscaught)
-			{
-				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-				this.State=1;
-				break;
-			}
+//			if (!iscaught)
+//			{
+//				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+//				this.State=1;
+//				break;
+//			}
 			
 			
 			Point kp;
@@ -254,9 +235,9 @@ public class StrategyD {
 			if  (w.getDirection())
 			{
 				//facing right
-				if (Point.pointDistance(w.getOtherAttackerPos(), new Point(150,50))<60)
+				if (Point.pointDistance(w.getOtherAttackerPos(), new Point(170,70))<80)
 				{
-					kp = new Point(50,50);
+					kp = new Point(50,70);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
@@ -271,15 +252,15 @@ public class StrategyD {
 			else
 			{
 				//facing left
-				if (Point.pointDistance(w.getOtherAttackerPos(), new Point(300,50))<60)
+				if (Point.pointDistance(w.getOtherAttackerPos(), new Point(300,70))<80)
 				{
-					kp = new Point(350,50);
+					kp = new Point(425,70);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
 				else
 				{
-					kp = new Point(350,170);
+					kp = new Point(425,170);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
@@ -294,11 +275,11 @@ public class StrategyD {
 			{
 				this.State = 4;
 			}
-			else if (!iscaught)
-			{
-				this.State = 1;
-				g = new Goal(new Point(0,0), CommandNames.KICK,false,false);
-			}
+//			else if (!iscaught)
+//			{
+//				this.State = 1;
+//				g = new Goal(new Point(0,0), CommandNames.KICK,false,false);
+//			}
 			
 			break;
 		} // TODO: I think it's OK to skip a case if this doesn't work when testing add an " empty " case 3: (i.e. same as default.

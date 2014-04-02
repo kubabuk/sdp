@@ -9,7 +9,7 @@ public class MoveD {
 
 	public static void makeCommands(World w, Goal goal, Queue aq) {
 
-		Robot robot = w.getAttacker();
+		Robot robot = w.getDefender();
 
 		CommandNames name = goal.getMove();
 
@@ -72,7 +72,7 @@ public class MoveD {
 			System.out.println("Sending move command.");
 			// Gets point of Robot and where it wants to move to and makes it
 			// into a vector
-//			System.out.println("ROBOTS POS: " + robot.getPos());
+			System.out.println("ROBOTS POS: " + robot.getPos());
 			robottopoint = new Vector(robot.getPos(), goal.getGoal());
 
 			// Assigns the Command via movetopoint method
@@ -86,11 +86,11 @@ public class MoveD {
 			// Prints out onto terminal for debugging purposes and then ends the
 			// MoveA instance.
 			
-//			System.out.println("Robot Direction: " + robot.getDir().getOrientationDegrees());
-//			System.out.println("Robot Position: " + robot.getPos().toString());
-//			System.out.println("Goal Position: " + goal.getGoal().toString());
-//			System.out.println("Moving distance: " + cmd.getDistance());
-//			System.out.println("Angle to move in: " + cmd.getAngle());
+			System.out.println("Robot Direction: " + robot.getDir().getOrientationDegrees());
+			System.out.println("Robot Position: " + robot.getPos().toString());
+			System.out.println("Goal Position: " + goal.getGoal().toString());
+			System.out.println("Moving distance: " + cmd.getDistance());
+			System.out.println("Angle to move in: " + cmd.getAngle());
 
 			return;
 		}
@@ -205,7 +205,7 @@ public class MoveD {
 			else {
 //				System.out.println("This shouldn't be happening!");
 			}
-//			check = true;
+			check = true;
 		}
 		return check;
 	}
