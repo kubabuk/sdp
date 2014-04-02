@@ -23,7 +23,7 @@ public class StrategyA {
 	public StrategyA(World w)
 	{
 		this.w = w;
-		this.State = 2; // Should be 0 for gameplay
+		this.State = 0; // Should be 0 for gameplay
 		
 		if (w.getDirection())
 		{
@@ -184,7 +184,7 @@ public class StrategyA {
 //				System.out.println("The ball is at "+b.toString());
 //				System.out.println("The attacker is at "+r.toString());
 		
-				if (!(b.getX()>softfrontboundary&&b.getX()<softbackboundary)) {
+				if ((!(b.getX()>softfrontboundary&&b.getX()<softbackboundary))||w.getBall().isMoving()) {
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 0;
 					
@@ -215,7 +215,7 @@ public class StrategyA {
 			//do catch0
 			g = new Goal(b, CommandNames.MOVE,false,false);
 			
-			if (Point.pointDistance(r, g.getGoal()) < 3) {
+			if (Point.pointDistance(r, b) < 30) {
 				g = new Goal(b, CommandNames.CATCH,false,false);
 				this.State=2;
 			}

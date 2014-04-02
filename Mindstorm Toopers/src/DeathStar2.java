@@ -68,7 +68,7 @@ public class DeathStar2 {
 				}
 				count++;
 				if (count == 10) {	flag = false;}
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 			}
 		}
 	}
