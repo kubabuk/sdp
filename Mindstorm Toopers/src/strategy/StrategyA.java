@@ -59,13 +59,13 @@ public class StrategyA {
 		//1         |catch the ball
 		//2         |move to the kick point
 		//3			|kick
+		//4 		|pass the ball
 	
 	
 	
 	public Goal getGoal(Goal lastgoal)
 	{
 		Goal g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-		System.out.println("The current state is: " + this.State);
 		switch (this.State)
 		{
 		case 0:
@@ -125,7 +125,7 @@ public class StrategyA {
 				System.out.println("The ball is at "+b.toString());
 				System.out.println("The attacker is at "+r.toString());
 				
-				if (b.getX()>softfrontboundary&&b.getX()<softbackboundary&&!w.getBall().isMoving()) 
+				if (b.getX()>softfrontboundary && b.getX()<softbackboundary) 
 				{
 					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
 					this.State = 1;
@@ -351,12 +351,31 @@ public class StrategyA {
 			
 			
 		}
-		default:
+		case 4:
 		{
+			/* In state 4 the attacker waits to receive the ball from the defender. 
+			 * If the ball is moving (the defender has already kicked it) then move to intercept.
+			 * Otherwise wait for the ball to start moving.*/
+			
+			if(w.getBall().isMoving()){
+				this.State = 0;
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
+				break;
+			}
+			else{
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
+				break;
+			}
+		}
+		default:
+		{   
 			// generally won't be called
 			// in special situation this will not be called either
+			
+			System.out.println("ERROR: State not recognised, revert to default behaviour. ERROR! This state should not be reached!");
 			g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,true);
 //			System.out.println("going default");
+			this.State = 0;
 			break;
 		}
 		

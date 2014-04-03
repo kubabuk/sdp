@@ -9,7 +9,7 @@ import strategy.*;
 import comms.*;
 import world.*;
 
-public class DeathStar2 {
+public class DeathStarBoth {
 
 	public static void main (String[] args) throws InterruptedException, IOException{
 		boolean color = true;
@@ -28,15 +28,8 @@ public class DeathStar2 {
 		// Allow vision time to instantiate
 		while(true){
 	
-	//		MainComm theForceDef = new MainComm(1);
+			MainComm theForceDef = new MainComm(1);
 			MainComm theForceAttack = new MainComm(2);
-	//		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,0);
-	//		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,180);
-	//		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,90);
-	//		theForceAttack.sendMessage(CommandNames.MOVE, 25, 1,90);
-	//		Goal goal = new Goal(new Point(300,20),CommandNames.MOVE,false);
-	//		MoveA.makeCommands(universe,goal,aq);
-			
 			int count = 0;
 				
 			while (universe.getReady()) {
@@ -46,26 +39,33 @@ public class DeathStar2 {
 				//System.out.println("The ball position is deathstar " + universe.getBall().getPos().getX()+" , "+universe.getBall().getPos().getY());
 					
 				// Retrieve commands from the queue.
+				Command cmdDefend = dq.pull();
 				Command cmdAttack = aq.pull();
-				//Command cmdDefend = dq.pull();
-	
-	//			if(!cmdDefend.isNothing()){
-	//				theForceDef.sendMessage(cmdDefend.getCommand(), cmdDefend.getDistance(), cmdDefend.getAngle());
-	//			}
-	
-	//			if (cmdAttack.getAngle()>180)
-	//				theForceAttack.sendMessage(CommandNames.MOVE, 50,50, 50);
-				if(!cmdAttack.isNothing()){
-//					System.out.println("Attempting to send message");
-					if (cmdAttack.getAngle()>180){
-//						System.out.println(cmdAttack.getCommand().toString());					
+				
+				if(!cmdDefend.isNothing()){
+					System.out.println("Sending command");
+					if (cmdDefend.getAngle() > 180) {
+						//
 					}
-					else theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle());
-//					System.out.println(cmdAttack.getDistance());
-//					System.out.println(cmdAttack.getAngle());
-					//theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle()-180);
-					
+					else {
+						theForceDef.sendMessage(cmdDefend.getCommand(), cmdDefend.getDistance(), 
+								cmdDefend.getAngleDirec(), cmdDefend.getAngle());
+					}
+
 				}
+				
+				if(!cmdAttack.isNothing()){
+					System.out.println("Sending command");
+					if (cmdAttack.getAngle() > 180) {
+						//
+					}
+					else {
+						theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(), 
+								cmdAttack.getAngleDirec(), cmdAttack.getAngle());
+					}
+
+				}
+	
 				count++;
 				if (count == 10) {	flag = false;}
 				Thread.sleep(1000);
