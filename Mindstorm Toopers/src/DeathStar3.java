@@ -28,7 +28,7 @@ public class DeathStar3 {
 		// Allow vision time to instantiate
 		while(true){
 	
-			MainComm theForceDef = new MainComm(1);
+			MainComm theForceDef = new MainComm(2);
 	//		MainComm theForceAttack = new MainComm(2);
 			int count = 0;
 				

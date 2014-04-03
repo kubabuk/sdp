@@ -23,7 +23,7 @@ public class StrategyD {
 	public StrategyD(World w)
 	{
 		this.w = w;
-		this.State = 0;
+		this.State = 2;
 		
 		if (w.getDirection())
 		{
@@ -180,7 +180,7 @@ public class StrategyD {
 			
 			//temporary function for iscaught
 			//when the real one is done, please remove the code below
-			Vector rb = new Vector(r, 20, v.getOrientation());
+			Vector rb = new Vector(r, 30, v.getOrientation());
 			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
 			boolean iscaught = Point.pointDistance(b, bc) < 10;
 			
@@ -218,16 +218,16 @@ public class StrategyD {
 			//if ball is not caught, switch back to state 1
 			//temporary function for iscaught
 			//when the real one is done, please remove the code below
-			Vector rb = new Vector(r, 20, v.getOrientation());
+			Vector rb = new Vector(r, 30, v.getOrientation());
 			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
 			boolean iscaught = Point.pointDistance(b, bc) < 10;
 			
-//			if (!iscaught)
-//			{
-//				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-//				this.State=1;
-//				break;
-//			}
+			if (!iscaught)
+			{
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+				this.State=1;
+				break;
+			}
 			
 			
 			Point kp;
@@ -237,13 +237,14 @@ public class StrategyD {
 				//facing right
 				if (Point.pointDistance(w.getOtherAttackerPos(), new Point(170,70))<80)
 				{
-					kp = new Point(50,70);
+					
+					kp = new Point(50,170);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
 				else
 				{
-					kp = new Point(50,170);
+					kp = new Point(50,70);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
@@ -254,13 +255,13 @@ public class StrategyD {
 				//facing left
 				if (Point.pointDistance(w.getOtherAttackerPos(), new Point(300,70))<80)
 				{
-					kp = new Point(425,70);
+					kp = new Point(425,170);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
 				else
 				{
-					kp = new Point(425,170);
+					kp = new Point(425,70);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
@@ -275,14 +276,14 @@ public class StrategyD {
 			{
 				this.State = 4;
 			}
-//			else if (!iscaught)
-//			{
-//				this.State = 1;
-//				g = new Goal(new Point(0,0), CommandNames.KICK,false,false);
-//			}
+			else if (!iscaught)
+			{
+				this.State = 1;
+				g = new Goal(new Point(0,0), CommandNames.KICK,false,false);
+			}
 			
 			break;
-		} // TODO: I think it's OK to skip a case if this doesn't work when testing add an " empty " case 3: (i.e. same as default.
+		} 
 		case 4:
 		{
 			Point r = w.getDefenderPos();
@@ -302,7 +303,7 @@ public class StrategyD {
 			
 			//temporary function for iscaught
 			//when the real one is done, please remove the code below
-			Vector rb = new Vector(r, 20, v.getOrientation());
+			Vector rb = new Vector(r, 30, v.getOrientation());
 			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
 			boolean iscaught = Point.pointDistance(b, bc) < 10;
 			if (!iscaught)
@@ -310,7 +311,7 @@ public class StrategyD {
 				this.State = 0;
 			}
 			
-			// TODO: The following line might be necessary to get out of this state. Uncomment it if you see that it gets stuck at state 4.
+			// The following line might be necessary to get out of this state. Uncomment it if you see that it gets stuck at state 4.
 			// this.State = 0;
 			break;
 			
@@ -369,6 +370,7 @@ public class StrategyD {
 		}else{
 				//if the ball isn't going to be intercepted by the opponent shoot towards the position of our Attacker.
 				pass = allyPos;
+				System.out.println("Deafault passing");
 		}
 
 		return pass;
