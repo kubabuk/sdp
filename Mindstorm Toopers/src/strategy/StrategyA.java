@@ -152,6 +152,15 @@ public class StrategyA {
 			
 			//vision bug tolerance
 			
+			//temporary function for iscaught
+			//when the real one is done, please remove the code below
+			Vector rb = new Vector(r, 30, v.getOrientation());
+			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
+			boolean iscaught = Point.pointDistance(b, bc) < 10;
+			
+			
+			//to here
+			
 			System.out.println(w.getDirection());
 			if ((b.getX()==0&&b.getY()==0)||(r.getX()==0&&r.getY()==0))
 			{
@@ -169,7 +178,7 @@ public class StrategyA {
 //				System.out.println("The attacker is at "+r.toString());
 				
 				if (!(b.getX()>softbackboundary&&b.getX()<softfrontboundary)) {
-					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+					g = new Goal(bc, CommandNames.KICK,false,false);
 					this.State = 0;
 					
 					break;
@@ -185,7 +194,7 @@ public class StrategyA {
 //				System.out.println("The attacker is at "+r.toString());
 		
 				if (!(b.getX()>softfrontboundary&&b.getX()<softbackboundary)) {
-					g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+					g = new Goal(bc, CommandNames.KICK,false,false);
 					this.State = 0;
 					
 					break;
@@ -195,30 +204,22 @@ public class StrategyA {
 			}
 			
 			
-			//temporary function for iscaught
-			//when the real one is done, please remove the code below
-			Vector rb = new Vector(r, 20, v.getOrientation());
-			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
-//			boolean iscaught = Point.pointDistance(b, bc) < 10;
 			
-			
-			//to here
-//			if (iscaught)
-//			{
-//				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-//				this.State=2;
-//				break;
-//			}
+			if (iscaught)
+			{
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+				this.State=2;
+				break;
+			}
 			
 			//Point b = w.getBall().getPos();
 			//w.getBall().setCaught(true);
 			//do catch0
-			g = new Goal(b, CommandNames.MOVE,false,false);
 			
-			if (Point.pointDistance(r, g.getGoal()) < 3) {
-				g = new Goal(b, CommandNames.CATCH,false,false);
-				this.State=2;
-			}
+			
+			
+			g = new Goal(b, CommandNames.CATCH,false,false);
+			
 			
 			break;
 			
@@ -231,25 +232,25 @@ public class StrategyA {
 			Vector v = w.getAttackerDir();
 			
 			//vision bug tolerance
-//			if ((b.getX()==0&&b.getY()==0)||(r.getX()==0&&r.getY()==0))
-//			{
-//				g = new Goal(new Point(0,0), CommandNames.DONOTHING,true,false);
-//				break;
-//			}
+			if ((b.getX()==0&&b.getY()==0)||(r.getX()==0&&r.getY()==0))
+			{
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,true,false);
+				break;
+			}
 			
 			//if ball is not caught, switch back to state 1
 			//temporary function for iscaught
 			//when the real one is done, please remove the code below
-//			Vector rb = new Vector(r, 20, v.getOrientation());
-//			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
-//			boolean iscaught = Point.pointDistance(b, bc) < 10;
-//			
-//			if (!iscaught)
-//			{
-//				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-//				this.State=1;
-//				break;
-//			}
+			Vector rb = new Vector(r, 30, v.getOrientation());
+			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
+			boolean iscaught = Point.pointDistance(b, bc) < 10;
+			
+			if (!iscaught)
+			{
+				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+				this.State=1;
+				break;
+			}
 			
 			
 			Point kp;
@@ -259,18 +260,18 @@ public class StrategyA {
 				//facing right
 				kp = new Point(w.getThirdBoundary() - 40, w.getMaxY() / 2);
 				g = new Goal(kp, CommandNames.MOVE,false,false);
-//				if (Point.pointDistance(w.getOtherDefenderPos(), new Point(350,50))<60)
-//				{
-//					kp = new Point(300,50);
-//					g = new Goal(kp, CommandNames.MOVE,false,false);
-//					
-//				}
-//				else
-//				{
-//					kp = new Point(300,170);
-//					g = new Goal(kp, CommandNames.MOVE,false,false);
-//					
-//				}
+				if (Point.pointDistance(w.getOtherDefenderPos(), new Point(350,50))<60)
+				{
+					kp = new Point(300,50);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+					
+				}
+				else
+				{
+					kp = new Point(300,170);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+					
+				}
 			
 			}
 			else
@@ -278,18 +279,18 @@ public class StrategyA {
 				//facing left
 				kp = new Point(w.getFirstBoundary() + 40, w.getMaxY() / 2);
 				g = new Goal(kp, CommandNames.MOVE,false,false);
-//				if (Point.pointDistance(w.getOtherDefenderPos(), new Point(50,50))<60)
-//				{
-//					kp = new Point(150,50);
-//					g = new Goal(kp, CommandNames.MOVE,false,false);
-//					
-//				}
-//				else
-//				{
-//					kp = new Point(150,170);
-//					g = new Goal(kp, CommandNames.MOVE,false,false);
-//					
-//				}
+				if (Point.pointDistance(w.getOtherDefenderPos(), new Point(50,50))<60)
+				{
+					kp = new Point(150,50);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+					
+				}
+				else
+				{
+					kp = new Point(150,170);
+					g = new Goal(kp, CommandNames.MOVE,false,false);
+					
+				}
 			}
 			
 			// when the robot is close enough to the kick point
@@ -302,12 +303,12 @@ public class StrategyA {
 			{
 				this.State = 3;
 			}	
-//			else if (!iscaught)
-//			{
-//				this.State = 1;
-//				g = new Goal(new Point(0,0), CommandNames.KICK,false,false);
-//			}
-//			this.State = 3;
+			else if (!iscaught)
+			{
+				this.State = 1;
+				g = new Goal(new Point(0,0), CommandNames.KICK,false,false);
+			}
+			this.State = 3;
 			break;
 		}
 		case 3:
@@ -339,14 +340,14 @@ public class StrategyA {
 			
 			//temporary function for iscaught
 			//when the real one is done, please remove the code below
-			Vector rb = new Vector(r, 20, v.getOrientation());
+			Vector rb = new Vector(r, 30, v.getOrientation());
 			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
 			boolean iscaught = Point.pointDistance(b, bc) < 10;
 
-//			if (!iscaught)
-//			{
-//				this.State = 0;
-//			}
+			if (!iscaught)
+			{
+				this.State = 0;
+			}
 			break;
 			
 			
@@ -386,8 +387,8 @@ public class StrategyA {
 		
 		
 		Goal output = judge(lastgoal,g);
-//		System.out.println("The state is " + this.State);
-//		System.out.println(output.toString());
+		System.out.println("The state is " + this.State);
+		System.out.println(output.toString());
 		return output;
 	}
 	
@@ -449,6 +450,14 @@ public class StrategyA {
 	public static Goal judge(Goal currentgoal, Goal newgoalG)
 	{
 		Goal newgoal = newgoalG;
+		
+		if (currentgoal.getMove()==CommandNames.CATCH && !newgoal.isNull())
+		{
+			return newgoal;
+		}
+		
+		
+		
 		if (newgoal.getAbort())
 		{
 			//send abort command and pass the new goal
