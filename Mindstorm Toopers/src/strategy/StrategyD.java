@@ -23,7 +23,7 @@ public class StrategyD {
 	public StrategyD(World w)
 	{
 		this.w = w;
-		this.State = 0;
+		this.State = 4;
 		
 		if (w.getDirection())
 		{
@@ -305,10 +305,10 @@ public class StrategyD {
 			Vector rb = new Vector(r, 20, v.getOrientation());
 			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
 			boolean iscaught = Point.pointDistance(b, bc) < 10;
-			if (!iscaught)
-			{
-				this.State = 0;
-			}
+//			if (!iscaught)
+//			{
+//				this.State = 0;
+//			}
 			
 			// TODO: The following line might be necessary to get out of this state. Uncomment it if you see that it gets stuck at state 4.
 			// this.State = 0;

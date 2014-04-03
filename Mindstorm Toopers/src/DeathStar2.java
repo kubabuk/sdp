@@ -28,7 +28,7 @@ public class DeathStar2 {
 		// Allow vision time to instantiate
 		while(true){
 	
-			MainComm theForceDef = new MainComm(1);
+			MainComm theForceDef = new MainComm(2);
 	//		MainComm theForceAttack = new MainComm(1);
 	//		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,0);
 	//		theForceAttack.sendMessage(CommandNames.MOVE, 25, 0,180);
@@ -36,9 +36,10 @@ public class DeathStar2 {
 	//		theForceAttack.sendMessage(CommandNames.MOVE, 25, 1,90);
 	//		Goal goal = new Goal(new Point(300,20),CommandNames.MOVE,false);
 	//		MoveA.makeCommands(universe,goal,aq);
-			
+			Command cmd = new Command(CommandNames.CATCH, 0, 0);
+			theForceDef.sendMessage(cmd.getCommand(), cmd.getDistance(),cmd.getAngleDirec(), cmd.getAngle());		
 			int count = 0;
-				
+			
 			while (universe.getReady()) {
 				// Update the AI with new actions for the robots. Store them in the queue.
 				emperor.update();
@@ -71,9 +72,11 @@ public class DeathStar2 {
 				if (cmdDefend.getAngle()>180){
 					System.out.println(cmdDefend.getCommand().toString());					
 				}
-				else theForceDef.sendMessage(cmdDefend.getCommand(), cmdDefend.getDistance(),cmdDefend.getAngleDirec(), cmdDefend.getAngle());
+				else {
+
+					theForceDef.sendMessage(cmdDefend.getCommand(), cmdDefend.getDistance(),cmdDefend.getAngleDirec(), cmdDefend.getAngle());
 	
-			
+				}
 			
 				}
 				count++;
