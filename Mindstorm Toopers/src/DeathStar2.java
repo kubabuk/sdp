@@ -33,7 +33,10 @@ public class DeathStar2 {
 
 			
 			int count = 0;
-				
+			if (count == 50) {
+				aq.add(new Command(CommandNames.KICK, 0, 0));
+				dq.add(new Command(CommandNames.KICK, 0, 0));
+			}
 			while (universe.getReady()) {
 				// Update the AI with new actions for the robots. Store them in the queue.
 				emperor.update();
