@@ -262,13 +262,13 @@ public class StrategyA {
 				g = new Goal(kp, CommandNames.MOVE,false,false);
 				if (Point.pointDistance(w.getOtherDefenderPos(), new Point(350,50))<60)
 				{
-					kp = new Point(300,50);
+					kp = new Point(300,170);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
 				else
 				{
-					kp = new Point(300,170);
+					kp = new Point(300,70);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
@@ -281,13 +281,13 @@ public class StrategyA {
 				g = new Goal(kp, CommandNames.MOVE,false,false);
 				if (Point.pointDistance(w.getOtherDefenderPos(), new Point(50,50))<60)
 				{
-					kp = new Point(150,50);
+					kp = new Point(150,170);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
 				else
 				{
-					kp = new Point(150,170);
+					kp = new Point(150,70);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
