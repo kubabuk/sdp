@@ -388,7 +388,8 @@ public class StrategyA {
 		
 		Goal output = judge(lastgoal,g);
 		System.out.println("The state is " + this.State);
-		System.out.println(output.toString());
+		System.out.println("The old goal is" + lastgoal.toString());
+		System.out.println("New goal is"+output.toString());
 		return output;
 	}
 	
@@ -461,14 +462,14 @@ public class StrategyA {
 		if (newgoal.getAbort())
 		{
 			//send abort command and pass the new goal
-//			System.out.println("This is an abort goal");
+			System.out.println("This is an abort goal");
 			return newgoal;
 		}
 		
 		else if (newgoal.isNull())
 		{
 			
-//			System.out.println("This is a null goal");
+			System.out.println("This is a null goal");
 			return newgoal;
 		}
 		
@@ -478,10 +479,10 @@ public class StrategyA {
 			// when the command name is different from the last one (except donothing command)
 			if (currentgoal.getMove() != newgoal.getMove())
 			{
-//				System.out.println("This is set to be an abort goal, a new command goal will be executed.");
+				System.out.println("A new command goal will be executed.");
 				System.out.println("In judge: " + currentgoal.getGoal().toString() + 
 						", " + newgoal.getGoal().toString());
-				newgoal.setAbort(true);
+				//newgoal.setAbort(true);
 				return newgoal;
 			}
 			else
@@ -494,9 +495,9 @@ public class StrategyA {
 				// update the old goal
 				if (Point.pointDistance(currentgoal.getGoal(), newgoal.getGoal())< 10)
 				{
-//					System.out.println("old goal " + currentgoal.toString());
-//					System.out.println("new goal " + newgoal.toString());
-//					System.out.println("This is set to be a null goal");
+					System.out.println("old goal " + currentgoal.toString());
+					System.out.println("new goal " + newgoal.toString());
+					System.out.println("This is set to be a null goal");
 					
 					newgoal.setNull(true);
 					return newgoal;

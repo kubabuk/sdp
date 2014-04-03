@@ -23,7 +23,7 @@ public class StrategyD {
 	public StrategyD(World w)
 	{
 		this.w = w;
-		this.State = 0;
+		this.State = 2;
 		
 		if (w.getDirection())
 		{
@@ -222,12 +222,12 @@ public class StrategyD {
 			Point bc = new Point(r.getX()+rb.getX(),r.getY()+rb.getY());
 			boolean iscaught = Point.pointDistance(b, bc) < 10;
 			
-			if (!iscaught)
-			{
-				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
-				this.State=1;
-				break;
-			}
+//			if (!iscaught)
+//			{
+//				g = new Goal(new Point(0,0), CommandNames.DONOTHING,false,false);
+//				this.State=1;
+//				break;
+//			}
 			
 			
 			Point kp;
@@ -235,15 +235,15 @@ public class StrategyD {
 			if  (w.getDirection())
 			{
 				//facing right
-				if (Point.pointDistance(w.getOtherAttackerPos(), new Point(170,70))<80 )
+				if (Point.pointDistance(w.getOtherAttackerPos(), new Point(170,70))<80)
 				{
-					kp = new Point(50,170);
+					kp = new Point(50,70);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
 				else
 				{
-					kp = new Point(50,70);
+					kp = new Point(50,170);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
@@ -254,13 +254,13 @@ public class StrategyD {
 				//facing left
 				if (Point.pointDistance(w.getOtherAttackerPos(), new Point(300,70))<80)
 				{
-					kp = new Point(425,170);
+					kp = new Point(425,70);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
 				else
 				{
-					kp = new Point(425,70);
+					kp = new Point(425,170);
 					g = new Goal(kp, CommandNames.MOVE,false,false);
 					
 				}
@@ -275,11 +275,11 @@ public class StrategyD {
 			{
 				this.State = 4;
 			}
-			else if (!iscaught)
-			{
-				this.State = 1;
-				g = new Goal(new Point(0,0), CommandNames.KICK,false,false);
-			}
+//			else if (!iscaught)
+//			{
+//				this.State = 1;
+//				g = new Goal(new Point(0,0), CommandNames.KICK,false,false);
+//			}
 			
 			break;
 		} // TODO: I think it's OK to skip a case if this doesn't work when testing add an " empty " case 3: (i.e. same as default.
@@ -401,7 +401,7 @@ public class StrategyD {
 			if (currentgoal.getMove() != newgoal.getMove())
 			{
 				System.out.println("This is set to be an abort goal, a new command goal will be executed.");
-				//newgoal.setAbort(true);
+				newgoal.setAbort(true);
 				return newgoal;
 			}
 			else

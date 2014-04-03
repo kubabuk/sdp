@@ -21,7 +21,7 @@ public class DeathStarQueueTest {
 		Queue aq = new Queue();
 		Queue dq = new Queue();
 		
-		AI emperor = new AI(universe, aq, dq);
+		//AI emperor = new AI(universe, aq, dq);
 		
 		// Allow vision time to instantiate
 		while (!universe.getReady()){
