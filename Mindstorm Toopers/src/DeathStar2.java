@@ -24,7 +24,8 @@ public class DeathStar2 {
 		Queue aq = new Queue();
 		Queue dq = new Queue();
 		AI emperor = new AI(universe, aq, dq);
-		
+		int count = 0;
+
 		// Allow vision time to instantiate
 		while(true){
 	
@@ -32,16 +33,26 @@ public class DeathStar2 {
 			MainComm theForceAttack = new MainComm(2);
 
 			
-			int count = 0;
-			if (count == 50) {
-				aq.add(new Command(CommandNames.KICK, 0, 0));
-				dq.add(new Command(CommandNames.KICK, 0, 0));
-			}
+
+			
 			while (universe.getReady()) {
 				// Update the AI with new actions for the robots. Store them in the queue.
+				
+				if (count % 7 == 1) {
+					Command cmd = new Command(CommandNames.KICK, 0, 0);
+					theForceAttack.sendMessage(cmd.getCommand(), cmd.getDistance(),cmd.getAngleDirec(), cmd.getAngle());
+					theForceDef.sendMessage(cmd.getCommand(), cmd.getDistance(),cmd.getAngleDirec(), cmd.getAngle());
+
+				}
+				if (count % 13 == 1) {
+					Command cmd = new Command(CommandNames.CATCH, 0, 0);
+					theForceAttack.sendMessage(cmd.getCommand(), cmd.getDistance(),cmd.getAngleDirec(), cmd.getAngle());
+					theForceDef.sendMessage(cmd.getCommand(), cmd.getDistance(),cmd.getAngleDirec(), cmd.getAngle());
+
+				}
+				
 				emperor.update();
 					
-				//System.out.println("The ball position is deathstar " + universe.getBall().getPos().getX()+" , "+universe.getBall().getPos().getY());
 					
 				// Retrieve commands from the queue.
 				Command cmdAttack = aq.pull();
@@ -56,9 +67,7 @@ public class DeathStar2 {
 					else theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle());
 				}
 					
-					//					System.out.println(cmdAttack.getDistance());
-//					System.out.println(cmdAttack.getAngle());
-					//theForceAttack.sendMessage(cmdAttack.getCommand(), cmdAttack.getDistance(),cmdAttack.getAngleDirec(), cmdAttack.getAngle()-180);
+
 				if(!cmdDefend.isNothing()){
 				System.out.println("Attempting to send message");
 				if (cmdDefend.getAngle()>180){
@@ -67,7 +76,7 @@ public class DeathStar2 {
 				else theForceDef.sendMessage(cmdDefend.getCommand(), cmdDefend.getDistance(),cmdDefend.getAngleDirec(), cmdDefend.getAngle());
 				}
 				count++;
-				if (count == 10) {	flag = false;}
+//				if (count == 10) {	flag = false;}
 				Thread.sleep(2000);
 			}
 		}
